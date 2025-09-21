@@ -1,0 +1,81 @@
+volumes: # Define o volume para persistência dos dados do banco de dados.
+  db_hospital:
+    name: db_account
+
+networks: # Define a rede de comunicação entre os containers.
+  communication:
+    name: communication
+    driver: bridge # Usar driver bridge para comunicação local e acesso à internet. Permite isolamento e controle de rede.
+
+services: # Define os serviços (containers) que serão executados.
+
+  kafka:
+    image: bitnami/kafka:latest
+    container_name: kafka
+    ports:
+      - "9092:9092"
+    environment:
+      # Ativa o modo KRaft (sem Zookeeper)
+      - KAFKA_ENABLE_KRAFT=yes # Habilita o modo KRaft (sem Zookeeper)
+      - KAFKA_CFG_PROCESS_ROLES=broker,controller # Define os papéis do nó - broker e controller - necessário para KRaft
+      - KAFKA_CFG_NODE_ID=1 # ID único do nó no cluster
+      - KAFKA_CFG_CONTROLLER_QUORUM_VOTERS=1@kafka:9093 # Define o votante do controller - necessário para KRaft
+      - KAFKA_CFG_LISTENERS=PLAINTEXT://:9092,CONTROLLER://:9093 # Define os listeners para broker e controller
+      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://kafka:9092 # Endereço que os clientes usarão para se conectar ao broker
+      - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT # Mapeia os protocolos de segurança dos listeners
+      - KAFKA_CFG_CONTROLLER_LISTENER_NAMES=CONTROLLER # Define o listener do controller
+      - ALLOW_PLAINTEXT_LISTENER=yes # Permite listener sem criptografia
+    restart: unless-stopped
+    networks:
+      - communication
+
+  api_account:
+    container_name: api_account
+    image: juniorsmartins/api_account:v0.0.1
+    build:
+      context: ../api-account
+      dockerfile: Dockerfile
+      args:
+        APP_NAME: "api_account"
+        APP_VERSION: "v0.0.1"
+        APP_DESCRIPTION: "API de Contas para sistema financeiro."
+    ports:
+      - "9050:9050"
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 512M
+    environment:
+      - DB_HOST=database_account
+      - DB_NAME=account
+      - DB_PORT=5432
+      - SPRING_KAFKA_BOOTSTRAP_SERVERS=kafka:9092
+    restart: on-failure
+    networks:
+      - communication
+    depends_on:
+      database_account:
+        condition: service_started
+      kafka:
+        condition: service_started
+
+  database_account:
+    container_name: database_account
+    image: postgres:16.0
+    ports:
+      - "5501:5432"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+    restart: on-failure
+    environment:
+      - POSTGRES_DB=account
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - db_account:/var/lib/postgresql/data
+    networks:
+      - communication
