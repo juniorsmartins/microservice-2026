@@ -1,4 +1,4 @@
-package backend.finance.api_user.infrastructure.daos;
+package backend.finance.api_user.infrastructure.jpas;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -23,9 +23,6 @@ public final class UserJpa {
 
     @Column(name = "password", nullable = false)
     private String password;
-
-    @Column(name = "enabled", nullable = false, columnDefinition = "BOOLEAN DEFAULT TRUE")
-    private boolean enabled;
 
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinColumn(name = "role_id", nullable = false)

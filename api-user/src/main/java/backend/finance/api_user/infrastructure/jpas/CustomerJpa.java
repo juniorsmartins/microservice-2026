@@ -1,4 +1,4 @@
-package backend.finance.api_user.infrastructure.daos;
+package backend.finance.api_user.infrastructure.jpas;
 
 import jakarta.persistence.*;
 import lombok.*;
