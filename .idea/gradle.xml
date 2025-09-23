@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="GradleMigrationSettings" migrationVersion="1" />
+  <component name="GradleSettings">
+    <option name="linkedExternalProjectsSettings">
+      <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/api-account" />
+        <option name="gradleJvm" value="21 (2)" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/api-account" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/api-investment" />
+        <option name="gradleJvm" value="21 (2)" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/api-investment" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/api-notifications" />
+        <option name="gradleJvm" value="21 (2)" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/api-notifications" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/api-report" />
+        <option name="gradleJvm" value="21 (2)" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/api-report" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/api-user" />
+        <option name="gradleJvm" value="21 (2)" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/api-user" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+    </option>
+  </component>
+</project>
