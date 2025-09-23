@@ -23,3 +23,19 @@
     * [Endpoints](#endpoints-report)
 
 ## API - User
+
+### Tecnologias User
+
+- Java 25;
+- Spring Boot 3.5.6;
+- Spring Data Web;
+- Spring Data JPA;
+- Spring Security;
+- Bean Validation;
+- Lombok;
+- Liquibase (migration);
+- Apache Kafka (mensageria);
+- MariaDB (banco de dados relacional);
+- H2 Database (banco de dados em memória para testes);
+
+
