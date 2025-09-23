@@ -17,6 +17,7 @@ public final class CustomerJpa {
     @Id // Indica que este campo é a chave primária da entidade
     private UUID id;
 
+    @Column(name = "name", nullable = false)
     private String name;
 
     @Column(name = "email", nullable = false, unique = true)

@@ -32,6 +32,6 @@ public final class AccountJpa {
     private BigDecimal currentBalance;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "usuario_id", nullable = false)
-    private CustomerJpa usuario;
+    @JoinColumn(name = "customer_id", nullable = false)
+    private CustomerJpa customer;
 }
