@@ -38,4 +38,12 @@
 - MariaDB (banco de dados relacional);
 - H2 Database (banco de dados em memória para testes);
 
+## API - Account
+
+## API - Investment
+
+## API - Notifications
+
+## API - Report
+
 
