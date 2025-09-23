@@ -18,22 +18,22 @@ public final class Account {
 
     private final BigDecimal currentBalance;
 
-    private final Usuario usuario;
+    private final Customer customer;
 
-    public Account(String id, Long number, String accountType, BigDecimal currentBalance, Usuario usuario) {
+    public Account(String id, Long number, String accountType, BigDecimal currentBalance, Customer customer) {
         this.id = ValidationUtilities.validateId(id);
         this.number = number;
         this.accountType = validateAccountType(accountType);
         this.currentBalance = currentBalance;
-        this.usuario = usuario;
+        this.customer = customer;
     }
 
-    public Account(UUID id, Long number, AccountTypeEnum accountType, BigDecimal currentBalance, Usuario usuario) {
+    public Account(UUID id, Long number, AccountTypeEnum accountType, BigDecimal currentBalance, Customer customer) {
         this.id = id;
         this.number = number;
         this.accountType = accountType;
         this.currentBalance = currentBalance;
-        this.usuario = usuario;
+        this.customer = customer;
     }
 
     private AccountTypeEnum validateAccountType(String accountType) {

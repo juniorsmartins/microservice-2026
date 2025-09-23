@@ -33,5 +33,5 @@ public final class AccountJpa {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "usuario_id", nullable = false)
-    private UsuarioJpa usuario;
+    private CustomerJpa usuario;
 }
