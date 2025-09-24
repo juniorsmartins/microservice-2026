@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.net.URI;
-import java.util.Optional;
 
 @RestController
 @RequestMapping(path = {CustomerController.URI_CUSTOMERS})
@@ -33,10 +32,8 @@ public class CustomerController {
     @PostMapping
     public ResponseEntity<CustomerResponse> create(@RequestBody @Valid CustomerRequest request) {
 
-        var response = Optional.ofNullable(request)
-                .map(dto -> customerInputPort.create(dto, customerOutputPort, userOutputPort))
-                .map(CustomerPresenter::toCustomerResponse)
-                .orElseThrow();
+        var dto = customerInputPort.create(request, customerOutputPort, userOutputPort);
+        var response = CustomerPresenter.toCustomerResponse(dto);
 
         return ResponseEntity
                 .created(URI.create(URI_CUSTOMERS + "/" + response.id()))

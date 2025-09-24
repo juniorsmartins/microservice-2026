@@ -9,7 +9,6 @@ import backend.finance.api_user.infrastructure.presenters.CustomerPresenter;
 import backend.finance.api_user.infrastructure.repositories.CustomerRepository;
 import backend.finance.api_user.infrastructure.repositories.RoleRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,16 +23,15 @@ public class CustomerGateway implements CustomerOutputPort {
     private final RoleRepository roleRepository;
 
     @Transactional
-    @Modifying
     @Override
     public CustomerDto save(CustomerRequest customerRequest) {
-        var roleJpa = confirmRole(customerRequest.user().role());
+        var roleJpa = getOrCreateRole(customerRequest.user().role());
         var customerJpa = CustomerPresenter.toCustomerJpa(customerRequest, roleJpa);
         var customerSalvo = customerRepository.save(customerJpa);
         return CustomerPresenter.toCustomerDto(customerSalvo);
     }
 
-    private RoleJpa confirmRole(String name) {
+    private RoleJpa getOrCreateRole(String name) {
         try {
             var roleEnum = RoleEnum.valueOf(name);
             var roleJpa = roleRepository.findByName(roleEnum);
