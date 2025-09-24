@@ -61,7 +61,7 @@ class CustomerControllerIntegrationTest {
             assertEquals(userRequest.username(), customerJpa.getUser().getUsername());
             assertEquals(request.name(), customerJpa.getName());
             assertEquals(request.email(), customerJpa.getEmail());
-            assertEquals(RoleEnum.ROLE_CUSTOMER.getValue(), customerJpa.getUser().getRole().getName());
+            assertEquals(RoleEnum.ROLE_CUSTOMER, customerJpa.getUser().getRole().getName());
         }
 
         @Test
@@ -76,7 +76,7 @@ class CustomerControllerIntegrationTest {
             assertEquals(userRequest.username(), customerJpa.getUser().getUsername());
             assertEquals(request.name(), customerJpa.getName());
             assertEquals(request.email(), customerJpa.getEmail());
-            assertEquals(RoleEnum.ROLE_ADMIN.getValue(), customerJpa.getUser().getRole().getName());
+            assertEquals(RoleEnum.ROLE_ADMIN, customerJpa.getUser().getRole().getName());
         }
     }
 

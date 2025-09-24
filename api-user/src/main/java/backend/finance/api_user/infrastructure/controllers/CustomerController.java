@@ -4,7 +4,6 @@ import backend.finance.api_user.application.dtos.input.CustomerRequest;
 import backend.finance.api_user.application.dtos.output.CustomerResponse;
 import backend.finance.api_user.infrastructure.ports.input.CustomerInputPort;
 import backend.finance.api_user.infrastructure.ports.output.CustomerOutputPort;
-import backend.finance.api_user.infrastructure.ports.output.RoleOutputPort;
 import backend.finance.api_user.infrastructure.ports.output.UserOutputPort;
 import backend.finance.api_user.infrastructure.presenters.CustomerPresenter;
 import jakarta.validation.Valid;
@@ -31,13 +30,11 @@ public class CustomerController {
 
     private final UserOutputPort userOutputPort;
 
-    private final RoleOutputPort roleOutputPort;
-
     @PostMapping
     public ResponseEntity<CustomerResponse> create(@RequestBody @Valid CustomerRequest request) {
 
         var response = Optional.ofNullable(request)
-                .map(dto -> customerInputPort.create(dto, customerOutputPort, userOutputPort, roleOutputPort))
+                .map(dto -> customerInputPort.create(dto, customerOutputPort, userOutputPort))
                 .map(CustomerPresenter::toCustomerResponse)
                 .orElseThrow();
 

@@ -1,5 +1,6 @@
 package backend.finance.api_user.infrastructure.jpas;
 
+import backend.finance.api_user.domain.enums.RoleEnum;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -18,6 +19,7 @@ public final class RoleJpa {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "name", nullable = false, unique = true)
-    private String name;
+    private RoleEnum name;
 }

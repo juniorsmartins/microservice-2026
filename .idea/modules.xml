@@ -3,6 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/api-account.test.iml" filepath="$PROJECT_DIR$/.idea/modules/api-account.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/api-user.main.iml" filepath="$PROJECT_DIR$/.idea/modules/api-user.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/api-user.test.iml" filepath="$PROJECT_DIR$/.idea/modules/api-user.test.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/microservice-2026.iml" filepath="$PROJECT_DIR$/.idea/microservice-2026.iml" />
     </modules>
   </component>
