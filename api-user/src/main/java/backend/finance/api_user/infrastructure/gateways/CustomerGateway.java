@@ -6,7 +6,7 @@ import backend.finance.api_user.application.dtos.input.CustomerRequest;
 import backend.finance.api_user.application.dtos.internal.CustomerDto;
 import backend.finance.api_user.domain.enums.RoleEnum;
 import backend.finance.api_user.infrastructure.jpas.RoleJpa;
-import backend.finance.api_user.infrastructure.ports.output.CustomerCommandOutputPort;
+import backend.finance.api_user.infrastructure.ports.output.CustomerPersistenceOutputPort;
 import backend.finance.api_user.infrastructure.ports.output.CustomerQueryOutputPort;
 import backend.finance.api_user.infrastructure.presenters.CustomerPresenter;
 import backend.finance.api_user.infrastructure.repositories.CustomerRepository;
@@ -21,7 +21,7 @@ import java.util.UUID;
 
 @Repository
 @RequiredArgsConstructor
-public class CustomerCommandGateway implements CustomerCommandOutputPort, CustomerQueryOutputPort {
+public class CustomerGateway implements CustomerPersistenceOutputPort, CustomerQueryOutputPort {
 
     private final CustomerRepository customerRepository;
 

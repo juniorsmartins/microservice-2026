@@ -5,7 +5,7 @@ import backend.finance.api_user.application.dtos.internal.CustomerDto;
 
 import java.util.UUID;
 
-public interface CustomerCommandOutputPort {
+public interface CustomerPersistenceOutputPort {
 
     CustomerDto save(CustomerRequest customerRequest);
 
