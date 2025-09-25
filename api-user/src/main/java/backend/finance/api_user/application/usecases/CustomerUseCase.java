@@ -1,6 +1,8 @@
 package backend.finance.api_user.application.usecases;
 
 import backend.finance.api_user.application.configs.exception.http404.RoleNotFoundCustomException;
+import backend.finance.api_user.application.configs.exception.http409.EmailConflictRulesCustomException;
+import backend.finance.api_user.application.configs.exception.http409.UsernameConflictRulesCustomException;
 import backend.finance.api_user.application.dtos.input.CustomerRequest;
 import backend.finance.api_user.application.dtos.internal.CustomerDto;
 import backend.finance.api_user.domain.enums.RoleEnum;
@@ -23,18 +25,18 @@ public class CustomerUseCase implements CustomerInputPort {
     }
 
     private void checkDuplicateEmail(CustomerRequest dto, CustomerOutputPort customerOutputPort) {
+        var email = dto.email();
         customerOutputPort.findByEmail(dto.email())
                 .ifPresent(customer -> {
-                    // TODO - criar exception customizada
-                    throw new RuntimeException("Email already exists");
+                    throw new EmailConflictRulesCustomException(email);
                 });
     }
 
     private void checkDuplicateUsername(CustomerRequest dto, UserOutputPort userOutputPort) {
-        userOutputPort.findByUsername(dto.user().username())
+        var username = dto.user().username();
+        userOutputPort.findByUsername(username)
                 .ifPresent(user -> {
-                    // TODO - criar exception customizada
-                    throw new RuntimeException("Username already exists");
+                    throw new UsernameConflictRulesCustomException(username);
                 });
     }
 

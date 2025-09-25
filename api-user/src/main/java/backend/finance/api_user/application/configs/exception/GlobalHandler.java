@@ -83,7 +83,7 @@ public final class GlobalHandler extends ResponseEntityExceptionHandler {
         problemDetail.setType(URI.create("https://nomad.com/errors/resource-conflict-rules"));
 
         var message = messageSource
-                .getMessage(ex.getMessageKey(), new Object[]{ex.getId()}, LocaleContextHolder.getLocale());
+                .getMessage(ex.getMessageKey(), new Object[]{ex.getValue()}, LocaleContextHolder.getLocale());
 
         problemDetail.setTitle(message);
 
