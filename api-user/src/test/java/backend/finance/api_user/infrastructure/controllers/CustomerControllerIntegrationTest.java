@@ -1,5 +1,8 @@
 package backend.finance.api_user.infrastructure.controllers;
 
+import backend.finance.api_user.application.configs.exception.http404.RoleNotFoundCustomException;
+import backend.finance.api_user.application.configs.exception.http409.EmailConflictRulesCustomException;
+import backend.finance.api_user.application.configs.exception.http409.UsernameConflictRulesCustomException;
 import backend.finance.api_user.domain.enums.RoleEnum;
 import backend.finance.api_user.infrastructure.repositories.CustomerRepository;
 import backend.finance.api_user.utils.CustomerUtils;
@@ -11,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
 @Transactional
@@ -31,8 +35,8 @@ class CustomerControllerIntegrationTest {
     }
 
     @Nested
-    @DisplayName("Create")
-    class Create {
+    @DisplayName("CreateValid")
+    class CreateValid {
 
         @Test
         void dadaRequisicaoValida_quandoChamarCreate_entaoDeveCriarAndDevolverCustomer() {
@@ -77,6 +81,47 @@ class CustomerControllerIntegrationTest {
             assertEquals(request.name(), customerJpa.getName());
             assertEquals(request.email(), customerJpa.getEmail());
             assertEquals(RoleEnum.ROLE_ADMIN, customerJpa.getUser().getRole().getName());
+        }
+    }
+
+    @Nested
+    @DisplayName("CreateInvalid")
+    class CreateInvalid {
+
+        @Test
+        void dadaRequisicaoInvalidaComEmailDuplicado_quandoChamarCreate_entaoDeveLancarException() {
+            // Arrange
+            var emailDuplicate = "jeff@gmail.com";
+            var userRequest1 = UserUtils.trainUserRequest("jeffbeck", "password123", RoleEnum.ROLE_CUSTOMER.getValue());
+            var request1 = CustomerUtils.trainCustomerRequest("Jeff Beck", emailDuplicate, userRequest1);
+            var userRequest2 = UserUtils.trainUserRequest("sutherland", "password123", RoleEnum.ROLE_CUSTOMER.getValue());
+            var request2 = CustomerUtils.trainCustomerRequest("Jeff Sutherland", emailDuplicate, userRequest2);
+            // Act & Assert
+            customerController.create(request1);
+            assertThrows(EmailConflictRulesCustomException.class, () -> customerController.create(request2));
+        }
+
+        @Test
+        void dadaRequisicaoInvalidaComUsernameDuplicado_quandoChamarCreate_entaoDeveLancarException() {
+            // Arrange
+            var usernameDuplicate = "jeff123";
+            var userRequest1 = UserUtils.trainUserRequest(usernameDuplicate, "password123", RoleEnum.ROLE_CUSTOMER.getValue());
+            var request1 = CustomerUtils.trainCustomerRequest("Jeff Beck", "beck@gmail.com", userRequest1);
+            var userRequest2 = UserUtils.trainUserRequest(usernameDuplicate, "password123", RoleEnum.ROLE_CUSTOMER.getValue());
+            var request2 = CustomerUtils.trainCustomerRequest("Jeff Sutherland", "sutherland@gmail.com", userRequest2);
+            // Act & Assert
+            customerController.create(request1);
+            assertThrows(UsernameConflictRulesCustomException.class, () -> customerController.create(request2));
+        }
+
+        @Test
+        void dadaRequisicaoInvalidaComRoleInvalid_quandoChamarCreate_entaoDeveLancarException() {
+            // Arrange
+            var roleInvalid = "ROLE_INVALID";
+            var userRequest = UserUtils.trainUserRequest("beck123", "password123", roleInvalid);
+            var request = CustomerUtils.trainCustomerRequest("Jeff Beck", "beck@gmail.com", userRequest);
+            // Act & Assert
+            assertThrows(RoleNotFoundCustomException.class, () -> customerController.create(request));
         }
     }
 
