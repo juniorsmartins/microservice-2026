@@ -1,5 +1,6 @@
 package backend.finance.api_user.application.usecases;
 
+import backend.finance.api_user.application.configs.exception.http404.RoleNotFoundCustomException;
 import backend.finance.api_user.application.dtos.input.CustomerRequest;
 import backend.finance.api_user.application.dtos.internal.CustomerDto;
 import backend.finance.api_user.domain.enums.RoleEnum;
@@ -37,13 +38,12 @@ public class CustomerUseCase implements CustomerInputPort {
                 });
     }
 
-    private CustomerRequest checkRoleExists(CustomerRequest request) {
+    private void checkRoleExists(CustomerRequest request) {
+        var roleName = request.user().role();
         try {
-            RoleEnum.valueOf(request.user().role());
-            return request;
+            RoleEnum.valueOf(roleName);
         } catch (IllegalArgumentException e) {
-            // TODO - Add Custom Exception
-            throw new RuntimeException("Role '" + request.user().role() + "' does not exist", e);
+            throw new RoleNotFoundCustomException(roleName);
         }
     }
 }

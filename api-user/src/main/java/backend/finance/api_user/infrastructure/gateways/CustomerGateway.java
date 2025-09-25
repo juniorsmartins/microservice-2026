@@ -1,5 +1,6 @@
 package backend.finance.api_user.infrastructure.gateways;
 
+import backend.finance.api_user.application.configs.exception.http404.RoleNotFoundCustomException;
 import backend.finance.api_user.application.dtos.input.CustomerRequest;
 import backend.finance.api_user.application.dtos.internal.CustomerDto;
 import backend.finance.api_user.domain.enums.RoleEnum;
@@ -37,8 +38,7 @@ public class CustomerGateway implements CustomerOutputPort {
             var roleJpa = roleRepository.findByName(roleEnum);
             return roleJpa.orElseGet(() -> roleRepository.save(new RoleJpa(null, roleEnum)));
         } catch (IllegalArgumentException e) {
-            // TODO - Add Custom Exception
-            throw new RuntimeException("Role '" + name + "' does not exist", e);
+            throw new RoleNotFoundCustomException(name);
         }
     }
 
