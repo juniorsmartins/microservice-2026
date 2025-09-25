@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Repository
 @RequiredArgsConstructor
@@ -47,5 +48,18 @@ public class CustomerGateway implements CustomerOutputPort {
     public Optional<CustomerDto> findByEmail(String email) {
         return customerRepository.findByEmail(email)
                 .map(CustomerPresenter::toCustomerDto);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public Optional<CustomerDto> findById(UUID id) {
+        return customerRepository.findById(id)
+                .map(CustomerPresenter::toCustomerDto);
+    }
+
+    @Transactional
+    @Override
+    public void deleteById(UUID id) {
+        customerRepository.deleteById(id);
     }
 }

@@ -1,5 +1,6 @@
 package backend.finance.api_user.infrastructure.controllers;
 
+import backend.finance.api_user.application.configs.exception.http404.CustomerNotFoundCustomException;
 import backend.finance.api_user.application.dtos.input.CustomerRequest;
 import backend.finance.api_user.application.dtos.output.CustomerResponse;
 import backend.finance.api_user.infrastructure.ports.input.CustomerInputPort;
@@ -9,12 +10,10 @@ import backend.finance.api_user.infrastructure.presenters.CustomerPresenter;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.UUID;
 
 @RestController
 @RequestMapping(path = {CustomerController.URI_CUSTOMERS})
@@ -37,6 +36,26 @@ public class CustomerController {
 
         return ResponseEntity
                 .created(URI.create(URI_CUSTOMERS + "/" + response.id()))
+                .body(response);
+    }
+
+    @DeleteMapping(path = "/{id}")
+    public ResponseEntity<Void> deleteById(@PathVariable(name = "id") final UUID id) {
+        customerInputPort.deleteById(id, customerOutputPort);
+        return ResponseEntity
+                .noContent()
+                .build();
+    }
+
+    @GetMapping(path = "/{id}")
+    public ResponseEntity<CustomerResponse> findById(@PathVariable(name = "id") final UUID id) {
+
+        var response = customerOutputPort.findById(id)
+                .map(CustomerPresenter::toCustomerResponse)
+                .orElseThrow(() -> new CustomerNotFoundCustomException(id));
+
+        return ResponseEntity
+                .ok()
                 .body(response);
     }
 }

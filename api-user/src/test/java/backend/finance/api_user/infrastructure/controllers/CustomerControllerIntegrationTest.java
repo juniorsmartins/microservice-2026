@@ -1,10 +1,14 @@
 package backend.finance.api_user.infrastructure.controllers;
 
+import backend.finance.api_user.application.configs.exception.http404.CustomerNotFoundCustomException;
 import backend.finance.api_user.application.configs.exception.http404.RoleNotFoundCustomException;
 import backend.finance.api_user.application.configs.exception.http409.EmailConflictRulesCustomException;
 import backend.finance.api_user.application.configs.exception.http409.UsernameConflictRulesCustomException;
+import backend.finance.api_user.application.dtos.input.CustomerRequest;
+import backend.finance.api_user.application.dtos.output.CustomerResponse;
 import backend.finance.api_user.domain.enums.RoleEnum;
 import backend.finance.api_user.infrastructure.repositories.CustomerRepository;
+import backend.finance.api_user.infrastructure.repositories.UserRepository;
 import backend.finance.api_user.utils.CustomerUtils;
 import backend.finance.api_user.utils.UserUtils;
 import org.junit.jupiter.api.*;
@@ -13,8 +17,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.transaction.annotation.Transactional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import java.util.UUID;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
@@ -26,12 +31,23 @@ class CustomerControllerIntegrationTest {
     @Autowired
     private CustomerRepository customerRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
+    private CustomerRequest customerRequest;
+
+    private CustomerResponse customerResponse;
+
     @BeforeEach
     void setUp() {
+        var userRequest = UserUtils.trainUserRequest("anne_frank", "password123", RoleEnum.ROLE_CUSTOMER.getValue());
+        customerRequest = CustomerUtils.trainCustomerRequest("Anne Frank", "frank@gmail.com", userRequest);
+        customerResponse = customerController.create(customerRequest).getBody();
     }
 
     @AfterEach
     void tearDown() {
+        customerRepository.deleteAll();
     }
 
     @Nested
@@ -131,12 +147,73 @@ class CustomerControllerIntegrationTest {
     }
 
     @Nested
-    @DisplayName("Delete")
-    class Delete {
+    @DisplayName("DeleteValid")
+    class DeleteValid {
+
+        @Test
+        void dadaRequisicaoValida_quandoChamarDeleteById_entaoRetornarHttpNoContent() {
+            var idValid = customerResponse.id();
+            var response = customerController.deleteById(idValid);
+            assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
+        }
+
+        @Test
+        void dadaRequisicaoValida_quandoChamarDeleteById_entaoDeletarCustomerAndUser() {
+            var idCustomerValid = customerResponse.id();
+            var customerDoBancoAntes = customerRepository.findById(idCustomerValid);
+            assertTrue(customerDoBancoAntes.isPresent());
+
+            var idUserValid = customerResponse.user().id();
+            var userDoBancoAntes = userRepository.findById(idUserValid);
+            assertTrue(userDoBancoAntes.isPresent());
+
+            customerController.deleteById(idCustomerValid);
+
+            var customerDoBancoDepois = customerRepository.findById(idCustomerValid);
+            assertTrue(customerDoBancoDepois.isEmpty());
+
+            var userDoBancoDepois = userRepository.findById(idUserValid);
+            assertTrue(userDoBancoDepois.isEmpty());
+        }
     }
 
     @Nested
-    @DisplayName("FindById")
-    class FindById {
+    @DisplayName("DeleteInvalid")
+    class DeleteInvalid {
+
+        @Test
+        void dadaRequisicaoInvalidaComIdInexistente_quandoChamarDeleteById_entaoLancarException() {
+            var idNotFound = UUID.randomUUID();
+            assertThrows(CustomerNotFoundCustomException.class, () -> customerController.deleteById(idNotFound));
+        }
+    }
+
+    @Nested
+    @DisplayName("FindByIdValid")
+    class FindByIdValid {
+
+        @Test
+        void dadaRequisicaoValida_quandoChamarFindById_entaoRetornarCustomer() {
+            // Arrange
+            var customerId = customerResponse.id();
+            // Act
+            var responseFind = customerController.findById(customerId);
+            // Assert
+            var customerResponse = responseFind.getBody();
+            assertEquals(customerRequest.user().username(), customerResponse.user().username());
+            assertEquals(customerRequest.name(), customerResponse.name());
+            assertEquals(customerRequest.email(), customerResponse.email());
+        }
+    }
+
+    @Nested
+    @DisplayName("FindByIdInvalid")
+    class FindByIdInvalid {
+
+        @Test
+        void dadaRequisicaoInvalidaComIdInexistente_quandoChamarFindById_entaoLancarException() {
+            var idNotFound = UUID.randomUUID();
+            assertThrows(CustomerNotFoundCustomException.class, () -> customerController.findById(idNotFound));
+        }
     }
 }
