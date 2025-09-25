@@ -9,7 +9,6 @@ import backend.finance.api_user.application.dtos.internal.CustomerDto;
 import backend.finance.api_user.domain.enums.RoleEnum;
 import backend.finance.api_user.infrastructure.ports.input.CustomerInputPort;
 import backend.finance.api_user.infrastructure.ports.output.CustomerOutputPort;
-import backend.finance.api_user.infrastructure.ports.output.UserOutputPort;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
@@ -18,35 +17,51 @@ import java.util.UUID;
 public class CustomerUseCase implements CustomerInputPort {
 
     @Override
-    public CustomerDto create(CustomerRequest customerRequest, CustomerOutputPort customerOutputPort, UserOutputPort userOutputPort) {
+    public CustomerDto create(CustomerRequest customerRequest, CustomerOutputPort customerOutputPort) {
 
-        checkDuplicateEmail(customerRequest, customerOutputPort);
-        checkDuplicateUsername(customerRequest, userOutputPort);
+        checkDuplicateEmail(null, customerRequest, customerOutputPort);
+        checkDuplicateUsername(null, customerRequest, customerOutputPort);
         checkRoleExists(customerRequest);
 
         return customerOutputPort.save(customerRequest);
     }
 
     @Override
+    public CustomerDto update(UUID customerId, CustomerRequest customerRequest, CustomerOutputPort customerOutputPort) {
+
+        checkDuplicateEmail(customerId, customerRequest, customerOutputPort);
+        checkDuplicateUsername(customerId, customerRequest, customerOutputPort);
+        checkRoleExists(customerRequest);
+
+        return customerOutputPort.update(customerId, customerRequest);
+    }
+
+    @Override
     public void deleteById(UUID id, CustomerOutputPort customerOutputPort) {
         customerOutputPort.findById(id)
                 .ifPresentOrElse(customerDto -> customerOutputPort.deleteById(customerDto.id()),
-                        () -> {throw new CustomerNotFoundCustomException(id);});
+                        () -> {
+                            throw new CustomerNotFoundCustomException(id);
+                        });
     }
 
-    private void checkDuplicateEmail(CustomerRequest dto, CustomerOutputPort customerOutputPort) {
+    private void checkDuplicateEmail(UUID customerId, CustomerRequest dto, CustomerOutputPort customerOutputPort) {
         var email = dto.email();
         customerOutputPort.findByEmail(dto.email())
                 .ifPresent(customerDto -> {
-                    throw new EmailConflictRulesCustomException(email);
+                    if (customerId == null || !customerId.equals(customerDto.id())) {
+                        throw new EmailConflictRulesCustomException(email);
+                    }
                 });
     }
 
-    private void checkDuplicateUsername(CustomerRequest dto, UserOutputPort userOutputPort) {
+    private void checkDuplicateUsername(UUID customerId, CustomerRequest dto, CustomerOutputPort customerOutputPort) {
         var username = dto.user().username();
-        userOutputPort.findByUsername(username)
-                .ifPresent(user -> {
-                    throw new UsernameConflictRulesCustomException(username);
+        customerOutputPort.findByUsername(username)
+                .ifPresent(customerDto -> {
+                    if (customerId == null || !customerId.equals(customerDto.id())) {
+                        throw new UsernameConflictRulesCustomException(username);
+                    }
                 });
     }
 

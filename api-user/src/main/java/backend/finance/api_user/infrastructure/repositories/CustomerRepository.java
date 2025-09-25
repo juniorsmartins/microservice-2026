@@ -9,4 +9,6 @@ import java.util.UUID;
 public interface CustomerRepository extends JpaRepository<CustomerJpa, UUID> {
 
     Optional<CustomerJpa> findByEmail(String email);
+
+    Optional<CustomerJpa> findByUserUsername(String username);
 }

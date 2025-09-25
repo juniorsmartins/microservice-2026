@@ -10,9 +10,13 @@ public interface CustomerOutputPort {
 
     CustomerDto save(CustomerRequest customerRequest);
 
-    Optional<CustomerDto> findByEmail(String email);
+    CustomerDto update(UUID customerId, CustomerRequest customerRequest);
+
+    void deleteById(UUID id);
 
     Optional<CustomerDto> findById(UUID id);
 
-    void deleteById(UUID id);
+    Optional<CustomerDto> findByEmail(String email);
+
+    Optional<CustomerDto> findByUsername(String username);
 }

@@ -142,8 +142,104 @@ class CustomerControllerIntegrationTest {
     }
 
     @Nested
-    @DisplayName("Update")
-    class Update {
+    @DisplayName("UpdateValid")
+    class UpdateValid {
+
+        @Test
+        void dadaRequisicaoValida_quandoChamarUpdate_entaoRetornarCustomerAtualizado() {
+            // Arrange
+            var idCustomer = customerResponse.id();
+            var userRequestUp = UserUtils.trainUserRequest("anne_frank_atual", "password123", RoleEnum.ROLE_ADMIN.getValue());
+            var customerRequestUp = CustomerUtils.trainCustomerRequest("Anne Atual Frank", "frank_atual@gmail.com", userRequestUp);
+            // Act
+            var responseEntity = customerController.update(idCustomer, customerRequestUp);
+            // Assert
+            assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+            var customerResponseUp = responseEntity.getBody();
+            assertEquals(userRequestUp.username(), customerResponseUp.user().username());
+            assertEquals(customerRequestUp.name(), customerResponseUp.name());
+            assertEquals(customerRequestUp.email(), customerResponseUp.email());
+        }
+
+        @Test
+        void dadaRequisicaoValidaSemAlterarEmailAndUsername_quandoChamarUpdate_entaoSalvarNoBanco() {
+            var emailEqual = "doe@gmail.com";
+            var usernameEqual = "johndoe";
+
+            var userRequestCreate = UserUtils.trainUserRequest( usernameEqual, "password123", RoleEnum.ROLE_CUSTOMER.getValue());
+            var customerRequestCreate = CustomerUtils.trainCustomerRequest("John Doe", emailEqual, userRequestCreate);
+            var responseCreate = customerController.create(customerRequestCreate).getBody();
+
+            var userRequestUpdate = UserUtils.trainUserRequest( usernameEqual, "atual123", RoleEnum.ROLE_ADMIN.getValue());
+            var customerRequestUpdate = CustomerUtils.trainCustomerRequest("John Atual Doe", emailEqual, userRequestUpdate);
+            var responseUpdate = customerController.update(responseCreate.id(), customerRequestUpdate).getBody();
+
+            var customerDb = customerRepository.findById(responseUpdate.id()).orElseThrow();
+
+            assertEquals(userRequestUpdate.role(), customerDb.getUser().getRole().getName().getValue());
+            assertEquals(usernameEqual, customerDb.getUser().getUsername());
+            assertEquals(customerRequestUpdate.name(), customerDb.getName());
+            assertEquals(emailEqual, customerDb.getEmail());
+        }
+
+        @Test
+        void dadaRequisicaoValida_quandoChamarUpdate_entaoSalvarCustomerAtualizadoNoBanco() {
+            // Arrange
+            var idCustomer = customerResponse.id();
+            var userRequestUp = UserUtils.trainUserRequest("anne_frank_atual", "password123", RoleEnum.ROLE_ADMIN.getValue());
+            var customerRequestUp = CustomerUtils.trainCustomerRequest("Anne Atual Frank", "frank_atual@gmail.com", userRequestUp);
+            // Act
+            customerController.update(idCustomer, customerRequestUp);
+            var customerUpdate = customerRepository.findById(idCustomer).orElseThrow();
+            // Assert
+            assertEquals(userRequestUp.role(), customerUpdate.getUser().getRole().getName().getValue());
+            assertEquals(userRequestUp.username(), customerUpdate.getUser().getUsername());
+            assertEquals(customerRequestUp.name(), customerUpdate.getName());
+            assertEquals(customerRequestUp.email(), customerUpdate.getEmail());
+        }
+    }
+
+    @Nested
+    @DisplayName("UpdateInvalid")
+    class UpdateInvalid {
+
+        @Test
+        void dadaRequisicaoInvalidaComIdInexistente_quandoChamarUpdate_entaoLancarException() {
+            // Arrange
+            var idCustomerInvalid = UUID.randomUUID();
+            var userRequestUp = UserUtils.trainUserRequest("robert_plant", "password123", RoleEnum.ROLE_ADMIN.getValue());
+            var customerRequestUp = CustomerUtils.trainCustomerRequest("Robert Plant", "plant@gmail.com", userRequestUp);
+            // Act & Assert
+            assertThrows(CustomerNotFoundCustomException.class, () -> customerController.update(idCustomerInvalid, customerRequestUp));
+        }
+
+        @Test
+        void dadaRequisicaoInvalidaComEmailDuplicado_quandoChamarUpdate_entaoLancarException() {
+            var emailDuplicate = "doe@gmail.com";
+            var userRequest = UserUtils.trainUserRequest("johndoe", "password123", RoleEnum.ROLE_CUSTOMER.getValue());
+            var request = CustomerUtils.trainCustomerRequest("John Doe", emailDuplicate, userRequest);
+            customerController.create(request);
+
+            var idCustomer = customerResponse.id();
+            var userRequestUp = UserUtils.trainUserRequest("anne_frank_atual", "password123", RoleEnum.ROLE_ADMIN.getValue());
+            var customerRequestUp = CustomerUtils.trainCustomerRequest("Anne Atual Frank", emailDuplicate, userRequestUp);
+
+            assertThrows(EmailConflictRulesCustomException.class, () -> customerController.update(idCustomer, customerRequestUp));
+        }
+
+        @Test
+        void dadaRequisicaoInvalidaComUsernameDuplicado_quandoChamarUpdate_entaoLancarException() {
+            var usernameDuplicate = "johndoe";
+            var userRequest = UserUtils.trainUserRequest(usernameDuplicate, "password123", RoleEnum.ROLE_CUSTOMER.getValue());
+            var request = CustomerUtils.trainCustomerRequest("John Doe", "doe@gmail.com", userRequest);
+            customerController.create(request);
+
+            var idCustomer = customerResponse.id();
+            var userRequestUp = UserUtils.trainUserRequest(usernameDuplicate, "password123", RoleEnum.ROLE_ADMIN.getValue());
+            var customerRequestUp = CustomerUtils.trainCustomerRequest("Anne Atual Frank", "frank_atual@gmail.com", userRequestUp);
+
+            assertThrows(UsernameConflictRulesCustomException.class, () -> customerController.update(idCustomer, customerRequestUp));
+        }
     }
 
     @Nested

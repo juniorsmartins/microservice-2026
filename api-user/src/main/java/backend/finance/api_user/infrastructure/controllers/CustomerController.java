@@ -5,7 +5,6 @@ import backend.finance.api_user.application.dtos.input.CustomerRequest;
 import backend.finance.api_user.application.dtos.output.CustomerResponse;
 import backend.finance.api_user.infrastructure.ports.input.CustomerInputPort;
 import backend.finance.api_user.infrastructure.ports.output.CustomerOutputPort;
-import backend.finance.api_user.infrastructure.ports.output.UserOutputPort;
 import backend.finance.api_user.infrastructure.presenters.CustomerPresenter;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -26,16 +25,25 @@ public class CustomerController {
 
     private final CustomerOutputPort customerOutputPort;
 
-    private final UserOutputPort userOutputPort;
-
     @PostMapping
     public ResponseEntity<CustomerResponse> create(@RequestBody @Valid CustomerRequest request) {
 
-        var dto = customerInputPort.create(request, customerOutputPort, userOutputPort);
+        var dto = customerInputPort.create(request, customerOutputPort);
         var response = CustomerPresenter.toCustomerResponse(dto);
 
         return ResponseEntity
                 .created(URI.create(URI_CUSTOMERS + "/" + response.id()))
+                .body(response);
+    }
+
+    @PutMapping(path = "/{id}")
+    public ResponseEntity<CustomerResponse> update(@PathVariable(name = "id") final UUID id, @RequestBody @Valid CustomerRequest request) {
+
+        var customerDto = customerInputPort.update(id, request, customerOutputPort);
+        var response = CustomerPresenter.toCustomerResponse(customerDto);
+
+        return ResponseEntity
+                .ok()
                 .body(response);
     }
 

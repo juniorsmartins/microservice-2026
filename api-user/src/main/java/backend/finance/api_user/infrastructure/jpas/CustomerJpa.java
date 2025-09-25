@@ -10,6 +10,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
+@Setter
 @EqualsAndHashCode(of = {"email"})
 @ToString
 public final class CustomerJpa {
