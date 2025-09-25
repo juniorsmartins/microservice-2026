@@ -35,7 +35,7 @@
 - Lombok;
 - Liquibase (migration);
 - Apache Kafka (mensageria);
-- MariaDB (banco de dados relacional);
+- PostgreSQL (banco de dados relacional);
 - H2 Database (banco de dados em memória para testes);
 
 ## API - Account
