@@ -8,46 +8,53 @@ import backend.finance.api_user.application.dtos.input.CustomerRequest;
 import backend.finance.api_user.application.dtos.internal.CustomerDto;
 import backend.finance.api_user.domain.enums.RoleEnum;
 import backend.finance.api_user.infrastructure.ports.input.CustomerInputPort;
-import backend.finance.api_user.infrastructure.ports.output.CustomerOutputPort;
+import backend.finance.api_user.infrastructure.ports.output.CustomerCommandOutputPort;
+import backend.finance.api_user.infrastructure.ports.output.CustomerQueryOutputPort;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 
 @Service
+@RequiredArgsConstructor
 public class CustomerUseCase implements CustomerInputPort {
 
-    @Override
-    public CustomerDto create(CustomerRequest customerRequest, CustomerOutputPort customerOutputPort) {
+    private final CustomerCommandOutputPort customerCommandOutputPort;
 
-        checkDuplicateEmail(null, customerRequest, customerOutputPort);
-        checkDuplicateUsername(null, customerRequest, customerOutputPort);
+    private final CustomerQueryOutputPort customerQueryOutputPort;
+
+    @Override
+    public CustomerDto create(CustomerRequest customerRequest) {
+
+        checkDuplicateEmail(null, customerRequest);
+        checkDuplicateUsername(null, customerRequest);
         checkRoleExists(customerRequest);
 
-        return customerOutputPort.save(customerRequest);
+        return customerCommandOutputPort.save(customerRequest);
     }
 
     @Override
-    public CustomerDto update(UUID customerId, CustomerRequest customerRequest, CustomerOutputPort customerOutputPort) {
+    public CustomerDto update(UUID customerId, CustomerRequest customerRequest) {
 
-        checkDuplicateEmail(customerId, customerRequest, customerOutputPort);
-        checkDuplicateUsername(customerId, customerRequest, customerOutputPort);
+        checkDuplicateEmail(customerId, customerRequest);
+        checkDuplicateUsername(customerId, customerRequest);
         checkRoleExists(customerRequest);
 
-        return customerOutputPort.update(customerId, customerRequest);
+        return customerCommandOutputPort.update(customerId, customerRequest);
     }
 
     @Override
-    public void deleteById(UUID id, CustomerOutputPort customerOutputPort) {
-        customerOutputPort.findById(id)
-                .ifPresentOrElse(customerDto -> customerOutputPort.deleteById(customerDto.id()),
+    public void deleteById(UUID id) {
+        customerQueryOutputPort.findById(id)
+                .ifPresentOrElse(customerDto -> customerCommandOutputPort.deleteById(customerDto.id()),
                         () -> {
                             throw new CustomerNotFoundCustomException(id);
                         });
     }
 
-    private void checkDuplicateEmail(UUID customerId, CustomerRequest dto, CustomerOutputPort customerOutputPort) {
+    private void checkDuplicateEmail(UUID customerId, CustomerRequest dto) {
         var email = dto.email();
-        customerOutputPort.findByEmail(dto.email())
+        customerQueryOutputPort.findByEmail(dto.email())
                 .ifPresent(customerDto -> {
                     if (customerId == null || !customerId.equals(customerDto.id())) {
                         throw new EmailConflictRulesCustomException(email);
@@ -55,9 +62,9 @@ public class CustomerUseCase implements CustomerInputPort {
                 });
     }
 
-    private void checkDuplicateUsername(UUID customerId, CustomerRequest dto, CustomerOutputPort customerOutputPort) {
+    private void checkDuplicateUsername(UUID customerId, CustomerRequest dto) {
         var username = dto.user().username();
-        customerOutputPort.findByUsername(username)
+        customerQueryOutputPort.findByUsername(username)
                 .ifPresent(customerDto -> {
                     if (customerId == null || !customerId.equals(customerDto.id())) {
                         throw new UsernameConflictRulesCustomException(username);
