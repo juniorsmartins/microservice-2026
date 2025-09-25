@@ -37,6 +37,7 @@
 - Apache Kafka (mensageria);
 - PostgreSQL (banco de dados relacional);
 - H2 Database (banco de dados em memória para testes);
+- Docker (dockerfile e docker compose);
 
 ## API - Account
 

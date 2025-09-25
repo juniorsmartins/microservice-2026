@@ -1,6 +1,8 @@
 volumes: # Define o volume para persistência dos dados do banco de dados.
-  db_hospital:
-    name: db_account
+  db_user:
+    name: db_user
+#  db_account:
+#    name: db_account
 
 networks: # Define a rede de comunicação entre os containers.
   communication:
@@ -29,16 +31,16 @@ services: # Define os serviços (containers) que serão executados.
     networks:
       - communication
 
-  api_account:
-    container_name: api_account
-    image: juniorsmartins/api_account:v0.0.1
+  api_user:
+    container_name: api_user
+    image: juniorsmartins/api_user:v0.0.1
     build:
-      context: ../api-account
+      context: ../api-user
       dockerfile: Dockerfile
       args:
-        APP_NAME: "api_account"
+        APP_NAME: "api_user"
         APP_VERSION: "v0.0.1"
-        APP_DESCRIPTION: "API de Contas para sistema financeiro."
+        APP_DESCRIPTION: "API de Usuários para segurança de sistema financeiro."
     ports:
       - "9050:9050"
     deploy:
@@ -47,21 +49,52 @@ services: # Define os serviços (containers) que serão executados.
           cpus: '1.0'
           memory: 512M
     environment:
-      - DB_HOST=database_account
-      - DB_NAME=account
+      - DB_HOST=database_user
+      - DB_NAME=db_user
       - DB_PORT=5432
       - SPRING_KAFKA_BOOTSTRAP_SERVERS=kafka:9092
     restart: on-failure
     networks:
       - communication
     depends_on:
-      database_account:
+      database_user:
         condition: service_started
       kafka:
         condition: service_started
 
-  database_account:
-    container_name: database_account
+#  api_account:
+#    container_name: api_account
+#    image: juniorsmartins/api_account:v0.0.1
+#    build:
+#      context: ../api-account
+#      dockerfile: Dockerfile
+#      args:
+#        APP_NAME: "api_account"
+#        APP_VERSION: "v0.0.1"
+#        APP_DESCRIPTION: "API de Contas para sistema financeiro."
+#    ports:
+#      - "9060:9060"
+#    deploy:
+#      resources:
+#        limits:
+#          cpus: '1.0'
+#          memory: 512M
+#    environment:
+#      - DB_HOST=database_account
+#      - DB_NAME=db_account
+#      - DB_PORT=5432
+#      - SPRING_KAFKA_BOOTSTRAP_SERVERS=kafka:9092
+#    restart: on-failure
+#    networks:
+#      - communication
+#    depends_on:
+#      database_account:
+#        condition: service_started
+#      kafka:
+#        condition: service_started
+
+  database_user:
+    container_name: database_user
     image: postgres:16.0
     ports:
       - "5501:5432"
@@ -72,10 +105,30 @@ services: # Define os serviços (containers) que serão executados.
           memory: 512M
     restart: on-failure
     environment:
-      - POSTGRES_DB=account
+      - POSTGRES_DB=db_user
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
     volumes:
-      - db_account:/var/lib/postgresql/data
+      - db_user:/var/lib/postgresql/data
     networks:
       - communication
+
+#  database_account:
+#    container_name: database_account
+#    image: postgres:16.0
+#    ports:
+#      - "5505:5432"
+#    deploy:
+#      resources:
+#        limits:
+#          cpus: '0.5'
+#          memory: 512M
+#    restart: on-failure
+#    environment:
+#      - POSTGRES_DB=account
+#      - POSTGRES_USER=postgres
+#      - POSTGRES_PASSWORD=postgres
+#    volumes:
+#      - db_account:/var/lib/postgresql/data
+#    networks:
+#      - communication
