@@ -1,5 +1,6 @@
 package backend.finance.api_user.application.configs.exception;
 
+import backend.finance.api_user.application.configs.exception.http400.BadRequestCustomException;
 import backend.finance.api_user.application.configs.exception.http404.ResourceNotFoundCustomException;
 import backend.finance.api_user.application.configs.exception.http409.ResourceConflictRulesCustomException;
 import lombok.RequiredArgsConstructor;
@@ -56,9 +57,26 @@ public final class GlobalHandler extends ResponseEntityExceptionHandler {
     }
 
     // ---------- TRATAMENTO DE EXCEÇÕES CUSTOMIZADAS ---------- //
-    // ---------- 404 Not Found ---------- //
+    // ---------- 400 Bad Request ---------- //
+    @ExceptionHandler(BadRequestCustomException.class)
+    public ResponseEntity<ProblemDetail> handleBadRequestCustom(BadRequestCustomException ex, WebRequest webRequest) {
+
+        // ProblemDetail RFC 7807
+        ProblemDetail problemDetail = ProblemDetail.forStatus(HttpStatus.BAD_REQUEST);
+        problemDetail.setType(URI.create("https://nomad.com/errors/bad-request"));
+
+        var message = messageSource
+                .getMessage(ex.getMessageKey(), new Object[]{ex.getValue()}, LocaleContextHolder.getLocale());
+
+        problemDetail.setTitle(message);
+
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(problemDetail);
+    }
+
     @ExceptionHandler(ResourceNotFoundCustomException.class)
-    public ResponseEntity<ProblemDetail> handleResourceNotFound(ResourceNotFoundCustomException ex, WebRequest webRequest) {
+    public ResponseEntity<ProblemDetail> handleResourceNotFound(ResourceNotFoundCustomException ex) {
 
         // ProblemDetail RFC 7807
         ProblemDetail problemDetail = ProblemDetail.forStatus(HttpStatus.NOT_FOUND);
@@ -76,7 +94,7 @@ public final class GlobalHandler extends ResponseEntityExceptionHandler {
 
     // ---------- 409 Conflict ---------- //
     @ExceptionHandler(ResourceConflictRulesCustomException.class)
-    public ResponseEntity<ProblemDetail> handleResourceNotFound(ResourceConflictRulesCustomException ex, WebRequest webRequest) {
+    public ResponseEntity<ProblemDetail> handleResourceNotFound(ResourceConflictRulesCustomException ex) {
 
         // ProblemDetail RFC 7807
         ProblemDetail problemDetail = ProblemDetail.forStatus(HttpStatus.CONFLICT);
