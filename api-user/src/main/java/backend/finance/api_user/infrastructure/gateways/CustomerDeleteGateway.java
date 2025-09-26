@@ -2,7 +2,6 @@ package backend.finance.api_user.infrastructure.gateways;
 
 import backend.finance.api_user.infrastructure.ports.output.CustomerDeleteOutputPort;
 import backend.finance.api_user.infrastructure.repositories.CustomerRepository;
-import backend.finance.api_user.infrastructure.repositories.RoleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,8 +13,6 @@ import java.util.UUID;
 public class CustomerDeleteGateway implements CustomerDeleteOutputPort {
 
     private final CustomerRepository customerRepository;
-
-    private final RoleRepository roleRepository;
 
     @Transactional
     @Override

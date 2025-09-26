@@ -9,6 +9,4 @@ public interface CustomerValidation {
     void checkDuplicateEmail(UUID customerId, CustomerRequest request);
 
     void checkDuplicateUsername(UUID customerId, CustomerRequest request);
-
-    void checkRoleExists(CustomerRequest request);
 }

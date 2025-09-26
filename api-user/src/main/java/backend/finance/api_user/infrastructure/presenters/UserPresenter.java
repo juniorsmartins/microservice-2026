@@ -1,8 +1,8 @@
 package backend.finance.api_user.infrastructure.presenters;
 
-import backend.finance.api_user.application.dtos.input.UserRequest;
 import backend.finance.api_user.application.dtos.internal.UserDto;
 import backend.finance.api_user.application.dtos.output.UserResponse;
+import backend.finance.api_user.domain.entities.Usuario;
 import backend.finance.api_user.infrastructure.jpas.RoleJpa;
 import backend.finance.api_user.infrastructure.jpas.UserJpa;
 
@@ -12,5 +12,5 @@ public interface UserPresenter {
 
     UserDto toUserDto(UserJpa jpa);
 
-    UserJpa toUserJpa(UserRequest request, RoleJpa role);
+    UserJpa toUserJpa(Usuario usuario, RoleJpa role);
 }

@@ -2,8 +2,8 @@ package backend.finance.api_user.infrastructure.gateways;
 
 import backend.finance.api_user.application.configs.exception.http404.CustomerNotFoundCustomException;
 import backend.finance.api_user.application.configs.exception.http404.RoleNotFoundCustomException;
-import backend.finance.api_user.application.dtos.input.CustomerRequest;
 import backend.finance.api_user.application.dtos.internal.CustomerDto;
+import backend.finance.api_user.domain.entities.Customer;
 import backend.finance.api_user.domain.enums.RoleEnum;
 import backend.finance.api_user.infrastructure.jpas.RoleJpa;
 import backend.finance.api_user.infrastructure.ports.output.CustomerUpdateOutputPort;
@@ -27,13 +27,13 @@ public class CustomerUpdateGateway implements CustomerUpdateOutputPort {
     private final CustomerPresenter customerPresenter;
 
     @Override
-    public CustomerDto update(UUID customerId, CustomerRequest customerRequest) {
-        var roleJpa = getOrCreateRole(customerRequest.user().role());
+    public CustomerDto update(UUID customerId, Customer customer) {
+        var roleJpa = getOrCreateRole(customer.getUser().getRole().getName().getValue());
 
         return customerRepository.findById(customerId)
                 .map(customerJpa -> {
-                    BeanUtils.copyProperties(customerRequest, customerJpa, "id");
-                    BeanUtils.copyProperties(customerRequest.user(), customerJpa.getUser(), "id", "password");
+                    BeanUtils.copyProperties(customer, customerJpa, "id");
+                    BeanUtils.copyProperties(customer.getUser(), customerJpa.getUser(), "id", "password");
                     customerJpa.getUser().setRole(roleJpa);
                     return customerJpa;
                 })

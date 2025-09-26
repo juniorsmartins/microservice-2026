@@ -1,8 +1,8 @@
 package backend.finance.api_user.infrastructure.presenters;
 
-import backend.finance.api_user.application.dtos.input.CustomerRequest;
 import backend.finance.api_user.application.dtos.internal.CustomerDto;
 import backend.finance.api_user.application.dtos.output.CustomerResponse;
+import backend.finance.api_user.domain.entities.Customer;
 import backend.finance.api_user.infrastructure.jpas.CustomerJpa;
 import backend.finance.api_user.infrastructure.jpas.RoleJpa;
 import lombok.RequiredArgsConstructor;
@@ -22,13 +22,13 @@ public final class CustomerPresenterImpl implements CustomerPresenter {
 
     @Override
     public CustomerDto toCustomerDto(CustomerJpa jpa) {
-        var useDto = userPresenter.toUserDto(jpa.getUser());
-        return new CustomerDto(jpa.getId(), jpa.getName(), jpa.getEmail(), useDto);
+        var userDto = userPresenter.toUserDto(jpa.getUser());
+        return new CustomerDto(jpa.getId(), jpa.getName(), jpa.getEmail(), userDto);
     }
 
     @Override
-    public CustomerJpa toCustomerJpa(CustomerRequest request, RoleJpa role) {
-        var userJpa = userPresenter.toUserJpa(request.user(), role);
-        return new CustomerJpa(null, request.name(), request.email(), userJpa);
+    public CustomerJpa toCustomerJpa(Customer customer, RoleJpa role) {
+        var userJpa = userPresenter.toUserJpa(customer.getUser(), role);
+        return new CustomerJpa(customer.getId(), customer.getName(), customer.getEmail(), userJpa);
     }
 }

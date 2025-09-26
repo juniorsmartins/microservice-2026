@@ -1,8 +1,8 @@
 package backend.finance.api_user.infrastructure.gateways;
 
 import backend.finance.api_user.application.configs.exception.http404.RoleNotFoundCustomException;
-import backend.finance.api_user.application.dtos.input.CustomerRequest;
 import backend.finance.api_user.application.dtos.internal.CustomerDto;
+import backend.finance.api_user.domain.entities.Customer;
 import backend.finance.api_user.domain.enums.RoleEnum;
 import backend.finance.api_user.infrastructure.jpas.RoleJpa;
 import backend.finance.api_user.infrastructure.ports.output.CustomerSaveOutputPort;
@@ -25,9 +25,9 @@ public class CustomerSaveGateway implements CustomerSaveOutputPort {
 
     @Transactional
     @Override
-    public CustomerDto save(CustomerRequest customerRequest) {
-        var roleJpa = getOrCreateRole(customerRequest.user().role());
-        var customerJpa = customerPresenter.toCustomerJpa(customerRequest, roleJpa);
+    public CustomerDto save(Customer customer) {
+        var roleJpa = getOrCreateRole(customer.getUser().getRole().getName().name());
+        var customerJpa = customerPresenter.toCustomerJpa(customer, roleJpa);
         var customerSave = customerRepository.save(customerJpa);
         return customerPresenter.toCustomerDto(customerSave);
     }

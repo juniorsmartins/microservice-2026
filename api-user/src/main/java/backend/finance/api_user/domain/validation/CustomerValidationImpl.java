@@ -38,14 +38,4 @@ public class CustomerValidationImpl implements CustomerValidation {
                     }
                 });
     }
-
-    @Override
-    public void checkRoleExists(CustomerRequest request) {
-        var roleName = request.user().role();
-        try {
-            RoleEnum.valueOf(roleName);
-        } catch (IllegalArgumentException e) {
-            throw new RoleNotFoundCustomException(roleName);
-        }
-    }
 }
