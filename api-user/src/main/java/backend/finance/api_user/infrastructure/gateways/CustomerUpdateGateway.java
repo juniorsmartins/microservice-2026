@@ -7,7 +7,6 @@ import backend.finance.api_user.infrastructure.ports.output.CustomerUpdateOutput
 import backend.finance.api_user.infrastructure.presenters.CustomerPresenter;
 import backend.finance.api_user.infrastructure.repositories.CustomerRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,9 +24,11 @@ public class CustomerUpdateGateway implements CustomerUpdateOutputPort {
 
         return customerRepository.findById(customer.getId())
                 .map(customerJpa -> {
-                    BeanUtils.copyProperties(customer, customerJpa, "id");
-                    BeanUtils.copyProperties(customer.getUser(), customerJpa.getUser(), "id", "password");
-                    BeanUtils.copyProperties(customer.getUser().getRole(), customerJpa.getUser().getRole());
+                    customerJpa.setName(customer.getName());
+                    customerJpa.setEmail(customer.getEmail());
+                    customerJpa.getUser().setUsername(customer.getUser().getUsername());
+                    customerJpa.getUser().getRole().setId(customer.getUser().getRole().getId());
+                    customerJpa.getUser().getRole().setName(customer.getUser().getRole().getName());
                     return customerJpa;
                 })
                 .map(customerPresenter::toCustomerDto)
