@@ -31,11 +31,13 @@ public class CustomerController {
 
     private final CustomerQueryOutputPort customerQueryOutputPort;
 
+    private final CustomerPresenter customerPresenter;
+
     @PostMapping
     public ResponseEntity<CustomerResponse> create(@RequestBody @Valid CustomerRequest request) {
 
         var dto = customerCreateInputPort.create(request);
-        var response = CustomerPresenter.toCustomerResponse(dto);
+        var response = customerPresenter.toCustomerResponse(dto);
 
         return ResponseEntity
                 .created(URI.create(URI_CUSTOMERS + "/" + response.id()))
@@ -46,7 +48,7 @@ public class CustomerController {
     public ResponseEntity<CustomerResponse> update(@PathVariable(name = "id") final UUID id, @RequestBody @Valid CustomerRequest request) {
 
         var customerDto = customerUpdateInputPort.update(id, request);
-        var response = CustomerPresenter.toCustomerResponse(customerDto);
+        var response = customerPresenter.toCustomerResponse(customerDto);
 
         return ResponseEntity
                 .ok()
@@ -65,7 +67,7 @@ public class CustomerController {
     public ResponseEntity<CustomerResponse> findById(@PathVariable(name = "id") final UUID id) {
 
         var response = customerQueryOutputPort.findById(id)
-                .map(CustomerPresenter::toCustomerResponse)
+                .map(customerPresenter::toCustomerResponse)
                 .orElseThrow(() -> new CustomerNotFoundCustomException(id));
 
         return ResponseEntity

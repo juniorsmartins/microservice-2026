@@ -21,13 +21,15 @@ public class CustomerSaveGateway implements CustomerSaveOutputPort {
 
     private final RoleRepository roleRepository;
 
+    private final CustomerPresenter customerPresenter;
+
     @Transactional
     @Override
     public CustomerDto save(CustomerRequest customerRequest) {
         var roleJpa = getOrCreateRole(customerRequest.user().role());
-        var customerJpa = CustomerPresenter.toCustomerJpa(customerRequest, roleJpa);
+        var customerJpa = customerPresenter.toCustomerJpa(customerRequest, roleJpa);
         var customerSave = customerRepository.save(customerJpa);
-        return CustomerPresenter.toCustomerDto(customerSave);
+        return customerPresenter.toCustomerDto(customerSave);
     }
 
     private RoleJpa getOrCreateRole(String name) {

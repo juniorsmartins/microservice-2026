@@ -24,6 +24,8 @@ public class CustomerUpdateGateway implements CustomerUpdateOutputPort {
 
     private final RoleRepository roleRepository;
 
+    private final CustomerPresenter customerPresenter;
+
     @Override
     public CustomerDto update(UUID customerId, CustomerRequest customerRequest) {
         var roleJpa = getOrCreateRole(customerRequest.user().role());
@@ -35,7 +37,7 @@ public class CustomerUpdateGateway implements CustomerUpdateOutputPort {
                     customerJpa.getUser().setRole(roleJpa);
                     return customerJpa;
                 })
-                .map(CustomerPresenter::toCustomerDto)
+                .map(customerPresenter::toCustomerDto)
                 .orElseThrow(() -> new CustomerNotFoundCustomException(customerId));
     }
 
