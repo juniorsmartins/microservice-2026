@@ -3,7 +3,9 @@ package backend.finance.api_user.infrastructure.controllers;
 import backend.finance.api_user.application.configs.exception.http404.CustomerNotFoundCustomException;
 import backend.finance.api_user.application.dtos.input.CustomerRequest;
 import backend.finance.api_user.application.dtos.output.CustomerResponse;
-import backend.finance.api_user.infrastructure.ports.input.CustomerInputPort;
+import backend.finance.api_user.infrastructure.ports.input.CustomerCreateInputPort;
+import backend.finance.api_user.infrastructure.ports.input.CustomerDeleteInputPort;
+import backend.finance.api_user.infrastructure.ports.input.CustomerUpdateInputPort;
 import backend.finance.api_user.infrastructure.ports.output.CustomerQueryOutputPort;
 import backend.finance.api_user.infrastructure.presenters.CustomerPresenter;
 import jakarta.validation.Valid;
@@ -21,14 +23,18 @@ public class CustomerController {
 
     protected static final String URI_CUSTOMERS = "/api/v1/customers";
 
-    private final CustomerInputPort customerInputPort;
+    private final CustomerCreateInputPort customerCreateInputPort;
+
+    private final CustomerUpdateInputPort customerUpdateInputPort;
+
+    private final CustomerDeleteInputPort customerDeleteInputPort;
 
     private final CustomerQueryOutputPort customerQueryOutputPort;
 
     @PostMapping
     public ResponseEntity<CustomerResponse> create(@RequestBody @Valid CustomerRequest request) {
 
-        var dto = customerInputPort.create(request);
+        var dto = customerCreateInputPort.create(request);
         var response = CustomerPresenter.toCustomerResponse(dto);
 
         return ResponseEntity
@@ -39,7 +45,7 @@ public class CustomerController {
     @PutMapping(path = "/{id}")
     public ResponseEntity<CustomerResponse> update(@PathVariable(name = "id") final UUID id, @RequestBody @Valid CustomerRequest request) {
 
-        var customerDto = customerInputPort.update(id, request);
+        var customerDto = customerUpdateInputPort.update(id, request);
         var response = CustomerPresenter.toCustomerResponse(customerDto);
 
         return ResponseEntity
@@ -49,7 +55,7 @@ public class CustomerController {
 
     @DeleteMapping(path = "/{id}")
     public ResponseEntity<Void> deleteById(@PathVariable(name = "id") final UUID id) {
-        customerInputPort.deleteById(id);
+        customerDeleteInputPort.deleteById(id);
         return ResponseEntity
                 .noContent()
                 .build();

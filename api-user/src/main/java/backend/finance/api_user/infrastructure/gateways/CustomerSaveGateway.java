@@ -1,25 +1,21 @@
 package backend.finance.api_user.infrastructure.gateways;
 
-import backend.finance.api_user.application.configs.exception.http404.CustomerNotFoundCustomException;
 import backend.finance.api_user.application.configs.exception.http404.RoleNotFoundCustomException;
 import backend.finance.api_user.application.dtos.input.CustomerRequest;
 import backend.finance.api_user.application.dtos.internal.CustomerDto;
 import backend.finance.api_user.domain.enums.RoleEnum;
 import backend.finance.api_user.infrastructure.jpas.RoleJpa;
-import backend.finance.api_user.infrastructure.ports.output.CustomerPersistenceOutputPort;
+import backend.finance.api_user.infrastructure.ports.output.CustomerSaveOutputPort;
 import backend.finance.api_user.infrastructure.presenters.CustomerPresenter;
 import backend.finance.api_user.infrastructure.repositories.CustomerRepository;
 import backend.finance.api_user.infrastructure.repositories.RoleRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.UUID;
-
 @Repository
 @RequiredArgsConstructor
-public class CustomerPersistenceGateway implements CustomerPersistenceOutputPort {
+public class CustomerSaveGateway implements CustomerSaveOutputPort {
 
     private final CustomerRepository customerRepository;
 
@@ -32,27 +28,6 @@ public class CustomerPersistenceGateway implements CustomerPersistenceOutputPort
         var customerJpa = CustomerPresenter.toCustomerJpa(customerRequest, roleJpa);
         var customerSave = customerRepository.save(customerJpa);
         return CustomerPresenter.toCustomerDto(customerSave);
-    }
-
-    @Override
-    public CustomerDto update(UUID customerId, CustomerRequest customerRequest) {
-        var roleJpa = getOrCreateRole(customerRequest.user().role());
-
-        return customerRepository.findById(customerId)
-                .map(customerJpa -> {
-                    BeanUtils.copyProperties(customerRequest, customerJpa, "id");
-                    BeanUtils.copyProperties(customerRequest.user(), customerJpa.getUser(), "id", "password");
-                    customerJpa.getUser().setRole(roleJpa);
-                    return customerJpa;
-                })
-                .map(CustomerPresenter::toCustomerDto)
-                .orElseThrow(() -> new CustomerNotFoundCustomException(customerId));
-    }
-
-    @Transactional
-    @Override
-    public void deleteById(UUID id) {
-        customerRepository.deleteById(id);
     }
 
     private RoleJpa getOrCreateRole(String name) {

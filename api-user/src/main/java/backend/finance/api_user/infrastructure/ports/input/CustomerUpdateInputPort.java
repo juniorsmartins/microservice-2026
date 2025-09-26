@@ -5,11 +5,7 @@ import backend.finance.api_user.application.dtos.internal.CustomerDto;
 
 import java.util.UUID;
 
-public interface CustomerInputPort {
-
-    CustomerDto create(CustomerRequest customerRequest);
+public interface CustomerUpdateInputPort {
 
     CustomerDto update(UUID customerId, CustomerRequest customerRequest);
-
-    void deleteById(UUID id);
 }
