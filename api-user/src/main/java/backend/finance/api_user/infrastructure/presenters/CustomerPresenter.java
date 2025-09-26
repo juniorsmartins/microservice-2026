@@ -12,5 +12,5 @@ public interface CustomerPresenter {
 
     CustomerDto toCustomerDto(CustomerJpa jpa);
 
-    CustomerJpa toCustomerJpa(Customer customer, RoleJpa role);
+    CustomerJpa toCustomerJpa(Customer customer);
 }

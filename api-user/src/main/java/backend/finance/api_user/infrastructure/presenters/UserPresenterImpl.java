@@ -5,10 +5,14 @@ import backend.finance.api_user.application.dtos.output.UserResponse;
 import backend.finance.api_user.domain.entities.Usuario;
 import backend.finance.api_user.infrastructure.jpas.RoleJpa;
 import backend.finance.api_user.infrastructure.jpas.UserJpa;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
+@RequiredArgsConstructor
 public final class UserPresenterImpl implements UserPresenter {
+
+    private final RolePresenter rolePresenter;
 
     @Override
     public UserResponse toUserResponse(UserDto dto) {
@@ -21,7 +25,8 @@ public final class UserPresenterImpl implements UserPresenter {
     }
 
     @Override
-    public UserJpa toUserJpa(Usuario usuario, RoleJpa role) {
-        return new UserJpa(usuario.getId(), usuario.getUsername(), usuario.getPassword(), role);
+    public UserJpa toUserJpa(Usuario usuario) {
+        var roleJpa = rolePresenter.toRoleJpa(usuario.getRole());
+        return new UserJpa(usuario.getId(), usuario.getUsername(), usuario.getPassword(), roleJpa);
     }
 }

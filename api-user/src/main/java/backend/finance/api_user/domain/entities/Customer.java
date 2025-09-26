@@ -1,6 +1,7 @@
 package backend.finance.api_user.domain.entities;
 
 import backend.finance.api_user.application.dtos.input.CustomerRequest;
+import backend.finance.api_user.application.dtos.internal.RoleDto;
 import lombok.Getter;
 
 import java.util.UUID;
@@ -23,8 +24,8 @@ public final class Customer {
         this.user = user;
     }
 
-    public static Customer create(UUID id, CustomerRequest request) {
-        var usuario = Usuario.create(request.user());
+    public static Customer create(UUID id, CustomerRequest request, RoleDto roleDto) {
+        var usuario = Usuario.create(request.user(), roleDto);
         return new Customer(id, request.name(), request.email(), usuario);
     }
 }

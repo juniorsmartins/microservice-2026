@@ -12,5 +12,5 @@ public interface UserPresenter {
 
     UserDto toUserDto(UserJpa jpa);
 
-    UserJpa toUserJpa(Usuario usuario, RoleJpa role);
+    UserJpa toUserJpa(Usuario usuario);
 }

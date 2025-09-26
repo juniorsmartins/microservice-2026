@@ -4,7 +4,6 @@ import backend.finance.api_user.application.dtos.internal.CustomerDto;
 import backend.finance.api_user.application.dtos.output.CustomerResponse;
 import backend.finance.api_user.domain.entities.Customer;
 import backend.finance.api_user.infrastructure.jpas.CustomerJpa;
-import backend.finance.api_user.infrastructure.jpas.RoleJpa;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -27,8 +26,8 @@ public final class CustomerPresenterImpl implements CustomerPresenter {
     }
 
     @Override
-    public CustomerJpa toCustomerJpa(Customer customer, RoleJpa role) {
-        var userJpa = userPresenter.toUserJpa(customer.getUser(), role);
+    public CustomerJpa toCustomerJpa(Customer customer) {
+        var userJpa = userPresenter.toUserJpa(customer.getUser());
         return new CustomerJpa(customer.getId(), customer.getName(), customer.getEmail(), userJpa);
     }
 }

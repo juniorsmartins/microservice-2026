@@ -2,7 +2,6 @@ package backend.finance.api_user.infrastructure.repositories;
 
 import backend.finance.api_user.domain.enums.RoleEnum;
 import backend.finance.api_user.infrastructure.jpas.RoleJpa;
-import org.hibernate.dialect.lock.OptimisticEntityLockException;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
