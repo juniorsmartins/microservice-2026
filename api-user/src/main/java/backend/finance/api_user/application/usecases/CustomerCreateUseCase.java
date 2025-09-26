@@ -23,7 +23,7 @@ public class CustomerCreateUseCase implements CustomerCreateInputPort {
         customerValidation.checkDuplicateEmail(null, request);
         customerValidation.checkDuplicateUsername(null, request);
 
-        var customerDomain = Customer.create(request);
+        var customerDomain = Customer.create(null, request);
 
         return customerSaveOutputPort.save(customerDomain);
     }

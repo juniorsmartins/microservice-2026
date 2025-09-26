@@ -25,8 +25,8 @@ public class CustomerUpdateUseCase implements CustomerUpdateInputPort {
         customerValidation.checkDuplicateEmail(customerId, request);
         customerValidation.checkDuplicateUsername(customerId, request);
 
-        var customerDomain = Customer.create(request);
+        var customerDomain = Customer.create(customerId, request);
 
-        return customerUpdateOutputPort.update(customerId, customerDomain);
+        return customerUpdateOutputPort.update(customerDomain);
     }
 }

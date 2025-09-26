@@ -23,8 +23,8 @@ public final class Customer {
         this.user = user;
     }
 
-    public static Customer create(CustomerRequest request) {
+    public static Customer create(UUID id, CustomerRequest request) {
         var usuario = Usuario.create(request.user());
-        return new Customer(null, request.name(), request.email(), usuario);
+        return new Customer(id, request.name(), request.email(), usuario);
     }
 }

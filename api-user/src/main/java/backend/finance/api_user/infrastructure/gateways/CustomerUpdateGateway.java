@@ -14,8 +14,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Repository;
 
-import java.util.UUID;
-
 @Repository
 @RequiredArgsConstructor
 public class CustomerUpdateGateway implements CustomerUpdateOutputPort {
@@ -27,10 +25,10 @@ public class CustomerUpdateGateway implements CustomerUpdateOutputPort {
     private final CustomerPresenter customerPresenter;
 
     @Override
-    public CustomerDto update(UUID customerId, Customer customer) {
+    public CustomerDto update(Customer customer) {
         var roleJpa = getOrCreateRole(customer.getUser().getRole().getName().getValue());
 
-        return customerRepository.findById(customerId)
+        return customerRepository.findById(customer.getId())
                 .map(customerJpa -> {
                     BeanUtils.copyProperties(customer, customerJpa, "id");
                     BeanUtils.copyProperties(customer.getUser(), customerJpa.getUser(), "id", "password");
@@ -38,7 +36,7 @@ public class CustomerUpdateGateway implements CustomerUpdateOutputPort {
                     return customerJpa;
                 })
                 .map(customerPresenter::toCustomerDto)
-                .orElseThrow(() -> new CustomerNotFoundCustomException(customerId));
+                .orElseThrow(() -> new CustomerNotFoundCustomException(customer.getId()));
     }
 
     private RoleJpa getOrCreateRole(String name) {
