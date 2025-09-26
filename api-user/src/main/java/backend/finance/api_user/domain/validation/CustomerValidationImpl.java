@@ -1,10 +1,8 @@
 package backend.finance.api_user.domain.validation;
 
-import backend.finance.api_user.application.configs.exception.http404.RoleNotFoundCustomException;
 import backend.finance.api_user.application.configs.exception.http409.EmailConflictRulesCustomException;
 import backend.finance.api_user.application.configs.exception.http409.UsernameConflictRulesCustomException;
 import backend.finance.api_user.application.dtos.input.CustomerRequest;
-import backend.finance.api_user.domain.enums.RoleEnum;
 import backend.finance.api_user.infrastructure.ports.output.CustomerQueryOutputPort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
