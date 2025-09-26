@@ -6,17 +6,11 @@ import backend.finance.api_user.application.dtos.output.UserResponse;
 import backend.finance.api_user.infrastructure.jpas.RoleJpa;
 import backend.finance.api_user.infrastructure.jpas.UserJpa;
 
-public final class UserPresenter {
+public interface UserPresenter {
 
-    public static UserResponse toUserResponse(UserDto dto) {
-        return new UserResponse(dto.id(), dto.username());
-    }
+    UserResponse toUserResponse(UserDto dto);
 
-    public static UserDto toUserDto(UserJpa jpa) {
-        return new UserDto(jpa.getId(), jpa.getUsername());
-    }
+    UserDto toUserDto(UserJpa jpa);
 
-    public static UserJpa toUserJpa(UserRequest request, RoleJpa role) {
-        return new UserJpa(null, request.username(), request.password(), role);
-    }
+    UserJpa toUserJpa(UserRequest request, RoleJpa role);
 }
