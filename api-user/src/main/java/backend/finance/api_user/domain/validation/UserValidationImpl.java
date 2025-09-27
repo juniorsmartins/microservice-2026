@@ -1,7 +1,6 @@
 package backend.finance.api_user.domain.validation;
 
-import backend.finance.api_user.application.configs.exception.http409.EmailConflictRulesCustomException;
-import backend.finance.api_user.application.dtos.input.CustomerRequest;
+import backend.finance.api_user.application.configs.exception.http409.UsernameConflictRulesCustomException;
 import backend.finance.api_user.infrastructure.ports.output.CustomerQueryOutputPort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -10,17 +9,16 @@ import java.util.UUID;
 
 @Component
 @RequiredArgsConstructor
-public class CustomerValidationImpl implements CustomerValidation {
+public class UserValidationImpl implements UserValidation {
 
     private final CustomerQueryOutputPort customerQueryOutputPort;
 
     @Override
-    public void checkDuplicateEmail(UUID customerId, CustomerRequest request) {
-        var email = request.email();
-        customerQueryOutputPort.findByEmail(request.email())
+    public void checkDuplicateUsername(UUID customerId, String username) {
+        customerQueryOutputPort.findByUsername(username)
                 .ifPresent(customerDto -> {
                     if (customerId == null || !customerId.equals(customerDto.id())) {
-                        throw new EmailConflictRulesCustomException(email);
+                        throw new UsernameConflictRulesCustomException(username);
                     }
                 });
     }

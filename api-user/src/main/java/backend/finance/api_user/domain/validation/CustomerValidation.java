@@ -7,6 +7,4 @@ import java.util.UUID;
 public interface CustomerValidation {
 
     void checkDuplicateEmail(UUID customerId, CustomerRequest request);
-
-    void checkDuplicateUsername(UUID customerId, CustomerRequest request);
 }

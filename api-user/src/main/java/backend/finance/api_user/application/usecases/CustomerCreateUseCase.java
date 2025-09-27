@@ -4,6 +4,7 @@ import backend.finance.api_user.application.dtos.input.CustomerRequest;
 import backend.finance.api_user.application.dtos.internal.CustomerDto;
 import backend.finance.api_user.domain.entities.Customer;
 import backend.finance.api_user.domain.validation.CustomerValidation;
+import backend.finance.api_user.domain.validation.UserValidation;
 import backend.finance.api_user.infrastructure.ports.input.CustomerCreateInputPort;
 import backend.finance.api_user.domain.validation.RoleValidation;
 import backend.finance.api_user.infrastructure.ports.output.CustomerSaveOutputPort;
@@ -18,13 +19,15 @@ public class CustomerCreateUseCase implements CustomerCreateInputPort {
 
     private final CustomerValidation customerValidation;
 
+    private final UserValidation userValidation;
+
     private final RoleValidation roleValidation;
 
     @Override
     public CustomerDto create(CustomerRequest request) {
 
         customerValidation.checkDuplicateEmail(null, request);
-        customerValidation.checkDuplicateUsername(null, request);
+        userValidation.checkDuplicateUsername(null, request.user().username());
         var roleDto = roleValidation.getOrCreateRole(request.user().role());
 
         var customerDomain = Customer.create(null, request, roleDto);
