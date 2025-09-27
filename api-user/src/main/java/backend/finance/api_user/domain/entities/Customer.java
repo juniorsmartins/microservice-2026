@@ -1,5 +1,6 @@
 package backend.finance.api_user.domain.entities;
 
+import backend.finance.api_user.application.configs.exception.http400.AllNullFieldsCustomException;
 import backend.finance.api_user.application.configs.exception.http400.EmailInvalidFormatCustomException;
 import backend.finance.api_user.application.dtos.input.CustomerRequest;
 import backend.finance.api_user.application.dtos.internal.RoleDto;
@@ -25,7 +26,7 @@ public final class Customer {
 
     private Customer(UUID id, String name, String email, Usuario user) {
         this.id = id;
-        this.name = name;
+        this.name = checkNotBlank("name", name);
         this.email = validateEmail(email);
         this.user = user;
     }
@@ -44,5 +45,12 @@ public final class Customer {
 
     private boolean ehValido(String email) {
         return EMAIL_PATTERN.matcher(email).matches();
+    }
+
+    private String checkNotBlank(String fieldName, String value) {
+        if (value == null || value.isBlank()) {
+            throw new AllNullFieldsCustomException(fieldName);
+        }
+        return value;
     }
 }

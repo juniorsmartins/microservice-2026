@@ -5,7 +5,8 @@ import lombok.Getter;
 import java.io.Serial;
 
 @Getter
-public abstract sealed class BadRequestCustomException extends RuntimeException permits EmailInvalidFormatCustomException {
+public abstract sealed class BadRequestCustomException extends RuntimeException permits EmailInvalidFormatCustomException,
+        AllNullFieldsCustomException {
 
     @Serial
     private static final long serialVersionUID = 1L;
