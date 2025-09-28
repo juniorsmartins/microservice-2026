@@ -7,7 +7,9 @@ import lombok.*;
 import java.util.UUID;
 
 @Entity
-@Table(name = "roles")
+@Table(name = "roles",
+        indexes = {@Index(name = "idx_roles_name", columnList = "name")}
+)
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter

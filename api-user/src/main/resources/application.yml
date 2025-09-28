@@ -20,10 +20,10 @@ spring:
 
   jpa: # Configura o JPA/Hibernate.
     hibernate:
-      ddl-auto: create-drop # Define a estrategia de criacao do schema do banco de dados. Pode ser 'none', 'validate', 'update', 'create', 'create-drop'.
+      ddl-auto: none # Define a estrategia de criacao do schema do banco de dados. Pode ser 'none', 'validate', 'update', 'create', 'create-drop'.
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl # Define a estrategia de nomeacao fisica (padrao). Usar CamelCase no Java e snake_case no banco.
-    defer-datasource-initialization: true # Adia a execução do import.sql até que o schema JPA esteja inicializado
+    defer-datasource-initialization: true # Adia a execuï¿½ï¿½o do import.sql atï¿½ que o schema JPA esteja inicializado
     properties:
       hibernate: # Configuracoes avancadas do Hibernate.
         format_sql: true # Formata o SQL gerado para melhor legibilidade.
@@ -39,6 +39,11 @@ spring:
     open-in-view: false #  Define se o Hibernate deve manter a sessao aberta durante a renderizacao da view. O false e recomendado para evitar problemas de performance e lazy loading.
     show-sql: true # Habilita a exibicao do SQL gerado no console.
 
+  liquibase:
+    enabled: true
+    change-log: classpath:db/changelog/db.changelog-master.yaml
+    default-schema: public
+
   security: # Configuracao do Sprint Security
     form-login:
       page: /login # Define a URL personalizada (caso precise ser usada em outra parte do sistema)
@@ -53,7 +58,7 @@ spring:
 #      evento-atualizar-status-consulta: evento-atualizar-status-consulta
 #    consumer:
 #      group-id: grupo-mensagem-kafka
-#      auto-offset-reset: earliest # Ou latest, dependendo do caso de uso - earliest lê desde o início do tópico
+#      auto-offset-reset: earliest # Ou latest, dependendo do caso de uso - earliest lï¿½ desde o inï¿½cio do tï¿½pico
 #      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
 #      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
 #      properties:

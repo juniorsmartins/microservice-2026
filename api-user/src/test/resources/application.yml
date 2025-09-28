@@ -10,7 +10,7 @@ spring:
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: none
     defer-datasource-initialization: true
     show-sql: true
 
@@ -24,6 +24,11 @@ spring:
     console:
       enabled: true
       path: /h2-console
+
+  liquibase:
+    enabled: true
+    change-log: classpath:db/changelog/db.changelog-master.yaml
+    default-schema: public
 
 #  kafka:
 #    bootstrap-servers: ${spring.embedded.kafka.brokers}  # Usa broker embutido

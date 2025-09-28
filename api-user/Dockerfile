@@ -1,6 +1,6 @@
 # Variáveis de tempo de construção (com valor default - opcional)
-ARG IMAGE_BUILD="eclipse-temurin:21.0.3_9-jdk-alpine"
-ARG IMAGE_RUN="eclipse-temurin:21.0.3_9-jre-alpine"
+ARG IMAGE_BUILD="amazoncorretto:25-alpine3.22-jdk"
+ARG IMAGE_RUN="amazoncorretto:25-alpine-full"
 
 # 1 - Estágio de construção/build
 FROM ${IMAGE_BUILD} AS builder
@@ -9,7 +9,7 @@ FROM ${IMAGE_BUILD} AS builder
 COPY . .
 
 ## Constrói o projeto com o Gradle
-RUN ./gradlew clean build -x test --no-daemon
+RUN ./gradlew clean build -x test --no-daemon --stacktrace
 
 
 # 2 - Estágio de execução
