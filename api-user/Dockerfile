@@ -19,10 +19,9 @@ FROM ${IMAGE_RUN} AS runner
 ARG APP_NAME="microsserviços"
 ARG APP_VERSION="v0.0.1"
 ARG APP_DESCRIPTION="Microsserviços em Java (25Lts) e Spring Boot (3.5.6)."
-
-ARG DEVELOPER="juniorsmartins"
-ARG MAINTAINER="juniorsmartins"
-ARG CONTATO="juniorsoaresmartins@gmail.com"
+ARG DEVELOPER="juniormartins"
+ARG MAINTAINER="juniormartins"
+ARG CONTATO="dev.juniorsmartins@gmail.com"
 
 # Metadados
 LABEL aplication=${APP_NAME} \
