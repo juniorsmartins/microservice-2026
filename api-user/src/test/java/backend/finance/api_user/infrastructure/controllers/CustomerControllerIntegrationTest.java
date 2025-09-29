@@ -72,7 +72,7 @@ class CustomerControllerIntegrationTest {
         @Test
         void dadaRequisicaoValidaComRoleCustomer_quandoChamarCreate_entaoDeveSalvarCustomerNoBanco() {
             // Arrange
-            var userRequest = UserUtils.trainUserRequest( "robertcm", "password123", RoleEnum.ROLE_CUSTOMER.getValue());
+            var userRequest = UserUtils.trainUserRequest("robertcm", "password123", RoleEnum.ROLE_CUSTOMER.getValue());
             var request = CustomerUtils.trainCustomerRequest("Robert C. Martin", "robert@gmail.com", userRequest);
             // Act
             var response = customerController.create(request);
@@ -87,7 +87,7 @@ class CustomerControllerIntegrationTest {
         @Test
         void dadaRequisicaoValidaComRoleAdmin_quandoChamarCreate_entaoDeveSalvarCustomerNoBanco() {
             // Arrange
-            var userRequest = UserUtils.trainUserRequest( "robertcm", "password123", RoleEnum.ROLE_ADMIN.getValue());
+            var userRequest = UserUtils.trainUserRequest("robertcm", "password123", RoleEnum.ROLE_ADMIN.getValue());
             var request = CustomerUtils.trainCustomerRequest("Robert C. Martin", "robert@gmail.com", userRequest);
             // Act
             var response = customerController.create(request);
@@ -166,11 +166,11 @@ class CustomerControllerIntegrationTest {
             var emailEqual = "doe@gmail.com";
             var usernameEqual = "johndoe";
 
-            var userRequestCreate = UserUtils.trainUserRequest( usernameEqual, "password123", RoleEnum.ROLE_CUSTOMER.getValue());
+            var userRequestCreate = UserUtils.trainUserRequest(usernameEqual, "password123", RoleEnum.ROLE_CUSTOMER.getValue());
             var customerRequestCreate = CustomerUtils.trainCustomerRequest("John Doe", emailEqual, userRequestCreate);
             var responseCreate = customerController.create(customerRequestCreate).getBody();
 
-            var userRequestUpdate = UserUtils.trainUserRequest( usernameEqual, "atual123", RoleEnum.ROLE_ADMIN.getValue());
+            var userRequestUpdate = UserUtils.trainUserRequest(usernameEqual, "atual123", RoleEnum.ROLE_ADMIN.getValue());
             var customerRequestUpdate = CustomerUtils.trainCustomerRequest("John Atual Doe", emailEqual, userRequestUpdate);
             var responseUpdate = customerController.update(responseCreate.id(), customerRequestUpdate).getBody();
 

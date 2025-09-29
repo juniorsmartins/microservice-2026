@@ -10,8 +10,8 @@ spring:
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
-      ddl-auto: none
-    defer-datasource-initialization: false
+      ddl-auto: create-drop
+    defer-datasource-initialization: true
     show-sql: true
 
   sql: # Habilita ou desabilita acionamento de script SQL
@@ -26,7 +26,7 @@ spring:
       path: /h2-console
 
   liquibase:
-    enabled: true
+    enabled: false
     change-log: classpath:liquibase/changelog/master.yaml
     default-schema: public
 
