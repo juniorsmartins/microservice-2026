@@ -2,7 +2,7 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.5.6'
 	id 'io.spring.dependency-management' version '1.1.7'
-    id 'org.liquibase.gradle' version '3.0.2'
+//    id 'org.liquibase.gradle' version '3.0.2'
 }
 
 group = 'backend.finance'
@@ -47,3 +47,12 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+//liquibase {
+//    activities {
+//        main {
+//            classpath configurations.liquibaseRuntime
+//            changeLogFile 'src/main/resources/db/changelog/master.yaml'
+//        }
+//    }
+//}

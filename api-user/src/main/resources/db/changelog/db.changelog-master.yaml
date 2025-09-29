@@ -1,9 +1,0 @@
-databaseChangeLog:
-  - include:
-    file: 20251028120810_create_table_roles.sql
-#    relativeToChangelogFile: true
-  - include:
-    file: 20251028120922_create_table_users.sql
-  - include:
-    file: 20251028121015_create_table_customers.sql
-

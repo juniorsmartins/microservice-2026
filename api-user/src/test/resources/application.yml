@@ -11,7 +11,7 @@ spring:
     database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
       ddl-auto: none
-    defer-datasource-initialization: true
+    defer-datasource-initialization: false
     show-sql: true
 
   sql: # Habilita ou desabilita acionamento de script SQL
@@ -27,7 +27,7 @@ spring:
 
   liquibase:
     enabled: true
-    change-log: classpath:db/changelog/db.changelog-master.yaml
+    change-log: classpath:liquibase/changelog/master.yaml
     default-schema: public
 
 #  kafka:
