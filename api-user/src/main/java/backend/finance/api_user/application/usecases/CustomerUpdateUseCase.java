@@ -35,7 +35,7 @@ public class CustomerUpdateUseCase implements CustomerUpdateInputPort {
 
         var roleDto = roleValidation.getOrCreateRole(request.user().role());
         var permissao = Permissao.create(roleDto.id(), roleDto.name());
-        var usuario = Usuario.create(request.user(), permissao);
+        var usuario = Usuario.create(request.user().username(), request.user().password(), permissao);
         var customer = Customer.create(customerId, request.name(), request.email(), usuario);
 
         return customerUpdateOutputPort.update(customer);

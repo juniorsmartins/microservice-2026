@@ -1,10 +1,13 @@
 package backend.finance.api_user.domain.entities;
 
 import backend.finance.api_user.application.configs.exception.http400.AllNullFieldsCustomException;
-import backend.finance.api_user.application.dtos.input.UserRequest;
+import backend.finance.api_user.application.configs.exception.http400.AttributeExceededMaximumLimitException;
 import lombok.Getter;
 
 import java.util.UUID;
+
+import static backend.finance.api_user.domain.constant.ConstantsValidation.PASSWORD_SIZE_MAX;
+import static backend.finance.api_user.domain.constant.ConstantsValidation.USERNAME_SIZE_MAX;
 
 @Getter
 public final class Usuario {
@@ -19,19 +22,36 @@ public final class Usuario {
 
     private Usuario(UUID id, String username, String password, Permissao role) {
         this.id = id;
-        this.username = checkNotBlank("username", username);
-        this.password = checkNotBlank("password", password);
+        this.username = checkValidUsername(username);
+        this.password = checkValidPassword(password);
         this.role = role;
     }
 
-    public static Usuario create(UserRequest request, Permissao permissao) {
-        return new Usuario(null, request.username(), request.password(), permissao);
+    public static Usuario create(String username, String password, Permissao permissao) {
+        return new Usuario(null, username, password, permissao);
     }
 
-    private String checkNotBlank(String fieldName, String value) {
+    private String checkValidUsername(String username) {
+        checkNotBlank("username", username);
+        checkSizeMax("username", USERNAME_SIZE_MAX, username);
+        return username;
+    }
+
+    private String checkValidPassword(String password) {
+        checkNotBlank("password", password);
+        checkSizeMax("password", PASSWORD_SIZE_MAX, password);
+        return password;
+    }
+
+    private void checkNotBlank(String fieldName, String value) {
         if (value == null || value.isBlank()) {
             throw new AllNullFieldsCustomException(fieldName);
         }
-        return value;
+    }
+
+    private void checkSizeMax(String fieldName, int sizeMax, String value) {
+        if (value.length() > sizeMax) {
+            throw new AttributeExceededMaximumLimitException(fieldName, String.valueOf(sizeMax));
+        }
     }
 }

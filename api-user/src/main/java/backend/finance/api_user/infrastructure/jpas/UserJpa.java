@@ -5,6 +5,9 @@ import lombok.*;
 
 import java.util.UUID;
 
+import static backend.finance.api_user.domain.constant.ConstantsValidation.PASSWORD_SIZE_MAX;
+import static backend.finance.api_user.domain.constant.ConstantsValidation.USERNAME_SIZE_MAX;
+
 @Entity
 @Table(name = "users")
 @AllArgsConstructor
@@ -19,10 +22,10 @@ public final class UserJpa {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(name = "username", nullable = false, unique = true)
+    @Column(name = "username", nullable = false, length = USERNAME_SIZE_MAX, unique = true)
     private String username;
 
-    @Column(name = "password", nullable = false)
+    @Column(name = "password", nullable = false, length = PASSWORD_SIZE_MAX)
     private String password;
 
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
