@@ -7,8 +7,9 @@
 ## Índice
 
 1.  [API - User](#api---user)
-    * [Tecnologias](#tecnologias-user)
-    * [Diagramas](#diagramas-user)
+    * [Tecnologias](#tecnologias-user);
+    * [Tutoriais]();
+    * [Diagramas](#diagramas-user);
 2.  [API - Account](#api---account)
     * [Entidades](#entidades-account)
     * [Endpoints](#endpoints-account)
@@ -33,11 +34,15 @@
 - Spring Security;
 - Bean Validation;
 - Lombok;
-- Liquibase (migration) - ![tutorial Liquibase](docs/tutoriais/liquibase.md);
+- Liquibase (migration);
 - Apache Kafka (mensageria);
 - PostgreSQL (banco de dados relacional);
 - H2 Database (banco de dados em memória para testes);
 - Docker (dockerfile e docker compose);
+
+### Tutoriais User
+
+[Liquibase](docs/tutoriais/liquibase.md);
 
 ### Diagramas User
 
