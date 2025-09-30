@@ -178,6 +178,7 @@ class CustomerControllerIntegrationTest {
 
             assertEquals(userRequestUpdate.role(), customerDb.getUser().getRole().getName().getValue());
             assertEquals(usernameEqual, customerDb.getUser().getUsername());
+            assertEquals(userRequestUpdate.password(), customerDb.getUser().getPassword());
             assertEquals(customerRequestUpdate.name(), customerDb.getName());
             assertEquals(emailEqual, customerDb.getEmail());
         }

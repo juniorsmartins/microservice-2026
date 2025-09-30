@@ -34,6 +34,7 @@ public class CustomerUpdateGateway implements CustomerUpdateOutputPort {
                     customerJpa.setName(customer.getName());
                     customerJpa.setEmail(customer.getEmail());
                     customerJpa.getUser().setUsername(customer.getUser().getUsername());
+                    customerJpa.getUser().setPassword(customer.getUser().getPassword());
                     customerJpa.getUser().setRole(roleJpa);
                     return customerJpa;
                 })
