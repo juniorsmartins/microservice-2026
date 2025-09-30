@@ -78,6 +78,7 @@ CREATE TABLE IF NOT EXISTS roles (
 COMMENT ON TABLE roles IS 'Tabela para mapear permissões/papéis de usuários.';  
 COMMENT ON COLUMN roles.id IS 'Identificador único gerado automaticamente como UUID.';
 COMMENT ON COLUMN roles.name IS 'Nome da permissão (enum como string), não nulo e único.';  
+
 CREATE INDEX idx_roles_name ON roles (name);
 ```
 
