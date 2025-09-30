@@ -8,7 +8,6 @@
 
 1.  [API - User](#api---user)
     * [Tecnologias](#tecnologias-user);
-    * [Tutoriais]();
     * [Diagramas](#diagramas-user);
 2.  [API - Account](#api---account)
     * [Entidades](#entidades-account)
@@ -22,6 +21,7 @@
 5.  [API - Report](#api---report)
     * [Entidades](#entidades-report)
     * [Endpoints](#endpoints-report)
+6.  [Tutoriais](#tutoriais)
 
 ## API - User
 
@@ -40,10 +40,6 @@
 - H2 Database (banco de dados em memória para testes);
 - Docker (dockerfile e docker compose);
 
-### Tutoriais User
-
-[Liquibase](docs/tutoriais/liquibase.md);
-
 ### Diagramas User
 
 DER
@@ -56,5 +52,9 @@ DER
 ## API - Notifications
 
 ## API - Report
+
+## Tutoriais
+
+[Liquibase](docs/tutoriais/liquibase.md);
 
 
