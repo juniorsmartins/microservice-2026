@@ -1,13 +1,15 @@
 package backend.finance.api_user.domain.entities;
 
 import backend.finance.api_user.application.configs.exception.http400.AllNullFieldsCustomException;
+import backend.finance.api_user.application.configs.exception.http400.AttributeExceededMaximumLimitException;
 import backend.finance.api_user.application.configs.exception.http400.EmailInvalidFormatCustomException;
-import backend.finance.api_user.application.dtos.input.CustomerRequest;
-import backend.finance.api_user.application.dtos.internal.RoleDto;
 import lombok.Getter;
 
 import java.util.UUID;
 import java.util.regex.Pattern;
+
+import static backend.finance.api_user.domain.constant.ConstantsValidation.EMAIL_SIZE_MAX;
+import static backend.finance.api_user.domain.constant.ConstantsValidation.NAME_SIZE_MAX;
 
 @Getter
 public final class Customer {
@@ -24,33 +26,49 @@ public final class Customer {
 
     private final Usuario user;
 
-    private Customer(UUID id, String name, String email, Usuario user) {
+    private Customer(UUID id, String name, String email, Usuario usuario) {
         this.id = id;
-        this.name = checkNotBlank("name", name);
-        this.email = validateEmail(email);
-        this.user = user;
+        this.name = validName(name);
+        this.email = validEmail(email);
+        this.user = usuario;
     }
 
-    public static Customer create(UUID id, CustomerRequest request, RoleDto roleDto) {
-        var usuario = Usuario.create(request.user(), roleDto);
-        return new Customer(id, request.name(), request.email(), usuario);
+    public static Customer create(UUID id, String name, String email, Usuario usuario) {
+        return new Customer(id, name, email, usuario);
     }
 
-    private String validateEmail(String email) {
-        if (email == null || !ehValido(email)) {
+    private String validName(String name) {
+        checkNotBlank("name", name);
+        checkSizeMax("name", NAME_SIZE_MAX, name);
+        return name;
+    }
+
+    private String validEmail(String email) {
+        checkNotBlank("email", email);
+        checkSizeMax("email", EMAIL_SIZE_MAX, email);
+        checkFormatEmail(email);
+        return email;
+    }
+
+    private void checkSizeMax(String fieldName, int sizeMax, String value) {
+        if (value.length() > sizeMax) {
+            throw new AttributeExceededMaximumLimitException(fieldName, String.valueOf(sizeMax));
+        }
+    }
+
+    private void checkNotBlank(String fieldName, String value) {
+        if (value == null || value.isBlank()) {
+            throw new AllNullFieldsCustomException(fieldName);
+        }
+    }
+
+    private void checkFormatEmail(String email) {
+        if (!ehValido(email)) {
             throw new EmailInvalidFormatCustomException(email);
         }
-        return email;
     }
 
     private boolean ehValido(String email) {
         return EMAIL_PATTERN.matcher(email).matches();
-    }
-
-    private String checkNotBlank(String fieldName, String value) {
-        if (value == null || value.isBlank()) {
-            throw new AllNullFieldsCustomException(fieldName);
-        }
-        return value;
     }
 }

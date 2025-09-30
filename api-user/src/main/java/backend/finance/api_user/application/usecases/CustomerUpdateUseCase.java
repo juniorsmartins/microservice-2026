@@ -3,6 +3,8 @@ package backend.finance.api_user.application.usecases;
 import backend.finance.api_user.application.dtos.input.CustomerRequest;
 import backend.finance.api_user.application.dtos.internal.CustomerDto;
 import backend.finance.api_user.domain.entities.Customer;
+import backend.finance.api_user.domain.entities.Permissao;
+import backend.finance.api_user.domain.entities.Usuario;
 import backend.finance.api_user.domain.validation.CustomerValidation;
 import backend.finance.api_user.domain.validation.UserValidation;
 import backend.finance.api_user.infrastructure.ports.input.CustomerUpdateInputPort;
@@ -30,10 +32,12 @@ public class CustomerUpdateUseCase implements CustomerUpdateInputPort {
 
         customerValidation.checkDuplicateEmail(customerId, request);
         userValidation.checkDuplicateUsername(customerId, request.user().username());
+
         var roleDto = roleValidation.getOrCreateRole(request.user().role());
+        var permissao = Permissao.create(roleDto.id(), roleDto.name());
+        var usuario = Usuario.create(request.user(), permissao);
+        var customer = Customer.create(customerId, request.name(), request.email(), usuario);
 
-        var customerDomain = Customer.create(customerId, request, roleDto);
-
-        return customerUpdateOutputPort.update(customerDomain);
+        return customerUpdateOutputPort.update(customer);
     }
 }

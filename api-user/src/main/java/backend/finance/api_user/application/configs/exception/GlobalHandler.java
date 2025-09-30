@@ -66,7 +66,7 @@ public final class GlobalHandler extends ResponseEntityExceptionHandler {
         problemDetail.setType(URI.create("https://nomad.com/errors/bad-request"));
 
         var message = messageSource
-                .getMessage(ex.getMessageKey(), new Object[]{ex.getValue()}, LocaleContextHolder.getLocale());
+                .getMessage(ex.getMessageKey(), new Object[]{ex.getValue0(), ex.getValue1()}, LocaleContextHolder.getLocale());
 
         problemDetail.setTitle(message);
 

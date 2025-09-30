@@ -2,7 +2,6 @@ package backend.finance.api_user.domain.entities;
 
 import backend.finance.api_user.application.configs.exception.http400.AllNullFieldsCustomException;
 import backend.finance.api_user.application.dtos.input.UserRequest;
-import backend.finance.api_user.application.dtos.internal.RoleDto;
 import lombok.Getter;
 
 import java.util.UUID;
@@ -25,8 +24,7 @@ public final class Usuario {
         this.role = role;
     }
 
-    public static Usuario create(UserRequest request, RoleDto roleDto) {
-        var permissao = Permissao.create(roleDto.id(), roleDto.name());
+    public static Usuario create(UserRequest request, Permissao permissao) {
         return new Usuario(null, request.username(), request.password(), permissao);
     }
 
