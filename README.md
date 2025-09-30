@@ -33,7 +33,7 @@
 - Spring Security;
 - Bean Validation;
 - Lombok;
-- Liquibase (migration);
+- Liquibase (migration) - ![tutorial Liquibase](docs/liquibase.md);
 - Apache Kafka (mensageria);
 - PostgreSQL (banco de dados relacional);
 - H2 Database (banco de dados em memória para testes);
