@@ -102,12 +102,13 @@ services: # Define os serviços (containers) que serão executados.
       resources:
         limits:
           cpus: '0.5'
-          memory: 512M
+          memory: 256M
     restart: always
     environment:
-      - POSTGRES_DB=db_user
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
+      POSTGRES_DB: db_user
+#      POSTGRES_MULTIPLE_DATABASES: db_user, db_outro1, db_outro2
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
     volumes:
       - db_user:/var/lib/postgresql/data
     networks:

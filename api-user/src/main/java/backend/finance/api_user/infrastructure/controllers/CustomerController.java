@@ -57,6 +57,7 @@ public class CustomerController {
 
     @DeleteMapping(path = "/{id}")
     public ResponseEntity<Void> deleteById(@PathVariable(name = "id") final UUID id) {
+
         customerDeleteInputPort.deleteById(id);
         return ResponseEntity
                 .noContent()
@@ -66,12 +67,9 @@ public class CustomerController {
     @GetMapping(path = "/{id}")
     public ResponseEntity<CustomerResponse> findById(@PathVariable(name = "id") final UUID id) {
 
-        var response = customerQueryOutputPort.findById(id)
+        return customerQueryOutputPort.findById(id)
                 .map(customerPresenter::toCustomerResponse)
+                .map(dto -> ResponseEntity.ok().body(dto))
                 .orElseThrow(() -> new CustomerNotFoundCustomException(id));
-
-        return ResponseEntity
-                .ok()
-                .body(response);
     }
 }

@@ -9,7 +9,9 @@ import static backend.finance.api_user.domain.constant.ConstantsValidation.PASSW
 import static backend.finance.api_user.domain.constant.ConstantsValidation.USERNAME_SIZE_MAX;
 
 @Entity
-@Table(name = "users")
+@Table(name = "users",
+        indexes = {@Index(name = "idx_users_username", columnList = "username")}
+)
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter

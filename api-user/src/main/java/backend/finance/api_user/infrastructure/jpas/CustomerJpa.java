@@ -9,7 +9,9 @@ import static backend.finance.api_user.domain.constant.ConstantsValidation.EMAIL
 import static backend.finance.api_user.domain.constant.ConstantsValidation.NAME_SIZE_MAX;
 
 @Entity
-@Table(name = "customers")
+@Table(name = "customers",
+        indexes = {@Index(name = "idx_customers_email", columnList = "email")}
+)
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
