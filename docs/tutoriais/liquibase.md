@@ -60,7 +60,7 @@ databaseChangeLog:
 O formato recomendado para o nome do arquivo (data e hora + ação): 
 YYYYMMDDHHMMSS_descricao_legivel_da_mudanca.sql
 
-4. Script/changesets
+5. Script/changesets
 
 Exemplo em SQL
 ```
