@@ -16,11 +16,11 @@ public final class KafkaConsumer {
     public void consumirEventoConsulta(CustomerResponse customerResponse, Acknowledgment ack) {
 
         try {
-            log.info("\n\n TechChallengeHospital - Mensagem recebida no tópico de eventos de consulta: {}. \n\n", customerResponse);
+            log.info("\n\n KafkaConsumer - Mensagem recebida no tópico de eventos de consulta: {}. \n\n", customerResponse);
             ack.acknowledge(); // Confirmar o processamento da mensagem
 
         } catch (Exception e) {
-            log.error("\n\n TechChallengeHospital - Erro ao processar a mensagem: {}.\n\n", e.getMessage());
+            log.error("\n\n KafkaConsumer - Erro ao processar a mensagem: {}.\n\n", e.getMessage());
         }
     }
 }

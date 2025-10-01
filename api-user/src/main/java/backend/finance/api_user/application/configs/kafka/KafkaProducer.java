@@ -19,6 +19,6 @@ public final class KafkaProducer {
 
     public void enviarEvento(CustomerResponse customerResponse) {
         kafkaTemplate.send(kafkaPropertiesConfig.topicoEventoCreateCustomer, UUID.randomUUID().toString(), customerResponse);
-        log.info("\n\n Mensagem enviada ao tópico de eventos de consulta: {}. \n\n", customerResponse);
+        log.info("\n\n KafkaProducer - Mensagem enviada ao tópico de eventos de consulta: {}. \n\n", customerResponse);
     }
 }
