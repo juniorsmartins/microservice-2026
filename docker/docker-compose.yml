@@ -11,50 +11,30 @@ networks: # Define a rede de comunicação entre os containers.
 
 services: # Define os serviços (containers) que serão executados.
 
-#  kafka:
-#    image: landoop/fast-data-dev:latest
-#    container_name: kafka
-#    hostname: kafka
-#    ports:
-#      - 2181:2181              # ZooKeeper
-#      - 3030:3030              # Landoop UI
-#      - 8081-8081              # Schema Registry
-#      - 8082-8082              # Kafka Rest Proxy
-#      - 8083-8083              # Kafka Connect
-#      - 9092:9092              # Kafka Broker
-#      - 9581-9585:9581-9585    # JMX Ports
-#    environment:
+  kafka:
+    image: landoop/fast-data-dev:latest
+    container_name: kafka
+    hostname: kafka
+    ports:
+      - 2181:2181              # ZooKeeper
+      - 3030:3030              # Landoop UI
+      - 8081-8081              # Schema Registry
+      - 8082-8082              # Kafka Rest Proxy
+      - 8083-8083              # Kafka Connect
+      - 9092:9092              # Kafka Broker
+      - 9581-9585:9581-9585    # JMX Ports
+    environment:
 #      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
 #      KAFKA_DELETE_TOPIC_ENABLE: "true"
 #      ADV_HOST: 127.0.0.1      # Define o endereço de host para 127.0.0.1 (localhost) - precisará ajustar isso para o IP do host ou o nome do serviço na rede Docker
-#      RUNTESTS: 0              # Desativa testes iniciais para iniciar mais rápido
-#      SAMPLEDATA: 0            # Desativa dados de exemplo
-#      FORWARDLOGS: 0           # Desativa forwarding de logs
-#      DEBUG: 0                 # Desabilita modo debug
-#      CONNECT_HEAP: 512m       # Aloca heap para o Kafka Connect
-#      DISABLE: azure-documentdb,blockchain,bloomberg,cassandra,coap,druid,elastic,elastic5,ftp,hazelcast,hbase,influxdb,jms,kudu,mongodb,mqtt,redis,rethink,voltdb,yahoo,hdfs,jdbc,elasticsearch,s3,twitter
-#    volumes:  # opcional se quiser persistir dados
-#      - kafka-data:/data
-#    networks:
-#      - communication
-
-  kafka:
-    image: bitnami/kafka:latest
-    container_name: kafka
-    ports:
-      - "9092:9092"
-    environment:
-      # Ativa o modo KRaft (sem Zookeeper)
-      - KAFKA_ENABLE_KRAFT=yes # Habilita o modo KRaft (sem Zookeeper)
-      - KAFKA_CFG_PROCESS_ROLES=broker,controller # Define os papéis do nó - broker e controller - necessário para KRaft
-      - KAFKA_CFG_NODE_ID=1 # ID único do nó no cluster
-      - KAFKA_CFG_CONTROLLER_QUORUM_VOTERS=1@kafka:9093 # Define o votante do controller - necessário para KRaft
-      - KAFKA_CFG_LISTENERS=PLAINTEXT://:9092,CONTROLLER://:9093 # Define os listeners para broker e controller
-      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://kafka:9092 # Endereço que os clientes usarão para se conectar ao broker
-      - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT # Mapeia os protocolos de segurança dos listeners
-      - KAFKA_CFG_CONTROLLER_LISTENER_NAMES=CONTROLLER # Define o listener do controller
-      - ALLOW_PLAINTEXT_LISTENER=yes # Permite listener sem criptografia
-    restart: unless-stopped
+      RUNTESTS: 0              # Desativa testes iniciais para iniciar mais rápido
+      SAMPLEDATA: 0            # Desativa dados de exemplo
+      FORWARDLOGS: 0           # Desativa forwarding de logs
+      DEBUG: 0                 # Desabilita modo debug
+      CONNECT_HEAP: 512m       # Aloca heap para o Kafka Connect
+      DISABLE: azure-documentdb,blockchain,bloomberg,cassandra,coap,druid,elastic,elastic5,ftp,hazelcast,hbase,influxdb,jms,kudu,mongodb,mqtt,redis,rethink,voltdb,yahoo,hdfs,jdbc,elasticsearch,s3,twitter
+    volumes:  # opcional se quiser persistir dados
+      - kafka-data:/data
     networks:
       - communication
 
