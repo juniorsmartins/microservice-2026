@@ -47,12 +47,3 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
-
-//liquibase {
-//    activities {
-//        main {
-//            classpath configurations.liquibaseRuntime
-//            changeLogFile 'src/main/resources/db/changelog/master.yaml'
-//        }
-//    }
-//}

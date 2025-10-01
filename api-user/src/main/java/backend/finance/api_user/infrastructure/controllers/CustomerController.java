@@ -1,6 +1,7 @@
 package backend.finance.api_user.infrastructure.controllers;
 
 import backend.finance.api_user.application.configs.exception.http404.CustomerNotFoundCustomException;
+import backend.finance.api_user.application.configs.kafka.KafkaProducer;
 import backend.finance.api_user.application.dtos.input.CustomerRequest;
 import backend.finance.api_user.application.dtos.output.CustomerResponse;
 import backend.finance.api_user.infrastructure.ports.input.CustomerCreateInputPort;
@@ -33,11 +34,14 @@ public class CustomerController {
 
     private final CustomerPresenter customerPresenter;
 
+    private final KafkaProducer kafkaProducer;
+
     @PostMapping
     public ResponseEntity<CustomerResponse> create(@RequestBody @Valid CustomerRequest request) {
 
         var dto = customerCreateInputPort.create(request);
         var response = customerPresenter.toCustomerResponse(dto);
+        kafkaProducer.enviarEvento(response);
 
         return ResponseEntity
                 .created(URI.create(URI_CUSTOMERS + "/" + response.id()))

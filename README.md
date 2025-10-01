@@ -22,6 +22,8 @@
     * [Entidades](#entidades-report)
     * [Endpoints](#endpoints-report)
 6.  [Tutoriais](#tutoriais)
+7.  [Como rodar a aplicação](#como-rodar-a-aplicacao) 
+8.  [Coleções de teste para Postman](#colecoes-de-teste-para-postman)
 
 ## API - User
 
@@ -57,5 +59,5 @@ DER
 ## Tutoriais
 
 [Liquibase](docs/tutoriais/liquibase.md);
-
+[Kafka](docs/tutoriais/kafka.md);
 

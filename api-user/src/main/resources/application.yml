@@ -51,23 +51,40 @@ spring:
   messages: # Configuracao de mensagem para login personalizado
     basename: messages
 
-#  kafka:
+#  Kafka:
 #    bootstrap-servers: kafka:9092
+#    properties:
+#      schema:
+#        registry:
+#          url: kafka-cluster:8081
+#      specific:
+#        avro:
+#          reader: true
 #    topic:
-#      evento-informar-paciente-consulta: evento-informar-paciente-consulta
-#      evento-atualizar-status-consulta: evento-atualizar-status-consulta
-#    consumer:
-#      group-id: grupo-mensagem-kafka
-#      auto-offset-reset: earliest # Ou latest, dependendo do caso de uso - earliest l� desde o in�cio do t�pico
-#      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-#      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
-#      properties:
-#        spring.json.trusted.packages: "*" # Asterisco para confiar em todos os pacotes para desserializacao
-#        spring.json.add.type.headers: false # Opcional: Evita headers de tipo para simplicidade
+#      event-create-customer: event-create-customer
 #    producer:
 #      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-#      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer  # Para JSON
+#      value-serializer: io.confluent.kafka.serializers.KafkaAvroSerializer
 #      properties:
 #        spring.json.trusted.packages: "*" # Asterisco para confiar em todos os pacotes para desserializacao
 #        spring.json.add.type.headers: false # Opcional: Evita headers de tipo para simplicidade
+
+  kafka:
+    bootstrap-servers: kafka:9092
+    topic:
+      evento-create-customer: evento-create-customer
+    consumer:
+      group-id: grupo-mensagem-kafka
+      auto-offset-reset: earliest # Ou latest, dependendo do caso de uso - earliest lê desde o início do tópico
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: "*" # Asterisco para confiar em todos os pacotes para desserializacao
+        spring.json.add.type.headers: false # Opcional: Evita headers de tipo para simplicidade
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer  # Para JSON
+      properties:
+        spring.json.trusted.packages: "*" # Asterisco para confiar em todos os pacotes para desserializacao
+        spring.json.add.type.headers: false # Opcional: Evita headers de tipo para simplicidade
 

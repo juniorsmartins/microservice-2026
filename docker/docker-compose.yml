@@ -1,8 +1,8 @@
 volumes: # Define o volume para persistência dos dados do banco de dados.
   db_user:
     name: db_user
-#  db_account:
-#    name: db_account
+  kafka-data:
+    name: kafka-data
 
 networks: # Define a rede de comunicação entre os containers.
   communication:
@@ -10,6 +10,33 @@ networks: # Define a rede de comunicação entre os containers.
     driver: bridge # Usar driver bridge para comunicação local e acesso à internet. Permite isolamento e controle de rede.
 
 services: # Define os serviços (containers) que serão executados.
+
+#  kafka:
+#    image: landoop/fast-data-dev:latest
+#    container_name: kafka
+#    hostname: kafka
+#    ports:
+#      - 2181:2181              # ZooKeeper
+#      - 3030:3030              # Landoop UI
+#      - 8081-8081              # Schema Registry
+#      - 8082-8082              # Kafka Rest Proxy
+#      - 8083-8083              # Kafka Connect
+#      - 9092:9092              # Kafka Broker
+#      - 9581-9585:9581-9585    # JMX Ports
+#    environment:
+#      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
+#      KAFKA_DELETE_TOPIC_ENABLE: "true"
+#      ADV_HOST: 127.0.0.1      # Define o endereço de host para 127.0.0.1 (localhost) - precisará ajustar isso para o IP do host ou o nome do serviço na rede Docker
+#      RUNTESTS: 0              # Desativa testes iniciais para iniciar mais rápido
+#      SAMPLEDATA: 0            # Desativa dados de exemplo
+#      FORWARDLOGS: 0           # Desativa forwarding de logs
+#      DEBUG: 0                 # Desabilita modo debug
+#      CONNECT_HEAP: 512m       # Aloca heap para o Kafka Connect
+#      DISABLE: azure-documentdb,blockchain,bloomberg,cassandra,coap,druid,elastic,elastic5,ftp,hazelcast,hbase,influxdb,jms,kudu,mongodb,mqtt,redis,rethink,voltdb,yahoo,hdfs,jdbc,elasticsearch,s3,twitter
+#    volumes:  # opcional se quiser persistir dados
+#      - kafka-data:/data
+#    networks:
+#      - communication
 
   kafka:
     image: bitnami/kafka:latest

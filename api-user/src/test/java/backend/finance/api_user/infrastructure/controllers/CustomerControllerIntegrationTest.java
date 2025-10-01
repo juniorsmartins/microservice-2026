@@ -9,12 +9,14 @@ import backend.finance.api_user.application.dtos.output.CustomerResponse;
 import backend.finance.api_user.domain.enums.RoleEnum;
 import backend.finance.api_user.infrastructure.repositories.CustomerRepository;
 import backend.finance.api_user.infrastructure.repositories.UserRepository;
+import backend.finance.api_user.utils.BaseIntegrationTest;
 import backend.finance.api_user.utils.CustomerUtils;
 import backend.finance.api_user.utils.UserUtils;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
+import org.springframework.kafka.test.EmbeddedKafkaBroker;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
@@ -23,7 +25,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
-class CustomerControllerIntegrationTest {
+class CustomerControllerIntegrationTest extends BaseIntegrationTest {
+
+    @Autowired
+    private EmbeddedKafkaBroker embeddedKafka; // Necessário para inicializar o contexto Kafka
 
     @Autowired
     private CustomerController customerController;
