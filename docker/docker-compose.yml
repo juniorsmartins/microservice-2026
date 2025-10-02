@@ -12,7 +12,7 @@ networks: # Define a rede de comunicação entre os containers.
 services: # Define os serviços (containers) que serão executados.
 
   kafka:
-    image: landoop/fast-data-dev:latest
+    image: lensesio/fast-data-dev:3.9
     container_name: kafka
     hostname: kafka
     ports:
@@ -23,16 +23,22 @@ services: # Define os serviços (containers) que serão executados.
       - 8083-8083              # Kafka Connect
       - 9092:9092              # Kafka Broker
       - 9581-9585:9581-9585    # JMX Ports
+      - 19092-19092            # For internal Docker access
     environment:
+#      KAFKA_LISTENERS: PLAINTEXT://:9092,DOCKERCOMPOSE://:19092,CONTROLLER://:16062 # Define os endereços e portas onde o Kafka escuta conexões: PLAINTEXT://:9092: O Kafka escuta na porta 9092 para conexões sem criptografia (plaintext). DOCKERCOMPOSE://:19092: Um listener interno para comunicação dentro da rede do Docker Compose, usando a porta 19092. CONTROLLER://:16062: Usado para comunicação interna no modo KRaft, onde os nós do Kafka (controladores) se comunicam para gerenciar metadados.
+#      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092,DOCKERCOMPOSE://demo-kafka:19092 # Define os endereços que o Kafka anuncia para os clientes se conectarem: PLAINTEXT://localhost:9092: Clientes fora do Docker (por exemplo, no host local) podem se conectar ao Kafka via localhost:9092. DOCKERCOMPOSE://demo-kafka:19092: Clientes dentro da rede Docker Compose podem se conectar ao serviço demo-kafka na porta 19092.
+#      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: > # Mapeia os listeners aos protocolos de segurança suportados: DOCKERCOMPOSE:PLAINTEXT, CONTROLLER:PLAINTEXT, PLAINTEXT:PLAINTEXT: Esses listeners usam comunicação sem criptografia. SSL:SSL, SASL_PLAINTEXT:SASL_PLAINTEXT, SASL_SSL:SASL_SSL: Suporta conexões seguras com SSL ou SASL, embora não estejam configuradas ativamente aqui.
+#        DOCKERCOMPOSE:PLAINTEXT,CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT,
+#        SSL:SSL,SASL_PLAINTEXT:SASL_PLAINTEXT,SASL_SSL:SASL_SSL
 #      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
 #      KAFKA_DELETE_TOPIC_ENABLE: "true"
-#      ADV_HOST: 127.0.0.1      # Define o endereço de host para 127.0.0.1 (localhost) - precisará ajustar isso para o IP do host ou o nome do serviço na rede Docker
+      ADV_HOST: kafka          # Define o endereço de host (127.0.0.1 - localhost) - precisará ajustar isso para o IP do host ou o nome do serviço na rede Docker. Define o hostname anunciado pelo Kafka para conexões externas.
       RUNTESTS: 0              # Desativa testes iniciais para iniciar mais rápido
       SAMPLEDATA: 0            # Desativa dados de exemplo
       FORWARDLOGS: 0           # Desativa forwarding de logs
       DEBUG: 0                 # Desabilita modo debug
       CONNECT_HEAP: 512m       # Aloca heap para o Kafka Connect
-      DISABLE: azure-documentdb,blockchain,bloomberg,cassandra,coap,druid,elastic,elastic5,ftp,hazelcast,hbase,influxdb,jms,kudu,mongodb,mqtt,redis,rethink,voltdb,yahoo,hdfs,jdbc,elasticsearch,s3,twitter
+      DISABLE: azure-documentdb,blockchain,bloomberg,cassandra,coap,druid,elastic,elastic5,ftp,hazelcast,hbase,influxdb,jms,kudu,mongodb,mqtt,redis,rethink,voltdb,yahoo,hdfs,jdbc,elasticsearch,s3,twitter,debezium-mongodb,debezium-mysql,debezium-postgres,debezium-sqlserver,debezium-jdbc
     volumes:  # opcional se quiser persistir dados
       - kafka-data:/data
     networks:

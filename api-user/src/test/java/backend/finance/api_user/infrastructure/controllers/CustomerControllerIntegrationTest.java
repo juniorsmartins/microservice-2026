@@ -16,7 +16,6 @@ import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
-import org.springframework.kafka.test.EmbeddedKafkaBroker;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
@@ -26,9 +25,6 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @Transactional
 class CustomerControllerIntegrationTest extends BaseIntegrationTest {
-
-    @Autowired
-    private EmbeddedKafkaBroker embeddedKafka; // Necessário para inicializar o contexto Kafka
 
     @Autowired
     private CustomerController customerController;

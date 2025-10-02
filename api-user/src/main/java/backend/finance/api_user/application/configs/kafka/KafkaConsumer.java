@@ -1,6 +1,6 @@
 package backend.finance.api_user.application.configs.kafka;
 
-import backend.finance.api_user.application.dtos.output.CustomerResponse;
+import backend.finance.api.user.CustomerKafka;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -13,10 +13,10 @@ import org.springframework.stereotype.Component;
 public final class KafkaConsumer {
 
     @KafkaListener(topics = "${spring.kafka.topic.evento-create-customer}", groupId = "grupo-mensagem-kafka", containerFactory = "kafkaListenerContainerFactory")
-    public void consumirEventoConsulta(CustomerResponse customerResponse, Acknowledgment ack) {
+    public void consumirEventoConsulta(CustomerKafka customerKafka, Acknowledgment ack) {
 
         try {
-            log.info("\n\n KafkaConsumer - Mensagem recebida no tópico de eventos de consulta: {}. \n\n", customerResponse);
+            log.info("\n\n KafkaConsumer - Mensagem recebida no tópico de eventos: {}. \n\n", customerKafka);
             ack.acknowledge(); // Confirmar o processamento da mensagem
 
         } catch (Exception e) {

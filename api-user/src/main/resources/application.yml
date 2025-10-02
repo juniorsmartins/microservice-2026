@@ -73,18 +73,18 @@ spring:
     bootstrap-servers: kafka:9092
     topic:
       evento-create-customer: evento-create-customer
+    properties:
+      schema.registry.url: http://kafka:8081
+      specific.avro.reader: true
+      enable.idempotence: true
+      auto.register.schemas: true
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: io.confluent.kafka.serializers.KafkaAvroSerializer
     consumer:
       group-id: grupo-mensagem-kafka
       auto-offset-reset: earliest # Ou latest, dependendo do caso de uso - earliest lê desde o início do tópico
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
-      properties:
-        spring.json.trusted.packages: "*" # Asterisco para confiar em todos os pacotes para desserializacao
-        spring.json.add.type.headers: false # Opcional: Evita headers de tipo para simplicidade
-    producer:
-      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer  # Para JSON
-      properties:
-        spring.json.trusted.packages: "*" # Asterisco para confiar em todos os pacotes para desserializacao
-        spring.json.add.type.headers: false # Opcional: Evita headers de tipo para simplicidade
+      value-deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
+
 

@@ -32,17 +32,21 @@ spring:
     bootstrap-servers: ${spring.embedded.kafka.brokers}  # Usa broker embutido
     topic:
       evento-create-customer: evento-create-customer
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: io.confluent.kafka.serializers.KafkaAvroSerializer
+      properties:
+        schema.registry.url: http://localhost:8081
+        auto.register.schemas: true
+        spring.json.trusted.packages: "*" # Asterisco para confiar em todos os pacotes para desserializacao
+        spring.json.add.type.headers: false # Opcional: Evita headers de tipo para simplicidade
     consumer:
       group-id: grupo-mensagem-kafka
       auto-offset-reset: earliest # Ou latest, dependendo do caso de uso - earliest lê desde o início do tópico
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      value-deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
       properties:
-        spring.json.trusted.packages: "*" # Asterisco para confiar em todos os pacotes para desserializacao
-        spring.json.add.type.headers: false # Opcional: Evita headers de tipo para simplicidade
-    producer:
-      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer  # Para JSON
-      properties:
+        schema.registry.url: http://localhost:8081
+        specific.avro.reader: true
         spring.json.trusted.packages: "*" # Asterisco para confiar em todos os pacotes para desserializacao
         spring.json.add.type.headers: false # Opcional: Evita headers de tipo para simplicidade
