@@ -1,6 +1,8 @@
 package backend.finance.api_user.application.configs.kafka;
 
-import backend.finance.api_user.application.dtos.output.CustomerResponse;
+import backend.finance.api.user.CustomerKafka;
+import io.confluent.kafka.serializers.AbstractKafkaSchemaSerDeConfig;
+import io.confluent.kafka.serializers.KafkaAvroDeserializer;
 import lombok.RequiredArgsConstructor;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
@@ -11,8 +13,6 @@ import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 import org.springframework.kafka.listener.ContainerProperties;
-import org.springframework.kafka.support.serializer.JsonDeserializer;
-import org.springframework.kafka.support.serializer.JsonSerializer;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -29,22 +29,22 @@ public class KafkaConsumerConfig {
         Map<String, Object> props = new HashMap<>();
         props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaPropertiesConfig.bootstrapServers); // Servidor Kafka
         props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class); // Usar StringDeserializer para desserializar chaves
-        props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class); // Usar JsonDeserializer para desserializar mensagens JSON
-        props.put(ConsumerConfig.GROUP_ID_CONFIG, "grupo-mensagem-kafka"); // Definir um ID de grupo
-        props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest"); // Ler desde o início do tópico se não houver offset
-        props.put(JsonDeserializer.TRUSTED_PACKAGES, "*"); // Permitir desserialização de qualquer pacote quando usar asterisco
-        props.put(JsonSerializer.ADD_TYPE_INFO_HEADERS, false);
+        props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, KafkaAvroDeserializer.class); // Usar JsonDeserializer para desserializar mensagens JSON
+        props.put(ConsumerConfig.GROUP_ID_CONFIG, kafkaPropertiesConfig.consumerGroupId); // Definir um ID de grupo
+        props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, kafkaPropertiesConfig.consumerAutoOffsetReset); // Ler desde o início do tópico se não houver offset
+        props.put(AbstractKafkaSchemaSerDeConfig.SCHEMA_REGISTRY_URL_CONFIG, kafkaPropertiesConfig.schemaRegistryUrl);
+        props.put("specific.avro.reader", kafkaPropertiesConfig.specificAvroReader);
         return props;
     }
 
     @Bean
-    public ConsumerFactory<String, CustomerResponse> consumerFactory() {
+    public ConsumerFactory<String, CustomerKafka> consumerFactory() {
         return new DefaultKafkaConsumerFactory<>(consumerConfigs()); // Criar a fábrica de consumidores
     }
 
     @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, CustomerResponse> kafkaListenerContainerFactory() {
-        ConcurrentKafkaListenerContainerFactory<String, CustomerResponse> factory = new ConcurrentKafkaListenerContainerFactory<>(); // Criar a fábrica de listeners
+    public ConcurrentKafkaListenerContainerFactory<String, CustomerKafka> kafkaListenerContainerFactory() {
+        ConcurrentKafkaListenerContainerFactory<String, CustomerKafka> factory = new ConcurrentKafkaListenerContainerFactory<>(); // Criar a fábrica de listeners
         factory.setConsumerFactory(consumerFactory()); // Configurar a fábrica de consumidores
         factory.getContainerProperties().setAckMode(ContainerProperties.AckMode.MANUAL); // Usar confirmação manual - mais controle - pode ser útil para garantir que a mensagem foi processada antes de confirmar
         return factory;

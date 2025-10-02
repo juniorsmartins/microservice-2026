@@ -1,6 +1,6 @@
 package backend.finance.api_user.application.configs.kafka;
 
-import backend.finance.api_user.application.dtos.output.CustomerResponse;
+import backend.finance.api.user.CustomerKafka;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -13,12 +13,12 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public final class KafkaProducer {
 
-    private final KafkaTemplate<String, CustomerResponse> kafkaTemplate;
+    private final KafkaTemplate<String, CustomerKafka> kafkaTemplate;
 
     private final KafkaPropertiesConfig kafkaPropertiesConfig;
 
-    public void enviarEvento(CustomerResponse customerResponse) {
-        kafkaTemplate.send(kafkaPropertiesConfig.topicoEventoCreateCustomer, UUID.randomUUID().toString(), customerResponse);
-        log.info("\n\n KafkaProducer - Mensagem enviada ao tópico de eventos de consulta: {}. \n\n", customerResponse);
+    public void enviarEvento(CustomerKafka customerKafka) {
+        kafkaTemplate.send(kafkaPropertiesConfig.topicoEventoCreateCustomer, UUID.randomUUID().toString(), customerKafka);
+        log.info("\n\n KafkaProducer - Mensagem enviada ao tópico de eventos: {}. \n\n", customerKafka);
     }
 }
