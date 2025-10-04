@@ -37,7 +37,7 @@ services: # Define os serviços (containers) que serão executados.
       SAMPLEDATA: 0            # Desativa dados de exemplo
       FORWARDLOGS: 0           # Desativa forwarding de logs
       DEBUG: 0                 # Desabilita modo debug
-      CONNECT_HEAP: 512m       # Aloca heap para o Kafka Connect
+      CONNECT_HEAP: 256m       # Aloca heap para o Kafka Connect
       DISABLE: azure-documentdb,blockchain,bloomberg,cassandra,coap,druid,elastic,elastic5,ftp,hazelcast,hbase,influxdb,jms,kudu,mongodb,mqtt,redis,rethink,voltdb,yahoo,hdfs,jdbc,elasticsearch,s3,twitter,debezium-mongodb,debezium-mysql,debezium-postgres,debezium-sqlserver,debezium-jdbc
     volumes:  # opcional se quiser persistir dados
       - kafka-data:/data
