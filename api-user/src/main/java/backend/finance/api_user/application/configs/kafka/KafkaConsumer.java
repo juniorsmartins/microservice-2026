@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public final class KafkaConsumer {
 
-    @KafkaListener(topics = "${spring.kafka.topic.evento-create-customer}", groupId = "grupo-mensagem-kafka", containerFactory = "kafkaListenerContainerFactory")
+    @KafkaListener(topics = "${spring.kafka.topic.evento-create-customer}", groupId = "group-api-user-customer", containerFactory = "kafkaListenerContainerFactory")
     public void consumirEventoConsulta(CustomerKafka customerKafka, Acknowledgment ack) {
 
         try {
