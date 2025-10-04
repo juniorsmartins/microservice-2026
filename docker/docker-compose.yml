@@ -44,6 +44,18 @@ services: # Define os serviços (containers) que serão executados.
     networks:
       - communication
 
+  kafdrop:
+    image: obsidiandynamics/kafdrop:latest
+    container_name: kafdrop
+    ports:
+      - 9000:9000  # Acesse em http://localhost:9000
+    environment:
+      KAFKA_BROKERCONNECT: kafka:9092
+    depends_on:
+      - kafka
+    networks:
+      - communication
+
   api_user:
     container_name: api_user
     image: juniorsmartins/api_user:v0.0.1
