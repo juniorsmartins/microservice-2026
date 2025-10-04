@@ -39,10 +39,11 @@ dependencies {
     runtimeOnly 'com.h2database:h2'
 
 	implementation 'org.springframework.kafka:spring-kafka'
-    testImplementation 'org.springframework.kafka:spring-kafka-test'
     implementation group: 'io.confluent', name: 'kafka-avro-serializer', version: '8.0.0' //  Fornece a serialização e desserialização de mensagens Avro para o Kafka, permitindo enviar e receber dados codificados em Avro nos tópicos do Kafka.
     implementation group: 'io.confluent', name: 'kafka-schema-registry-client', version: '8.0.0' // Permite que sua aplicação interaja com o Schema Registry da Confluent, que gerencia os esquemas Avro, garantindo compatibilidade e evolução dos esquemas ao produzir ou consumir mensagens.
     implementation group: 'org.apache.avro', name: 'avro', version: '1.12.0' // Utilizada para trabalhar com esquemas Avro e serializar/desserializar mensagens.
+    testImplementation 'org.springframework.kafka:spring-kafka-test'
+    testImplementation group: 'io.confluent', name: 'kafka-schema-registry', version: '8.0.0' // Necessário para mockar schema registry nos testes
 
 	compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'

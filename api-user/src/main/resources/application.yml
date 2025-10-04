@@ -82,7 +82,7 @@ spring:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: io.confluent.kafka.serializers.KafkaAvroSerializer
     consumer:
-      group-id: grupo-mensagem-kafka
+      group-id: group-api-user-customer
       auto-offset-reset: earliest # Ou latest, dependendo do caso de uso - earliest lê desde o início do tópico
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer

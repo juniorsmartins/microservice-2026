@@ -9,7 +9,8 @@ FROM ${IMAGE_BUILD} AS builder
 COPY . .
 
 ## Constrói o projeto com o Gradle
-RUN ./gradlew clean build -x test --no-daemon --stacktrace
+RUN ./gradlew clean build --no-daemon --stacktrace
+# RUN ./gradlew clean build -x test --no-daemon --stacktrace
 
 
 # 2 - Estágio de execução
