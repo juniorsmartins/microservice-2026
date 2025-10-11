@@ -82,7 +82,7 @@ services: # Define os serviços (containers) que serão executados.
     networks:
       - communication
     depends_on:
-      database_user:
+      database_users:
         condition: service_started
       kafka:
         condition: service_started
