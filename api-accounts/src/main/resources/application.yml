@@ -2,7 +2,7 @@ server:
   port: ${SERVER_PORT:9060}
 spring:
   application:
-    name: api-account
+    name: api-accounts
   profiles:
     active: default
 
@@ -14,7 +14,7 @@ spring:
 
   datasource: # Configura o datasource do banco de dados.
     driver-class-name: org.postgresql.Driver # Especifica o driver JDBC (neste caso, para Postgres).
-    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:account} # Define a URL de conexao ao banco.
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:accounts} # Define a URL de conexao ao banco.
     username: ${DB_USERNAME:postgres}
     password: ${DB_PASSWORD:postgres}
 

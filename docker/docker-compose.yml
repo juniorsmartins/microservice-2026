@@ -1,6 +1,6 @@
 volumes: # Define o volume para persistência dos dados do banco de dados.
-  db_user:
-    name: db_user
+  db_users:
+    name: db_users
   kafka-data:
     name: kafka-data
 
@@ -56,14 +56,14 @@ services: # Define os serviços (containers) que serão executados.
     networks:
       - communication
 
-  api_user:
-    container_name: api_user
-    image: juniorsmartins/api_user:v0.0.1
+  api_users:
+    container_name: api_users
+    image: juniorsmartins/api_users:v0.0.1
     build:
-      context: ../api-user
+      context: ../api-users
       dockerfile: Dockerfile
       args:
-        APP_NAME: "api_user"
+        APP_NAME: "api_users"
         APP_VERSION: "v0.0.1"
         APP_DESCRIPTION: "API de Usuários para segurança de sistema financeiro."
     ports:
@@ -74,8 +74,8 @@ services: # Define os serviços (containers) que serão executados.
           cpus: '1.0'
           memory: 512M
     environment:
-      - DB_HOST=database_user
-      - DB_NAME=db_user
+      - DB_HOST=database_users
+      - DB_NAME=db_users
       - DB_PORT=5432
       - SPRING_KAFKA_BOOTSTRAP_SERVERS=kafka:9092
     restart: on-failure
@@ -118,8 +118,8 @@ services: # Define os serviços (containers) que serão executados.
 #      kafka:
 #        condition: service_started
 
-  database_user:
-    container_name: database_user
+  database_users:
+    container_name: database_users
     image: postgres:17.0
     ports:
       - "5501:5432"
@@ -130,12 +130,12 @@ services: # Define os serviços (containers) que serão executados.
           memory: 256M
     restart: always
     environment:
-      POSTGRES_DB: db_user
+      POSTGRES_DB: db_users
 #      POSTGRES_MULTIPLE_DATABASES: db_user, db_outro1, db_outro2
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
     volumes:
-      - db_user:/var/lib/postgresql/data
+      - db_users:/var/lib/postgresql/data
     networks:
       - communication
 
