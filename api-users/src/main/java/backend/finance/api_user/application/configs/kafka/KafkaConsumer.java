@@ -1,6 +1,6 @@
 package backend.finance.api_user.application.configs.kafka;
 
-import backend.finance.api.user.CustomerKafka;
+import backend.finance.api.users.CustomerKafka;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;

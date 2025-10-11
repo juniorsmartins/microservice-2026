@@ -1,6 +1,6 @@
 package backend.finance.api_user.application.configs.kafka;
 
-import backend.finance.api.user.CustomerKafka;
+import backend.finance.api.users.CustomerKafka;
 import io.confluent.kafka.serializers.AbstractKafkaSchemaSerDeConfig;
 import io.confluent.kafka.serializers.KafkaAvroDeserializer;
 import lombok.RequiredArgsConstructor;

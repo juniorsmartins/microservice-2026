@@ -1,6 +1,6 @@
 {
   "type": "record",
-  "namespace": "backend.finance.api.user",
+  "namespace": "backend.finance.api.users",
   "name": "CustomerKafka",
   "fields": [
     {
