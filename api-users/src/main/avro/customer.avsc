@@ -1,0 +1,23 @@
+{
+  "type": "record",
+  "namespace": "backend.finance.api.users",
+  "name": "CustomerKafka",
+  "fields": [
+    {
+      "name": "id",
+      "type": "string",
+      "doc": "Identificador do cliente"
+    },
+    {
+      "name": "name",
+      "type": "string",
+      "doc": "Nome do cliente"
+    },
+    {
+      "name": "email",
+      "type": "string",
+      "doc": "Correio eletrônico do cliente"
+    }
+  ]
+}
+

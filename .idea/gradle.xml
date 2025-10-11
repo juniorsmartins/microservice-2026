@@ -4,20 +4,20 @@
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
-        <option name="externalProjectPath" value="$PROJECT_DIR$/api-account" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/api-accounts" />
         <option name="gradleJvm" value="21 (2)" />
         <option name="modules">
           <set>
-            <option value="$PROJECT_DIR$/api-account" />
+            <option value="$PROJECT_DIR$/api-accounts" />
           </set>
         </option>
       </GradleProjectSettings>
       <GradleProjectSettings>
-        <option name="externalProjectPath" value="$PROJECT_DIR$/api-investment" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/api-investments" />
         <option name="gradleJvm" value="21 (2)" />
         <option name="modules">
           <set>
-            <option value="$PROJECT_DIR$/api-investment" />
+            <option value="$PROJECT_DIR$/api-investments" />
           </set>
         </option>
       </GradleProjectSettings>
@@ -31,20 +31,20 @@
         </option>
       </GradleProjectSettings>
       <GradleProjectSettings>
-        <option name="externalProjectPath" value="$PROJECT_DIR$/api-report" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/api-reports" />
         <option name="gradleJvm" value="21 (2)" />
         <option name="modules">
           <set>
-            <option value="$PROJECT_DIR$/api-report" />
+            <option value="$PROJECT_DIR$/api-reports" />
           </set>
         </option>
       </GradleProjectSettings>
       <GradleProjectSettings>
-        <option name="externalProjectPath" value="$PROJECT_DIR$/api-user" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/api-users" />
         <option name="gradleJvm" value="21 (2)" />
         <option name="modules">
           <set>
-            <option value="$PROJECT_DIR$/api-user" />
+            <option value="$PROJECT_DIR$/api-users" />
           </set>
         </option>
       </GradleProjectSettings>

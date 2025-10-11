@@ -7,27 +7,49 @@
         <processorPath useClasspath="false">
           <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.projectlombok/lombok/1.18.40/398c6d2d7c42c96b65e78d2ddc9be0058c163453/lombok-1.18.40.jar" />
         </processorPath>
-        <module name="api-user.main" />
+        <module name="api-investments.main" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="api-account.main" target="25" />
+      <module name="api-account.test" target="25" />
+      <module name="api-investment.main" target="25" />
+      <module name="api-investment.test" target="25" />
+      <module name="api-report" target="25" />
+      <module name="api-report.main" target="25" />
+      <module name="api-report.test" target="25" />
+      <module name="api-user" target="25" />
+      <module name="api-user.main" target="25" />
+      <module name="api-user.test" target="25" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="api-account" options="-parameters" />
       <module name="api-account.main" options="-parameters" />
       <module name="api-account.test" options="-parameters" />
-      <module name="api-investment" options="-parameters" />
+      <module name="api-accounts" options="-parameters" />
+      <module name="api-accounts.main" options="-parameters" />
+      <module name="api-accounts.test" options="-parameters" />
       <module name="api-investment.main" options="-parameters" />
       <module name="api-investment.test" options="-parameters" />
+      <module name="api-investments" options="-parameters" />
+      <module name="api-investments.main" options="-parameters" />
+      <module name="api-investments.test" options="-parameters" />
       <module name="api-notifications" options="-parameters" />
       <module name="api-notifications.main" options="-parameters" />
       <module name="api-notifications.test" options="-parameters" />
       <module name="api-report" options="-parameters" />
       <module name="api-report.main" options="-parameters" />
       <module name="api-report.test" options="-parameters" />
+      <module name="api-reports" options="-parameters" />
+      <module name="api-reports.main" options="-parameters" />
+      <module name="api-reports.test" options="-parameters" />
       <module name="api-user" options="-parameters" />
       <module name="api-user.main" options="-parameters" />
       <module name="api-user.test" options="-parameters" />
+      <module name="api-users" options="-parameters" />
+      <module name="api-users.main" options="-parameters" />
+      <module name="api-users.test" options="-parameters" />
     </option>
   </component>
 </project>
