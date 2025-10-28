@@ -20,8 +20,8 @@ public class CustomerSaveGateway implements CustomerSaveOutputPort {
     @Transactional
     @Override
     public CustomerDto save(Customer customer) {
-        var customerJpa = customerPresenter.toCustomerJpa(customer);
+        var customerJpa = customerPresenter.toJpa(customer);
         var customerSave = customerRepository.save(customerJpa);
-        return customerPresenter.toCustomerDto(customerSave);
+        return customerPresenter.toDto(customerSave);
     }
 }

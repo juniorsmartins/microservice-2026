@@ -5,21 +5,37 @@
       <profile name="Gradle Imported" enabled="true">
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="false">
-          <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.projectlombok/lombok/1.18.40/398c6d2d7c42c96b65e78d2ddc9be0058c163453/lombok-1.18.40.jar" />
+          <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.projectlombok/lombok/1.18.42/8365263844ebb62398e0dc33057ba10ba472d3b8/lombok-1.18.42.jar" />
         </processorPath>
+        <module name="api-users.main" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="api-account.main" target="25" />
       <module name="api-account.test" target="25" />
+      <module name="api-accounts" target="25" />
+      <module name="api-accounts.main" target="25" />
+      <module name="api-accounts.test" target="25" />
       <module name="api-investment.main" target="25" />
       <module name="api-investment.test" target="25" />
+      <module name="api-investments" target="25" />
+      <module name="api-investments.main" target="25" />
+      <module name="api-investments.test" target="25" />
+      <module name="api-notifications" target="25" />
+      <module name="api-notifications.main" target="25" />
+      <module name="api-notifications.test" target="25" />
       <module name="api-report" target="25" />
       <module name="api-report.main" target="25" />
       <module name="api-report.test" target="25" />
+      <module name="api-reports" target="25" />
+      <module name="api-reports.main" target="25" />
+      <module name="api-reports.test" target="25" />
       <module name="api-user" target="25" />
       <module name="api-user.main" target="25" />
       <module name="api-user.test" target="25" />
+      <module name="api-users" target="25" />
+      <module name="api-users.main" target="25" />
+      <module name="api-users.test" target="25" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">

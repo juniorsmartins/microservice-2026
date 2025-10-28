@@ -1,7 +1,7 @@
 {
   "type": "record",
   "namespace": "backend.finance.api.users",
-  "name": "CustomerKafka",
+  "name": "CustomerMessage",
   "fields": [
     {
       "name": "id",

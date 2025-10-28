@@ -1,4 +1,4 @@
-package backend.finance.api_user.application.configs.kafka;
+package backend.finance.api_user.application.configs.mensageria;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @Getter
 @Setter
-public class KafkaPropertiesConfig {
+public class PropertiesConfig {
 
     @Value("${spring.kafka.bootstrap-servers}")
     public String bootstrapServers;
