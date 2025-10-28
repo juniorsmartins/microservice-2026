@@ -18,8 +18,8 @@ public final class Producer {
 
     private final PropertiesConfig propertiesConfig;
 
-    public void enviarEvento(CustomerMessage customerMessage) {
-        kafkaTemplate.send(propertiesConfig.topicoEventoCreateCustomer, UUID.randomUUID().toString(), customerMessage);
+    public void sendEventCreateCustomer(CustomerMessage customerMessage) {
+        kafkaTemplate.send(propertiesConfig.topicEventCreateCustomer, UUID.randomUUID().toString(), customerMessage);
         log.info("\n\n Producer - Mensagem enviada: {}. \n\n", customerMessage);
     }
 }

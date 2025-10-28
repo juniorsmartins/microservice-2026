@@ -28,7 +28,7 @@ public class CustomerCreateUseCase implements CustomerCreateInputPort {
     @Override
     public CustomerDto create(CustomerRequest request) {
 
-        customerValidation.checkDuplicateEmail(null, request);
+        customerValidation.checkDuplicateEmail(null, request.email());
         userValidation.checkDuplicateUsername(null, request.user().username());
 
         var roleDto = roleValidation.getOrCreateRole(request.user().role());

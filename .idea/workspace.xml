@@ -5,23 +5,23 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a1ea8202-910b-4a63-8ece-9f6a9a5ee2c0" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api-users/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/src/main/avro/customer.avsc" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/main/avro/customer.avsc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_user/application/configs/exception/GlobalHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_user/application/configs/exception/GlobalHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_user/application/configs/kafka/KafkaConsumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_user/application/configs/mensageria/consumer/Consumer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_user/application/configs/kafka/KafkaConsumerConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_user/application/configs/mensageria/consumer/ConsumerBaseConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_user/application/configs/kafka/KafkaProducer.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_user/application/configs/mensageria/producer/Producer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_user/application/configs/kafka/KafkaProducerConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_user/application/configs/mensageria/producer/ProducerBaseConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_user/application/configs/kafka/KafkaPropertiesConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_user/application/configs/mensageria/PropertiesConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_user/application/configs/kafka/KafkaTopicsConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_user/application/configs/mensageria/TopicsConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_user/application/configs/mensageria/PropertiesConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_user/application/configs/mensageria/PropertiesConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_user/application/configs/mensageria/TopicsConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_user/application/configs/mensageria/TopicsConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_user/application/configs/mensageria/consumer/Consumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_user/application/configs/mensageria/consumer/Consumer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_user/application/configs/mensageria/producer/Producer.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_user/application/configs/mensageria/producer/Producer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_user/application/usecases/CustomerCreateUseCase.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_user/application/usecases/CustomerCreateUseCase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_user/application/usecases/CustomerUpdateUseCase.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_user/application/usecases/CustomerUpdateUseCase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_user/domain/validation/CustomerValidation.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_user/domain/validation/CustomerValidation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_user/domain/validation/CustomerValidationImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_user/domain/validation/CustomerValidationImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_user/infrastructure/controllers/CustomerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_user/infrastructure/controllers/CustomerController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_user/infrastructure/gateways/CustomerQueryGateway.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_user/infrastructure/gateways/CustomerQueryGateway.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_user/infrastructure/gateways/CustomerSaveGateway.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_user/infrastructure/gateways/CustomerSaveGateway.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_user/infrastructure/gateways/CustomerUpdateGateway.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_user/infrastructure/gateways/CustomerUpdateGateway.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_user/infrastructure/presenters/CustomerPresenter.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_user/infrastructure/presenters/CustomerPresenter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_user/infrastructure/presenters/CustomerPresenterImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_user/infrastructure/presenters/CustomerPresenterImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/src/test/java/backend/finance/api_user/infrastructure/controllers/CustomerControllerIntegrationTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/test/java/backend/finance/api_user/infrastructure/controllers/CustomerControllerIntegrationTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/src/test/java/backend/finance/api_user/utils/BaseIntegrationTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/test/java/backend/finance/api_user/utils/BaseIntegrationTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/src/test/java/backend/finance/api_user/utils/CustomerUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/test/java/backend/finance/api_user/utils/CustomerUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/src/test/java/backend/finance/api_user/utils/UserUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/test/java/backend/finance/api_user/utils/UserUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/src/test/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/test/resources/application.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -143,35 +143,36 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Gradle.CustomerTest.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Download Sources.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Tests in 'api-user.test'.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Tests in 'api-users.test'.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.api-user [:backend.finance.api_user.ApiUserApplication.main()].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.api-user [build].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.api-user [clean].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.api-user [diff].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.api-user [generateAvroJava].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.api-users [build].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.api-users [clean].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.api-users [generateAvroJava].executor&quot;: &quot;Run&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit5&quot;,
-    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;develop&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/juniorsmartins/Projetos/microservice-2026&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.editor&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Gradle.CustomerControllerIntegrationTest.executor": "Run",
+    "Gradle.CustomerTest.executor": "Run",
+    "Gradle.Download Sources.executor": "Run",
+    "Gradle.Tests in 'api-user.test'.executor": "Run",
+    "Gradle.Tests in 'api-users.test'.executor": "Run",
+    "Gradle.api-user [:backend.finance.api_user.ApiUserApplication.main()].executor": "Run",
+    "Gradle.api-user [build].executor": "Run",
+    "Gradle.api-user [clean].executor": "Run",
+    "Gradle.api-user [diff].executor": "Run",
+    "Gradle.api-user [generateAvroJava].executor": "Run",
+    "Gradle.api-users [build].executor": "Run",
+    "Gradle.api-users [clean].executor": "Run",
+    "Gradle.api-users [generateAvroJava].executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
+    "git-widget-placeholder": "develop",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/home/juniorsmartins/Projetos/microservice-2026",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "File.Encoding"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$" />
@@ -203,10 +204,10 @@
     </key>
   </component>
   <component name="RunManager" selected="Gradle.Tests in 'api-users.test'">
-    <configuration name="Tests in 'api-user.test'" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="CustomerControllerIntegrationTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/api-user" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/api-users" />
         <option name="externalSystemIdString" value="GRADLE" />
         <option name="scriptParameters" value="" />
         <option name="taskDescriptions">
@@ -215,6 +216,8 @@
         <option name="taskNames">
           <list>
             <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;backend.finance.api_user.infrastructure.controllers.CustomerControllerIntegrationTest&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -316,10 +319,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Gradle.Tests in 'api-users.test'" />
+        <item itemvalue="Gradle.CustomerControllerIntegrationTest" />
         <item itemvalue="Gradle.api-users [generateAvroJava]" />
         <item itemvalue="Gradle.api-users [clean]" />
         <item itemvalue="Gradle.api-users [build]" />
-        <item itemvalue="Gradle.Tests in 'api-user.test'" />
       </list>
     </recent_temporary>
   </component>

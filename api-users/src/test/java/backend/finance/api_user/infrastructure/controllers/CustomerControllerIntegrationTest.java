@@ -12,19 +12,30 @@ import backend.finance.api_user.infrastructure.repositories.UserRepository;
 import backend.finance.api_user.utils.BaseIntegrationTest;
 import backend.finance.api_user.utils.CustomerUtils;
 import backend.finance.api_user.utils.UserUtils;
+import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest
-@Transactional
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class CustomerControllerIntegrationTest extends BaseIntegrationTest {
+
+    private static final String URI_CUSTOMER = "/v1/customers";
+
+    private static final String EMAIL_TESTE = "teste@email.com";
+
+    private static final String USERNAME_TESTE = "username-teste";
+
+    @LocalServerPort
+    private int randomPort;
 
     @Autowired
     private CustomerController customerController;
@@ -41,8 +52,11 @@ class CustomerControllerIntegrationTest extends BaseIntegrationTest {
 
     @BeforeEach
     void setUp() {
-        var userRequest = UserUtils.trainUserRequest("anne_frank", "password123", RoleEnum.ROLE_CUSTOMER.getValue());
-        customerRequest = CustomerUtils.trainCustomerRequest("Anne Frank", "frank@gmail.com", userRequest);
+        RestAssured.port = randomPort; // Configura a porta dinâmica
+        RestAssured.basePath = URI_CUSTOMER;
+
+        var userRequest = UserUtils.trainRequest(USERNAME_TESTE, "password123", RoleEnum.ROLE_CUSTOMER.getValue());
+        customerRequest = CustomerUtils.trainRequest("Anne Frank", EMAIL_TESTE, userRequest);
         customerResponse = customerController.create(customerRequest).getBody();
     }
 
@@ -58,23 +72,30 @@ class CustomerControllerIntegrationTest extends BaseIntegrationTest {
         @Test
         void dadaRequisicaoValida_quandoChamarCreate_entaoDeveCriarAndDevolverCustomer() {
             // Arrange
-            var userRequest = UserUtils.trainUserRequest("johndoe", "password123", RoleEnum.ROLE_CUSTOMER.getValue());
-            var request = CustomerUtils.trainCustomerRequest("John Doe", "doe@gmail.com", userRequest);
-            // Act
-            var responseEntity = customerController.create(request);
-            // Assert
-            assertEquals(HttpStatus.CREATED, responseEntity.getStatusCode());
-            var customerResponse = responseEntity.getBody();
-            assertEquals(userRequest.username(), customerResponse.user().username());
-            assertEquals(request.name(), customerResponse.name());
-            assertEquals(request.email(), customerResponse.email());
+            var userRequest = UserUtils
+                    .trainRequest("johndoe", "password123", RoleEnum.ROLE_CUSTOMER.getValue());
+            var request = CustomerUtils
+                    .trainRequest("John Doe", "doe@gmail.com", userRequest);
+
+            RestAssured.given()
+                        .contentType(ContentType.JSON)
+                        .body(request)
+                    .when()
+                        .post()
+                    .then()
+                        .statusCode(HttpStatus.CREATED.value())
+                        .body("id", Matchers.notNullValue())
+                        .body("name", Matchers.equalTo(request.name()))
+                        .body("email", Matchers.equalTo(request.email()))
+                        .body("user.id", Matchers.notNullValue())
+                        .body("user.username", Matchers.equalTo(userRequest.username()));
         }
 
         @Test
         void dadaRequisicaoValidaComRoleCustomer_quandoChamarCreate_entaoDeveSalvarCustomerNoBanco() {
             // Arrange
-            var userRequest = UserUtils.trainUserRequest("robertcm", "password123", RoleEnum.ROLE_CUSTOMER.getValue());
-            var request = CustomerUtils.trainCustomerRequest("Robert C. Martin", "robert@gmail.com", userRequest);
+            var userRequest = UserUtils.trainRequest("robertcm", "password123", RoleEnum.ROLE_CUSTOMER.getValue());
+            var request = CustomerUtils.trainRequest("Robert C. Martin", "robert@gmail.com", userRequest);
             // Act
             var response = customerController.create(request);
             var customerJpa = customerRepository.findById(response.getBody().id()).orElseThrow();
@@ -88,8 +109,8 @@ class CustomerControllerIntegrationTest extends BaseIntegrationTest {
         @Test
         void dadaRequisicaoValidaComRoleAdmin_quandoChamarCreate_entaoDeveSalvarCustomerNoBanco() {
             // Arrange
-            var userRequest = UserUtils.trainUserRequest("robertcm", "password123", RoleEnum.ROLE_ADMIN.getValue());
-            var request = CustomerUtils.trainCustomerRequest("Robert C. Martin", "robert@gmail.com", userRequest);
+            var userRequest = UserUtils.trainRequest("robertcm", "password123", RoleEnum.ROLE_ADMIN.getValue());
+            var request = CustomerUtils.trainRequest("Robert C. Martin", "robert@gmail.com", userRequest);
             // Act
             var response = customerController.create(request);
             var customerJpa = customerRepository.findById(response.getBody().id()).orElseThrow();
@@ -106,37 +127,77 @@ class CustomerControllerIntegrationTest extends BaseIntegrationTest {
     class CreateInvalid {
 
         @Test
-        void dadaRequisicaoInvalidaComEmailDuplicado_quandoChamarCreate_entaoDeveLancarException() {
+        void dadaRequisicaoComEmailDuplicado_quandoChamarCreate_entaoDeveLancarException() {
             // Arrange
-            var emailDuplicate = "jeff@gmail.com";
-            var userRequest1 = UserUtils.trainUserRequest("jeffbeck", "password123", RoleEnum.ROLE_CUSTOMER.getValue());
-            var request1 = CustomerUtils.trainCustomerRequest("Jeff Beck", emailDuplicate, userRequest1);
-            var userRequest2 = UserUtils.trainUserRequest("sutherland", "password123", RoleEnum.ROLE_CUSTOMER.getValue());
-            var request2 = CustomerUtils.trainCustomerRequest("Jeff Sutherland", emailDuplicate, userRequest2);
-            // Act & Assert
-            customerController.create(request1);
-            assertThrows(EmailConflictRulesCustomException.class, () -> customerController.create(request2));
+            var userRequest = UserUtils.trainRequest("jeffbeck", "password123", RoleEnum.ROLE_CUSTOMER.getValue());
+            var request = CustomerUtils.trainRequest("Jeff Beck", EMAIL_TESTE, userRequest);
+
+            RestAssured.given()
+                        .contentType(ContentType.JSON)
+                        .body(request)
+                    .when()
+                        .post()
+                    .then()
+                        .statusCode(HttpStatus.CONFLICT.value())
+                        .body("title", Matchers.equalTo("Esse email já existe no sistema: " + EMAIL_TESTE + "."));
         }
 
         @Test
-        void dadaRequisicaoInvalidaComUsernameDuplicado_quandoChamarCreate_entaoDeveLancarException() {
+        void dadaRequisicaoComEmailDuplicado_quandoChamarCreate_entaoDeveLancarEmailConflictRulesCustomException() {
             // Arrange
-            var usernameDuplicate = "jeff123";
-            var userRequest1 = UserUtils.trainUserRequest(usernameDuplicate, "password123", RoleEnum.ROLE_CUSTOMER.getValue());
-            var request1 = CustomerUtils.trainCustomerRequest("Jeff Beck", "beck@gmail.com", userRequest1);
-            var userRequest2 = UserUtils.trainUserRequest(usernameDuplicate, "password123", RoleEnum.ROLE_CUSTOMER.getValue());
-            var request2 = CustomerUtils.trainCustomerRequest("Jeff Sutherland", "sutherland@gmail.com", userRequest2);
+            var userRequest = UserUtils.trainRequest("jeffbeck", "password123", RoleEnum.ROLE_CUSTOMER.getValue());
+            var request = CustomerUtils.trainRequest("Jeff Beck", EMAIL_TESTE, userRequest);
+
             // Act & Assert
-            customerController.create(request1);
-            assertThrows(UsernameConflictRulesCustomException.class, () -> customerController.create(request2));
+            assertThrows(EmailConflictRulesCustomException.class, () -> customerController.create(request));
         }
 
         @Test
-        void dadaRequisicaoInvalidaComRoleInvalid_quandoChamarCreate_entaoDeveLancarException() {
+        void dadaRequisicaoComUsernameDuplicado_quandoChamarCreate_entaoDeveLancarException() {
             // Arrange
-            var roleInvalid = "ROLE_INVALID";
-            var userRequest = UserUtils.trainUserRequest("beck123", "password123", roleInvalid);
-            var request = CustomerUtils.trainCustomerRequest("Jeff Beck", "beck@gmail.com", userRequest);
+            var userRequest = UserUtils.trainRequest(USERNAME_TESTE, "password123", RoleEnum.ROLE_CUSTOMER.getValue());
+            var request = CustomerUtils.trainRequest("Jeff Beck", "jbeck@email.com", userRequest);
+
+            RestAssured.given()
+                        .contentType(ContentType.JSON)
+                        .body(request)
+                    .when()
+                        .post()
+                    .then()
+                        .statusCode(HttpStatus.CONFLICT.value())
+                        .body("title", Matchers.equalTo("Esse username já existe no sistema: " + USERNAME_TESTE + "."));
+        }
+
+        @Test
+        void dadaRequisicaoComUsernameDuplicado_quandoChamarCreate_entaoDeveLancarUsernameConflictRulesCustomException() {
+            // Arrange
+            var userRequest = UserUtils.trainRequest(USERNAME_TESTE, "password123", RoleEnum.ROLE_CUSTOMER.getValue());
+            var request = CustomerUtils.trainRequest("Jeff Beck", "beck@gmail.com", userRequest);
+            // Act & Assert
+            assertThrows(UsernameConflictRulesCustomException.class, () -> customerController.create(request));
+        }
+
+        @Test
+        void dadaRequisicaoComRoleInvalid_quandoChamarCreate_entaoDeveLancarException() {
+            // Arrange
+            var userRequest = UserUtils.trainRequest("jbeck123", "password123", "ROLE_INVALID");
+            var request = CustomerUtils.trainRequest("Jeff Beck", "jbeck@email.com", userRequest);
+
+            RestAssured.given()
+                        .contentType(ContentType.JSON)
+                        .body(request)
+                    .when()
+                        .post()
+                    .then()
+                        .statusCode(HttpStatus.NOT_FOUND.value())
+                        .body("title", Matchers.equalTo("Permissão não encontrada pelo nome: ROLE_INVALID."));
+        }
+
+        @Test
+        void dadaRequisicaoComRoleInvalid_quandoChamarCreate_entaoDeveLancarRoleNotFoundCustomException() {
+            // Arrange
+            var userRequest = UserUtils.trainRequest("beck123", "password123", "ROLE_INVALID");
+            var request = CustomerUtils.trainRequest("Jeff Beck", "beck@gmail.com", userRequest);
             // Act & Assert
             assertThrows(RoleNotFoundCustomException.class, () -> customerController.create(request));
         }
@@ -150,8 +211,8 @@ class CustomerControllerIntegrationTest extends BaseIntegrationTest {
         void dadaRequisicaoValida_quandoChamarUpdate_entaoRetornarCustomerAtualizado() {
             // Arrange
             var idCustomer = customerResponse.id();
-            var userRequestUp = UserUtils.trainUserRequest("anne_frank_atual", "password123", RoleEnum.ROLE_ADMIN.getValue());
-            var customerRequestUp = CustomerUtils.trainCustomerRequest("Anne Atual Frank", "frank_atual@gmail.com", userRequestUp);
+            var userRequestUp = UserUtils.trainRequest("anne_frank_atual", "password123", RoleEnum.ROLE_ADMIN.getValue());
+            var customerRequestUp = CustomerUtils.trainRequest("Anne Atual Frank", "frank_atual@gmail.com", userRequestUp);
             // Act
             var responseEntity = customerController.update(idCustomer, customerRequestUp);
             // Assert
@@ -167,12 +228,12 @@ class CustomerControllerIntegrationTest extends BaseIntegrationTest {
             var emailEqual = "doe@gmail.com";
             var usernameEqual = "johndoe";
 
-            var userRequestCreate = UserUtils.trainUserRequest(usernameEqual, "password123", RoleEnum.ROLE_CUSTOMER.getValue());
-            var customerRequestCreate = CustomerUtils.trainCustomerRequest("John Doe", emailEqual, userRequestCreate);
+            var userRequestCreate = UserUtils.trainRequest(usernameEqual, "password123", RoleEnum.ROLE_CUSTOMER.getValue());
+            var customerRequestCreate = CustomerUtils.trainRequest("John Doe", emailEqual, userRequestCreate);
             var responseCreate = customerController.create(customerRequestCreate).getBody();
 
-            var userRequestUpdate = UserUtils.trainUserRequest(usernameEqual, "atual123", RoleEnum.ROLE_ADMIN.getValue());
-            var customerRequestUpdate = CustomerUtils.trainCustomerRequest("John Atual Doe", emailEqual, userRequestUpdate);
+            var userRequestUpdate = UserUtils.trainRequest(usernameEqual, "atual123", RoleEnum.ROLE_ADMIN.getValue());
+            var customerRequestUpdate = CustomerUtils.trainRequest("John Atual Doe", emailEqual, userRequestUpdate);
             var responseUpdate = customerController.update(responseCreate.id(), customerRequestUpdate).getBody();
 
             var customerDb = customerRepository.findById(responseUpdate.id()).orElseThrow();
@@ -188,8 +249,8 @@ class CustomerControllerIntegrationTest extends BaseIntegrationTest {
         void dadaRequisicaoValida_quandoChamarUpdate_entaoSalvarCustomerAtualizadoNoBanco() {
             // Arrange
             var idCustomer = customerResponse.id();
-            var userRequestUp = UserUtils.trainUserRequest("anne_frank_atual", "password123", RoleEnum.ROLE_ADMIN.getValue());
-            var customerRequestUp = CustomerUtils.trainCustomerRequest("Anne Atual Frank", "frank_atual@gmail.com", userRequestUp);
+            var userRequestUp = UserUtils.trainRequest("anne_frank_atual", "password123", RoleEnum.ROLE_ADMIN.getValue());
+            var customerRequestUp = CustomerUtils.trainRequest("Anne Atual Frank", "frank_atual@gmail.com", userRequestUp);
             // Act
             customerController.update(idCustomer, customerRequestUp);
             var customerUpdate = customerRepository.findById(idCustomer).orElseThrow();
@@ -209,8 +270,8 @@ class CustomerControllerIntegrationTest extends BaseIntegrationTest {
         void dadaRequisicaoInvalidaComIdInexistente_quandoChamarUpdate_entaoLancarException() {
             // Arrange
             var idCustomerInvalid = UUID.randomUUID();
-            var userRequestUp = UserUtils.trainUserRequest("robert_plant", "password123", RoleEnum.ROLE_ADMIN.getValue());
-            var customerRequestUp = CustomerUtils.trainCustomerRequest("Robert Plant", "plant@gmail.com", userRequestUp);
+            var userRequestUp = UserUtils.trainRequest("robert_plant", "password123", RoleEnum.ROLE_ADMIN.getValue());
+            var customerRequestUp = CustomerUtils.trainRequest("Robert Plant", "plant@gmail.com", userRequestUp);
             // Act & Assert
             assertThrows(CustomerNotFoundCustomException.class, () -> customerController.update(idCustomerInvalid, customerRequestUp));
         }
@@ -218,13 +279,13 @@ class CustomerControllerIntegrationTest extends BaseIntegrationTest {
         @Test
         void dadaRequisicaoInvalidaComEmailDuplicado_quandoChamarUpdate_entaoLancarException() {
             var emailDuplicate = "doe@gmail.com";
-            var userRequest = UserUtils.trainUserRequest("johndoe", "password123", RoleEnum.ROLE_CUSTOMER.getValue());
-            var request = CustomerUtils.trainCustomerRequest("John Doe", emailDuplicate, userRequest);
+            var userRequest = UserUtils.trainRequest("johndoe", "password123", RoleEnum.ROLE_CUSTOMER.getValue());
+            var request = CustomerUtils.trainRequest("John Doe", emailDuplicate, userRequest);
             customerController.create(request);
 
             var idCustomer = customerResponse.id();
-            var userRequestUp = UserUtils.trainUserRequest("anne_frank_atual", "password123", RoleEnum.ROLE_ADMIN.getValue());
-            var customerRequestUp = CustomerUtils.trainCustomerRequest("Anne Atual Frank", emailDuplicate, userRequestUp);
+            var userRequestUp = UserUtils.trainRequest("anne_frank_atual", "password123", RoleEnum.ROLE_ADMIN.getValue());
+            var customerRequestUp = CustomerUtils.trainRequest("Anne Atual Frank", emailDuplicate, userRequestUp);
 
             assertThrows(EmailConflictRulesCustomException.class, () -> customerController.update(idCustomer, customerRequestUp));
         }
@@ -232,13 +293,13 @@ class CustomerControllerIntegrationTest extends BaseIntegrationTest {
         @Test
         void dadaRequisicaoInvalidaComUsernameDuplicado_quandoChamarUpdate_entaoLancarException() {
             var usernameDuplicate = "johndoe";
-            var userRequest = UserUtils.trainUserRequest(usernameDuplicate, "password123", RoleEnum.ROLE_CUSTOMER.getValue());
-            var request = CustomerUtils.trainCustomerRequest("John Doe", "doe@gmail.com", userRequest);
+            var userRequest = UserUtils.trainRequest(usernameDuplicate, "password123", RoleEnum.ROLE_CUSTOMER.getValue());
+            var request = CustomerUtils.trainRequest("John Doe", "doe@gmail.com", userRequest);
             customerController.create(request);
 
             var idCustomer = customerResponse.id();
-            var userRequestUp = UserUtils.trainUserRequest(usernameDuplicate, "password123", RoleEnum.ROLE_ADMIN.getValue());
-            var customerRequestUp = CustomerUtils.trainCustomerRequest("Anne Atual Frank", "frank_atual@gmail.com", userRequestUp);
+            var userRequestUp = UserUtils.trainRequest(usernameDuplicate, "password123", RoleEnum.ROLE_ADMIN.getValue());
+            var customerRequestUp = CustomerUtils.trainRequest("Anne Atual Frank", "frank_atual@gmail.com", userRequestUp);
 
             assertThrows(UsernameConflictRulesCustomException.class, () -> customerController.update(idCustomer, customerRequestUp));
         }

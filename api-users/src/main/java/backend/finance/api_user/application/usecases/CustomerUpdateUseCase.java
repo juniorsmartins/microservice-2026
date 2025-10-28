@@ -30,7 +30,7 @@ public class CustomerUpdateUseCase implements CustomerUpdateInputPort {
     @Override
     public CustomerDto update(UUID customerId, CustomerRequest request) {
 
-        customerValidation.checkDuplicateEmail(customerId, request);
+        customerValidation.checkDuplicateEmail(customerId, request.email());
         userValidation.checkDuplicateUsername(customerId, request.user().username());
 
         var roleDto = roleValidation.getOrCreateRole(request.user().role());

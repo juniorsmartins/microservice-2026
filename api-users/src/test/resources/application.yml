@@ -31,7 +31,7 @@ spring:
   kafka:
     bootstrap-servers: ${spring.embedded.kafka.brokers} # Usa broker embutido
     topic:
-      evento-create-customer: evento-create-customer
+      event-create-customer: event-create-customer
     properties:
       schema.registry.url: mock://localhost # Usa o mock do Schema Registry
       specific.avro.reader: true
