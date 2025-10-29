@@ -219,6 +219,7 @@ class CustomerControllerIntegrationTest extends BaseIntegrationTest {
         @Test
         void dadaRequisicaoValida_quandoChamarUpdate_entaoRetornarCustomerAtualizado() {
             var idCustomer = customerResponse.id();
+
             var userRequestUp = UserUtils
                     .trainRequest("anne_frank_atual", "password123", RoleEnum.ROLE_ADMIN.getValue());
             var request = CustomerUtils
@@ -241,51 +242,47 @@ class CustomerControllerIntegrationTest extends BaseIntegrationTest {
         }
 
         @Test
-        void dadaRequisicaoValidaSemAlterarEmailAndUsername_quandoChamarUpdate_entaoSalvarNoBanco() {
-            var emailEqual = "doe@gmail.com";
-            var usernameEqual = "johndoe";
+        void dadaRequisicaoValida_quandoChamarUpdate_entaoSalvarNoBanco() {
+            var idCustomer = customerResponse.id();
 
-            var userRequestCreate = UserUtils.trainRequest(usernameEqual, "password123", RoleEnum.ROLE_CUSTOMER.getValue());
-            var customerRequestCreate = CustomerUtils.trainRequest("John Doe", emailEqual, userRequestCreate);
-            var responseCreate = customerController.create(customerRequestCreate).getBody();
+            var userRequestUpdate = UserUtils
+                    .trainRequest("username999", "password999", RoleEnum.ROLE_ADMIN.getValue());
+            var customerRequestUpdate = CustomerUtils
+                    .trainRequest("John Atual Doe", "doe@yahoo.com", userRequestUpdate);
 
-            var userRequestUpdate = UserUtils.trainRequest(usernameEqual, "atual123", RoleEnum.ROLE_ADMIN.getValue());
-            var customerRequestUpdate = CustomerUtils.trainRequest("John Atual Doe", emailEqual, userRequestUpdate);
-            var responseUpdate = customerController.update(responseCreate.id(), customerRequestUpdate).getBody();
-
-            var customerDoBanco = customerRepository.findById(responseUpdate.id()).orElseThrow();
+            var responseAtualizado = customerController.update(idCustomer, customerRequestUpdate).getBody();
+            assertNotNull(responseAtualizado);
+            var customerDoBanco = customerRepository.findById(idCustomer).orElseThrow();
 
             assertEquals(customerRequestUpdate.name(), customerDoBanco.getName());
-            assertEquals(emailEqual, customerDoBanco.getEmail());
+            assertEquals(customerRequestUpdate.email(), customerDoBanco.getEmail());
             assertTrue(customerDoBanco.isActive());
-            assertEquals(usernameEqual, customerDoBanco.getUser().getUsername());
+            assertEquals(userRequestUpdate.username(), customerDoBanco.getUser().getUsername());
             assertEquals(userRequestUpdate.password(), customerDoBanco.getUser().getPassword());
             assertTrue(customerDoBanco.getUser().isActive());
             assertEquals(userRequestUpdate.role(), customerDoBanco.getUser().getRole().getName().getValue());
         }
 
         @Test
-        void dadaRequisicaoValida_quandoChamarUpdate_entaoSalvarCustomerAtualizadoNoBanco() {
-            var userRequestCreate = UserUtils.trainRequest("martin999", "password999", RoleEnum.ROLE_CUSTOMER.getValue());
-            var customerRequestCreate = CustomerUtils.trainRequest("Robert Martin", "martin9@email.com", userRequestCreate);
-            var responseCreate = customerController.create(customerRequestCreate).getBody();
+        void dadaRequisicaoValidaSemAlterarEmailAndUsername_quandoChamarUpdate_entaoSalvarNoBanco() {
+            var idCustomer = customerResponse.id();
 
-            var customerDoBancoAntes = customerRepository.findById(responseCreate.id()).orElseThrow();
-            assertEquals(RoleEnum.ROLE_CUSTOMER.getValue(), customerDoBancoAntes.getUser().getRole().getName().getValue());
+            var userRequestUpdate = UserUtils
+                    .trainRequest(USERNAME_TESTE, "atual123", RoleEnum.ROLE_ADMIN.getValue());
+            var customerRequestUpdate = CustomerUtils
+                    .trainRequest("John Atual Doe", EMAIL_TESTE, userRequestUpdate);
 
-            var userRequestUpdate = UserUtils.trainRequest("martin123", "password888", RoleEnum.ROLE_ADMIN.getValue());
-            var customerRequestUpdate = CustomerUtils.trainRequest("Robert Cecil Martin", "rcm@email.com", userRequestUpdate);
-            var responseUpdate = customerController.update(responseCreate.id(), customerRequestUpdate).getBody();
+            var responseAtualizado = customerController.update(idCustomer, customerRequestUpdate).getBody();
+            assertNotNull(responseAtualizado);
+            var customerDoBanco = customerRepository.findById(idCustomer).orElseThrow();
 
-            var customerDoBanco = customerRepository.findById(responseCreate.id()).orElseThrow();
-
-            assertEquals(responseUpdate.name(), customerDoBanco.getName());
-            assertEquals(responseUpdate.email(), customerDoBanco.getEmail());
+            assertEquals(customerRequestUpdate.name(), customerDoBanco.getName());
+            assertEquals(EMAIL_TESTE, customerDoBanco.getEmail());
             assertTrue(customerDoBanco.isActive());
-            assertEquals(responseUpdate.user().username(), customerDoBanco.getUser().getUsername());
+            assertEquals(USERNAME_TESTE, customerDoBanco.getUser().getUsername());
             assertEquals(userRequestUpdate.password(), customerDoBanco.getUser().getPassword());
             assertTrue(customerDoBanco.getUser().isActive());
-            assertEquals(RoleEnum.ROLE_ADMIN.getValue(), customerDoBanco.getUser().getRole().getName().getValue());
+            assertEquals(userRequestUpdate.role(), customerDoBanco.getUser().getRole().getName().getValue());
         }
     }
 
