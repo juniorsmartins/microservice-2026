@@ -1,9 +1,5 @@
 package backend.finance.api_user.infrastructure.controllers;
 
-import backend.finance.api_user.application.configs.exception.http404.CustomerNotFoundCustomException;
-import backend.finance.api_user.application.configs.exception.http404.RoleNotFoundCustomException;
-import backend.finance.api_user.application.configs.exception.http409.EmailConflictRulesCustomException;
-import backend.finance.api_user.application.configs.exception.http409.UsernameConflictRulesCustomException;
 import backend.finance.api_user.application.dtos.input.CustomerRequest;
 import backend.finance.api_user.application.dtos.output.CustomerResponse;
 import backend.finance.api_user.domain.enums.RoleEnum;
@@ -22,10 +18,8 @@ import org.springframework.http.HttpStatus;
 
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class CustomerControllerIntegrationTest extends BaseIntegrationTest {
+class CustomerControllerRestAssuredTest extends BaseIntegrationTest {
 
     private static final String URI_CUSTOMER = "/v1/customers";
 
@@ -49,9 +43,10 @@ class CustomerControllerIntegrationTest extends BaseIntegrationTest {
         RestAssured.port = randomPort; // Configura a porta dinâmica
         RestAssured.basePath = URI_CUSTOMER;
 
-        var userRequest = UserUtils.trainRequest(USERNAME_TESTE, "password123", RoleEnum.ROLE_CUSTOMER.getValue());
-        var customerRequest = CustomerUtils.trainRequest("Anne Frank", EMAIL_TESTE, userRequest);
-        defaultCustomerResponse = customerController.create(customerRequest).getBody();
+        var request =
+                buildCustomerRequest(USERNAME_TESTE, "password123", RoleEnum.ROLE_CUSTOMER.getValue(),
+                        "Anne Frank", EMAIL_TESTE);
+        defaultCustomerResponse = customerController.create(request).getBody();
     }
 
     @AfterEach
@@ -84,38 +79,6 @@ class CustomerControllerIntegrationTest extends BaseIntegrationTest {
                         .body("user.username", Matchers.equalTo(request.user().username()))
                         .body("user.active", Matchers.equalTo(true));
         }
-
-        @Test
-        void dadaRequisicaoValida_quandoChamarCreate_entaoDeveSalvarNoBanco() {
-            var request =
-                    buildCustomerRequest("robertcm", "password123", RoleEnum.ROLE_CUSTOMER.getValue(),
-                            "Robert C. Martin", "robert@gmail.com");
-
-            var response = customerController.create(request).getBody();
-            assertNotNull(response);
-            var customerJpa = customerRepository.findById(response.id()).orElseThrow();
-
-            assertEquals(request.name(), customerJpa.getName());
-            assertEquals(request.email(), customerJpa.getEmail());
-            assertTrue(customerJpa.isActive());
-            assertEquals(request.user().username(), customerJpa.getUser().getUsername());
-            assertEquals(request.user().password(), customerJpa.getUser().getPassword());
-            assertTrue(customerJpa.getUser().isActive());
-            assertEquals(RoleEnum.ROLE_CUSTOMER, customerJpa.getUser().getRole().getName());
-        }
-
-        @Test
-        void dadaRequisicaoValidaComRoleAdmin_quandoChamarCreate_entaoDeveSalvarCustomerNoBanco() {
-            var request =
-                    buildCustomerRequest("robertcm", "password123", RoleEnum.ROLE_ADMIN.getValue(),
-                            "Robert C. Martin", "robert@gmail.com");
-
-            var response = customerController.create(request).getBody();
-            assertNotNull(response);
-            var customerJpa = customerRepository.findById(response.id()).orElseThrow();
-
-            assertEquals(RoleEnum.ROLE_ADMIN, customerJpa.getUser().getRole().getName());
-        }
     }
 
     @Nested
@@ -139,15 +102,6 @@ class CustomerControllerIntegrationTest extends BaseIntegrationTest {
         }
 
         @Test
-        void dadaRequisicaoComEmailDuplicado_quandoChamarCreate_entaoDeveLancarEmailConflictRulesCustomException() {
-            var request =
-                    buildCustomerRequest("jeffbeck", "password123", RoleEnum.ROLE_ADMIN.getValue(),
-                            "Jeff Beck", EMAIL_TESTE);
-
-            assertThrows(EmailConflictRulesCustomException.class, () -> customerController.create(request));
-        }
-
-        @Test
         void dadaRequisicaoComUsernameDuplicado_quandoChamarCreate_entaoDeveLancarException() {
             var request =
                     buildCustomerRequest(USERNAME_TESTE, "password123", RoleEnum.ROLE_CUSTOMER.getValue(),
@@ -164,15 +118,6 @@ class CustomerControllerIntegrationTest extends BaseIntegrationTest {
         }
 
         @Test
-        void dadaRequisicaoComUsernameDuplicado_quandoChamarCreate_entaoDeveLancarUsernameConflictRulesCustomException() {
-            var request =
-                    buildCustomerRequest(USERNAME_TESTE, "password123", RoleEnum.ROLE_CUSTOMER.getValue(),
-                            "Jeff Beck", "beck@gmail.com");
-
-            assertThrows(UsernameConflictRulesCustomException.class, () -> customerController.create(request));
-        }
-
-        @Test
         void dadaRequisicaoComRoleInvalid_quandoChamarCreate_entaoDeveLancarException() {
             var request =
                     buildCustomerRequest("jbeck123", "password123", "ROLE_INVALID",
@@ -186,15 +131,6 @@ class CustomerControllerIntegrationTest extends BaseIntegrationTest {
                     .then()
                         .statusCode(HttpStatus.NOT_FOUND.value())
                         .body("title", Matchers.equalTo("Permissão não encontrada pelo nome: ROLE_INVALID."));
-        }
-
-        @Test
-        void dadaRequisicaoComRoleInvalid_quandoChamarCreate_entaoDeveLancarRoleNotFoundCustomException() {
-            var request =
-                    buildCustomerRequest("beck123", "password123", "ROLE_INVALID",
-                            "Jeff Beck", "beck@gmail.com");
-
-            assertThrows(RoleNotFoundCustomException.class, () -> customerController.create(request));
         }
     }
 
@@ -225,48 +161,6 @@ class CustomerControllerIntegrationTest extends BaseIntegrationTest {
                         .body("user.username", Matchers.equalTo(request.user().username()))
                         .body("user.active", Matchers.equalTo(true));
         }
-
-        @Test
-        void dadaRequisicaoValida_quandoChamarUpdate_entaoSalvarNoBanco() {
-            var idCustomer = defaultCustomerResponse.id();
-
-            var request =
-                    buildCustomerRequest("username999", "password999", RoleEnum.ROLE_ADMIN.getValue(),
-                            "John Atual Doe", "doe@yahoo.com");
-
-            var responseAtualizado = customerController.update(idCustomer, request).getBody();
-            assertNotNull(responseAtualizado);
-            var customerDoBanco = customerRepository.findById(idCustomer).orElseThrow();
-
-            assertEquals(request.name(), customerDoBanco.getName());
-            assertEquals(request.email(), customerDoBanco.getEmail());
-            assertTrue(customerDoBanco.isActive());
-            assertEquals(request.user().username(), customerDoBanco.getUser().getUsername());
-            assertEquals(request.user().password(), customerDoBanco.getUser().getPassword());
-            assertTrue(customerDoBanco.getUser().isActive());
-            assertEquals(request.user().role(), customerDoBanco.getUser().getRole().getName().getValue());
-        }
-
-        @Test
-        void dadaRequisicaoValidaSemAlterarEmailAndUsername_quandoChamarUpdate_entaoSalvarNoBanco() {
-            var idCustomer = defaultCustomerResponse.id();
-
-            var request =
-                    buildCustomerRequest(USERNAME_TESTE, "atual123", RoleEnum.ROLE_ADMIN.getValue(),
-                            "John Atual Doe", EMAIL_TESTE);
-
-            var responseAtualizado = customerController.update(idCustomer, request).getBody();
-            assertNotNull(responseAtualizado);
-            var customerDoBanco = customerRepository.findById(idCustomer).orElseThrow();
-
-            assertEquals(request.name(), customerDoBanco.getName());
-            assertEquals(EMAIL_TESTE, customerDoBanco.getEmail());
-            assertTrue(customerDoBanco.isActive());
-            assertEquals(USERNAME_TESTE, customerDoBanco.getUser().getUsername());
-            assertEquals(request.user().password(), customerDoBanco.getUser().getPassword());
-            assertTrue(customerDoBanco.getUser().isActive());
-            assertEquals(request.user().role(), customerDoBanco.getUser().getRole().getName().getValue());
-        }
     }
 
     @Nested
@@ -289,17 +183,6 @@ class CustomerControllerIntegrationTest extends BaseIntegrationTest {
                     .then()
                         .statusCode(HttpStatus.NOT_FOUND.value())
                         .body("title", Matchers.equalTo("Cliente não encontrado por id: " + idCustomerInvalid + "."));
-        }
-
-        @Test
-        void dadaRequisicaoInvalidaComIdInexistente_quandoChamarUpdate_entaoLancarCustomerNotFoundCustomException() {
-            var idCustomerInvalid = UUID.randomUUID();
-
-            var request =
-                    buildCustomerRequest("robert_plant", "password123", RoleEnum.ROLE_CUSTOMER.getValue(),
-                            "Robert Plant", "plant@gmail.com");
-
-            assertThrows(CustomerNotFoundCustomException.class, () -> customerController.update(idCustomerInvalid, request));
         }
 
         @Test
@@ -327,24 +210,6 @@ class CustomerControllerIntegrationTest extends BaseIntegrationTest {
         }
 
         @Test
-        void dadaRequisicaoInvalidaComEmailDuplicado_quandoChamarUpdate_entaoLancarEmailConflictRulesCustomException() {
-            var emailDuplicate = "doe@gmail.com";
-            var requestCreate =
-                    buildCustomerRequest("johndoe", "password123", RoleEnum.ROLE_CUSTOMER.getValue(),
-                            "John Doe", emailDuplicate);
-
-            customerController.create(requestCreate);
-
-            var idCustomer = defaultCustomerResponse.id();
-            var requestUpdate =
-                    buildCustomerRequest("anne_frank_atual", "password888", RoleEnum.ROLE_ADMIN.getValue(),
-                            "Anne Atual Frank", emailDuplicate);
-
-            assertThrows(EmailConflictRulesCustomException.class, () ->
-                    customerController.update(idCustomer, requestUpdate));
-        }
-
-        @Test
         void dadaRequisicaoInvalidaComUsernameDuplicado_quandoChamarUpdate_entaoLancarException() {
             var usernameDuplicate = "johndoe";
             var requestCreate =
@@ -367,24 +232,6 @@ class CustomerControllerIntegrationTest extends BaseIntegrationTest {
                         .statusCode(HttpStatus.CONFLICT.value())
                         .body("title", Matchers.equalTo("Esse username já existe no sistema: " + usernameDuplicate + "."));
         }
-
-        @Test
-        void dadaRequisicaoInvalidaComUsernameDuplicado_quandoChamarUpdate_entaoLancarUsernameConflictRulesCustomException() {
-            var usernameDuplicate = "johndoe";
-            var requestCreate =
-                    buildCustomerRequest(usernameDuplicate, "password123", RoleEnum.ROLE_CUSTOMER.getValue(),
-                            "John Doe", "doe@gmail.com");
-
-            customerController.create(requestCreate);
-
-            var idCustomer = defaultCustomerResponse.id();
-            var requestUpdate =
-                    buildCustomerRequest(usernameDuplicate, "password888", RoleEnum.ROLE_ADMIN.getValue(),
-                            "Anne Atual Frank", "frank_atual@gmail.com");
-
-            assertThrows(UsernameConflictRulesCustomException.class, () ->
-                    customerController.update(idCustomer, requestUpdate));
-        }
     }
 
     @Nested
@@ -400,24 +247,6 @@ class CustomerControllerIntegrationTest extends BaseIntegrationTest {
                         .delete("/{id}", defaultCustomerResponse.id())
                     .then()
                         .statusCode(HttpStatus.NO_CONTENT.value());
-        }
-
-        @Test
-        void dadaRequisicaoValida_quandoDeleteById_entaoArmazenarAtivoFalseNoBancoDeDados() {
-            var customerActiveTrue = customerRepository.findById(defaultCustomerResponse.id());
-            assertTrue(customerActiveTrue.isPresent());
-            assertTrue(customerActiveTrue.get().isActive());
-
-            RestAssured.given()
-                        .contentType(ContentType.JSON)
-                    .when()
-                        .delete("/{id}", defaultCustomerResponse.id())
-                    .then()
-                        .statusCode(HttpStatus.NO_CONTENT.value());
-
-            var customerActiveFalse = customerRepository.findById(defaultCustomerResponse.id()).orElseThrow();
-            assertFalse(customerActiveFalse.isActive());
-            assertFalse(customerActiveFalse.getUser().isActive());
         }
     }
 
@@ -436,36 +265,6 @@ class CustomerControllerIntegrationTest extends BaseIntegrationTest {
                     .then()
                         .statusCode(HttpStatus.NOT_FOUND.value())
                         .body("title", Matchers.equalTo("Cliente não encontrado por id: " + idInexistente + "."));
-        }
-
-        @Test
-        void dadaRequisicaoComIdInexistente_quandoDeleteById_entaoLancarCustomerNotFoundCustomException() {
-            var idNotFound = UUID.randomUUID();
-            assertThrows(CustomerNotFoundCustomException.class, () -> customerController.disableById(idNotFound));
-        }
-
-        @Test
-        void dadaRequisicaoComIdDesativado_quandoDeleteById_entaoLancarExceptionAndTerNoBancoComoFalse() {
-            var idCustomer = defaultCustomerResponse.id();
-
-            var customerBuscadoAntes = customerRepository.findById(idCustomer).orElseThrow();
-            assertNotNull(customerBuscadoAntes);
-            assertTrue(customerBuscadoAntes.isActive());
-
-            var customerDesativado = customerController.disableById(idCustomer);
-            assertEquals(HttpStatus.NO_CONTENT, customerDesativado.getStatusCode());
-
-            RestAssured.given()
-                        .contentType(ContentType.JSON)
-                    .when()
-                        .delete("/{id}", idCustomer)
-                    .then()
-                        .statusCode(HttpStatus.NOT_FOUND.value())
-                        .body("title", Matchers.equalTo("Cliente não encontrado por id: " + idCustomer + "."));
-
-            var customerBuscadoDepois = customerRepository.findById(idCustomer).orElseThrow();
-            assertNotNull(customerBuscadoDepois);
-            assertFalse(customerBuscadoDepois.isActive());
         }
     }
 
@@ -507,36 +306,6 @@ class CustomerControllerIntegrationTest extends BaseIntegrationTest {
                     .then()
                         .statusCode(HttpStatus.NOT_FOUND.value())
                         .body("title", Matchers.equalTo("Cliente não encontrado por id: " + idNotFound + "."));
-        }
-
-        @Test
-        void dadaRequisicaoComIdInexistente_quandoChamarFindById_entaoLancarCustomerNotFoundCustomException() {
-            var idNotFound = UUID.randomUUID();
-            assertThrows(CustomerNotFoundCustomException.class, () -> customerController.findById(idNotFound));
-        }
-
-        @Test
-        void dadaRequisicaoComIdDesativado_quandoConsultarPorId_entaoLancarExcecao() {
-            var idCustomer = defaultCustomerResponse.id();
-
-            var customerBuscadoAntes = customerRepository.findById(idCustomer).orElseThrow();
-            assertNotNull(customerBuscadoAntes);
-            assertTrue(customerBuscadoAntes.isActive());
-
-            var customerDesativado = customerController.disableById(defaultCustomerResponse.id());
-            assertEquals(HttpStatus.NO_CONTENT, customerDesativado.getStatusCode());
-
-            RestAssured.given()
-                        .contentType(ContentType.JSON)
-                    .when()
-                        .get("/{id}", defaultCustomerResponse.id())
-                    .then()
-                        .statusCode(HttpStatus.NOT_FOUND.value())
-                        .body("title", Matchers.equalTo("Cliente não encontrado por id: " + defaultCustomerResponse.id() + "."));
-
-            var customerBuscadoDepois = customerRepository.findById(idCustomer).orElseThrow();
-            assertNotNull(customerBuscadoDepois);
-            assertFalse(customerBuscadoDepois.isActive());
         }
     }
 
