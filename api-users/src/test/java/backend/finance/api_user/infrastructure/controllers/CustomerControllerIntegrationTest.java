@@ -212,16 +212,23 @@ class CustomerControllerIntegrationTest extends BaseIntegrationTest {
             // Arrange
             var idCustomer = customerResponse.id();
             var userRequestUp = UserUtils.trainRequest("anne_frank_atual", "password123", RoleEnum.ROLE_ADMIN.getValue());
-            var customerRequestUp = CustomerUtils.trainRequest("Anne Atual Frank", "frank_atual@gmail.com", userRequestUp);
-            // Act
-            var responseEntity = customerController.update(idCustomer, customerRequestUp);
-            // Assert
-            assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-            var customerResponseUp = responseEntity.getBody();
-            assertEquals(userRequestUp.username(), customerResponseUp.user().username());
-            assertEquals(customerRequestUp.name(), customerResponseUp.name());
-            assertEquals(customerRequestUp.email(), customerResponseUp.email());
+            var request = CustomerUtils.trainRequest("Anne Atual Frank", "frank_atual@gmail.com", userRequestUp);
+
+            RestAssured.given()
+                        .contentType(ContentType.JSON)
+                        .body(request)
+                    .when()
+                        .put("/{id}", idCustomer)
+                    .then()
+                        .statusCode(HttpStatus.OK.value())
+                        .body("id", Matchers.notNullValue())
+                        .body("name", Matchers.equalTo(request.name()))
+                        .body("email", Matchers.equalTo(request.email()))
+                        .body("user.id", Matchers.notNullValue())
+                        .body("user.username", Matchers.equalTo(userRequestUp.username()));
         }
+
+        // TODO
 
         @Test
         void dadaRequisicaoValidaSemAlterarEmailAndUsername_quandoChamarUpdate_entaoSalvarNoBanco() {
