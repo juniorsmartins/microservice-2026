@@ -89,7 +89,8 @@ class CustomerControllerIntegrationTest extends BaseIntegrationTest {
                         .body("email", Matchers.equalTo(request.email()))
                         .body("active", Matchers.equalTo(true))
                         .body("user.id", Matchers.notNullValue())
-                        .body("user.username", Matchers.equalTo(userRequest.username()));
+                        .body("user.username", Matchers.equalTo(userRequest.username()))
+                        .body("user.active", Matchers.equalTo(true));
         }
 
         @Test
@@ -97,14 +98,18 @@ class CustomerControllerIntegrationTest extends BaseIntegrationTest {
             // Arrange
             var userRequest = UserUtils.trainRequest("robertcm", "password123", RoleEnum.ROLE_CUSTOMER.getValue());
             var request = CustomerUtils.trainRequest("Robert C. Martin", "robert@gmail.com", userRequest);
+
             // Act
             var response = customerController.create(request);
             var customerJpa = customerRepository.findById(response.getBody().id()).orElseThrow();
+
             // Assert
-            assertEquals(userRequest.username(), customerJpa.getUser().getUsername());
             assertEquals(request.name(), customerJpa.getName());
             assertEquals(request.email(), customerJpa.getEmail());
-            assertEquals(true, customerJpa.isActive());
+            assertTrue(customerJpa.isActive());
+            assertEquals(userRequest.username(), customerJpa.getUser().getUsername());
+            assertEquals(userRequest.password(), customerJpa.getUser().getPassword());
+            assertTrue(customerJpa.getUser().isActive());
             assertEquals(RoleEnum.ROLE_CUSTOMER, customerJpa.getUser().getRole().getName());
         }
 
@@ -113,14 +118,12 @@ class CustomerControllerIntegrationTest extends BaseIntegrationTest {
             // Arrange
             var userRequest = UserUtils.trainRequest("robertcm", "password123", RoleEnum.ROLE_ADMIN.getValue());
             var request = CustomerUtils.trainRequest("Robert C. Martin", "robert@gmail.com", userRequest);
+
             // Act
             var response = customerController.create(request);
             var customerJpa = customerRepository.findById(response.getBody().id()).orElseThrow();
+
             // Assert
-            assertEquals(userRequest.username(), customerJpa.getUser().getUsername());
-            assertEquals(request.name(), customerJpa.getName());
-            assertEquals(request.email(), customerJpa.getEmail());
-            assertEquals(true, customerJpa.isActive());
             assertEquals(RoleEnum.ROLE_ADMIN, customerJpa.getUser().getRole().getName());
         }
     }
@@ -229,7 +232,8 @@ class CustomerControllerIntegrationTest extends BaseIntegrationTest {
                         .body("email", Matchers.equalTo(request.email()))
                         .body("active", Matchers.equalTo(true))
                         .body("user.id", Matchers.notNullValue())
-                        .body("user.username", Matchers.equalTo(userRequestUp.username()));
+                        .body("user.username", Matchers.equalTo(userRequestUp.username()))
+                        .body("user.active", Matchers.equalTo(true));
         }
 
         @Test
@@ -245,31 +249,39 @@ class CustomerControllerIntegrationTest extends BaseIntegrationTest {
             var customerRequestUpdate = CustomerUtils.trainRequest("John Atual Doe", emailEqual, userRequestUpdate);
             var responseUpdate = customerController.update(responseCreate.id(), customerRequestUpdate).getBody();
 
-            var customerDb = customerRepository.findById(responseUpdate.id()).orElseThrow();
+            var customerDoBanco = customerRepository.findById(responseUpdate.id()).orElseThrow();
 
-            assertEquals(userRequestUpdate.role(), customerDb.getUser().getRole().getName().getValue());
-            assertEquals(usernameEqual, customerDb.getUser().getUsername());
-            assertEquals(userRequestUpdate.password(), customerDb.getUser().getPassword());
-            assertEquals(customerRequestUpdate.name(), customerDb.getName());
-            assertTrue(customerDb.isActive());
-            assertEquals(emailEqual, customerDb.getEmail());
+            assertEquals(customerRequestUpdate.name(), customerDoBanco.getName());
+            assertEquals(emailEqual, customerDoBanco.getEmail());
+            assertTrue(customerDoBanco.isActive());
+            assertEquals(usernameEqual, customerDoBanco.getUser().getUsername());
+            assertEquals(userRequestUpdate.password(), customerDoBanco.getUser().getPassword());
+            assertTrue(customerDoBanco.getUser().isActive());
+            assertEquals(userRequestUpdate.role(), customerDoBanco.getUser().getRole().getName().getValue());
         }
 
         @Test
         void dadaRequisicaoValida_quandoChamarUpdate_entaoSalvarCustomerAtualizadoNoBanco() {
-            // Arrange
-            var idCustomer = customerResponse.id();
-            var userRequestUp = UserUtils.trainRequest("anne_frank_atual", "password123", RoleEnum.ROLE_ADMIN.getValue());
-            var customerRequestUp = CustomerUtils.trainRequest("Anne Atual Frank", "frank_atual@gmail.com", userRequestUp);
-            // Act
-            customerController.update(idCustomer, customerRequestUp);
-            var customerUpdate = customerRepository.findById(idCustomer).orElseThrow();
-            // Assert
-            assertEquals(userRequestUp.role(), customerUpdate.getUser().getRole().getName().getValue());
-            assertEquals(userRequestUp.username(), customerUpdate.getUser().getUsername());
-            assertEquals(customerRequestUp.name(), customerUpdate.getName());
-            assertTrue(customerUpdate.isActive());
-            assertEquals(customerRequestUp.email(), customerUpdate.getEmail());
+            var userRequestCreate = UserUtils.trainRequest("martin999", "password999", RoleEnum.ROLE_CUSTOMER.getValue());
+            var customerRequestCreate = CustomerUtils.trainRequest("Robert Martin", "martin9@email.com", userRequestCreate);
+            var responseCreate = customerController.create(customerRequestCreate).getBody();
+
+            var customerDoBancoAntes = customerRepository.findById(responseCreate.id()).orElseThrow();
+            assertEquals(RoleEnum.ROLE_CUSTOMER.getValue(), customerDoBancoAntes.getUser().getRole().getName().getValue());
+
+            var userRequestUpdate = UserUtils.trainRequest("martin123", "password888", RoleEnum.ROLE_ADMIN.getValue());
+            var customerRequestUpdate = CustomerUtils.trainRequest("Robert Cecil Martin", "rcm@email.com", userRequestUpdate);
+            var responseUpdate = customerController.update(responseCreate.id(), customerRequestUpdate).getBody();
+
+            var customerDoBanco = customerRepository.findById(responseCreate.id()).orElseThrow();
+
+            assertEquals(responseUpdate.name(), customerDoBanco.getName());
+            assertEquals(responseUpdate.email(), customerDoBanco.getEmail());
+            assertTrue(customerDoBanco.isActive());
+            assertEquals(responseUpdate.user().username(), customerDoBanco.getUser().getUsername());
+            assertEquals(userRequestUpdate.password(), customerDoBanco.getUser().getPassword());
+            assertTrue(customerDoBanco.getUser().isActive());
+            assertEquals(RoleEnum.ROLE_ADMIN.getValue(), customerDoBanco.getUser().getRole().getName().getValue());
         }
     }
 
@@ -404,9 +416,9 @@ class CustomerControllerIntegrationTest extends BaseIntegrationTest {
                     .then()
                         .statusCode(HttpStatus.NO_CONTENT.value());
 
-            var customerActiveFalse = customerRepository.findById(customerResponse.id());
-            assertTrue(customerActiveFalse.isPresent());
-            assertFalse(customerActiveFalse.get().isActive());
+            var customerActiveFalse = customerRepository.findById(customerResponse.id()).orElseThrow();
+            assertFalse(customerActiveFalse.isActive());
+            assertFalse(customerActiveFalse.getUser().isActive());
         }
     }
 
@@ -476,7 +488,8 @@ class CustomerControllerIntegrationTest extends BaseIntegrationTest {
                         .body("email", Matchers.equalTo(customerResponse.email()))
                         .body("active", Matchers.equalTo(true))
                         .body("user.id", Matchers.notNullValue())
-                        .body("user.username", Matchers.equalTo(customerResponse.user().username()));
+                        .body("user.username", Matchers.equalTo(customerResponse.user().username()))
+                        .body("user.active", Matchers.equalTo(true));
         }
     }
 

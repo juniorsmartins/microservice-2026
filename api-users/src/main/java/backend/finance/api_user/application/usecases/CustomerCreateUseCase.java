@@ -32,7 +32,7 @@ public class CustomerCreateUseCase implements CustomerCreateInputPort {
 
         var roleDto = roleValidation.getOrCreateRole(request.user().role());
         var permissao = Permissao.create(roleDto.id(), roleDto.name());
-        var usuario = Usuario.create(request.user().username(), request.user().password(), permissao);
+        var usuario = Usuario.create(null, request.user().username(), request.user().password(), permissao, true);
         var customer = Customer.create(null, request.name(), request.email(), usuario, true);
 
         return customerSaveOutputPort.save(customer);

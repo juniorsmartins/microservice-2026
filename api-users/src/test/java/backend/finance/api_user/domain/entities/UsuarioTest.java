@@ -27,7 +27,7 @@ class UsuarioTest {
             var username = "username123";
             var password = "password123";
             // Act
-            var usuario = Usuario.create(username, password, permissao);
+            var usuario = Usuario.create(null, username, password, permissao, true);
             // Assert
             assertEquals(username, usuario.getUsername());
             assertEquals(password, usuario.getPassword());
@@ -41,7 +41,7 @@ class UsuarioTest {
         @Test
         void dadoUsernameNulo_quandoCreateUsuario_entaoLancarException() {
             var exception = assertThrows(AllNullFieldsCustomException.class,
-                    () -> Usuario.create(null, "password123", permissao));
+                    () -> Usuario.create(null, null, "password123", permissao, true));
             assertEquals("exception.field.null.request.all", exception.getMessage());
         }
 
@@ -49,7 +49,7 @@ class UsuarioTest {
         @ValueSource(strings = {"", "   "})
         void dadoUsernameVazioOuEmBranco_quandoCreateUsuario_entaoLancarException(String username) {
             var exception = assertThrows(AllNullFieldsCustomException.class,
-                    () -> Usuario.create(username, "password123", permissao));
+                    () -> Usuario.create(null, username, "password123", permissao, true));
             assertEquals("exception.field.null.request.all", exception.getMessage());
         }
 
@@ -57,7 +57,7 @@ class UsuarioTest {
         void dadoUsernameMaior_quandoCreateUsuario_entaoLancarException() {
             var username = "abcdefghijlmnoperstuvxz123123123123123123123123123123123";
             var exception = assertThrows(AttributeExceededMaximumLimitException.class,
-                    () -> Usuario.create(username, "password123", permissao));
+                    () -> Usuario.create(null, username, "password123", permissao, true));
             assertEquals("exception.field.exceeded-maximum-limit.request", exception.getMessage());
         }
     }
@@ -69,7 +69,7 @@ class UsuarioTest {
         @Test
         void dadoPasswordNulo_quandoCreateUsuario_entaoLancarException() {
             var exception = assertThrows(AllNullFieldsCustomException.class,
-                    () -> Usuario.create("username123", null, permissao));
+                    () -> Usuario.create(null, "username123", null, permissao, true));
             assertEquals("exception.field.null.request.all", exception.getMessage());
         }
 
@@ -77,7 +77,7 @@ class UsuarioTest {
         @ValueSource(strings = {"", "   "})
         void dadoPasswordVazioOuEmBranco_quandoCreateUsuario_entaoLancarException(String password) {
             var exception = assertThrows(AllNullFieldsCustomException.class,
-                    () -> Usuario.create("username123", password, permissao));
+                    () -> Usuario.create(null, "username123", password, permissao, true));
             assertEquals("exception.field.null.request.all", exception.getMessage());
         }
 
@@ -85,7 +85,7 @@ class UsuarioTest {
         void dadoPasswordMaior_quandoCreateUsuario_entaoLancarException() {
             var password = "abcdefghijlmnoperstuvxz123123123123123123123123123123123qreqreerwerqwerwqerwerwerwewerwerwer32145678abcdefghijlmnoperstuvxz123123123123123123123123123123123qreqreerwerqwerwqerwerwerwewerwerwer321456783";
             var exception = assertThrows(AttributeExceededMaximumLimitException.class,
-                    () -> Usuario.create("username123", password, permissao));
+                    () -> Usuario.create(null, "username123", password, permissao, true));
             assertEquals("exception.field.exceeded-maximum-limit.request", exception.getMessage());
         }
     }

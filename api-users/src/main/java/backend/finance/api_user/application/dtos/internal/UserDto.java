@@ -6,6 +6,8 @@ public record UserDto(
 
         UUID id,
 
-        String username
+        String username,
+
+        boolean active
 ) {
 }

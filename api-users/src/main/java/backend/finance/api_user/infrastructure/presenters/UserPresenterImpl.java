@@ -15,28 +15,28 @@ public final class UserPresenterImpl implements UserPresenter {
 
     @Override
     public UserResponse toUserResponse(UserDto dto) {
-        return new UserResponse(dto.id(), dto.username());
+        return new UserResponse(dto.id(), dto.username(), dto.active());
     }
 
     @Override
     public UserResponse toUserResponse(Usuario usuario) {
-        return new UserResponse(usuario.getId(), usuario.getUsername());
+        return new UserResponse(usuario.getId(), usuario.getUsername(), usuario.isActive());
     }
 
     @Override
     public UserDto toUserDto(UserJpa jpa) {
-        return new UserDto(jpa.getId(), jpa.getUsername());
+        return new UserDto(jpa.getId(), jpa.getUsername(), jpa.isActive());
     }
 
     @Override
     public UserJpa toUserJpa(Usuario usuario) {
         var roleJpa = rolePresenter.toRoleJpa(usuario.getRole());
-        return new UserJpa(usuario.getId(), usuario.getUsername(), usuario.getPassword(), roleJpa);
+        return new UserJpa(usuario.getId(), usuario.getUsername(), usuario.getPassword(), roleJpa, usuario.isActive());
     }
 
     @Override
     public Usuario toEntity(UserJpa jpa) {
         var permissao = rolePresenter.toEntity(jpa.getRole());
-        return Usuario.create(jpa.getId(), jpa.getUsername(), jpa.getPassword(), permissao);
+        return Usuario.create(jpa.getId(), jpa.getUsername(), jpa.getPassword(), permissao, jpa.isActive());
     }
 }

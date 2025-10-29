@@ -11,6 +11,8 @@ public record UserResponse(
 
         UUID id,
 
-        String username
+        String username,
+
+        boolean active
 ) {
 }

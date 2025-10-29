@@ -33,4 +33,7 @@ public final class UserJpa {
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinColumn(name = "role_id", nullable = false)
     private RoleJpa role;
+
+    @Column(name = "active", nullable = false, columnDefinition = "BOOLEAN DEFAULT TRUE")
+    private boolean active;
 }
