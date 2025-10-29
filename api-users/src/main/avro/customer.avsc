@@ -1,6 +1,6 @@
 {
   "type": "record",
-  "namespace": "backend.finance.api.users",
+  "namespace": "backend.finance.api_users.application.configs.mensageria",
   "name": "CustomerMessage",
   "fields": [
     {
