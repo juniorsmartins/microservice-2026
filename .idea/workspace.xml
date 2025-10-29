@@ -5,7 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a1ea8202-910b-4a63-8ece-9f6a9a5ee2c0" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/docker/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/src/test/java/backend/finance/api_user/infrastructure/controllers/CustomerControllerIntegrationTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/test/java/backend/finance/api_user/infrastructure/controllers/CustomerControllerIntegrationTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -77,6 +79,12 @@
                 <item name="Tasks" type="e4a08cd1:TasksNode" />
                 <item name="build" type="c8890929:TasksNode$1" />
               </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="api-users" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="source generation" type="c8890929:TasksNode$1" />
+              </path>
             </expand>
             <select />
           </tree_state>
@@ -123,6 +131,7 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+    &quot;Gradle.CustomerControllerIntegrationTest.executor&quot;: &quot;Run&quot;,
     &quot;Gradle.CustomerTest.executor&quot;: &quot;Run&quot;,
     &quot;Gradle.Download Sources.executor&quot;: &quot;Run&quot;,
     &quot;Gradle.Tests in 'api-user.test'.executor&quot;: &quot;Run&quot;,
@@ -143,20 +152,20 @@
     &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
     &quot;git-widget-placeholder&quot;: &quot;develop&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/juniorsmartins/Projetos/microservice-2026/api-accounts&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/juniorsmartins/Projetos/microservice-2026&quot;,
     &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.editor&quot;
+    &quot;settings.editor.selected.configurable&quot;: &quot;File.Encoding&quot;
   }
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/docs/diagramas" />
       <recent name="$PROJECT_DIR$/api-user/src/main/resources/db/changelog" />
       <recent name="$PROJECT_DIR$/api-user" />
       <recent name="$PROJECT_DIR$/api-user/src/test/resources" />
-      <recent name="$PROJECT_DIR$/api-user/src/main/java/backend/finance/api_user/infrastructure/daos" />
     </key>
     <key name="CreateTestDialog.Recents.Supers">
       <recent name="" />
@@ -180,11 +189,11 @@
       <recent name="backend.finance.api_user.infrastructure.gateways" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.api-users [build]">
-    <configuration name="Tests in 'api-user.test'" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+  <component name="RunManager" selected="Gradle.Tests in 'api-users.test'">
+    <configuration name="CustomerControllerIntegrationTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/api-user" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/api-users" />
         <option name="externalSystemIdString" value="GRADLE" />
         <option name="scriptParameters" value="" />
         <option name="taskDescriptions">
@@ -193,6 +202,8 @@
         <option name="taskNames">
           <list>
             <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;backend.finance.api_user.infrastructure.controllers.CustomerControllerIntegrationTest&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -293,11 +304,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.api-users [build]" />
-        <item itemvalue="Gradle.api-users [clean]" />
         <item itemvalue="Gradle.Tests in 'api-users.test'" />
+        <item itemvalue="Gradle.CustomerControllerIntegrationTest" />
         <item itemvalue="Gradle.api-users [generateAvroJava]" />
-        <item itemvalue="Gradle.Tests in 'api-user.test'" />
+        <item itemvalue="Gradle.api-users [clean]" />
+        <item itemvalue="Gradle.api-users [build]" />
       </list>
     </recent_temporary>
   </component>

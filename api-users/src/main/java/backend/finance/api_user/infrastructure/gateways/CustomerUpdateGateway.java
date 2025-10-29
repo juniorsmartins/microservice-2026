@@ -39,7 +39,7 @@ public class CustomerUpdateGateway implements CustomerUpdateOutputPort {
                     return customerJpa;
                 })
                 .map(customerRepository::save)
-                .map(customerPresenter::toCustomerDto)
+                .map(customerPresenter::toDto)
                 .orElseThrow(() -> new CustomerNotFoundCustomException(customer.getId()));
     }
 }

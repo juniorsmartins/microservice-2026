@@ -1,8 +1,7 @@
 package backend.finance.api_user.infrastructure.controllers;
 
-import backend.finance.api.users.CustomerKafka;
 import backend.finance.api_user.application.configs.exception.http404.CustomerNotFoundCustomException;
-import backend.finance.api_user.application.configs.kafka.KafkaProducer;
+import backend.finance.api_user.application.configs.mensageria.producer.Producer;
 import backend.finance.api_user.application.dtos.input.CustomerRequest;
 import backend.finance.api_user.application.dtos.output.CustomerResponse;
 import backend.finance.api_user.infrastructure.ports.input.CustomerCreateInputPort;
@@ -16,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -23,7 +23,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class CustomerController {
 
-    protected static final String URI_CUSTOMERS = "/api/v1/customers";
+    protected static final String URI_CUSTOMERS = "/v1/customers";
 
     private final CustomerCreateInputPort customerCreateInputPort;
 
@@ -35,25 +35,31 @@ public class CustomerController {
 
     private final CustomerPresenter customerPresenter;
 
-    private final KafkaProducer kafkaProducer;
+    private final Producer producer;
 
     @PostMapping
     public ResponseEntity<CustomerResponse> create(@RequestBody @Valid CustomerRequest request) {
 
-        var dto = customerCreateInputPort.create(request);
-        var response = customerPresenter.toCustomerResponse(dto);
-        kafkaProducer.enviarEvento(new CustomerKafka(response.id().toString(), response.name(), response.email()));
+        var customerResponse = Optional.ofNullable(request)
+                .map(customerCreateInputPort::create)
+                .map(customerPresenter::toResponse)
+                .map(response -> {
+                    var message = customerPresenter.toMessage(response);
+                    producer.sendEventCreateCustomer(message);
+                    return response;
+                })
+                .orElseThrow();
 
         return ResponseEntity
-                .created(URI.create(URI_CUSTOMERS + "/" + response.id()))
-                .body(response);
+                .created(URI.create(URI_CUSTOMERS + "/" + customerResponse.id()))
+                .body(customerResponse);
     }
 
     @PutMapping(path = "/{id}")
     public ResponseEntity<CustomerResponse> update(@PathVariable(name = "id") final UUID id, @RequestBody @Valid CustomerRequest request) {
 
         var customerDto = customerUpdateInputPort.update(id, request);
-        var response = customerPresenter.toCustomerResponse(customerDto);
+        var response = customerPresenter.toResponse(customerDto);
 
         return ResponseEntity
                 .ok()
@@ -64,6 +70,7 @@ public class CustomerController {
     public ResponseEntity<Void> deleteById(@PathVariable(name = "id") final UUID id) {
 
         customerDeleteInputPort.deleteById(id);
+
         return ResponseEntity
                 .noContent()
                 .build();
@@ -73,7 +80,7 @@ public class CustomerController {
     public ResponseEntity<CustomerResponse> findById(@PathVariable(name = "id") final UUID id) {
 
         return customerQueryOutputPort.findById(id)
-                .map(customerPresenter::toCustomerResponse)
+                .map(customerPresenter::toResponse)
                 .map(dto -> ResponseEntity.ok().body(dto))
                 .orElseThrow(() -> new CustomerNotFoundCustomException(id));
     }

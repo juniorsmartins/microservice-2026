@@ -1,4 +1,4 @@
-package backend.finance.api_user.application.configs.kafka;
+package backend.finance.api_user.application.configs.mensageria;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -8,13 +8,13 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @Getter
 @Setter
-public class KafkaPropertiesConfig {
+public class PropertiesConfig {
 
     @Value("${spring.kafka.bootstrap-servers}")
     public String bootstrapServers;
 
-    @Value(value = "${spring.kafka.topic.evento-create-customer}")
-    public String topicoEventoCreateCustomer;
+    @Value(value = "${spring.kafka.topic.event-create-customer}")
+    public String topicEventCreateCustomer;
 
     @Value("${spring.kafka.properties.schema.registry.url}")
     public String schemaRegistryUrl;

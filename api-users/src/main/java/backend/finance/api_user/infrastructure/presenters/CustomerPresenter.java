@@ -1,5 +1,6 @@
 package backend.finance.api_user.infrastructure.presenters;
 
+import backend.finance.api.users.CustomerMessage;
 import backend.finance.api_user.application.dtos.internal.CustomerDto;
 import backend.finance.api_user.application.dtos.output.CustomerResponse;
 import backend.finance.api_user.domain.entities.Customer;
@@ -7,9 +8,11 @@ import backend.finance.api_user.infrastructure.jpas.CustomerJpa;
 
 public interface CustomerPresenter {
 
-    CustomerResponse toCustomerResponse(CustomerDto dto);
+    CustomerResponse toResponse(CustomerDto dto);
 
-    CustomerDto toCustomerDto(CustomerJpa jpa);
+    CustomerDto toDto(CustomerJpa jpa);
 
-    CustomerJpa toCustomerJpa(Customer customer);
+    CustomerJpa toJpa(Customer customer);
+
+    CustomerMessage toMessage(CustomerResponse response);
 }

@@ -1,4 +1,4 @@
-package backend.finance.api_user.application.configs.kafka;
+package backend.finance.api_user.application.configs.mensageria;
 
 import lombok.RequiredArgsConstructor;
 import org.apache.kafka.clients.admin.NewTopic;
@@ -8,16 +8,16 @@ import org.springframework.kafka.config.TopicBuilder;
 
 @Configuration
 @RequiredArgsConstructor
-public class KafkaTopicsConfig {
+public class TopicsConfig {
 
-    private final KafkaPropertiesConfig kafkaPropertiesConfig; // Injetar a configuração de propriedades do Kafka
+    private final PropertiesConfig propertiesConfig; // Injetar a configuração de propriedades do Kafka
 
     @Bean
-    public NewTopic criarTopicoEventoCreateCustomer() {
-        return montarTopico(kafkaPropertiesConfig.topicoEventoCreateCustomer, 1, (short) 1);
+    public NewTopic upTopicEventCreateCustomer() {
+        return buildTopic(propertiesConfig.topicEventCreateCustomer, 1, (short) 1);
     }
 
-    private NewTopic montarTopico(String nome, int numReplicas, short numParticoes) {
+    private NewTopic buildTopic(String nome, int numReplicas, short numParticoes) {
         return TopicBuilder
                 .name(nome)
                 .replicas(numReplicas)

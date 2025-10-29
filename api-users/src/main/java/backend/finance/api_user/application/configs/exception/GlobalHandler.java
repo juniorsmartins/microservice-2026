@@ -75,6 +75,7 @@ public final class GlobalHandler extends ResponseEntityExceptionHandler {
                 .body(problemDetail);
     }
 
+    // ---------- 404 Not-Found ---------- //
     @ExceptionHandler(ResourceNotFoundCustomException.class)
     public ResponseEntity<ProblemDetail> handleResourceNotFound(ResourceNotFoundCustomException ex) {
 

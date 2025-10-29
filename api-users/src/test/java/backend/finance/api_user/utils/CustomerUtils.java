@@ -5,7 +5,7 @@ import backend.finance.api_user.application.dtos.input.UserRequest;
 
 public class CustomerUtils {
 
-    public static CustomerRequest trainCustomerRequest(String name, String email, UserRequest user) {
+    public static CustomerRequest trainRequest(String name, String email, UserRequest user) {
         return new CustomerRequest(name, email, user);
     }
 }

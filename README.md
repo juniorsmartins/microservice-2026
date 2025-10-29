@@ -36,12 +36,14 @@
 - Spring Data JPA;
 - Spring Security;
 - Bean Validation;
-- Lombok;
 - Liquibase (migration);
-- Apache Kafka (mensageria);
+- Apache Kafka, Schema Registry e Apache Avro (mensageria);
+- RestAssured, JUnit e Mockito (testes);
 - PostgreSQL (versão 17 - banco de dados relacional);
 - H2 Database (banco de dados em memória para testes);
 - Docker (dockerfile e docker compose);
+- Lombok;
+- DevTools.
 
 ### Diagramas User
 

@@ -72,7 +72,7 @@ spring:
   kafka:
     bootstrap-servers: kafka:9092
     topic:
-      evento-create-customer: evento-create-customer
+      event-create-customer: event-create-customer
     properties:
       schema.registry.url: http://kafka:8081
       specific.avro.reader: true
