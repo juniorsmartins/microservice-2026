@@ -228,8 +228,6 @@ class CustomerControllerIntegrationTest extends BaseIntegrationTest {
                         .body("user.username", Matchers.equalTo(userRequestUp.username()));
         }
 
-        // TODO
-
         @Test
         void dadaRequisicaoValidaSemAlterarEmailAndUsername_quandoChamarUpdate_entaoSalvarNoBanco() {
             var emailEqual = "doe@gmail.com";
@@ -275,10 +273,28 @@ class CustomerControllerIntegrationTest extends BaseIntegrationTest {
 
         @Test
         void dadaRequisicaoInvalidaComIdInexistente_quandoChamarUpdate_entaoLancarException() {
-            // Arrange
             var idCustomerInvalid = UUID.randomUUID();
             var userRequestUp = UserUtils.trainRequest("robert_plant", "password123", RoleEnum.ROLE_ADMIN.getValue());
             var customerRequestUp = CustomerUtils.trainRequest("Robert Plant", "plant@gmail.com", userRequestUp);
+
+            RestAssured.given()
+                        .contentType(ContentType.JSON)
+                        .body(customerRequestUp)
+                    .when()
+                        .put("/{id}", idCustomerInvalid)
+                    .then()
+                        .statusCode(HttpStatus.NOT_FOUND.value())
+                        .body("title", Matchers.equalTo("Cliente não encontrado por id: " + idCustomerInvalid + "."));
+        }
+
+        @Test
+        void dadaRequisicaoInvalidaComIdInexistente_quandoChamarUpdate_entaoLancarCustomerNotFoundCustomException() {
+            // Arrange
+            var idCustomerInvalid = UUID.randomUUID();
+            var userRequestUp = UserUtils
+                    .trainRequest("robert_plant", "password123", RoleEnum.ROLE_ADMIN.getValue());
+            var customerRequestUp = CustomerUtils
+                    .trainRequest("Robert Plant", "plant@gmail.com", userRequestUp);
             // Act & Assert
             assertThrows(CustomerNotFoundCustomException.class, () -> customerController.update(idCustomerInvalid, customerRequestUp));
         }
@@ -294,11 +310,53 @@ class CustomerControllerIntegrationTest extends BaseIntegrationTest {
             var userRequestUp = UserUtils.trainRequest("anne_frank_atual", "password123", RoleEnum.ROLE_ADMIN.getValue());
             var customerRequestUp = CustomerUtils.trainRequest("Anne Atual Frank", emailDuplicate, userRequestUp);
 
+            RestAssured.given()
+                        .contentType(ContentType.JSON)
+                        .body(customerRequestUp)
+                    .when()
+                        .put("/{id}", idCustomer)
+                    .then()
+                        .statusCode(HttpStatus.CONFLICT.value())
+                        .body("title", Matchers.equalTo("Esse email já existe no sistema: " + emailDuplicate + "."));
+        }
+
+        @Test
+        void dadaRequisicaoInvalidaComEmailDuplicado_quandoChamarUpdate_entaoLancarEmailConflictRulesCustomException() {
+            var emailDuplicate = "doe@gmail.com";
+            var userRequest = UserUtils.trainRequest("johndoe", "password123", RoleEnum.ROLE_CUSTOMER.getValue());
+            var request = CustomerUtils.trainRequest("John Doe", emailDuplicate, userRequest);
+            customerController.create(request);
+
+            var idCustomer = customerResponse.id();
+            var userRequestUp = UserUtils.trainRequest("anne_frank_atual", "password123", RoleEnum.ROLE_ADMIN.getValue());
+            var customerRequestUp = CustomerUtils.trainRequest("Anne Atual Frank", emailDuplicate, userRequestUp);
+
             assertThrows(EmailConflictRulesCustomException.class, () -> customerController.update(idCustomer, customerRequestUp));
         }
 
         @Test
         void dadaRequisicaoInvalidaComUsernameDuplicado_quandoChamarUpdate_entaoLancarException() {
+            var usernameDuplicate = "johndoe";
+            var userRequest = UserUtils.trainRequest(usernameDuplicate, "password123", RoleEnum.ROLE_CUSTOMER.getValue());
+            var request = CustomerUtils.trainRequest("John Doe", "doe@gmail.com", userRequest);
+            customerController.create(request);
+
+            var idCustomer = customerResponse.id();
+            var userRequestUp = UserUtils.trainRequest(usernameDuplicate, "password123", RoleEnum.ROLE_ADMIN.getValue());
+            var customerRequestUp = CustomerUtils.trainRequest("Anne Atual Frank", "frank_atual@gmail.com", userRequestUp);
+
+            RestAssured.given()
+                        .contentType(ContentType.JSON)
+                        .body(customerRequestUp)
+                    .when()
+                        .put("/{id}", idCustomer)
+                    .then()
+                        .statusCode(HttpStatus.CONFLICT.value())
+                        .body("title", Matchers.equalTo("Esse username já existe no sistema: " + usernameDuplicate + "."));
+        }
+
+        @Test
+        void dadaRequisicaoInvalidaComUsernameDuplicado_quandoChamarUpdate_entaoLancarUsernameConflictRulesCustomException() {
             var usernameDuplicate = "johndoe";
             var userRequest = UserUtils.trainRequest(usernameDuplicate, "password123", RoleEnum.ROLE_CUSTOMER.getValue());
             var request = CustomerUtils.trainRequest("John Doe", "doe@gmail.com", userRequest);
@@ -360,15 +418,18 @@ class CustomerControllerIntegrationTest extends BaseIntegrationTest {
 
         @Test
         void dadaRequisicaoValida_quandoChamarFindById_entaoRetornarCustomer() {
-            // Arrange
-            var customerId = customerResponse.id();
-            // Act
-            var responseFind = customerController.findById(customerId);
-            // Assert
-            var customerResponse = responseFind.getBody();
-            assertEquals(customerRequest.user().username(), customerResponse.user().username());
-            assertEquals(customerRequest.name(), customerResponse.name());
-            assertEquals(customerRequest.email(), customerResponse.email());
+
+            RestAssured.given()
+                        .contentType(ContentType.JSON)
+                    .when()
+                        .get("/{id}", customerResponse.id())
+                    .then()
+                        .statusCode(HttpStatus.OK.value())
+                        .body("id", Matchers.notNullValue())
+                        .body("name", Matchers.equalTo(customerResponse.name()))
+                        .body("email", Matchers.equalTo(customerResponse.email()))
+                        .body("user.id", Matchers.notNullValue())
+                        .body("user.username", Matchers.equalTo(customerResponse.user().username()));
         }
     }
 
@@ -378,6 +439,19 @@ class CustomerControllerIntegrationTest extends BaseIntegrationTest {
 
         @Test
         void dadaRequisicaoInvalidaComIdInexistente_quandoChamarFindById_entaoLancarException() {
+            var idNotFound = UUID.randomUUID();
+
+            RestAssured.given()
+                        .contentType(ContentType.JSON)
+                    .when()
+                        .get("/{id}", idNotFound)
+                    .then()
+                        .statusCode(HttpStatus.NOT_FOUND.value())
+                        .body("title", Matchers.equalTo("Cliente não encontrado por id: " + idNotFound + "."));
+        }
+
+        @Test
+        void dadaRequisicaoInvalidaComIdInexistente_quandoChamarFindById_entaoLancarCustomerNotFoundCustomException() {
             var idNotFound = UUID.randomUUID();
             assertThrows(CustomerNotFoundCustomException.class, () -> customerController.findById(idNotFound));
         }
