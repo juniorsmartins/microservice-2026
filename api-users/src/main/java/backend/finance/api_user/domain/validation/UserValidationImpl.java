@@ -16,8 +16,8 @@ public class UserValidationImpl implements UserValidation {
     @Override
     public void checkDuplicateUsername(UUID customerId, String username) {
         customerQueryOutputPort.findByUsername(username)
-                .ifPresent(customerDto -> {
-                    if (customerId == null || !customerId.equals(customerDto.id())) {
+                .ifPresent(customer -> {
+                    if (customerId == null || !customerId.equals(customer.getId())) {
                         throw new UsernameConflictRulesCustomException(username);
                     }
                 });

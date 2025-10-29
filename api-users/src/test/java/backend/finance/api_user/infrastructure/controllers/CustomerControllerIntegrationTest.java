@@ -87,6 +87,7 @@ class CustomerControllerIntegrationTest extends BaseIntegrationTest {
                         .body("id", Matchers.notNullValue())
                         .body("name", Matchers.equalTo(request.name()))
                         .body("email", Matchers.equalTo(request.email()))
+                        .body("active", Matchers.equalTo(true))
                         .body("user.id", Matchers.notNullValue())
                         .body("user.username", Matchers.equalTo(userRequest.username()));
         }
@@ -103,6 +104,7 @@ class CustomerControllerIntegrationTest extends BaseIntegrationTest {
             assertEquals(userRequest.username(), customerJpa.getUser().getUsername());
             assertEquals(request.name(), customerJpa.getName());
             assertEquals(request.email(), customerJpa.getEmail());
+            assertEquals(true, customerJpa.isActive());
             assertEquals(RoleEnum.ROLE_CUSTOMER, customerJpa.getUser().getRole().getName());
         }
 
@@ -118,6 +120,7 @@ class CustomerControllerIntegrationTest extends BaseIntegrationTest {
             assertEquals(userRequest.username(), customerJpa.getUser().getUsername());
             assertEquals(request.name(), customerJpa.getName());
             assertEquals(request.email(), customerJpa.getEmail());
+            assertEquals(true, customerJpa.isActive());
             assertEquals(RoleEnum.ROLE_ADMIN, customerJpa.getUser().getRole().getName());
         }
     }
@@ -224,6 +227,7 @@ class CustomerControllerIntegrationTest extends BaseIntegrationTest {
                         .body("id", Matchers.notNullValue())
                         .body("name", Matchers.equalTo(request.name()))
                         .body("email", Matchers.equalTo(request.email()))
+                        .body("active", Matchers.equalTo(true))
                         .body("user.id", Matchers.notNullValue())
                         .body("user.username", Matchers.equalTo(userRequestUp.username()));
         }
@@ -247,6 +251,7 @@ class CustomerControllerIntegrationTest extends BaseIntegrationTest {
             assertEquals(usernameEqual, customerDb.getUser().getUsername());
             assertEquals(userRequestUpdate.password(), customerDb.getUser().getPassword());
             assertEquals(customerRequestUpdate.name(), customerDb.getName());
+            assertTrue(customerDb.isActive());
             assertEquals(emailEqual, customerDb.getEmail());
         }
 
@@ -263,6 +268,7 @@ class CustomerControllerIntegrationTest extends BaseIntegrationTest {
             assertEquals(userRequestUp.role(), customerUpdate.getUser().getRole().getName().getValue());
             assertEquals(userRequestUp.username(), customerUpdate.getUser().getUsername());
             assertEquals(customerRequestUp.name(), customerUpdate.getName());
+            assertTrue(customerUpdate.isActive());
             assertEquals(customerRequestUp.email(), customerUpdate.getEmail());
         }
     }
@@ -375,29 +381,32 @@ class CustomerControllerIntegrationTest extends BaseIntegrationTest {
     class DeleteValid {
 
         @Test
-        void dadaRequisicaoValida_quandoChamarDeleteById_entaoRetornarHttpNoContent() {
-            var idValid = customerResponse.id();
-            var response = customerController.deleteById(idValid);
-            assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
+        void dadaRequisicaoValida_quandoDeleteById_entaoRetornarSucesso() {
+
+            RestAssured.given()
+                        .contentType(ContentType.JSON)
+                    .when()
+                        .delete("/{id}", customerResponse.id())
+                    .then()
+                        .statusCode(HttpStatus.NO_CONTENT.value());
         }
 
         @Test
-        void dadaRequisicaoValida_quandoChamarDeleteById_entaoDeletarCustomerAndUser() {
-            var idCustomerValid = customerResponse.id();
-            var customerDoBancoAntes = customerRepository.findById(idCustomerValid);
-            assertTrue(customerDoBancoAntes.isPresent());
+        void dadaRequisicaoValida_quandoDeleteById_entaoArmazenarAtivoFalseNoBancoDeDados() {
+            var customerActiveTrue = customerRepository.findById(customerResponse.id());
+            assertTrue(customerActiveTrue.isPresent());
+            assertTrue(customerActiveTrue.get().isActive());
 
-            var idUserValid = customerResponse.user().id();
-            var userDoBancoAntes = userRepository.findById(idUserValid);
-            assertTrue(userDoBancoAntes.isPresent());
+            RestAssured.given()
+                        .contentType(ContentType.JSON)
+                    .when()
+                        .delete("/{id}", customerResponse.id())
+                    .then()
+                        .statusCode(HttpStatus.NO_CONTENT.value());
 
-            customerController.deleteById(idCustomerValid);
-
-            var customerDoBancoDepois = customerRepository.findById(idCustomerValid);
-            assertTrue(customerDoBancoDepois.isEmpty());
-
-            var userDoBancoDepois = userRepository.findById(idUserValid);
-            assertTrue(userDoBancoDepois.isEmpty());
+            var customerActiveFalse = customerRepository.findById(customerResponse.id());
+            assertTrue(customerActiveFalse.isPresent());
+            assertFalse(customerActiveFalse.get().isActive());
         }
     }
 
@@ -406,9 +415,46 @@ class CustomerControllerIntegrationTest extends BaseIntegrationTest {
     class DeleteInvalid {
 
         @Test
-        void dadaRequisicaoInvalidaComIdInexistente_quandoChamarDeleteById_entaoLancarException() {
+        void dadaRequisicaoComIdInexistente_quandoDeleteById_entaoLancarException() {
+            var idInexistente = UUID.randomUUID();
+
+            RestAssured.given()
+                        .contentType(ContentType.JSON)
+                    .when()
+                        .delete("/{id}", idInexistente)
+                    .then()
+                        .statusCode(HttpStatus.NOT_FOUND.value())
+                        .body("title", Matchers.equalTo("Cliente não encontrado por id: " + idInexistente + "."));
+        }
+
+        @Test
+        void dadaRequisicaoComIdInexistente_quandoDeleteById_entaoLancarCustomerNotFoundCustomException() {
             var idNotFound = UUID.randomUUID();
-            assertThrows(CustomerNotFoundCustomException.class, () -> customerController.deleteById(idNotFound));
+            assertThrows(CustomerNotFoundCustomException.class, () -> customerController.disableById(idNotFound));
+        }
+
+        @Test
+        void dadaRequisicaoComIdDesativado_quandoDeleteById_entaoLancarExceptionAndTerNoBancoComoFalse() {
+            var idCustomer = customerResponse.id();
+
+            var customerBuscadoAntes = customerRepository.findById(idCustomer).orElseThrow();
+            assertNotNull(customerBuscadoAntes);
+            assertTrue(customerBuscadoAntes.isActive());
+
+            var customerDesativado = customerController.disableById(idCustomer);
+            assertEquals(HttpStatus.NO_CONTENT, customerDesativado.getStatusCode());
+
+            RestAssured.given()
+                        .contentType(ContentType.JSON)
+                    .when()
+                        .delete("/{id}", idCustomer)
+                    .then()
+                        .statusCode(HttpStatus.NOT_FOUND.value())
+                        .body("title", Matchers.equalTo("Cliente não encontrado por id: " + idCustomer + "."));
+
+            var customerBuscadoDepois = customerRepository.findById(idCustomer).orElseThrow();
+            assertNotNull(customerBuscadoDepois);
+            assertFalse(customerBuscadoDepois.isActive());
         }
     }
 
@@ -428,6 +474,7 @@ class CustomerControllerIntegrationTest extends BaseIntegrationTest {
                         .body("id", Matchers.notNullValue())
                         .body("name", Matchers.equalTo(customerResponse.name()))
                         .body("email", Matchers.equalTo(customerResponse.email()))
+                        .body("active", Matchers.equalTo(true))
                         .body("user.id", Matchers.notNullValue())
                         .body("user.username", Matchers.equalTo(customerResponse.user().username()));
         }
@@ -438,7 +485,7 @@ class CustomerControllerIntegrationTest extends BaseIntegrationTest {
     class FindByIdInvalid {
 
         @Test
-        void dadaRequisicaoInvalidaComIdInexistente_quandoChamarFindById_entaoLancarException() {
+        void dadaRequisicaoComIdInexistente_quandoChamarFindById_entaoLancarException() {
             var idNotFound = UUID.randomUUID();
 
             RestAssured.given()
@@ -451,9 +498,33 @@ class CustomerControllerIntegrationTest extends BaseIntegrationTest {
         }
 
         @Test
-        void dadaRequisicaoInvalidaComIdInexistente_quandoChamarFindById_entaoLancarCustomerNotFoundCustomException() {
+        void dadaRequisicaoComIdInexistente_quandoChamarFindById_entaoLancarCustomerNotFoundCustomException() {
             var idNotFound = UUID.randomUUID();
             assertThrows(CustomerNotFoundCustomException.class, () -> customerController.findById(idNotFound));
+        }
+
+        @Test
+        void dadaRequisicaoComIdDesativado_quandoConsultarPorId_entaoLancarExcecao() {
+            var idCustomer = customerResponse.id();
+
+            var customerBuscadoAntes = customerRepository.findById(idCustomer).orElseThrow();
+            assertNotNull(customerBuscadoAntes);
+            assertTrue(customerBuscadoAntes.isActive());
+
+            var customerDesativado = customerController.disableById(customerResponse.id());
+            assertEquals(HttpStatus.NO_CONTENT, customerDesativado.getStatusCode());
+
+            RestAssured.given()
+                        .contentType(ContentType.JSON)
+                    .when()
+                        .get("/{id}", customerResponse.id())
+                    .then()
+                        .statusCode(HttpStatus.NOT_FOUND.value())
+                        .body("title", Matchers.equalTo("Cliente não encontrado por id: " + customerResponse.id() + "."));
+
+            var customerBuscadoDepois = customerRepository.findById(idCustomer).orElseThrow();
+            assertNotNull(customerBuscadoDepois);
+            assertFalse(customerBuscadoDepois.isActive());
         }
     }
 }

@@ -19,6 +19,11 @@ public final class UserPresenterImpl implements UserPresenter {
     }
 
     @Override
+    public UserResponse toUserResponse(Usuario usuario) {
+        return new UserResponse(usuario.getId(), usuario.getUsername());
+    }
+
+    @Override
     public UserDto toUserDto(UserJpa jpa) {
         return new UserDto(jpa.getId(), jpa.getUsername());
     }
@@ -27,5 +32,11 @@ public final class UserPresenterImpl implements UserPresenter {
     public UserJpa toUserJpa(Usuario usuario) {
         var roleJpa = rolePresenter.toRoleJpa(usuario.getRole());
         return new UserJpa(usuario.getId(), usuario.getUsername(), usuario.getPassword(), roleJpa);
+    }
+
+    @Override
+    public Usuario toEntity(UserJpa jpa) {
+        var permissao = rolePresenter.toEntity(jpa.getRole());
+        return Usuario.create(jpa.getId(), jpa.getUsername(), jpa.getPassword(), permissao);
     }
 }

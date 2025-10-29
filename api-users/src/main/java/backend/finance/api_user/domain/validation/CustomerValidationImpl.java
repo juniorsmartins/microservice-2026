@@ -16,8 +16,8 @@ public class CustomerValidationImpl implements CustomerValidation {
     @Override
     public void checkDuplicateEmail(UUID customerId, String email) {
         customerQueryOutputPort.findByEmail(email)
-                .ifPresent(customerDto -> {
-                    if (customerId == null || !customerId.equals(customerDto.id())) {
+                .ifPresent(customer -> {
+                    if (customerId == null || !customerId.equals(customer.getId())) {
                         throw new EmailConflictRulesCustomException(email);
                     }
                 });

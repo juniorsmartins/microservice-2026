@@ -1,14 +1,13 @@
 package backend.finance.api_user.application.usecases;
 
 import backend.finance.api_user.application.dtos.input.CustomerRequest;
-import backend.finance.api_user.application.dtos.internal.CustomerDto;
 import backend.finance.api_user.domain.entities.Customer;
 import backend.finance.api_user.domain.entities.Permissao;
 import backend.finance.api_user.domain.entities.Usuario;
 import backend.finance.api_user.domain.validation.CustomerValidation;
+import backend.finance.api_user.domain.validation.RoleValidation;
 import backend.finance.api_user.domain.validation.UserValidation;
 import backend.finance.api_user.infrastructure.ports.input.CustomerUpdateInputPort;
-import backend.finance.api_user.domain.validation.RoleValidation;
 import backend.finance.api_user.infrastructure.ports.output.CustomerUpdateOutputPort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -28,7 +27,7 @@ public class CustomerUpdateUseCase implements CustomerUpdateInputPort {
     private final RoleValidation roleValidation;
 
     @Override
-    public CustomerDto update(UUID customerId, CustomerRequest request) {
+    public Customer update(UUID customerId, CustomerRequest request) {
 
         customerValidation.checkDuplicateEmail(customerId, request.email());
         userValidation.checkDuplicateUsername(customerId, request.user().username());
@@ -36,7 +35,7 @@ public class CustomerUpdateUseCase implements CustomerUpdateInputPort {
         var roleDto = roleValidation.getOrCreateRole(request.user().role());
         var permissao = Permissao.create(roleDto.id(), roleDto.name());
         var usuario = Usuario.create(request.user().username(), request.user().password(), permissao);
-        var customer = Customer.create(customerId, request.name(), request.email(), usuario);
+        var customer = Customer.create(customerId, request.name(), request.email(), usuario, true);
 
         return customerUpdateOutputPort.update(customer);
     }

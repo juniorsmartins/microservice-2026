@@ -1,6 +1,6 @@
 package backend.finance.api_user.infrastructure.gateways;
 
-import backend.finance.api_user.application.dtos.internal.CustomerDto;
+import backend.finance.api_user.domain.entities.Customer;
 import backend.finance.api_user.infrastructure.ports.output.CustomerQueryOutputPort;
 import backend.finance.api_user.infrastructure.presenters.CustomerPresenter;
 import backend.finance.api_user.infrastructure.repositories.CustomerRepository;
@@ -19,24 +19,30 @@ public class CustomerQueryGateway implements CustomerQueryOutputPort {
 
     private final CustomerPresenter customerPresenter;
 
+    @Override
+    public Optional<Customer> findByIdAndActiveTrue(UUID id) {
+        return customerRepository.findByIdAndActiveTrue(id)
+                .map(customerPresenter::toEntity);
+    }
+
     @Transactional(readOnly = true)
     @Override
-    public Optional<CustomerDto> findById(UUID id) {
+    public Optional<Customer> findById(UUID id) {
         return customerRepository.findById(id)
-                .map(customerPresenter::toDto);
+                .map(customerPresenter::toEntity);
     }
 
     @Transactional(readOnly = true)
     @Override
-    public Optional<CustomerDto> findByEmail(String email) {
+    public Optional<Customer> findByEmail(String email) {
         return customerRepository.findByEmail(email)
-                .map(customerPresenter::toDto);
+                .map(customerPresenter::toEntity);
     }
 
     @Transactional(readOnly = true)
     @Override
-    public Optional<CustomerDto> findByUsername(String username) {
+    public Optional<Customer> findByUsername(String username) {
         return customerRepository.findByUserUsername(username)
-                .map(customerPresenter::toDto);
+                .map(customerPresenter::toEntity);
     }
 }

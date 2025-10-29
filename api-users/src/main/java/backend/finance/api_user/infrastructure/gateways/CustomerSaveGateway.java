@@ -1,6 +1,5 @@
 package backend.finance.api_user.infrastructure.gateways;
 
-import backend.finance.api_user.application.dtos.internal.CustomerDto;
 import backend.finance.api_user.domain.entities.Customer;
 import backend.finance.api_user.infrastructure.ports.output.CustomerSaveOutputPort;
 import backend.finance.api_user.infrastructure.presenters.CustomerPresenter;
@@ -19,9 +18,9 @@ public class CustomerSaveGateway implements CustomerSaveOutputPort {
 
     @Transactional
     @Override
-    public CustomerDto save(Customer customer) {
+    public Customer save(Customer customer) {
         var customerJpa = customerPresenter.toJpa(customer);
         var customerSave = customerRepository.save(customerJpa);
-        return customerPresenter.toDto(customerSave);
+        return customerPresenter.toEntity(customerSave);
     }
 }

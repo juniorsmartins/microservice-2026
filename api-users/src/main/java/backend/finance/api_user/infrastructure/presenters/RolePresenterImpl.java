@@ -22,4 +22,9 @@ public class RolePresenterImpl implements RolePresenter {
     public RoleJpa toRoleJpa(Permissao permissao) {
         return new RoleJpa(permissao.getId(), permissao.getName());
     }
+
+    @Override
+    public Permissao toEntity(RoleJpa jpa) {
+        return Permissao.create(jpa.getId(), jpa.getName());
+    }
 }

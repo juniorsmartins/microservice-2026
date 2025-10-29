@@ -17,19 +17,31 @@ public final class CustomerPresenterImpl implements CustomerPresenter {
     @Override
     public CustomerResponse toResponse(CustomerDto dto) {
         var userResponse = userPresenter.toUserResponse(dto.user());
-        return new CustomerResponse(dto.id(), dto.name(), dto.email(), userResponse);
+        return new CustomerResponse(dto.id(), dto.name(), dto.email(), userResponse, dto.active());
+    }
+
+    @Override
+    public CustomerResponse toResponse(Customer customer) {
+        var userResponse = userPresenter.toUserResponse(customer.getUser());
+        return new CustomerResponse(customer.getId(), customer.getName(), customer.getEmail(), userResponse, customer.isActive());
     }
 
     @Override
     public CustomerDto toDto(CustomerJpa jpa) {
         var userDto = userPresenter.toUserDto(jpa.getUser());
-        return new CustomerDto(jpa.getId(), jpa.getName(), jpa.getEmail(), userDto);
+        return new CustomerDto(jpa.getId(), jpa.getName(), jpa.getEmail(), userDto, jpa.isActive());
     }
 
     @Override
     public CustomerJpa toJpa(Customer customer) {
         var userJpa = userPresenter.toUserJpa(customer.getUser());
-        return new CustomerJpa(customer.getId(), customer.getName(), customer.getEmail(), userJpa);
+        return new CustomerJpa(customer.getId(), customer.getName(), customer.getEmail(), userJpa, customer.isActive());
+    }
+
+    @Override
+    public Customer toEntity(CustomerJpa jpa) {
+        var usuario = userPresenter.toEntity(jpa.getUser());
+        return Customer.create(jpa.getId(), jpa.getName(), jpa.getEmail(), usuario, jpa.isActive());
     }
 
     @Override

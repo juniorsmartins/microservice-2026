@@ -31,6 +31,10 @@ public final class Usuario {
         return new Usuario(null, username, password, permissao);
     }
 
+    public static Usuario create(UUID id, String username, String password, Permissao permissao) {
+        return new Usuario(id, username, password, permissao);
+    }
+
     private String checkValidUsername(String username) {
         checkNotBlank("username", username);
         checkSizeMax("username", USERNAME_SIZE_MAX, username);

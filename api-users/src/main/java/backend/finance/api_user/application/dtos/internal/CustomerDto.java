@@ -10,6 +10,8 @@ public record CustomerDto(
 
         String email,
 
-        UserDto user
+        UserDto user,
+
+        boolean active
 ) {
 }

@@ -1,15 +1,17 @@
 package backend.finance.api_user.infrastructure.ports.output;
 
-import backend.finance.api_user.application.dtos.internal.CustomerDto;
+import backend.finance.api_user.domain.entities.Customer;
 
 import java.util.Optional;
 import java.util.UUID;
 
 public interface CustomerQueryOutputPort {
 
-    Optional<CustomerDto> findById(UUID id);
+    Optional<Customer> findByIdAndActiveTrue(UUID id);
 
-    Optional<CustomerDto> findByEmail(String email);
+    Optional<Customer> findById(UUID id);
 
-    Optional<CustomerDto> findByUsername(String username);
+    Optional<Customer> findByEmail(String email);
+
+    Optional<Customer> findByUsername(String username);
 }

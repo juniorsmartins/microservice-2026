@@ -4,5 +4,5 @@ import java.util.UUID;
 
 public interface CustomerDeleteInputPort {
 
-    void deleteById(UUID id);
+    void disableById(UUID id);
 }

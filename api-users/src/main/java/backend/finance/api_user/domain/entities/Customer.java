@@ -26,15 +26,18 @@ public final class Customer {
 
     private final Usuario user;
 
-    private Customer(UUID id, String name, String email, Usuario usuario) {
+    private final boolean active;
+
+    private Customer(UUID id, String name, String email, Usuario usuario, boolean active) {
         this.id = id;
         this.name = validName(name);
         this.email = validEmail(email);
         this.user = usuario;
+        this.active = active;
     }
 
-    public static Customer create(UUID id, String name, String email, Usuario usuario) {
-        return new Customer(id, name, email, usuario);
+    public static Customer create(UUID id, String name, String email, Usuario usuario, boolean active) {
+        return new Customer(id, name, email, usuario, active);
     }
 
     private String validName(String name) {

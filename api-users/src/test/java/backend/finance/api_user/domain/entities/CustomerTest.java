@@ -31,7 +31,7 @@ class CustomerTest {
             var name = "Donald Trump";
             var email = "trump@gmail.com";
             // Act
-            var customer = Customer.create(id, name, email, usuarioMock);
+            var customer = Customer.create(id, name, email, usuarioMock, true);
             // Assert
             assertEquals(id, customer.getId());
             assertEquals(name, customer.getName());
@@ -50,7 +50,7 @@ class CustomerTest {
             var email = "trump@gmail.com";
             // Act & Assert
             var exception = assertThrows(AllNullFieldsCustomException.class,
-                    () -> Customer.create(id, null, email, usuarioMock));
+                    () -> Customer.create(id, null, email, usuarioMock, true));
             assertEquals("exception.field.null.request.all", exception.getMessage());
         }
 
@@ -62,7 +62,7 @@ class CustomerTest {
             var email = "trump@gmail.com";
             // Act & Assert
             var exception = assertThrows(AllNullFieldsCustomException.class,
-                    () -> Customer.create(id, name, email, usuarioMock));
+                    () -> Customer.create(id, name, email, usuarioMock, true));
             assertEquals("exception.field.null.request.all", exception.getMessage());
         }
 
@@ -72,7 +72,7 @@ class CustomerTest {
             var name = "Donald Trump da Silva Sauro da Manchuria Azul do Mar";
             var email = "trump@gmail.com";
             var exception = assertThrows(AttributeExceededMaximumLimitException.class,
-                    () -> Customer.create(id, name, email, usuarioMock));
+                    () -> Customer.create(id, name, email, usuarioMock, true));
             assertEquals("exception.field.exceeded-maximum-limit.request", exception.getMessage());
         }
     }
@@ -86,7 +86,7 @@ class CustomerTest {
             var id = UUID.randomUUID();
             var name = "Donald Trump";
             var exception = assertThrows(AllNullFieldsCustomException.class,
-                    () -> Customer.create(id, name, null, usuarioMock));
+                    () -> Customer.create(id, name, null, usuarioMock, true));
             assertEquals("exception.field.null.request.all", exception.getMessage());
         }
 
@@ -96,7 +96,7 @@ class CustomerTest {
             var id = UUID.randomUUID();
             var name = "Donald Trump";
             var exception = assertThrows(AllNullFieldsCustomException.class,
-                    () -> Customer.create(id, name, email, usuarioMock));
+                    () -> Customer.create(id, name, email, usuarioMock, true));
             assertEquals("exception.field.null.request.all", exception.getMessage());
         }
 
@@ -106,7 +106,7 @@ class CustomerTest {
             var name = "Donald Trump";
             var email = "donald_trump_email_ultrapassa_limite_de_tamanho_e_por_isso_lanca_excecao_abracadabra_abracadabra@gmail.com";
             var exception = assertThrows(AttributeExceededMaximumLimitException.class,
-                    () -> Customer.create(id, name, email, usuarioMock));
+                    () -> Customer.create(id, name, email, usuarioMock, true));
             assertEquals("exception.field.exceeded-maximum-limit.request", exception.getMessage());
         }
 
@@ -116,7 +116,7 @@ class CustomerTest {
             var id = UUID.randomUUID();
             var name = "Donald Trump";
             var exception = assertThrows(EmailInvalidFormatCustomException.class,
-                    () -> Customer.create(id, name, email, usuarioMock));
+                    () -> Customer.create(id, name, email, usuarioMock, true));
             assertEquals("exception.poorly.formulated.request.email", exception.getMessage());
         }
     }

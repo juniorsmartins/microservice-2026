@@ -11,4 +11,6 @@ public interface RolePresenter {
     RoleJpa toRoleJpa(RoleDto roleDto);
 
     RoleJpa toRoleJpa(Permissao permissao);
+
+    Permissao toEntity(RoleJpa jpa);
 }

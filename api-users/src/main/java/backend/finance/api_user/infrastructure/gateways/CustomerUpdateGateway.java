@@ -2,7 +2,6 @@ package backend.finance.api_user.infrastructure.gateways;
 
 import backend.finance.api_user.application.configs.exception.http404.CustomerNotFoundCustomException;
 import backend.finance.api_user.application.configs.exception.http404.RoleNotFoundCustomException;
-import backend.finance.api_user.application.dtos.internal.CustomerDto;
 import backend.finance.api_user.domain.entities.Customer;
 import backend.finance.api_user.infrastructure.ports.output.CustomerUpdateOutputPort;
 import backend.finance.api_user.infrastructure.presenters.CustomerPresenter;
@@ -24,7 +23,7 @@ public class CustomerUpdateGateway implements CustomerUpdateOutputPort {
 
     @Transactional
     @Override
-    public CustomerDto update(Customer customer) {
+    public Customer update(Customer customer) {
         var roleEnum = customer.getUser().getRole().getName();
         var roleJpa = roleRepository.findByName(roleEnum)
                 .orElseThrow(() -> new RoleNotFoundCustomException(roleEnum.name()));
@@ -39,7 +38,7 @@ public class CustomerUpdateGateway implements CustomerUpdateOutputPort {
                     return customerJpa;
                 })
                 .map(customerRepository::save)
-                .map(customerPresenter::toDto)
+                .map(customerPresenter::toEntity)
                 .orElseThrow(() -> new CustomerNotFoundCustomException(customer.getId()));
     }
 }

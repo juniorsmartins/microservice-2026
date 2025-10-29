@@ -8,6 +8,8 @@ import java.util.UUID;
 
 public interface CustomerRepository extends JpaRepository<CustomerJpa, UUID> {
 
+    Optional<CustomerJpa> findByIdAndActiveTrue(UUID id);
+
     Optional<CustomerJpa> findByEmail(String email);
 
     Optional<CustomerJpa> findByUserUsername(String username);

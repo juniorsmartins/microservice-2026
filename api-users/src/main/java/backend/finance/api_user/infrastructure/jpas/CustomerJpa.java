@@ -33,4 +33,7 @@ public final class CustomerJpa {
     @OneToOne(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, optional = false, orphanRemoval = true)
     @JoinColumn(name = "user_id", nullable = false, unique = true)
     private UserJpa user;
+
+    @Column(name = "active", nullable = false, columnDefinition = "BOOLEAN DEFAULT TRUE")
+    private boolean active;
 }

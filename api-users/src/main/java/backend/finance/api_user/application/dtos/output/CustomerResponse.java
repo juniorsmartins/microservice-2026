@@ -15,6 +15,8 @@ public record CustomerResponse(
 
         String email,
 
-        UserResponse user
+        UserResponse user,
+
+        boolean active
 ) {
 }
