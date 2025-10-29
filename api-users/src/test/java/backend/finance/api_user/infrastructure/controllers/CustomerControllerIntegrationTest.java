@@ -8,7 +8,6 @@ import backend.finance.api_user.application.dtos.input.CustomerRequest;
 import backend.finance.api_user.application.dtos.output.CustomerResponse;
 import backend.finance.api_user.domain.enums.RoleEnum;
 import backend.finance.api_user.infrastructure.repositories.CustomerRepository;
-import backend.finance.api_user.infrastructure.repositories.UserRepository;
 import backend.finance.api_user.utils.BaseIntegrationTest;
 import backend.finance.api_user.utils.CustomerUtils;
 import backend.finance.api_user.utils.UserUtils;
@@ -43,12 +42,7 @@ class CustomerControllerIntegrationTest extends BaseIntegrationTest {
     @Autowired
     private CustomerRepository customerRepository;
 
-    @Autowired
-    private UserRepository userRepository;
-
-    private CustomerRequest customerRequest;
-
-    private CustomerResponse customerResponse;
+    private CustomerResponse defaultCustomerResponse;
 
     @BeforeEach
     void setUp() {
@@ -56,8 +50,8 @@ class CustomerControllerIntegrationTest extends BaseIntegrationTest {
         RestAssured.basePath = URI_CUSTOMER;
 
         var userRequest = UserUtils.trainRequest(USERNAME_TESTE, "password123", RoleEnum.ROLE_CUSTOMER.getValue());
-        customerRequest = CustomerUtils.trainRequest("Anne Frank", EMAIL_TESTE, userRequest);
-        customerResponse = customerController.create(customerRequest).getBody();
+        var customerRequest = CustomerUtils.trainRequest("Anne Frank", EMAIL_TESTE, userRequest);
+        defaultCustomerResponse = customerController.create(customerRequest).getBody();
     }
 
     @AfterEach
@@ -71,10 +65,9 @@ class CustomerControllerIntegrationTest extends BaseIntegrationTest {
 
         @Test
         void dadaRequisicaoValida_quandoChamarCreate_entaoCriarComSucesso() {
-            var userRequest = UserUtils
-                    .trainRequest("johndoe", "password123", RoleEnum.ROLE_CUSTOMER.getValue());
-            var request = CustomerUtils
-                    .trainRequest("John Doe", "doe@gmail.com", userRequest);
+            var request =
+                    buildCustomerRequest("johndoe", "password123", RoleEnum.ROLE_CUSTOMER.getValue(),
+                            "John Doe", "doe@gmail.com");
 
             RestAssured.given()
                         .contentType(ContentType.JSON)
@@ -88,16 +81,15 @@ class CustomerControllerIntegrationTest extends BaseIntegrationTest {
                         .body("email", Matchers.equalTo(request.email()))
                         .body("active", Matchers.equalTo(true))
                         .body("user.id", Matchers.notNullValue())
-                        .body("user.username", Matchers.equalTo(userRequest.username()))
+                        .body("user.username", Matchers.equalTo(request.user().username()))
                         .body("user.active", Matchers.equalTo(true));
         }
 
         @Test
         void dadaRequisicaoValida_quandoChamarCreate_entaoDeveSalvarNoBanco() {
-            var userRequest = UserUtils
-                    .trainRequest("robertcm", "password123", RoleEnum.ROLE_CUSTOMER.getValue());
-            var request = CustomerUtils
-                    .trainRequest("Robert C. Martin", "robert@gmail.com", userRequest);
+            var request =
+                    buildCustomerRequest("robertcm", "password123", RoleEnum.ROLE_CUSTOMER.getValue(),
+                            "Robert C. Martin", "robert@gmail.com");
 
             var response = customerController.create(request).getBody();
             assertNotNull(response);
@@ -106,18 +98,17 @@ class CustomerControllerIntegrationTest extends BaseIntegrationTest {
             assertEquals(request.name(), customerJpa.getName());
             assertEquals(request.email(), customerJpa.getEmail());
             assertTrue(customerJpa.isActive());
-            assertEquals(userRequest.username(), customerJpa.getUser().getUsername());
-            assertEquals(userRequest.password(), customerJpa.getUser().getPassword());
+            assertEquals(request.user().username(), customerJpa.getUser().getUsername());
+            assertEquals(request.user().password(), customerJpa.getUser().getPassword());
             assertTrue(customerJpa.getUser().isActive());
             assertEquals(RoleEnum.ROLE_CUSTOMER, customerJpa.getUser().getRole().getName());
         }
 
         @Test
         void dadaRequisicaoValidaComRoleAdmin_quandoChamarCreate_entaoDeveSalvarCustomerNoBanco() {
-            var userRequest = UserUtils
-                    .trainRequest("robertcm", "password123", RoleEnum.ROLE_ADMIN.getValue());
-            var request = CustomerUtils
-                    .trainRequest("Robert C. Martin", "robert@gmail.com", userRequest);
+            var request =
+                    buildCustomerRequest("robertcm", "password123", RoleEnum.ROLE_ADMIN.getValue(),
+                            "Robert C. Martin", "robert@gmail.com");
 
             var response = customerController.create(request).getBody();
             assertNotNull(response);
@@ -133,8 +124,9 @@ class CustomerControllerIntegrationTest extends BaseIntegrationTest {
 
         @Test
         void dadaRequisicaoComEmailDuplicado_quandoChamarCreate_entaoDeveLancarException() {
-            var userRequest = UserUtils.trainRequest("jeffbeck", "password123", RoleEnum.ROLE_CUSTOMER.getValue());
-            var request = CustomerUtils.trainRequest("Jeff Beck", EMAIL_TESTE, userRequest);
+            var request =
+                    buildCustomerRequest("jeffbeck", "password123", RoleEnum.ROLE_ADMIN.getValue(),
+                            "Jeff Beck", EMAIL_TESTE);
 
             RestAssured.given()
                         .contentType(ContentType.JSON)
@@ -148,21 +140,18 @@ class CustomerControllerIntegrationTest extends BaseIntegrationTest {
 
         @Test
         void dadaRequisicaoComEmailDuplicado_quandoChamarCreate_entaoDeveLancarEmailConflictRulesCustomException() {
-            // Arrange
-            var userRequest = UserUtils
-                    .trainRequest("jeffbeck", "password123", RoleEnum.ROLE_CUSTOMER.getValue());
-            var request = CustomerUtils.trainRequest("Jeff Beck", EMAIL_TESTE, userRequest);
+            var request =
+                    buildCustomerRequest("jeffbeck", "password123", RoleEnum.ROLE_ADMIN.getValue(),
+                            "Jeff Beck", EMAIL_TESTE);
 
-            // Act & Assert
             assertThrows(EmailConflictRulesCustomException.class, () -> customerController.create(request));
         }
 
         @Test
         void dadaRequisicaoComUsernameDuplicado_quandoChamarCreate_entaoDeveLancarException() {
-            var userRequest = UserUtils
-                    .trainRequest(USERNAME_TESTE, "password123", RoleEnum.ROLE_CUSTOMER.getValue());
-            var request = CustomerUtils
-                    .trainRequest("Jeff Beck", "jbeck@email.com", userRequest);
+            var request =
+                    buildCustomerRequest(USERNAME_TESTE, "password123", RoleEnum.ROLE_CUSTOMER.getValue(),
+                            "Jeff Beck", "jbeck@email.com");
 
             RestAssured.given()
                         .contentType(ContentType.JSON)
@@ -176,20 +165,18 @@ class CustomerControllerIntegrationTest extends BaseIntegrationTest {
 
         @Test
         void dadaRequisicaoComUsernameDuplicado_quandoChamarCreate_entaoDeveLancarUsernameConflictRulesCustomException() {
-            var userRequest = UserUtils
-                    .trainRequest(USERNAME_TESTE, "password123", RoleEnum.ROLE_CUSTOMER.getValue());
-            var request = CustomerUtils
-                    .trainRequest("Jeff Beck", "beck@gmail.com", userRequest);
+            var request =
+                    buildCustomerRequest(USERNAME_TESTE, "password123", RoleEnum.ROLE_CUSTOMER.getValue(),
+                            "Jeff Beck", "beck@gmail.com");
 
             assertThrows(UsernameConflictRulesCustomException.class, () -> customerController.create(request));
         }
 
         @Test
         void dadaRequisicaoComRoleInvalid_quandoChamarCreate_entaoDeveLancarException() {
-            var userRequest = UserUtils
-                    .trainRequest("jbeck123", "password123", "ROLE_INVALID");
-            var request = CustomerUtils
-                    .trainRequest("Jeff Beck", "jbeck@email.com", userRequest);
+            var request =
+                    buildCustomerRequest("jbeck123", "password123", "ROLE_INVALID",
+                            "Jeff Beck", "jbeck@email.com");
 
             RestAssured.given()
                         .contentType(ContentType.JSON)
@@ -203,10 +190,9 @@ class CustomerControllerIntegrationTest extends BaseIntegrationTest {
 
         @Test
         void dadaRequisicaoComRoleInvalid_quandoChamarCreate_entaoDeveLancarRoleNotFoundCustomException() {
-            var userRequest = UserUtils
-                    .trainRequest("beck123", "password123", "ROLE_INVALID");
-            var request = CustomerUtils
-                    .trainRequest("Jeff Beck", "beck@gmail.com", userRequest);
+            var request =
+                    buildCustomerRequest("beck123", "password123", "ROLE_INVALID",
+                            "Jeff Beck", "beck@gmail.com");
 
             assertThrows(RoleNotFoundCustomException.class, () -> customerController.create(request));
         }
@@ -218,12 +204,11 @@ class CustomerControllerIntegrationTest extends BaseIntegrationTest {
 
         @Test
         void dadaRequisicaoValida_quandoChamarUpdate_entaoRetornarCustomerAtualizado() {
-            var idCustomer = customerResponse.id();
+            var idCustomer = defaultCustomerResponse.id();
 
-            var userRequestUp = UserUtils
-                    .trainRequest("anne_frank_atual", "password123", RoleEnum.ROLE_ADMIN.getValue());
-            var request = CustomerUtils
-                    .trainRequest("Anne Atual Frank", "frank_atual@gmail.com", userRequestUp);
+            var request =
+                    buildCustomerRequest("anne_frank_atual", "password123", RoleEnum.ROLE_ADMIN.getValue(),
+                            "Anne Atual Frank", "frank_atual@gmail.com");
 
             RestAssured.given()
                         .contentType(ContentType.JSON)
@@ -237,52 +222,50 @@ class CustomerControllerIntegrationTest extends BaseIntegrationTest {
                         .body("email", Matchers.equalTo(request.email()))
                         .body("active", Matchers.equalTo(true))
                         .body("user.id", Matchers.notNullValue())
-                        .body("user.username", Matchers.equalTo(userRequestUp.username()))
+                        .body("user.username", Matchers.equalTo(request.user().username()))
                         .body("user.active", Matchers.equalTo(true));
         }
 
         @Test
         void dadaRequisicaoValida_quandoChamarUpdate_entaoSalvarNoBanco() {
-            var idCustomer = customerResponse.id();
+            var idCustomer = defaultCustomerResponse.id();
 
-            var userRequestUpdate = UserUtils
-                    .trainRequest("username999", "password999", RoleEnum.ROLE_ADMIN.getValue());
-            var customerRequestUpdate = CustomerUtils
-                    .trainRequest("John Atual Doe", "doe@yahoo.com", userRequestUpdate);
+            var request =
+                    buildCustomerRequest("username999", "password999", RoleEnum.ROLE_ADMIN.getValue(),
+                            "John Atual Doe", "doe@yahoo.com");
 
-            var responseAtualizado = customerController.update(idCustomer, customerRequestUpdate).getBody();
+            var responseAtualizado = customerController.update(idCustomer, request).getBody();
             assertNotNull(responseAtualizado);
             var customerDoBanco = customerRepository.findById(idCustomer).orElseThrow();
 
-            assertEquals(customerRequestUpdate.name(), customerDoBanco.getName());
-            assertEquals(customerRequestUpdate.email(), customerDoBanco.getEmail());
+            assertEquals(request.name(), customerDoBanco.getName());
+            assertEquals(request.email(), customerDoBanco.getEmail());
             assertTrue(customerDoBanco.isActive());
-            assertEquals(userRequestUpdate.username(), customerDoBanco.getUser().getUsername());
-            assertEquals(userRequestUpdate.password(), customerDoBanco.getUser().getPassword());
+            assertEquals(request.user().username(), customerDoBanco.getUser().getUsername());
+            assertEquals(request.user().password(), customerDoBanco.getUser().getPassword());
             assertTrue(customerDoBanco.getUser().isActive());
-            assertEquals(userRequestUpdate.role(), customerDoBanco.getUser().getRole().getName().getValue());
+            assertEquals(request.user().role(), customerDoBanco.getUser().getRole().getName().getValue());
         }
 
         @Test
         void dadaRequisicaoValidaSemAlterarEmailAndUsername_quandoChamarUpdate_entaoSalvarNoBanco() {
-            var idCustomer = customerResponse.id();
+            var idCustomer = defaultCustomerResponse.id();
 
-            var userRequestUpdate = UserUtils
-                    .trainRequest(USERNAME_TESTE, "atual123", RoleEnum.ROLE_ADMIN.getValue());
-            var customerRequestUpdate = CustomerUtils
-                    .trainRequest("John Atual Doe", EMAIL_TESTE, userRequestUpdate);
+            var request =
+                    buildCustomerRequest(USERNAME_TESTE, "atual123", RoleEnum.ROLE_ADMIN.getValue(),
+                            "John Atual Doe", EMAIL_TESTE);
 
-            var responseAtualizado = customerController.update(idCustomer, customerRequestUpdate).getBody();
+            var responseAtualizado = customerController.update(idCustomer, request).getBody();
             assertNotNull(responseAtualizado);
             var customerDoBanco = customerRepository.findById(idCustomer).orElseThrow();
 
-            assertEquals(customerRequestUpdate.name(), customerDoBanco.getName());
+            assertEquals(request.name(), customerDoBanco.getName());
             assertEquals(EMAIL_TESTE, customerDoBanco.getEmail());
             assertTrue(customerDoBanco.isActive());
             assertEquals(USERNAME_TESTE, customerDoBanco.getUser().getUsername());
-            assertEquals(userRequestUpdate.password(), customerDoBanco.getUser().getPassword());
+            assertEquals(request.user().password(), customerDoBanco.getUser().getPassword());
             assertTrue(customerDoBanco.getUser().isActive());
-            assertEquals(userRequestUpdate.role(), customerDoBanco.getUser().getRole().getName().getValue());
+            assertEquals(request.user().role(), customerDoBanco.getUser().getRole().getName().getValue());
         }
     }
 
@@ -293,14 +276,14 @@ class CustomerControllerIntegrationTest extends BaseIntegrationTest {
         @Test
         void dadaRequisicaoInvalidaComIdInexistente_quandoChamarUpdate_entaoLancarException() {
             var idCustomerInvalid = UUID.randomUUID();
-            var userRequestUp = UserUtils
-                    .trainRequest("robert_plant", "password123", RoleEnum.ROLE_ADMIN.getValue());
-            var customerRequestUp = CustomerUtils
-                    .trainRequest("Robert Plant", "plant@gmail.com", userRequestUp);
+
+            var request =
+                    buildCustomerRequest("robert_plant", "password123", RoleEnum.ROLE_CUSTOMER.getValue(),
+                            "Robert Plant", "plant@gmail.com");
 
             RestAssured.given()
                         .contentType(ContentType.JSON)
-                        .body(customerRequestUp)
+                        .body(request)
                     .when()
                         .put("/{id}", idCustomerInvalid)
                     .then()
@@ -310,30 +293,32 @@ class CustomerControllerIntegrationTest extends BaseIntegrationTest {
 
         @Test
         void dadaRequisicaoInvalidaComIdInexistente_quandoChamarUpdate_entaoLancarCustomerNotFoundCustomException() {
-            // Arrange
             var idCustomerInvalid = UUID.randomUUID();
-            var userRequestUp = UserUtils
-                    .trainRequest("robert_plant", "password123", RoleEnum.ROLE_ADMIN.getValue());
-            var customerRequestUp = CustomerUtils
-                    .trainRequest("Robert Plant", "plant@gmail.com", userRequestUp);
-            // Act & Assert
-            assertThrows(CustomerNotFoundCustomException.class, () -> customerController.update(idCustomerInvalid, customerRequestUp));
+
+            var request =
+                    buildCustomerRequest("robert_plant", "password123", RoleEnum.ROLE_CUSTOMER.getValue(),
+                            "Robert Plant", "plant@gmail.com");
+
+            assertThrows(CustomerNotFoundCustomException.class, () -> customerController.update(idCustomerInvalid, request));
         }
 
         @Test
         void dadaRequisicaoInvalidaComEmailDuplicado_quandoChamarUpdate_entaoLancarException() {
             var emailDuplicate = "doe@gmail.com";
-            var userRequest = UserUtils.trainRequest("johndoe", "password123", RoleEnum.ROLE_CUSTOMER.getValue());
-            var request = CustomerUtils.trainRequest("John Doe", emailDuplicate, userRequest);
-            customerController.create(request);
+            var requestCreate =
+                    buildCustomerRequest("johndoe", "password123", RoleEnum.ROLE_CUSTOMER.getValue(),
+                            "John Doe", emailDuplicate);
 
-            var idCustomer = customerResponse.id();
-            var userRequestUp = UserUtils.trainRequest("anne_frank_atual", "password123", RoleEnum.ROLE_ADMIN.getValue());
-            var customerRequestUp = CustomerUtils.trainRequest("Anne Atual Frank", emailDuplicate, userRequestUp);
+            customerController.create(requestCreate);
+
+            var idCustomer = defaultCustomerResponse.id();
+            var requestUpdate =
+                    buildCustomerRequest("anne_frank_atual", "password888", RoleEnum.ROLE_ADMIN.getValue(),
+                            "Anne Atual Frank", emailDuplicate);
 
             RestAssured.given()
                         .contentType(ContentType.JSON)
-                        .body(customerRequestUp)
+                        .body(requestUpdate)
                     .when()
                         .put("/{id}", idCustomer)
                     .then()
@@ -344,34 +329,38 @@ class CustomerControllerIntegrationTest extends BaseIntegrationTest {
         @Test
         void dadaRequisicaoInvalidaComEmailDuplicado_quandoChamarUpdate_entaoLancarEmailConflictRulesCustomException() {
             var emailDuplicate = "doe@gmail.com";
-            var userRequest = UserUtils.trainRequest("johndoe", "password123", RoleEnum.ROLE_CUSTOMER.getValue());
-            var request = CustomerUtils.trainRequest("John Doe", emailDuplicate, userRequest);
-            customerController.create(request);
+            var requestCreate =
+                    buildCustomerRequest("johndoe", "password123", RoleEnum.ROLE_CUSTOMER.getValue(),
+                            "John Doe", emailDuplicate);
 
-            var idCustomer = customerResponse.id();
-            var userRequestUp = UserUtils
-                    .trainRequest("anne_frank_atual", "password123", RoleEnum.ROLE_ADMIN.getValue());
-            var customerRequestUp = CustomerUtils
-                    .trainRequest("Anne Atual Frank", emailDuplicate, userRequestUp);
+            customerController.create(requestCreate);
+
+            var idCustomer = defaultCustomerResponse.id();
+            var requestUpdate =
+                    buildCustomerRequest("anne_frank_atual", "password888", RoleEnum.ROLE_ADMIN.getValue(),
+                            "Anne Atual Frank", emailDuplicate);
 
             assertThrows(EmailConflictRulesCustomException.class, () ->
-                    customerController.update(idCustomer, customerRequestUp));
+                    customerController.update(idCustomer, requestUpdate));
         }
 
         @Test
         void dadaRequisicaoInvalidaComUsernameDuplicado_quandoChamarUpdate_entaoLancarException() {
             var usernameDuplicate = "johndoe";
-            var userRequest = UserUtils.trainRequest(usernameDuplicate, "password123", RoleEnum.ROLE_CUSTOMER.getValue());
-            var request = CustomerUtils.trainRequest("John Doe", "doe@gmail.com", userRequest);
-            customerController.create(request);
+            var requestCreate =
+                    buildCustomerRequest(usernameDuplicate, "password123", RoleEnum.ROLE_CUSTOMER.getValue(),
+                            "John Doe", "doe@gmail.com");
 
-            var idCustomer = customerResponse.id();
-            var userRequestUp = UserUtils.trainRequest(usernameDuplicate, "password123", RoleEnum.ROLE_ADMIN.getValue());
-            var customerRequestUp = CustomerUtils.trainRequest("Anne Atual Frank", "frank_atual@gmail.com", userRequestUp);
+            customerController.create(requestCreate);
+
+            var idCustomer = defaultCustomerResponse.id();
+            var requestUpdate =
+                    buildCustomerRequest(usernameDuplicate, "password888", RoleEnum.ROLE_ADMIN.getValue(),
+                            "Anne Atual Frank", "frank_atual@gmail.com");
 
             RestAssured.given()
                         .contentType(ContentType.JSON)
-                        .body(customerRequestUp)
+                        .body(requestUpdate)
                     .when()
                         .put("/{id}", idCustomer)
                     .then()
@@ -382,15 +371,19 @@ class CustomerControllerIntegrationTest extends BaseIntegrationTest {
         @Test
         void dadaRequisicaoInvalidaComUsernameDuplicado_quandoChamarUpdate_entaoLancarUsernameConflictRulesCustomException() {
             var usernameDuplicate = "johndoe";
-            var userRequest = UserUtils.trainRequest(usernameDuplicate, "password123", RoleEnum.ROLE_CUSTOMER.getValue());
-            var request = CustomerUtils.trainRequest("John Doe", "doe@gmail.com", userRequest);
-            customerController.create(request);
+            var requestCreate =
+                    buildCustomerRequest(usernameDuplicate, "password123", RoleEnum.ROLE_CUSTOMER.getValue(),
+                            "John Doe", "doe@gmail.com");
 
-            var idCustomer = customerResponse.id();
-            var userRequestUp = UserUtils.trainRequest(usernameDuplicate, "password123", RoleEnum.ROLE_ADMIN.getValue());
-            var customerRequestUp = CustomerUtils.trainRequest("Anne Atual Frank", "frank_atual@gmail.com", userRequestUp);
+            customerController.create(requestCreate);
 
-            assertThrows(UsernameConflictRulesCustomException.class, () -> customerController.update(idCustomer, customerRequestUp));
+            var idCustomer = defaultCustomerResponse.id();
+            var requestUpdate =
+                    buildCustomerRequest(usernameDuplicate, "password888", RoleEnum.ROLE_ADMIN.getValue(),
+                            "Anne Atual Frank", "frank_atual@gmail.com");
+
+            assertThrows(UsernameConflictRulesCustomException.class, () ->
+                    customerController.update(idCustomer, requestUpdate));
         }
     }
 
@@ -404,25 +397,25 @@ class CustomerControllerIntegrationTest extends BaseIntegrationTest {
             RestAssured.given()
                         .contentType(ContentType.JSON)
                     .when()
-                        .delete("/{id}", customerResponse.id())
+                        .delete("/{id}", defaultCustomerResponse.id())
                     .then()
                         .statusCode(HttpStatus.NO_CONTENT.value());
         }
 
         @Test
         void dadaRequisicaoValida_quandoDeleteById_entaoArmazenarAtivoFalseNoBancoDeDados() {
-            var customerActiveTrue = customerRepository.findById(customerResponse.id());
+            var customerActiveTrue = customerRepository.findById(defaultCustomerResponse.id());
             assertTrue(customerActiveTrue.isPresent());
             assertTrue(customerActiveTrue.get().isActive());
 
             RestAssured.given()
                         .contentType(ContentType.JSON)
                     .when()
-                        .delete("/{id}", customerResponse.id())
+                        .delete("/{id}", defaultCustomerResponse.id())
                     .then()
                         .statusCode(HttpStatus.NO_CONTENT.value());
 
-            var customerActiveFalse = customerRepository.findById(customerResponse.id()).orElseThrow();
+            var customerActiveFalse = customerRepository.findById(defaultCustomerResponse.id()).orElseThrow();
             assertFalse(customerActiveFalse.isActive());
             assertFalse(customerActiveFalse.getUser().isActive());
         }
@@ -453,7 +446,7 @@ class CustomerControllerIntegrationTest extends BaseIntegrationTest {
 
         @Test
         void dadaRequisicaoComIdDesativado_quandoDeleteById_entaoLancarExceptionAndTerNoBancoComoFalse() {
-            var idCustomer = customerResponse.id();
+            var idCustomer = defaultCustomerResponse.id();
 
             var customerBuscadoAntes = customerRepository.findById(idCustomer).orElseThrow();
             assertNotNull(customerBuscadoAntes);
@@ -486,15 +479,15 @@ class CustomerControllerIntegrationTest extends BaseIntegrationTest {
             RestAssured.given()
                         .contentType(ContentType.JSON)
                     .when()
-                        .get("/{id}", customerResponse.id())
+                        .get("/{id}", defaultCustomerResponse.id())
                     .then()
                         .statusCode(HttpStatus.OK.value())
                         .body("id", Matchers.notNullValue())
-                        .body("name", Matchers.equalTo(customerResponse.name()))
-                        .body("email", Matchers.equalTo(customerResponse.email()))
+                        .body("name", Matchers.equalTo(defaultCustomerResponse.name()))
+                        .body("email", Matchers.equalTo(defaultCustomerResponse.email()))
                         .body("active", Matchers.equalTo(true))
                         .body("user.id", Matchers.notNullValue())
-                        .body("user.username", Matchers.equalTo(customerResponse.user().username()))
+                        .body("user.username", Matchers.equalTo(defaultCustomerResponse.user().username()))
                         .body("user.active", Matchers.equalTo(true));
         }
     }
@@ -524,26 +517,31 @@ class CustomerControllerIntegrationTest extends BaseIntegrationTest {
 
         @Test
         void dadaRequisicaoComIdDesativado_quandoConsultarPorId_entaoLancarExcecao() {
-            var idCustomer = customerResponse.id();
+            var idCustomer = defaultCustomerResponse.id();
 
             var customerBuscadoAntes = customerRepository.findById(idCustomer).orElseThrow();
             assertNotNull(customerBuscadoAntes);
             assertTrue(customerBuscadoAntes.isActive());
 
-            var customerDesativado = customerController.disableById(customerResponse.id());
+            var customerDesativado = customerController.disableById(defaultCustomerResponse.id());
             assertEquals(HttpStatus.NO_CONTENT, customerDesativado.getStatusCode());
 
             RestAssured.given()
                         .contentType(ContentType.JSON)
                     .when()
-                        .get("/{id}", customerResponse.id())
+                        .get("/{id}", defaultCustomerResponse.id())
                     .then()
                         .statusCode(HttpStatus.NOT_FOUND.value())
-                        .body("title", Matchers.equalTo("Cliente não encontrado por id: " + customerResponse.id() + "."));
+                        .body("title", Matchers.equalTo("Cliente não encontrado por id: " + defaultCustomerResponse.id() + "."));
 
             var customerBuscadoDepois = customerRepository.findById(idCustomer).orElseThrow();
             assertNotNull(customerBuscadoDepois);
             assertFalse(customerBuscadoDepois.isActive());
         }
+    }
+
+    private CustomerRequest buildCustomerRequest(String username, String password, String role, String name, String email) {
+        var userRequest = UserUtils.trainRequest(username, password, role);
+        return CustomerUtils.trainRequest(name, email, userRequest);
     }
 }

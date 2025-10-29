@@ -1,7 +1,6 @@
 package backend.finance.api_user.infrastructure.presenters;
 
 import backend.finance.api.users.CustomerMessage;
-import backend.finance.api_user.application.dtos.internal.CustomerDto;
 import backend.finance.api_user.application.dtos.output.CustomerResponse;
 import backend.finance.api_user.domain.entities.Customer;
 import backend.finance.api_user.infrastructure.jpas.CustomerJpa;
@@ -15,21 +14,9 @@ public final class CustomerPresenterImpl implements CustomerPresenter {
     private final UserPresenter userPresenter;
 
     @Override
-    public CustomerResponse toResponse(CustomerDto dto) {
-        var userResponse = userPresenter.toUserResponse(dto.user());
-        return new CustomerResponse(dto.id(), dto.name(), dto.email(), userResponse, dto.active());
-    }
-
-    @Override
     public CustomerResponse toResponse(Customer customer) {
         var userResponse = userPresenter.toUserResponse(customer.getUser());
         return new CustomerResponse(customer.getId(), customer.getName(), customer.getEmail(), userResponse, customer.isActive());
-    }
-
-    @Override
-    public CustomerDto toDto(CustomerJpa jpa) {
-        var userDto = userPresenter.toUserDto(jpa.getUser());
-        return new CustomerDto(jpa.getId(), jpa.getName(), jpa.getEmail(), userDto, jpa.isActive());
     }
 
     @Override

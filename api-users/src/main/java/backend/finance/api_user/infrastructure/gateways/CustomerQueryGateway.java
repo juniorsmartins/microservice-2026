@@ -19,16 +19,10 @@ public class CustomerQueryGateway implements CustomerQueryOutputPort {
 
     private final CustomerPresenter customerPresenter;
 
+    @Transactional(readOnly = true)
     @Override
     public Optional<Customer> findByIdAndActiveTrue(UUID id) {
         return customerRepository.findByIdAndActiveTrue(id)
-                .map(customerPresenter::toEntity);
-    }
-
-    @Transactional(readOnly = true)
-    @Override
-    public Optional<Customer> findById(UUID id) {
-        return customerRepository.findById(id)
                 .map(customerPresenter::toEntity);
     }
 

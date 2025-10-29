@@ -9,8 +9,6 @@ public interface CustomerQueryOutputPort {
 
     Optional<Customer> findByIdAndActiveTrue(UUID id);
 
-    Optional<Customer> findById(UUID id);
-
     Optional<Customer> findByEmail(String email);
 
     Optional<Customer> findByUsername(String username);
