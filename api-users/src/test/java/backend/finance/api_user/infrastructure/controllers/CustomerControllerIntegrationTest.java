@@ -293,8 +293,10 @@ class CustomerControllerIntegrationTest extends BaseIntegrationTest {
         @Test
         void dadaRequisicaoInvalidaComIdInexistente_quandoChamarUpdate_entaoLancarException() {
             var idCustomerInvalid = UUID.randomUUID();
-            var userRequestUp = UserUtils.trainRequest("robert_plant", "password123", RoleEnum.ROLE_ADMIN.getValue());
-            var customerRequestUp = CustomerUtils.trainRequest("Robert Plant", "plant@gmail.com", userRequestUp);
+            var userRequestUp = UserUtils
+                    .trainRequest("robert_plant", "password123", RoleEnum.ROLE_ADMIN.getValue());
+            var customerRequestUp = CustomerUtils
+                    .trainRequest("Robert Plant", "plant@gmail.com", userRequestUp);
 
             RestAssured.given()
                         .contentType(ContentType.JSON)
@@ -347,10 +349,13 @@ class CustomerControllerIntegrationTest extends BaseIntegrationTest {
             customerController.create(request);
 
             var idCustomer = customerResponse.id();
-            var userRequestUp = UserUtils.trainRequest("anne_frank_atual", "password123", RoleEnum.ROLE_ADMIN.getValue());
-            var customerRequestUp = CustomerUtils.trainRequest("Anne Atual Frank", emailDuplicate, userRequestUp);
+            var userRequestUp = UserUtils
+                    .trainRequest("anne_frank_atual", "password123", RoleEnum.ROLE_ADMIN.getValue());
+            var customerRequestUp = CustomerUtils
+                    .trainRequest("Anne Atual Frank", emailDuplicate, userRequestUp);
 
-            assertThrows(EmailConflictRulesCustomException.class, () -> customerController.update(idCustomer, customerRequestUp));
+            assertThrows(EmailConflictRulesCustomException.class, () ->
+                    customerController.update(idCustomer, customerRequestUp));
         }
 
         @Test
