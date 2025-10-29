@@ -1,8 +1,6 @@
 package backend.finance.api_user.application.usecases;
 
 import backend.finance.api_user.application.configs.exception.http404.CustomerNotFoundCustomException;
-import backend.finance.api_user.domain.entities.Customer;
-import backend.finance.api_user.domain.entities.Usuario;
 import backend.finance.api_user.infrastructure.ports.input.CustomerDeleteInputPort;
 import backend.finance.api_user.infrastructure.ports.output.CustomerQueryOutputPort;
 import backend.finance.api_user.infrastructure.ports.output.CustomerSaveOutputPort;
@@ -23,15 +21,9 @@ public class CustomerDeleteUseCase implements CustomerDeleteInputPort {
     public void disableById(UUID id) {
         customerQueryOutputPort.findByIdAndActiveTrue(id)
                 .ifPresentOrElse(customer -> {
-
-                            var usuario = customer.getUser();
-                            var usuarioDesativado = Usuario
-                                    .create(usuario.getId(), usuario.getUsername(), usuario.getPassword(), usuario.getRole(), false);
-
-                            var customerDesativado = Customer
-                                    .create(customer.getId(), customer.getName(), customer.getEmail(), usuarioDesativado, false);
-
-                            customerSaveOutputPort.save(customerDesativado);
+                            customer.disable();
+                            customer.getUser().disable();
+                            customerSaveOutputPort.save(customer);
                         },
                         () -> {
                             throw new CustomerNotFoundCustomException(id);

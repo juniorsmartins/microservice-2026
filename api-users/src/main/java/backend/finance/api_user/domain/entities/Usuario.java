@@ -20,7 +20,7 @@ public final class Usuario {
 
     private final Permissao role;
 
-    private final boolean active;
+    private boolean active;
 
     private Usuario(UUID id, String username, String password, Permissao role, boolean active) {
         this.id = id;
@@ -56,5 +56,9 @@ public final class Usuario {
         if (value.length() > sizeMax) {
             throw new AttributeExceededMaximumLimitException(fieldName, String.valueOf(sizeMax));
         }
+    }
+
+    public void disable() {
+        this.active = false;
     }
 }

@@ -26,7 +26,7 @@ public final class Customer {
 
     private final Usuario user;
 
-    private final boolean active;
+    private boolean active;
 
     private Customer(UUID id, String name, String email, Usuario usuario, boolean active) {
         this.id = id;
@@ -73,5 +73,9 @@ public final class Customer {
 
     private boolean ehValido(String email) {
         return EMAIL_PATTERN.matcher(email).matches();
+    }
+
+    public void disable() {
+        this.active = false;
     }
 }
