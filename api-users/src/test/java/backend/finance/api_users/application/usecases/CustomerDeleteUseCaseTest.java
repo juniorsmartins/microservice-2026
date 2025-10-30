@@ -5,8 +5,8 @@ import backend.finance.api_users.domain.entities.Customer;
 import backend.finance.api_users.domain.enums.RoleEnum;
 import backend.finance.api_users.infrastructure.repositories.CustomerRepository;
 import backend.finance.api_users.utils.BaseIntegrationTest;
-import backend.finance.api_users.utils.CustomerUtils;
-import backend.finance.api_users.utils.UserUtils;
+import backend.finance.api_users.utils.CustomerTestUtils;
+import backend.finance.api_users.utils.UserTestUtils;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -35,9 +35,9 @@ class CustomerDeleteUseCaseTest extends BaseIntegrationTest {
 
     @BeforeEach
     void setUp() {
-        var userRequest = UserUtils
+        var userRequest = UserTestUtils
                 .trainRequest(USERNAME_TESTE, "password123", RoleEnum.ROLE_CUSTOMER.getValue());
-        var request = CustomerUtils.trainRequest("Anne Frank", EMAIL_TESTE, userRequest);
+        var request = CustomerTestUtils.trainRequest("Anne Frank", EMAIL_TESTE, userRequest);
         defaultCustomer = customerCreateUseCase.create(request);
     }
 

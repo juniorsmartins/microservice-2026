@@ -4,12 +4,13 @@ import backend.finance.api_users.application.configs.exception.http404.CustomerN
 import backend.finance.api_users.application.usecases.CustomerCreateUseCase;
 import backend.finance.api_users.application.usecases.CustomerDeleteUseCase;
 import backend.finance.api_users.domain.entities.Customer;
-import backend.finance.api_users.domain.enums.RoleEnum;
 import backend.finance.api_users.infrastructure.repositories.CustomerRepository;
 import backend.finance.api_users.utils.BaseIntegrationTest;
-import backend.finance.api_users.utils.CustomerUtils;
-import backend.finance.api_users.utils.UserUtils;
-import org.junit.jupiter.api.*;
+import backend.finance.api_users.utils.CustomerTestFactory;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -19,10 +20,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class CustomerControllerTest extends BaseIntegrationTest {
-
-    private static final String EMAIL_TESTE = "teste@email.com";
-
-    private static final String USERNAME_TESTE = "username-teste";
 
     @Autowired
     private CustomerController customerController;
@@ -40,23 +37,18 @@ class CustomerControllerTest extends BaseIntegrationTest {
 
     @BeforeEach
     void setUp() {
-        var userRequest = UserUtils
-                .trainRequest(USERNAME_TESTE, "password123", RoleEnum.ROLE_CUSTOMER.getValue());
-        var request = CustomerUtils.trainRequest("Anne Frank", EMAIL_TESTE, userRequest);
+        var request = CustomerTestFactory.defaultRequest();
+
         defaultCustomer = customerCreateUseCase.create(request);
     }
 
-    @AfterEach
-    void tearDown() {
-        customerRepository.deleteAll();
-    }
-
     @Nested
-    @DisplayName("FindByIdValid")
+    @DisplayName("FindById - casos válidos")
     class FindByIdValid {
 
         @Test
-        void dadaRequisicaoValida_quandoChamarFindById_entaoRetornarCustomer() {
+        @DisplayName("Deve consultar cliente por id.")
+        void shouldFindByIdCustomer() {
 
             var response = customerController.findById(defaultCustomer.getId()).getBody();
 
@@ -68,16 +60,17 @@ class CustomerControllerTest extends BaseIntegrationTest {
     }
 
     @Nested
-    @DisplayName("FindByIdInvalid")
+    @DisplayName("FindById - casos inválidos")
     class FindByIdInvalid {
 
         @Test
-        void dadaRequisicaoComIdInexistente_quandoChamarFindById_entaoLancarCustomerNotFoundCustomException() {
-            assertThrows(CustomerNotFoundCustomException.class, () ->
-                    customerController.findById(UUID.randomUUID()));
+        @DisplayName("Deve lançar exceção ao consultar por id inexistente.")
+        void shouldThrowOnNotFoundCustomer() {
+            assertThrows(CustomerNotFoundCustomException.class, () -> customerController.findById(UUID.randomUUID()));
         }
 
         @Test
+        @DisplayName("Deve lançar exceção ao consultar por id desativado, mas estar no banco de dados.")
         void dadaRequisicaoComIdDesativado_quandoConsultarPorId_entaoLancarExcecao() {
             var idCustomer = defaultCustomer.getId();
 

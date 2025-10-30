@@ -3,16 +3,14 @@ package backend.finance.api_users.application.usecases;
 import backend.finance.api_users.application.configs.exception.http404.RoleNotFoundCustomException;
 import backend.finance.api_users.application.configs.exception.http409.EmailConflictRulesCustomException;
 import backend.finance.api_users.application.configs.exception.http409.UsernameConflictRulesCustomException;
-import backend.finance.api_users.application.dtos.input.CustomerRequest;
 import backend.finance.api_users.domain.enums.RoleEnum;
 import backend.finance.api_users.infrastructure.repositories.CustomerRepository;
 import backend.finance.api_users.utils.BaseIntegrationTest;
-import backend.finance.api_users.utils.CustomerUtils;
-import backend.finance.api_users.utils.UserUtils;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import static backend.finance.api_users.utils.CustomerTestFactory.buildRequest;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
@@ -23,11 +21,6 @@ class CustomerCreateUseCaseTest extends BaseIntegrationTest {
 
     @Autowired
     private CustomerRepository customerRepository;
-
-    @AfterEach
-    void tearDown() {
-        customerRepository.deleteAll();
-    }
 
     @Nested
     @DisplayName("Create - casos válidos")
@@ -83,7 +76,7 @@ class CustomerCreateUseCaseTest extends BaseIntegrationTest {
         }
 
         @Test
-        @DisplayName("Deve lançar exceção ao tentar criar com email duplicado.")
+        @DisplayName("Deve lançar exceção ao criar com email duplicado.")
         void shouldThrowOnDuplicateEmail() {
             var request = buildRequest("jeffbeck", "password123",
                     RoleEnum.ROLE_ADMIN.getValue(), "Jeff Beck", EMAIL_DEFAULT);
@@ -92,7 +85,7 @@ class CustomerCreateUseCaseTest extends BaseIntegrationTest {
         }
 
         @Test
-        @DisplayName("Deve lançar exceção ao tentar criar com username duplicado.")
+        @DisplayName("Deve lançar exceção ao criar com username duplicado.")
         void shouldThrowOnDuplicateUsername() {
             var request = buildRequest(USERNAME_DEFAULT, "password123",
                     RoleEnum.ROLE_CUSTOMER.getValue(), "Jeff Beck", "beck@gmail.com");
@@ -101,17 +94,12 @@ class CustomerCreateUseCaseTest extends BaseIntegrationTest {
         }
 
         @Test
-        @DisplayName("Deve lançar exceção ao tentar criar com permissão inexistente.")
+        @DisplayName("Deve lançar exceção ao criar com permissão inexistente.")
         void shouldThrowOnInvalidRole() {
             var request = buildRequest("beck123", "password123", "ROLE_INVALID",
                             "Jeff Beck", "beck@gmail.com");
 
             assertThrows(RoleNotFoundCustomException.class, () -> customerCreateUseCase.create(request));
         }
-    }
-
-    private CustomerRequest buildRequest(String username, String password, String role, String name, String email) {
-        var userRequest = UserUtils.trainRequest(username, password, role);
-        return CustomerUtils.trainRequest(name, email, userRequest);
     }
 }
