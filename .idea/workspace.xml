@@ -5,9 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a1ea8202-910b-4a63-8ece-9f6a9a5ee2c0" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/src/test/java/backend/finance/api_user/infrastructure/controllers/CustomerControllerIntegrationTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/test/java/backend/finance/api_user/infrastructure/controllers/CustomerControllerRestAssuredTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/src/test/java/backend/finance/api_users/application/usecases/CustomerCreateUseCaseTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/test/java/backend/finance/api_users/application/usecases/CustomerCreateUseCaseTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/src/test/java/backend/finance/api_users/application/usecases/CustomerDeleteUseCaseTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/test/java/backend/finance/api_users/application/usecases/CustomerDeleteUseCaseTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/src/test/java/backend/finance/api_users/application/usecases/CustomerUpdateUseCaseTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/test/java/backend/finance/api_users/application/usecases/CustomerUpdateUseCaseTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/src/test/java/backend/finance/api_users/infrastructure/controllers/CustomerControllerRestAssuredTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/test/java/backend/finance/api_users/infrastructure/controllers/CustomerControllerRestAssuredTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/src/test/java/backend/finance/api_users/infrastructure/controllers/CustomerControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/test/java/backend/finance/api_users/infrastructure/controllers/CustomerControllerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/src/test/java/backend/finance/api_users/utils/BaseIntegrationTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/test/java/backend/finance/api_users/utils/BaseIntegrationTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/src/test/java/backend/finance/api_users/utils/CustomerUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/test/java/backend/finance/api_users/utils/CustomerTestUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/src/test/java/backend/finance/api_users/utils/UserUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/test/java/backend/finance/api_users/utils/UserTestUtils.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,7 +69,29 @@
         </task>
         <projects_view>
           <tree_state>
-            <expand />
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="api-users" type="f1a62948:ProjectNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="api-users" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="api-users" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="build" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="api-users" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="source generation" type="c8890929:TasksNode$1" />
+              </path>
+            </expand>
             <select />
           </tree_state>
         </projects_view>
@@ -76,8 +104,8 @@
         <option value="Enum" />
         <option value="Record" />
         <option value="Interface" />
-        <option value="Class" />
         <option value="JUnit5 Test Class" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -288,10 +316,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Gradle.Tests in 'api-users.test'" />
-        <item itemvalue="Gradle.CustomerCreateUseCaseTest" />
-        <item itemvalue="Gradle.CustomerControllerIntegrationTest" />
         <item itemvalue="Gradle.api-users [generateAvroJava]" />
         <item itemvalue="Gradle.api-users [clean]" />
+        <item itemvalue="Gradle.CustomerCreateUseCaseTest" />
+        <item itemvalue="Gradle.CustomerControllerIntegrationTest" />
       </list>
     </recent_temporary>
   </component>
@@ -306,7 +334,7 @@
     <servers />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/microservice_2026$Tests_in__api_users_test_.ic" NAME="Tests in 'api-users.test' Coverage Results" MODIFIED="1761755885145" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
+    <SUITE FILE_PATH="coverage/microservice_2026$Tests_in__api_users_test_.ic" NAME="Tests in 'api-users.test' Coverage Results" MODIFIED="1761774152901" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
     <SUITE FILE_PATH="coverage/microservice_2026$Tests_in__api_user_test_.ic" NAME="Tests in 'api-user.test' Coverage Results" MODIFIED="1759259391843" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
   </component>
 </project>

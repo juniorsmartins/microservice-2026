@@ -5,8 +5,8 @@ import backend.finance.api_users.application.dtos.output.CustomerResponse;
 import backend.finance.api_users.domain.enums.RoleEnum;
 import backend.finance.api_users.infrastructure.repositories.CustomerRepository;
 import backend.finance.api_users.utils.BaseIntegrationTest;
-import backend.finance.api_users.utils.CustomerUtils;
-import backend.finance.api_users.utils.UserUtils;
+import backend.finance.api_users.utils.CustomerTestUtils;
+import backend.finance.api_users.utils.UserTestUtils;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import org.hamcrest.Matchers;
@@ -310,7 +310,7 @@ class CustomerControllerRestAssuredTest extends BaseIntegrationTest {
     }
 
     private CustomerRequest buildCustomerRequest(String username, String password, String role, String name, String email) {
-        var userRequest = UserUtils.trainRequest(username, password, role);
-        return CustomerUtils.trainRequest(name, email, userRequest);
+        var userRequest = UserTestUtils.trainRequest(username, password, role);
+        return CustomerTestUtils.trainRequest(name, email, userRequest);
     }
 }

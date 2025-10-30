@@ -1,7 +1,11 @@
 package backend.finance.api_users.utils;
 
+import backend.finance.api_users.infrastructure.repositories.CustomerRepository;
 import io.confluent.kafka.schemaregistry.client.MockSchemaRegistryClient;
 import io.confluent.kafka.schemaregistry.client.SchemaRegistryClient;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.kafka.test.context.EmbeddedKafka;
@@ -15,8 +19,18 @@ import org.springframework.test.annotation.DirtiesContext;
 @DirtiesContext // Para garantir que o contexto seja reiniciado entre os testes, evitando interferências
 public abstract class BaseIntegrationTest {
 
-//    @Autowired
-//    private EmbeddedKafkaBroker embeddedKafka; // Necessário para inicializar o contexto Kafka
+    @Autowired
+    protected CustomerRepository customerRepository;
+
+    @BeforeEach
+    void cleanDatabaseBefore() {
+        customerRepository.deleteAll();
+    }
+
+    @AfterEach
+    void cleanDatabaseAfter() {
+        customerRepository.deleteAll();
+    }
 
     @Bean
     public SchemaRegistryClient schemaRegistryClient() { // Necessário para fornecer mock de Schema Registry para os testes
