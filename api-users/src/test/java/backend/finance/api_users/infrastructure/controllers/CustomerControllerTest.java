@@ -71,7 +71,7 @@ class CustomerControllerTest extends BaseIntegrationTest {
 
         @Test
         @DisplayName("Deve lançar exceção ao consultar por id desativado, mas estar no banco de dados.")
-        void dadaRequisicaoComIdDesativado_quandoConsultarPorId_entaoLancarExcecao() {
+        void shouldThrowOnNotFoundCustomerWithDisableId() {
             var idCustomer = defaultCustomer.getId();
 
             var customerBuscadoAntes = customerRepository.findById(idCustomer).orElseThrow();
