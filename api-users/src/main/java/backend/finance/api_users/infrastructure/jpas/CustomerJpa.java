@@ -5,7 +5,6 @@ import lombok.*;
 
 import java.util.UUID;
 
-import static backend.finance.api_users.domain.constant.ConstantsValidation.EMAIL_SIZE_MAX;
 import static backend.finance.api_users.domain.constant.ConstantsValidation.NAME_SIZE_MAX;
 
 @Entity
@@ -27,7 +26,7 @@ public final class CustomerJpa {
     @Column(name = "name", nullable = false, length = NAME_SIZE_MAX)
     private String name;
 
-    @Column(name = "email", nullable = false, length = EMAIL_SIZE_MAX, unique = true)
+    @Column(name = "email", nullable = false, unique = true)
     private String email;
 
     @OneToOne(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, optional = false, orphanRemoval = true)
