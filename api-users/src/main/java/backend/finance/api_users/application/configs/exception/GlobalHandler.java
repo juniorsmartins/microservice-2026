@@ -50,6 +50,11 @@ public final class GlobalHandler extends ResponseEntityExceptionHandler {
     }
 
     private Map<String, List<String>> getFields(BindException ex) {
+//        return ex.getBindingResult()
+//                .getAllErrors()
+//                .stream()
+//                .collect(Collectors.toMap(objectError -> ((FieldError) objectError).getField(),
+//                        objectError -> this.messageSource.getMessage(objectError, LocaleContextHolder.getLocale())));
         return ex.getBindingResult()
                 .getFieldErrors()
                 .stream()
@@ -60,11 +65,6 @@ public final class GlobalHandler extends ResponseEntityExceptionHandler {
                                 Collectors.toList()
                         )
                 ));
-//        return ex.getBindingResult()
-//                .getAllErrors()
-//                .stream()
-//                .collect(Collectors.toMap(objectError -> ((FieldError) objectError).getField(),
-//                        objectError -> this.messageSource.getMessage(objectError, LocaleContextHolder.getLocale())));
     }
 
     // ---------- TRATAMENTO DE EXCEÇÕES CUSTOMIZADAS ---------- //

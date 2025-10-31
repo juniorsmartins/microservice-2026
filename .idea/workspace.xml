@@ -4,17 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a1ea8202-910b-4a63-8ece-9f6a9a5ee2c0" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/application/configs/exception/GlobalHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/application/configs/exception/GlobalHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/application/dtos/input/CustomerRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/application/dtos/input/CustomerRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/domain/constant/ConstantsValidation.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/domain/constant/ConstantsValidation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/domain/entities/Customer.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/domain/entities/Customer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/infrastructure/jpas/CustomerJpa.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/infrastructure/jpas/CustomerJpa.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/src/main/resources/liquibase/changesets/20250928121015_create_table_customers.sql" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/main/resources/liquibase/changesets/20250928121015_create_table_customers.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/src/test/java/backend/finance/api_users/domain/entities/CustomerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/test/java/backend/finance/api_users/domain/entities/CustomerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/src/test/java/backend/finance/api_users/infrastructure/controllers/CustomerControllerRestAssuredTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/test/java/backend/finance/api_users/infrastructure/controllers/CustomerControllerRestAssuredTest.java" afterDir="false" />
-    </list>
+    <list default="true" id="a1ea8202-910b-4a63-8ece-9f6a9a5ee2c0" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -142,7 +132,7 @@
     "Gradle.CustomerTest.executor": "Run",
     "Gradle.Download Sources.executor": "Run",
     "Gradle.Tests in 'api-user.test'.executor": "Run",
-    "Gradle.Tests in 'api-users.test'.executor": "Run",
+    "Gradle.Tests in 'api-users.test'.executor": "Coverage",
     "Gradle.api-user [:backend.finance.api_user.ApiUserApplication.main()].executor": "Run",
     "Gradle.api-user [build].executor": "Run",
     "Gradle.api-user [clean].executor": "Run",
@@ -334,7 +324,7 @@
     <servers />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/microservice_2026$Tests_in__api_users_test_.ic" NAME="Tests in 'api-users.test' Coverage Results" MODIFIED="1761940677294" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
+    <SUITE FILE_PATH="coverage/microservice_2026$Tests_in__api_users_test_.ic" NAME="Tests in 'api-users.test' Coverage Results" MODIFIED="1761944541841" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
     <SUITE FILE_PATH="coverage/microservice_2026$Tests_in__api_user_test_.ic" NAME="Tests in 'api-user.test' Coverage Results" MODIFIED="1759259391843" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
   </component>
 </project>
