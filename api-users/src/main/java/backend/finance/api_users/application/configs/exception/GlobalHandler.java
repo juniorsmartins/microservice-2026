@@ -16,6 +16,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import java.net.URI;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -48,12 +49,22 @@ public final class GlobalHandler extends ResponseEntityExceptionHandler {
         return this.messageSource.getMessage(messageKey, new Object[]{}, LocaleContextHolder.getLocale());
     }
 
-    private Map<String, String> getFields(BindException ex) {
+    private Map<String, List<String>> getFields(BindException ex) {
         return ex.getBindingResult()
-                .getAllErrors()
+                .getFieldErrors()
                 .stream()
-                .collect(Collectors.toMap(objectError -> ((FieldError) objectError).getField(),
-                        objectError -> this.messageSource.getMessage(objectError, LocaleContextHolder.getLocale())));
+                .collect(Collectors.groupingBy(
+                        FieldError::getField,
+                        Collectors.mapping(
+                                error -> messageSource.getMessage(error, LocaleContextHolder.getLocale()),
+                                Collectors.toList()
+                        )
+                ));
+//        return ex.getBindingResult()
+//                .getAllErrors()
+//                .stream()
+//                .collect(Collectors.toMap(objectError -> ((FieldError) objectError).getField(),
+//                        objectError -> this.messageSource.getMessage(objectError, LocaleContextHolder.getLocale())));
     }
 
     // ---------- TRATAMENTO DE EXCEÇÕES CUSTOMIZADAS ---------- //

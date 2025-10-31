@@ -6,7 +6,6 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
-import static backend.finance.api_users.domain.constant.ConstantsValidation.EMAIL_SIZE_MAX;
 import static backend.finance.api_users.domain.constant.ConstantsValidation.NAME_SIZE_MAX;
 
 public record CustomerRequest(
@@ -16,7 +15,6 @@ public record CustomerRequest(
         String name,
 
         @Email
-        @Size(max = EMAIL_SIZE_MAX)
         String email,
 
         @NotNull

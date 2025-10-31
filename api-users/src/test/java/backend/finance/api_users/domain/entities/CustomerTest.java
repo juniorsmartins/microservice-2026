@@ -100,16 +100,6 @@ class CustomerTest {
             assertEquals("exception.field.null.request.all", exception.getMessage());
         }
 
-        @Test
-        void dadoEmailMaior_quandoCreateCustomer_entaoLancarException() {
-            var id = UUID.randomUUID();
-            var name = "Donald Trump";
-            var email = "donald_trump_email_ultrapassa_limite_de_tamanho_e_por_isso_lanca_excecao_abracadabra_abracadabra@gmail.com";
-            var exception = assertThrows(AttributeExceededMaximumLimitException.class,
-                    () -> Customer.create(id, name, email, usuarioMock, true));
-            assertEquals("exception.field.exceeded-maximum-limit.request", exception.getMessage());
-        }
-
         @ParameterizedTest
         @ValueSource(strings = {"email_teste_sem_arroba.com", "teste@", "123232!!!@%$#", "@yahoo.com"})
         void dadoEmailNoFormatoIncorreto_quandoCreateCustomer_entaoLancarException(String email) {

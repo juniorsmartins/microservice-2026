@@ -8,7 +8,6 @@ import lombok.Getter;
 import java.util.UUID;
 import java.util.regex.Pattern;
 
-import static backend.finance.api_users.domain.constant.ConstantsValidation.EMAIL_SIZE_MAX;
 import static backend.finance.api_users.domain.constant.ConstantsValidation.NAME_SIZE_MAX;
 
 @Getter
@@ -48,7 +47,6 @@ public final class Customer {
 
     private String validEmail(String email) {
         checkNotBlank("email", email);
-        checkSizeMax("email", EMAIL_SIZE_MAX, email);
         checkFormatEmail(email);
         return email;
     }

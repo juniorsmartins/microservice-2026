@@ -6,7 +6,7 @@ CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 CREATE TABLE IF NOT EXISTS customers (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     name VARCHAR(50) NOT NULL,
-    email VARCHAR(100) NOT NULL UNIQUE,
+    email VARCHAR NOT NULL UNIQUE,
     user_id UUID NOT NULL,
     active BOOLEAN NOT NULL DEFAULT TRUE,
     CONSTRAINT fk_customers_users FOREIGN KEY (user_id) REFERENCES users (id)
