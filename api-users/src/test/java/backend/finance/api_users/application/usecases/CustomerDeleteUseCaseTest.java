@@ -5,14 +5,13 @@ import backend.finance.api_users.domain.entities.Customer;
 import backend.finance.api_users.domain.enums.RoleEnum;
 import backend.finance.api_users.infrastructure.repositories.CustomerRepository;
 import backend.finance.api_users.utils.BaseIntegrationTest;
-import backend.finance.api_users.utils.CustomerTestUtils;
-import backend.finance.api_users.utils.UserTestUtils;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.UUID;
 
+import static backend.finance.api_users.utils.CustomerTestFactory.buildRequest;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
@@ -35,9 +34,8 @@ class CustomerDeleteUseCaseTest extends BaseIntegrationTest {
 
     @BeforeEach
     void setUp() {
-        var userRequest = UserTestUtils
-                .trainRequest(USERNAME_TESTE, "password123", RoleEnum.ROLE_CUSTOMER.getValue());
-        var request = CustomerTestUtils.trainRequest("Anne Frank", EMAIL_TESTE, userRequest);
+        var request = buildRequest(USERNAME_TESTE, "password123",
+                RoleEnum.ROLE_CUSTOMER.getValue(), "Maria Antonieta", EMAIL_TESTE);
         defaultCustomer = customerCreateUseCase.create(request);
     }
 
@@ -47,41 +45,48 @@ class CustomerDeleteUseCaseTest extends BaseIntegrationTest {
     }
 
     @Nested
-    @DisplayName("DeleteValid")
+    @DisplayName("Delete - casos válidos")
     class DeleteValid {
 
         @Test
-        void dadaRequisicaoValida_quandoDeleteById_entaoArmazenarAtivoFalseNoBancoDeDados() {
+        @DisplayName("Deve desativar cliente, alterando o campo active para false, no banco de dados.")
+        void shouldDisableCustomerInDatabaseWithFieldActiveFalse() {
             var idCustomer = defaultCustomer.getId();
 
             var customerActiveTrue = customerRepository.findById(idCustomer);
             assertTrue(customerActiveTrue.isPresent());
             assertTrue(customerActiveTrue.get().isActive());
+            assertTrue(customerActiveTrue.get().getUser().isActive());
 
             customerDeleteUseCase.disableById(idCustomer);
 
-            var customerActiveFalse = customerRepository.findById(idCustomer).orElseThrow();
-            assertFalse(customerActiveFalse.isActive());
-            assertFalse(customerActiveFalse.getUser().isActive());
+            var customerActiveFalse = customerRepository.findById(idCustomer);
+            assertTrue(customerActiveFalse.isPresent());
+            assertFalse(customerActiveFalse.get().isActive());
+            assertFalse(customerActiveFalse.get().getUser().isActive());
         }
     }
 
     @Nested
-    @DisplayName("DeleteInvalid")
+    @DisplayName("Delete - casos inválidos")
     class DeleteInvalid {
 
         @Test
-        void dadaRequisicaoComIdInexistente_quandoDeleteById_entaoLancarCustomerNotFoundCustomException() {
-            assertThrows(CustomerNotFoundCustomException.class, () -> customerDeleteUseCase.disableById(UUID.randomUUID()));
+        @DisplayName("Deve lançar exceção ao desabilitar com ID inexistente.")
+        void shouldThrowOnNotFoundNonexistentId() {
+            assertThrows(CustomerNotFoundCustomException.class, () ->
+                    customerDeleteUseCase.disableById(UUID.randomUUID()));
         }
 
         @Test
+        @DisplayName("Deve lançar exceção ao desabilitar com ID existente, mas já desabilitado.")
         void dadaRequisicaoComIdDesativado_quandoDeleteById_entaoLancarExceptionAndTerNoBancoComoFalse() {
             var idCustomer = defaultCustomer.getId();
 
             var customerBuscadoAntes = customerRepository.findById(idCustomer).orElseThrow();
             assertNotNull(customerBuscadoAntes);
             assertTrue(customerBuscadoAntes.isActive());
+            assertTrue(customerBuscadoAntes.getUser().isActive());
             customerDeleteUseCase.disableById(idCustomer);
 
             assertThrows(CustomerNotFoundCustomException.class, () -> customerDeleteUseCase.disableById(idCustomer));
@@ -89,6 +94,7 @@ class CustomerDeleteUseCaseTest extends BaseIntegrationTest {
             var customerBuscadoDepois = customerRepository.findById(idCustomer).orElseThrow();
             assertNotNull(customerBuscadoDepois);
             assertFalse(customerBuscadoDepois.isActive());
+            assertFalse(customerBuscadoDepois.getUser().isActive());
         }
     }
 }
