@@ -96,7 +96,7 @@ class CustomerControllerRestAssuredTest extends BaseIntegrationTest {
         }
 
         @Test
-        @DisplayName("Deve retornar 409 com username duplicado")
+        @DisplayName("Deve retornar 409 com username duplicado.")
         void shouldReturnConflictOnDuplicateUsername() {
             var request = buildRequest(USERNAME_TESTE, "password123",
                     RoleEnum.ROLE_CUSTOMER.getValue(), "Jeff Beck", "jbeck@email.com");
@@ -112,7 +112,7 @@ class CustomerControllerRestAssuredTest extends BaseIntegrationTest {
         }
 
         @Test
-        @DisplayName("Deve retornar 404 com role inválida")
+        @DisplayName("Deve retornar 404 com role inválida.")
         void shouldReturnNotFoundOnInvalidRole() {
             var request = buildRequest("jbeck123", "password123", "ROLE_INVALID",
                             "Jeff Beck", "jbeck@email.com");
@@ -133,7 +133,8 @@ class CustomerControllerRestAssuredTest extends BaseIntegrationTest {
     class UpdateValid {
 
         @Test
-        void dadaRequisicaoValida_quandoChamarUpdate_entaoRetornarCustomerAtualizado() {
+        @DisplayName("Deve atualizar cliente via PUT e retornar 200.")
+        void shouldUpdateCustomer() {
             var idCustomer = defaultCustomerResponse.id();
 
             var request = buildRequest("anne_frank_atual", "password123",
@@ -157,11 +158,21 @@ class CustomerControllerRestAssuredTest extends BaseIntegrationTest {
     }
 
     @Nested
-    @DisplayName("UpdateInvalid")
+    @DisplayName("Update - casos inválidos")
     class UpdateInvalid {
 
+        private CustomerResponse customerResponse;
+
+        @BeforeEach
+        void setUp() {
+            var requestCreate = buildRequest("johndoe", "password123",
+                    RoleEnum.ROLE_CUSTOMER.getValue(), "John Doe", "doe@gmail.com");
+            customerResponse = customerController.create(requestCreate).getBody();
+        }
+
         @Test
-        void dadaRequisicaoInvalidaComIdInexistente_quandoChamarUpdate_entaoLancarException() {
+        @DisplayName("Deve retornar 404 com ID inexistente.")
+        void shouldReturnNotFoundOnInvalidId() {
             var idCustomerInvalid = UUID.randomUUID();
 
             var request = buildRequest("robert_plant", "password123",
@@ -178,56 +189,45 @@ class CustomerControllerRestAssuredTest extends BaseIntegrationTest {
         }
 
         @Test
-        void dadaRequisicaoInvalidaComEmailDuplicado_quandoChamarUpdate_entaoLancarException() {
-            var emailDuplicate = "doe@gmail.com";
-            var requestCreate = buildRequest("johndoe", "password123",
-                    RoleEnum.ROLE_CUSTOMER.getValue(), "John Doe", emailDuplicate);
-
-            customerController.create(requestCreate);
-
-            var idCustomer = defaultCustomerResponse.id();
-            var requestUpdate = buildRequest("anne_frank_atual", "password888",
-                    RoleEnum.ROLE_ADMIN.getValue(), "Anne Atual Frank", emailDuplicate);
+        @DisplayName("Deve retornar 409 com email duplicado.")
+        void shouldReturnConflictOnDuplicateEmail() {
+            var requestUpdate = buildRequest("johnatualdoe", "password55544",
+                    RoleEnum.ROLE_ADMIN.getValue(), "John Atual Doe", EMAIL_TESTE);
 
             RestAssured.given()
                         .contentType(ContentType.JSON)
                         .body(requestUpdate)
                     .when()
-                        .put("/{id}", idCustomer)
+                        .put("/{id}", customerResponse.id())
                     .then()
                         .statusCode(HttpStatus.CONFLICT.value())
-                        .body("title", equalTo("Esse email já existe no sistema: " + emailDuplicate + "."));
+                        .body("title", equalTo("Esse email já existe no sistema: " + EMAIL_TESTE + "."));
         }
 
         @Test
-        void dadaRequisicaoInvalidaComUsernameDuplicado_quandoChamarUpdate_entaoLancarException() {
-            var usernameDuplicate = "johndoe";
-            var requestCreate = buildRequest(usernameDuplicate, "password123",
-                    RoleEnum.ROLE_CUSTOMER.getValue(), "John Doe", "doe@gmail.com");
-
-            customerController.create(requestCreate);
-
-            var idCustomer = defaultCustomerResponse.id();
-            var requestUpdate = buildRequest(usernameDuplicate, "password888",
-                    RoleEnum.ROLE_ADMIN.getValue(), "Anne Atual Frank", "frank_atual@gmail.com");
+        @DisplayName("Deve retornar 409 com username duplicado.")
+        void shouldReturnConflictOnDuplicateUsername() {
+            var requestUpdate = buildRequest(USERNAME_TESTE, "password3421",
+                    RoleEnum.ROLE_ADMIN.getValue(), "Jeff Sutherland Filho", "jsuther@gmail.com");
 
             RestAssured.given()
                         .contentType(ContentType.JSON)
                         .body(requestUpdate)
                     .when()
-                        .put("/{id}", idCustomer)
+                        .put("/{id}", customerResponse.id())
                     .then()
                         .statusCode(HttpStatus.CONFLICT.value())
-                        .body("title", equalTo("Esse username já existe no sistema: " + usernameDuplicate + "."));
+                        .body("title", equalTo("Esse username já existe no sistema: " + USERNAME_TESTE + "."));
         }
     }
 
     @Nested
-    @DisplayName("DeleteValid")
+    @DisplayName("Delete - casos válidos")
     class DeleteValid {
 
         @Test
-        void dadaRequisicaoValida_quandoDeleteById_entaoRetornarSucesso() {
+        @DisplayName("Deve desativar cliente via DELETE e retornar 200.")
+        void shouldDeleteCustomer() {
 
             RestAssured.given()
                         .contentType(ContentType.JSON)
@@ -239,11 +239,12 @@ class CustomerControllerRestAssuredTest extends BaseIntegrationTest {
     }
 
     @Nested
-    @DisplayName("DeleteInvalid")
+    @DisplayName("Delete - casos inválidos")
     class DeleteInvalid {
 
         @Test
-        void dadaRequisicaoComIdInexistente_quandoDeleteById_entaoLancarException() {
+        @DisplayName("Deve retornar 404 com ID não encontrado.")
+        void shouldReturnNotFoundOnInvalidId() {
             var idInexistente = UUID.randomUUID();
 
             RestAssured.given()
@@ -257,11 +258,12 @@ class CustomerControllerRestAssuredTest extends BaseIntegrationTest {
     }
 
     @Nested
-    @DisplayName("FindByIdValid")
+    @DisplayName("FindById - casos válidos")
     class FindByIdValid {
 
         @Test
-        void dadaRequisicaoValida_quandoChamarFindById_entaoRetornarCustomer() {
+        @DisplayName("Deve consultar cliente via GET e retornar 200.")
+        void shouldFindByIdCustomer() {
 
             RestAssured.given()
                         .contentType(ContentType.JSON)
@@ -280,11 +282,12 @@ class CustomerControllerRestAssuredTest extends BaseIntegrationTest {
     }
 
     @Nested
-    @DisplayName("FindByIdInvalid")
+    @DisplayName("FindById - casos inválidos")
     class FindByIdInvalid {
 
         @Test
-        void dadaRequisicaoComIdInexistente_quandoChamarFindById_entaoLancarException() {
+        @DisplayName("Deve retornar 404 com ID não encontrado.")
+        void shouldReturnNotFoundOnInvalidId() {
             var idNotFound = UUID.randomUUID();
 
             RestAssured.given()
