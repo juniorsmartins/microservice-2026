@@ -15,7 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
-import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -40,19 +39,15 @@ public class CustomerController {
     @PostMapping
     public ResponseEntity<CustomerResponse> create(@RequestBody @Valid CustomerRequest request) {
 
-        var customerResponse = Optional.ofNullable(request)
-                .map(customerCreateInputPort::create)
-                .map(customerPresenter::toResponse)
-                .map(response -> {
-                    var message = customerPresenter.toMessage(response);
-                    producer.sendEventCreateCustomer(message);
-                    return response;
-                })
-                .orElseThrow();
+        var created = customerCreateInputPort.create(request);
+        var response = customerPresenter.toResponse(created);
+
+        var message = customerPresenter.toMessage(response);
+        producer.sendEventCreateCustomer(message);
 
         return ResponseEntity
-                .created(URI.create(URI_CUSTOMERS + "/" + customerResponse.id()))
-                .body(customerResponse);
+                .created(URI.create(URI_CUSTOMERS + "/" + response.id()))
+                .body(response);
     }
 
     @PutMapping(path = "/{id}")
