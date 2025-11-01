@@ -1,10 +1,11 @@
 package backend.finance.api_users.application.usecases;
 
-import backend.finance.api_users.application.configs.exception.http404.RoleNotFoundCustomException;
-import backend.finance.api_users.application.configs.exception.http409.EmailConflictRulesCustomException;
-import backend.finance.api_users.application.configs.exception.http409.UsernameConflictRulesCustomException;
-import backend.finance.api_users.domain.enums.RoleEnum;
-import backend.finance.api_users.infrastructure.repositories.CustomerRepository;
+import backend.finance.api_users.application_business_rules.exception.http404.RoleNotFoundCustomException;
+import backend.finance.api_users.application_business_rules.exception.http409.EmailConflictRulesCustomException;
+import backend.finance.api_users.application_business_rules.exception.http409.UsernameConflictRulesCustomException;
+import backend.finance.api_users.application_business_rules.usecases.CustomerCreateUseCase;
+import backend.finance.api_users.enterprise_business_rules.enums.RoleEnum;
+import backend.finance.api_users.interface_adapters.repositories.CustomerRepository;
 import backend.finance.api_users.utils.BaseIntegrationTest;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;

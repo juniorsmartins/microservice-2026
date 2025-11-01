@@ -1,7 +1,9 @@
 package backend.finance.api_users.domain.entities;
 
-import backend.finance.api_users.application.configs.exception.http400.AllNullFieldsCustomException;
-import backend.finance.api_users.application.configs.exception.http400.AttributeExceededMaximumLimitException;
+import backend.finance.api_users.application_business_rules.exception.http400.AllNullFieldsCustomException;
+import backend.finance.api_users.application_business_rules.exception.http400.AttributeExceededMaximumLimitException;
+import backend.finance.api_users.enterprise_business_rules.entities.Permissao;
+import backend.finance.api_users.enterprise_business_rules.entities.Usuario;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;

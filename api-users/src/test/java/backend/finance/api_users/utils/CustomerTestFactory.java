@@ -1,7 +1,7 @@
 package backend.finance.api_users.utils;
 
-import backend.finance.api_users.application.dtos.input.CustomerRequest;
-import backend.finance.api_users.domain.enums.RoleEnum;
+import backend.finance.api_users.application_business_rules.dtos.input.CustomerRequest;
+import backend.finance.api_users.enterprise_business_rules.enums.RoleEnum;
 
 public class CustomerTestFactory {
 

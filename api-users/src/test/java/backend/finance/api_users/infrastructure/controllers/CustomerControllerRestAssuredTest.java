@@ -1,7 +1,8 @@
 package backend.finance.api_users.infrastructure.controllers;
 
-import backend.finance.api_users.application.dtos.output.CustomerResponse;
-import backend.finance.api_users.domain.enums.RoleEnum;
+import backend.finance.api_users.application_business_rules.dtos.output.CustomerResponse;
+import backend.finance.api_users.enterprise_business_rules.enums.RoleEnum;
+import backend.finance.api_users.interface_adapters.controllers.CustomerController;
 import backend.finance.api_users.utils.BaseIntegrationTest;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
@@ -16,7 +17,7 @@ import org.springframework.http.HttpStatus;
 
 import java.util.UUID;
 
-import static backend.finance.api_users.domain.constant.ConstantsValidation.*;
+import static backend.finance.api_users.enterprise_business_rules.constants.ConstantsValidation.*;
 import static backend.finance.api_users.utils.CustomerTestFactory.buildRequest;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;

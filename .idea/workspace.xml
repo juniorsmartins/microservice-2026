@@ -6,14 +6,14 @@
   <component name="ChangeListManager">
     <list default="true" id="a1ea8202-910b-4a63-8ece-9f6a9a5ee2c0" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/application/configs/exception/GlobalHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/application/configs/exception/GlobalHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/application/dtos/input/CustomerRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/application/dtos/input/CustomerRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/domain/constant/ConstantsValidation.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/domain/constant/ConstantsValidation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/domain/entities/Customer.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/domain/entities/Customer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/infrastructure/jpas/CustomerJpa.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/infrastructure/jpas/CustomerJpa.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/src/main/resources/liquibase/changesets/20250928121015_create_table_customers.sql" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/main/resources/liquibase/changesets/20250928121015_create_table_customers.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/src/test/java/backend/finance/api_users/domain/entities/CustomerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/test/java/backend/finance/api_users/domain/entities/CustomerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/src/test/java/backend/finance/api_users/infrastructure/controllers/CustomerControllerRestAssuredTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/test/java/backend/finance/api_users/infrastructure/controllers/CustomerControllerRestAssuredTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/application_business_rules/ports/output/CustomerUpdateOutputPort.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/application_business_rules/usecases/CustomerUpdateUseCase.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/application_business_rules/usecases/CustomerUpdateUseCase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/enterprise_business_rules/entities/Customer.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/enterprise_business_rules/entities/Customer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/enterprise_business_rules/entities/Usuario.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/enterprise_business_rules/entities/Usuario.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/interface_adapters/gateways/CustomerUpdateGateway.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/interface_adapters/jpas/CustomerJpa.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/interface_adapters/jpas/CustomerJpa.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/interface_adapters/jpas/RoleJpa.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/interface_adapters/jpas/RoleJpa.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/interface_adapters/jpas/UserJpa.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/interface_adapters/jpas/UserJpa.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -135,37 +135,37 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Gradle.CustomerControllerIntegrationTest.executor": "Run",
-    "Gradle.CustomerCreateUseCaseTest.executor": "Run",
-    "Gradle.CustomerTest.executor": "Run",
-    "Gradle.Download Sources.executor": "Run",
-    "Gradle.Tests in 'api-user.test'.executor": "Run",
-    "Gradle.Tests in 'api-users.test'.executor": "Run",
-    "Gradle.api-user [:backend.finance.api_user.ApiUserApplication.main()].executor": "Run",
-    "Gradle.api-user [build].executor": "Run",
-    "Gradle.api-user [clean].executor": "Run",
-    "Gradle.api-user [diff].executor": "Run",
-    "Gradle.api-user [generateAvroJava].executor": "Run",
-    "Gradle.api-users [build].executor": "Run",
-    "Gradle.api-users [clean].executor": "Run",
-    "Gradle.api-users [generateAvroJava].executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
-    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
-    "git-widget-placeholder": "develop",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/home/juniorsmartins/Projetos/microservice-2026",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "File.Encoding"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Gradle.CustomerControllerIntegrationTest.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.CustomerCreateUseCaseTest.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.CustomerTest.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Download Sources.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Tests in 'api-user.test'.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Tests in 'api-users.test'.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.api-user [:backend.finance.api_user.ApiUserApplication.main()].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.api-user [build].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.api-user [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.api-user [diff].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.api-user [generateAvroJava].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.api-users [build].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.api-users [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.api-users [generateAvroJava].executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit5&quot;,
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;develop&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/juniorsmartins/Projetos/microservice-2026&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;File.Encoding&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$" />
@@ -199,30 +199,6 @@
     </key>
   </component>
   <component name="RunManager" selected="Gradle.Tests in 'api-users.test'">
-    <configuration name="CustomerControllerIntegrationTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/api-users" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value=":test" />
-            <option value="--tests" />
-            <option value="&quot;backend.finance.api_user.infrastructure.controllers.CustomerControllerIntegrationTest&quot;" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>true</RunAsTest>
-      <method v="2" />
-    </configuration>
     <configuration name="CustomerCreateUseCaseTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -267,6 +243,28 @@
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
       <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="api-users [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/api-users" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="build" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
       <method v="2" />
     </configuration>
     <configuration name="api-users [clean]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
@@ -316,10 +314,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Gradle.Tests in 'api-users.test'" />
-        <item itemvalue="Gradle.api-users [generateAvroJava]" />
+        <item itemvalue="Gradle.api-users [build]" />
         <item itemvalue="Gradle.api-users [clean]" />
+        <item itemvalue="Gradle.api-users [generateAvroJava]" />
         <item itemvalue="Gradle.CustomerCreateUseCaseTest" />
-        <item itemvalue="Gradle.CustomerControllerIntegrationTest" />
       </list>
     </recent_temporary>
   </component>
@@ -334,7 +332,7 @@
     <servers />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/microservice_2026$Tests_in__api_users_test_.ic" NAME="Tests in 'api-users.test' Coverage Results" MODIFIED="1761940677294" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
+    <SUITE FILE_PATH="coverage/microservice_2026$Tests_in__api_users_test_.ic" NAME="Tests in 'api-users.test' Coverage Results" MODIFIED="1761944739906" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
     <SUITE FILE_PATH="coverage/microservice_2026$Tests_in__api_user_test_.ic" NAME="Tests in 'api-user.test' Coverage Results" MODIFIED="1759259391843" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
   </component>
 </project>
