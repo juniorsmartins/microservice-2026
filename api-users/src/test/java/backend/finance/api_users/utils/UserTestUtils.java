@@ -1,6 +1,6 @@
 package backend.finance.api_users.utils;
 
-import backend.finance.api_users.application.dtos.input.UserRequest;
+import backend.finance.api_users.application_business_rules.dtos.input.UserRequest;
 
 public class UserTestUtils {
 

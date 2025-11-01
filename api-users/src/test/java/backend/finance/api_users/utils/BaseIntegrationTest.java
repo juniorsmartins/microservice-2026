@@ -1,6 +1,6 @@
 package backend.finance.api_users.utils;
 
-import backend.finance.api_users.infrastructure.repositories.CustomerRepository;
+import backend.finance.api_users.frameworks_drivers.repositories.CustomerRepository;
 import io.confluent.kafka.schemaregistry.client.MockSchemaRegistryClient;
 import io.confluent.kafka.schemaregistry.client.SchemaRegistryClient;
 import org.junit.jupiter.api.AfterEach;
