@@ -1,13 +1,13 @@
 package backend.finance.api_users.interface_adapters.controllers;
 
-import backend.finance.api_users.application_business_rules.exception.http404.CustomerNotFoundCustomException;
-import backend.finance.api_users.interface_adapters.configs.producer.Producer;
 import backend.finance.api_users.application_business_rules.dtos.input.CustomerRequest;
 import backend.finance.api_users.application_business_rules.dtos.output.CustomerResponse;
+import backend.finance.api_users.application_business_rules.exception.http404.CustomerNotFoundCustomException;
 import backend.finance.api_users.application_business_rules.ports.input.CustomerCreateInputPort;
 import backend.finance.api_users.application_business_rules.ports.input.CustomerDeleteInputPort;
 import backend.finance.api_users.application_business_rules.ports.input.CustomerUpdateInputPort;
 import backend.finance.api_users.application_business_rules.ports.output.CustomerQueryOutputPort;
+import backend.finance.api_users.interface_adapters.mensageria.producer.CustomerEventPublisher;
 import backend.finance.api_users.interface_adapters.presenters.CustomerPresenter;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -34,7 +34,7 @@ public class CustomerController {
 
     private final CustomerPresenter customerPresenter;
 
-    private final Producer producer;
+    private final CustomerEventPublisher eventPublisher;
 
     @PostMapping
     public ResponseEntity<CustomerResponse> create(@RequestBody @Valid CustomerRequest request) {
@@ -42,8 +42,7 @@ public class CustomerController {
         var created = customerCreateInputPort.create(request);
         var response = customerPresenter.toResponse(created);
 
-        var message = customerPresenter.toMessage(response);
-        producer.sendEventCreateCustomer(message);
+        eventPublisher.sendEventCreateCustomer(response);
 
         return ResponseEntity
                 .created(URI.create(URI_CUSTOMERS + "/" + response.id()))

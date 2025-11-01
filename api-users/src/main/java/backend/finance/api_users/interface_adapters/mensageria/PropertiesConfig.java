@@ -1,4 +1,4 @@
-package backend.finance.api_users.interface_adapters.configs;
+package backend.finance.api_users.interface_adapters.mensageria;
 
 import lombok.Getter;
 import lombok.Setter;
