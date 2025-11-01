@@ -4,7 +4,7 @@ import backend.finance.api_users.application_business_rules.dtos.internal.RoleDt
 import backend.finance.api_users.enterprise_business_rules.enums.RoleEnum;
 import backend.finance.api_users.application_business_rules.ports.output.RoleOutputPort;
 import backend.finance.api_users.interface_adapters.presenters.RolePresenter;
-import backend.finance.api_users.frameworks_drivers.repositories.RoleRepository;
+import backend.finance.api_users.interface_adapters.repositories.RoleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

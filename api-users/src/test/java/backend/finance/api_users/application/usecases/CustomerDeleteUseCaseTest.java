@@ -1,11 +1,11 @@
 package backend.finance.api_users.application.usecases;
 
-import backend.finance.api_users.enterprise_business_rules.exception.http404.CustomerNotFoundCustomException;
+import backend.finance.api_users.application_business_rules.exception.http404.CustomerNotFoundCustomException;
 import backend.finance.api_users.application_business_rules.usecases.CustomerCreateUseCase;
 import backend.finance.api_users.application_business_rules.usecases.CustomerDeleteUseCase;
 import backend.finance.api_users.enterprise_business_rules.entities.Customer;
 import backend.finance.api_users.enterprise_business_rules.enums.RoleEnum;
-import backend.finance.api_users.frameworks_drivers.repositories.CustomerRepository;
+import backend.finance.api_users.interface_adapters.repositories.CustomerRepository;
 import backend.finance.api_users.utils.BaseIntegrationTest;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;

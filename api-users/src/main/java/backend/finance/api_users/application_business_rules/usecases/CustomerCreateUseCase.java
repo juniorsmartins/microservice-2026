@@ -6,9 +6,9 @@ import backend.finance.api_users.application_business_rules.ports.output.Custome
 import backend.finance.api_users.enterprise_business_rules.entities.Customer;
 import backend.finance.api_users.enterprise_business_rules.entities.Permissao;
 import backend.finance.api_users.enterprise_business_rules.entities.Usuario;
-import backend.finance.api_users.enterprise_business_rules.validation.CustomerValidation;
-import backend.finance.api_users.enterprise_business_rules.validation.RoleValidation;
-import backend.finance.api_users.enterprise_business_rules.validation.UserValidation;
+import backend.finance.api_users.application_business_rules.validation.CustomerValidation;
+import backend.finance.api_users.application_business_rules.validation.RoleValidation;
+import backend.finance.api_users.application_business_rules.validation.UserValidation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

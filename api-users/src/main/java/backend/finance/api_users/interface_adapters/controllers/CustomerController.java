@@ -1,7 +1,7 @@
 package backend.finance.api_users.interface_adapters.controllers;
 
-import backend.finance.api_users.enterprise_business_rules.exception.http404.CustomerNotFoundCustomException;
-import backend.finance.api_users.application.configs.mensageria.producer.Producer;
+import backend.finance.api_users.application_business_rules.exception.http404.CustomerNotFoundCustomException;
+import backend.finance.api_users.interface_adapters.configs.producer.Producer;
 import backend.finance.api_users.application_business_rules.dtos.input.CustomerRequest;
 import backend.finance.api_users.application_business_rules.dtos.output.CustomerResponse;
 import backend.finance.api_users.application_business_rules.ports.input.CustomerCreateInputPort;

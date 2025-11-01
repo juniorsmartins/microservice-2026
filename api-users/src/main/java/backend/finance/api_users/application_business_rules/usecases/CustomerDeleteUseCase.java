@@ -1,6 +1,6 @@
 package backend.finance.api_users.application_business_rules.usecases;
 
-import backend.finance.api_users.enterprise_business_rules.exception.http404.CustomerNotFoundCustomException;
+import backend.finance.api_users.application_business_rules.exception.http404.CustomerNotFoundCustomException;
 import backend.finance.api_users.application_business_rules.ports.input.CustomerDeleteInputPort;
 import backend.finance.api_users.application_business_rules.ports.output.CustomerQueryOutputPort;
 import backend.finance.api_users.application_business_rules.ports.output.CustomerSaveOutputPort;

@@ -1,8 +1,8 @@
 package backend.finance.api_users.enterprise_business_rules.entities;
 
-import backend.finance.api_users.enterprise_business_rules.exception.http400.AllNullFieldsCustomException;
-import backend.finance.api_users.enterprise_business_rules.exception.http400.AttributeExceededMaximumLimitException;
-import backend.finance.api_users.enterprise_business_rules.exception.http400.EmailInvalidFormatCustomException;
+import backend.finance.api_users.application_business_rules.exception.http400.AllNullFieldsCustomException;
+import backend.finance.api_users.application_business_rules.exception.http400.AttributeExceededMaximumLimitException;
+import backend.finance.api_users.application_business_rules.exception.http400.EmailInvalidFormatCustomException;
 import lombok.Getter;
 
 import java.util.UUID;
