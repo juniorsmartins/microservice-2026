@@ -8,13 +8,10 @@ import java.util.UUID;
 import static backend.finance.api_users.enterprise_business_rules.constants.ConstantsValidation.NAME_SIZE_MAX;
 
 @Entity
-@Table(name = "customers",
-        indexes = {@Index(name = "idx_customers_email", columnList = "email")}
-)
+@Table(name = "customers", indexes = {@Index(name = "idx_customers_email", columnList = "email")})
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-@Setter
 @EqualsAndHashCode(of = {"email"})
 @ToString
 public final class CustomerJpa {

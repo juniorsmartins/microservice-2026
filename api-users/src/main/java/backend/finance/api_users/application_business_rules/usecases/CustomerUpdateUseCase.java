@@ -1,14 +1,15 @@
 package backend.finance.api_users.application_business_rules.usecases;
 
 import backend.finance.api_users.application_business_rules.dtos.input.CustomerRequest;
+import backend.finance.api_users.application_business_rules.exception.http404.CustomerNotFoundCustomException;
 import backend.finance.api_users.application_business_rules.ports.input.CustomerUpdateInputPort;
-import backend.finance.api_users.application_business_rules.ports.output.CustomerUpdateOutputPort;
-import backend.finance.api_users.enterprise_business_rules.entities.Customer;
-import backend.finance.api_users.enterprise_business_rules.entities.Permissao;
-import backend.finance.api_users.enterprise_business_rules.entities.Usuario;
+import backend.finance.api_users.application_business_rules.ports.output.CustomerQueryOutputPort;
+import backend.finance.api_users.application_business_rules.ports.output.CustomerSaveOutputPort;
 import backend.finance.api_users.application_business_rules.validation.CustomerValidation;
 import backend.finance.api_users.application_business_rules.validation.RoleValidation;
 import backend.finance.api_users.application_business_rules.validation.UserValidation;
+import backend.finance.api_users.enterprise_business_rules.entities.Customer;
+import backend.finance.api_users.enterprise_business_rules.entities.Permissao;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +19,9 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class CustomerUpdateUseCase implements CustomerUpdateInputPort {
 
-    private final CustomerUpdateOutputPort customerUpdateOutputPort;
+    private final CustomerQueryOutputPort customerQueryOutputPort;
+
+    private final CustomerSaveOutputPort customerSaveOutputPort;
 
     private final CustomerValidation customerValidation;
 
@@ -29,14 +32,19 @@ public class CustomerUpdateUseCase implements CustomerUpdateInputPort {
     @Override
     public Customer update(UUID customerId, CustomerRequest request) {
 
+        var saved = customerQueryOutputPort.findByIdAndActiveTrue(customerId)
+                .orElseThrow(() -> new CustomerNotFoundCustomException(customerId));
+
         customerValidation.checkDuplicateEmail(customerId, request.email());
         userValidation.checkDuplicateUsername(customerId, request.user().username());
-
         var roleDto = roleValidation.getOrCreateRole(request.user().role());
-        var permissao = Permissao.create(roleDto.id(), roleDto.name());
-        var usuario = Usuario.create(null, request.user().username(), request.user().password(), permissao, true);
-        var customer = Customer.create(customerId, request.name(), request.email(), usuario, true);
 
-        return customerUpdateOutputPort.update(customer);
+        saved.setName(request.name());
+        saved.setEmail(request.email());
+        saved.getUser().setUsername(request.user().username());
+        saved.getUser().setPassword(request.user().password());
+        saved.getUser().setRole(Permissao.create(roleDto.id(), roleDto.name()));
+
+        return customerSaveOutputPort.save(saved);
     }
 }

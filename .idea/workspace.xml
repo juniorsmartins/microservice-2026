@@ -6,37 +6,14 @@
   <component name="ChangeListManager">
     <list default="true" id="a1ea8202-910b-4a63-8ece-9f6a9a5ee2c0" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/application_business_rules/usecases/CustomerCreateUseCase.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/application_business_rules/usecases/CustomerCreateUseCase.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/application_business_rules/usecases/CustomerDeleteUseCase.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/application_business_rules/usecases/CustomerDeleteUseCase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/application_business_rules/ports/output/CustomerUpdateOutputPort.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/application_business_rules/usecases/CustomerUpdateUseCase.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/application_business_rules/usecases/CustomerUpdateUseCase.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/enterprise_business_rules/GlobalHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/application_business_rules/exception/GlobalHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/enterprise_business_rules/SettingInternationalMessaging.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/application_business_rules/exception/SettingInternationalMessaging.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/enterprise_business_rules/entities/Customer.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/enterprise_business_rules/entities/Customer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/enterprise_business_rules/entities/Usuario.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/enterprise_business_rules/entities/Usuario.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/enterprise_business_rules/exception/http400/AllNullFieldsCustomException.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/application_business_rules/exception/http400/AllNullFieldsCustomException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/enterprise_business_rules/exception/http400/AttributeExceededMaximumLimitException.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/application_business_rules/exception/http400/AttributeExceededMaximumLimitException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/enterprise_business_rules/exception/http400/BadRequestCustomException.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/application_business_rules/exception/http400/BadRequestCustomException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/enterprise_business_rules/exception/http400/EmailInvalidFormatCustomException.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/application_business_rules/exception/http400/EmailInvalidFormatCustomException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/enterprise_business_rules/exception/http404/CustomerNotFoundCustomException.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/application_business_rules/exception/http404/CustomerNotFoundCustomException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/enterprise_business_rules/exception/http404/ResourceNotFoundCustomException.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/application_business_rules/exception/http404/ResourceNotFoundCustomException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/enterprise_business_rules/exception/http404/RoleNotFoundCustomException.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/application_business_rules/exception/http404/RoleNotFoundCustomException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/enterprise_business_rules/exception/http409/EmailConflictRulesCustomException.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/application_business_rules/exception/http409/EmailConflictRulesCustomException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/enterprise_business_rules/exception/http409/ResourceConflictRulesCustomException.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/application_business_rules/exception/http409/ResourceConflictRulesCustomException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/enterprise_business_rules/exception/http409/UsernameConflictRulesCustomException.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/application_business_rules/exception/http409/UsernameConflictRulesCustomException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/enterprise_business_rules/validation/CustomerValidation.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/application_business_rules/validation/CustomerValidation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/enterprise_business_rules/validation/CustomerValidationImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/application_business_rules/validation/CustomerValidationImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/enterprise_business_rules/validation/RoleValidation.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/application_business_rules/validation/RoleValidation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/enterprise_business_rules/validation/RoleValidationImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/application_business_rules/validation/RoleValidationImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/enterprise_business_rules/validation/UserValidation.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/application_business_rules/validation/UserValidation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/enterprise_business_rules/validation/UserValidationImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/application_business_rules/validation/UserValidationImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/interface_adapters/controllers/CustomerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/interface_adapters/controllers/CustomerController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/interface_adapters/gateways/CustomerUpdateGateway.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/interface_adapters/gateways/CustomerUpdateGateway.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/src/test/java/backend/finance/api_users/application/usecases/CustomerCreateUseCaseTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/test/java/backend/finance/api_users/application/usecases/CustomerCreateUseCaseTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/src/test/java/backend/finance/api_users/application/usecases/CustomerDeleteUseCaseTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/test/java/backend/finance/api_users/application/usecases/CustomerDeleteUseCaseTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/src/test/java/backend/finance/api_users/application/usecases/CustomerUpdateUseCaseTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/test/java/backend/finance/api_users/application/usecases/CustomerUpdateUseCaseTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/src/test/java/backend/finance/api_users/domain/entities/CustomerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/test/java/backend/finance/api_users/domain/entities/CustomerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/src/test/java/backend/finance/api_users/domain/entities/UsuarioTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/test/java/backend/finance/api_users/domain/entities/UsuarioTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/src/test/java/backend/finance/api_users/infrastructure/controllers/CustomerControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/test/java/backend/finance/api_users/infrastructure/controllers/CustomerControllerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/interface_adapters/gateways/CustomerUpdateGateway.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/interface_adapters/jpas/CustomerJpa.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/interface_adapters/jpas/CustomerJpa.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/interface_adapters/jpas/RoleJpa.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/interface_adapters/jpas/RoleJpa.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/interface_adapters/jpas/UserJpa.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/interface_adapters/jpas/UserJpa.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -222,30 +199,6 @@
     </key>
   </component>
   <component name="RunManager" selected="Gradle.Tests in 'api-users.test'">
-    <configuration name="CustomerControllerIntegrationTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/api-users" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value=":test" />
-            <option value="--tests" />
-            <option value="&quot;backend.finance.api_user.infrastructure.controllers.CustomerControllerIntegrationTest&quot;" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>true</RunAsTest>
-      <method v="2" />
-    </configuration>
     <configuration name="CustomerCreateUseCaseTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -290,6 +243,28 @@
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
       <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="api-users [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/api-users" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="build" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
       <method v="2" />
     </configuration>
     <configuration name="api-users [clean]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
@@ -339,10 +314,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Gradle.Tests in 'api-users.test'" />
-        <item itemvalue="Gradle.api-users [generateAvroJava]" />
+        <item itemvalue="Gradle.api-users [build]" />
         <item itemvalue="Gradle.api-users [clean]" />
+        <item itemvalue="Gradle.api-users [generateAvroJava]" />
         <item itemvalue="Gradle.CustomerCreateUseCaseTest" />
-        <item itemvalue="Gradle.CustomerControllerIntegrationTest" />
       </list>
     </recent_temporary>
   </component>

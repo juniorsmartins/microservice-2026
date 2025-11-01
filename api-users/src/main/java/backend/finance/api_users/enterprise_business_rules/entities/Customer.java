@@ -17,13 +17,13 @@ public final class Customer {
 
     private static final Pattern EMAIL_PATTERN = Pattern.compile(EMAIL_REGEX);
 
-    private final UUID id;
+    private UUID id;
 
-    private final String name;
+    private String name;
 
-    private final String email;
+    private String email;
 
-    private final Usuario user;
+    private Usuario user;
 
     private boolean active;
 
@@ -75,5 +75,21 @@ public final class Customer {
 
     public void disable() {
         this.active = false;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = validName(name);
+    }
+
+    public void setEmail(String email) {
+        this.email = validEmail(email);
+    }
+
+    public void setUser(Usuario user) {
+        this.user = user;
     }
 }

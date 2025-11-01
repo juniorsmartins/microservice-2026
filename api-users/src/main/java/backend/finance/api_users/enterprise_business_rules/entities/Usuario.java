@@ -12,13 +12,13 @@ import static backend.finance.api_users.enterprise_business_rules.constants.Cons
 @Getter
 public final class Usuario {
 
-    private final UUID id;
+    private UUID id;
 
-    private final String username;
+    private String username;
 
-    private final String password;
+    private String password;
 
-    private final Permissao role;
+    private Permissao role;
 
     private boolean active;
 
@@ -60,5 +60,21 @@ public final class Usuario {
 
     public void disable() {
         this.active = false;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public void setUsername(String username) {
+        this.username = checkValidUsername(username);
+    }
+
+    public void setPassword(String password) {
+        this.password = checkValidPassword(password);
+    }
+
+    public void setRole(Permissao role) {
+        this.role = role;
     }
 }

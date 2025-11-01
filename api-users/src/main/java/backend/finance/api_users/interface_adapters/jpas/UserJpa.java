@@ -9,13 +9,10 @@ import static backend.finance.api_users.enterprise_business_rules.constants.Cons
 import static backend.finance.api_users.enterprise_business_rules.constants.ConstantsValidation.USERNAME_SIZE_MAX;
 
 @Entity
-@Table(name = "users",
-        indexes = {@Index(name = "idx_users_username", columnList = "username")}
-)
+@Table(name = "users", indexes = {@Index(name = "idx_users_username", columnList = "username")})
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-@Setter
 @EqualsAndHashCode(of = {"username"})
 @ToString
 public final class UserJpa {
