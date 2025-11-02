@@ -77,6 +77,7 @@ public final class Customer {
         this.active = false;
     }
 
+    //#region Setters
     public void setId(UUID id) {
         this.id = id;
     }
@@ -92,4 +93,5 @@ public final class Customer {
     public void setUser(Usuario user) {
         this.user = user;
     }
+    //#endregion
 }
