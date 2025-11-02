@@ -2,7 +2,7 @@ package backend.finance.api_users.application.usecases;
 
 import backend.finance.api_users.application_business_rules.exception.http404.CustomerNotFoundCustomException;
 import backend.finance.api_users.application_business_rules.usecases.CustomerCreateUseCase;
-import backend.finance.api_users.application_business_rules.usecases.CustomerDeleteUseCase;
+import backend.finance.api_users.application_business_rules.usecases.CustomerDisableUseCase;
 import backend.finance.api_users.enterprise_business_rules.entities.Customer;
 import backend.finance.api_users.enterprise_business_rules.enums.RoleEnum;
 import backend.finance.api_users.interface_adapters.repositories.CustomerRepository;
@@ -27,7 +27,7 @@ class CustomerDeleteUseCaseTest extends BaseIntegrationTest {
     private CustomerCreateUseCase customerCreateUseCase;
 
     @Autowired
-    private CustomerDeleteUseCase customerDeleteUseCase;
+    private CustomerDisableUseCase customerDeleteUseCase;
 
     @Autowired
     private CustomerRepository customerRepository;

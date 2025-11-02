@@ -1,7 +1,7 @@
 package backend.finance.api_users.application_business_rules.usecases;
 
 import backend.finance.api_users.application_business_rules.exception.http404.CustomerNotFoundCustomException;
-import backend.finance.api_users.application_business_rules.ports.input.CustomerDeleteInputPort;
+import backend.finance.api_users.application_business_rules.ports.input.CustomerDisableInputPort;
 import backend.finance.api_users.application_business_rules.ports.output.CustomerQueryOutputPort;
 import backend.finance.api_users.application_business_rules.ports.output.CustomerSaveOutputPort;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +11,7 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class CustomerDeleteUseCase implements CustomerDeleteInputPort {
+public class CustomerDisableUseCase implements CustomerDisableInputPort {
 
     private final CustomerQueryOutputPort customerQueryOutputPort;
 
