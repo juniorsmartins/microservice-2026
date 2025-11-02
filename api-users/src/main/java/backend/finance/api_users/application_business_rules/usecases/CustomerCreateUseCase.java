@@ -2,6 +2,7 @@ package backend.finance.api_users.application_business_rules.usecases;
 
 import backend.finance.api_users.application_business_rules.dtos.input.CustomerRequest;
 import backend.finance.api_users.application_business_rules.ports.input.CustomerCreateInputPort;
+import backend.finance.api_users.application_business_rules.ports.output.CustomerEventPublisherOutputPort;
 import backend.finance.api_users.application_business_rules.ports.output.CustomerSaveOutputPort;
 import backend.finance.api_users.enterprise_business_rules.entities.Customer;
 import backend.finance.api_users.enterprise_business_rules.entities.Permissao;
@@ -24,6 +25,8 @@ public class CustomerCreateUseCase implements CustomerCreateInputPort {
 
     private final RoleValidation roleValidation;
 
+    private final CustomerEventPublisherOutputPort eventPublisher;
+
     @Override
     public Customer create(CustomerRequest request) {
 
@@ -35,6 +38,9 @@ public class CustomerCreateUseCase implements CustomerCreateInputPort {
         var usuario = Usuario.create(null, request.user().username(), request.user().password(), permissao, true);
         var customer = Customer.create(null, request.name(), request.email(), usuario, true);
 
-        return customerSaveOutputPort.save(customer);
+        var saved = customerSaveOutputPort.save(customer);
+        eventPublisher.sendEventCreateCustomer(saved);
+
+        return saved;
     }
 }

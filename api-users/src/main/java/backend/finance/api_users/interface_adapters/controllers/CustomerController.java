@@ -7,7 +7,6 @@ import backend.finance.api_users.application_business_rules.ports.input.Customer
 import backend.finance.api_users.application_business_rules.ports.input.CustomerDeleteInputPort;
 import backend.finance.api_users.application_business_rules.ports.input.CustomerUpdateInputPort;
 import backend.finance.api_users.application_business_rules.ports.output.CustomerQueryOutputPort;
-import backend.finance.api_users.interface_adapters.mensageria.producer.CustomerEventPublisher;
 import backend.finance.api_users.interface_adapters.presenters.CustomerPresenter;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -34,15 +33,11 @@ public class CustomerController {
 
     private final CustomerPresenter customerPresenter;
 
-    private final CustomerEventPublisher eventPublisher;
-
     @PostMapping
     public ResponseEntity<CustomerResponse> create(@RequestBody @Valid CustomerRequest request) {
 
         var created = customerCreateInputPort.create(request);
         var response = customerPresenter.toResponse(created);
-
-        eventPublisher.sendEventCreateCustomer(response);
 
         return ResponseEntity
                 .created(URI.create(URI_CUSTOMERS + "/" + response.id()))
