@@ -1,6 +1,6 @@
-package backend.finance.api_users.interface_adapters.configs.consumer;
+package backend.finance.api_users.interface_adapters.mensageria.consumer;
 
-import backend.finance.api_users.interface_adapters.configs.PropertiesConfig;
+import backend.finance.api_users.interface_adapters.mensageria.PropertiesConfig;
 import io.confluent.kafka.serializers.AbstractKafkaSchemaSerDeConfig;
 import io.confluent.kafka.serializers.KafkaAvroDeserializer;
 import lombok.RequiredArgsConstructor;

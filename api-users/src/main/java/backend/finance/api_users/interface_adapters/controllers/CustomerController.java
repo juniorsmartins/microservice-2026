@@ -1,11 +1,10 @@
 package backend.finance.api_users.interface_adapters.controllers;
 
-import backend.finance.api_users.application_business_rules.exception.http404.CustomerNotFoundCustomException;
-import backend.finance.api_users.interface_adapters.configs.producer.Producer;
 import backend.finance.api_users.application_business_rules.dtos.input.CustomerRequest;
 import backend.finance.api_users.application_business_rules.dtos.output.CustomerResponse;
+import backend.finance.api_users.application_business_rules.exception.http404.CustomerNotFoundCustomException;
 import backend.finance.api_users.application_business_rules.ports.input.CustomerCreateInputPort;
-import backend.finance.api_users.application_business_rules.ports.input.CustomerDeleteInputPort;
+import backend.finance.api_users.application_business_rules.ports.input.CustomerDisableInputPort;
 import backend.finance.api_users.application_business_rules.ports.input.CustomerUpdateInputPort;
 import backend.finance.api_users.application_business_rules.ports.output.CustomerQueryOutputPort;
 import backend.finance.api_users.interface_adapters.presenters.CustomerPresenter;
@@ -28,22 +27,17 @@ public class CustomerController {
 
     private final CustomerUpdateInputPort customerUpdateInputPort;
 
-    private final CustomerDeleteInputPort customerDeleteInputPort;
+    private final CustomerDisableInputPort customerDisableInputPort;
 
     private final CustomerQueryOutputPort customerQueryOutputPort;
 
     private final CustomerPresenter customerPresenter;
-
-    private final Producer producer;
 
     @PostMapping
     public ResponseEntity<CustomerResponse> create(@RequestBody @Valid CustomerRequest request) {
 
         var created = customerCreateInputPort.create(request);
         var response = customerPresenter.toResponse(created);
-
-        var message = customerPresenter.toMessage(response);
-        producer.sendEventCreateCustomer(message);
 
         return ResponseEntity
                 .created(URI.create(URI_CUSTOMERS + "/" + response.id()))
@@ -64,7 +58,7 @@ public class CustomerController {
     @DeleteMapping(path = "/{id}")
     public ResponseEntity<Void> disableById(@PathVariable(name = "id") final UUID id) {
 
-        customerDeleteInputPort.disableById(id);
+        customerDisableInputPort.disableById(id);
 
         return ResponseEntity
                 .noContent()

@@ -6,14 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="a1ea8202-910b-4a63-8ece-9f6a9a5ee2c0" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/application_business_rules/ports/output/CustomerUpdateOutputPort.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/application_business_rules/usecases/CustomerUpdateUseCase.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/application_business_rules/usecases/CustomerUpdateUseCase.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/enterprise_business_rules/entities/Customer.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/enterprise_business_rules/entities/Customer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/enterprise_business_rules/entities/Usuario.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/enterprise_business_rules/entities/Usuario.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/interface_adapters/gateways/CustomerUpdateGateway.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/interface_adapters/jpas/CustomerJpa.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/interface_adapters/jpas/CustomerJpa.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/interface_adapters/jpas/RoleJpa.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/interface_adapters/jpas/RoleJpa.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/interface_adapters/jpas/UserJpa.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/interface_adapters/jpas/UserJpa.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/application_business_rules/ports/input/CustomerDeleteInputPort.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/application_business_rules/ports/input/CustomerDisableInputPort.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/application_business_rules/usecases/CustomerDeleteUseCase.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/application_business_rules/usecases/CustomerDisableUseCase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/interface_adapters/controllers/CustomerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/interface_adapters/controllers/CustomerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/interface_adapters/repositories/UserRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/src/test/java/backend/finance/api_users/application/usecases/CustomerDeleteUseCaseTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/test/java/backend/finance/api_users/application/usecases/CustomerDeleteUseCaseTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/src/test/java/backend/finance/api_users/infrastructure/controllers/CustomerControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/test/java/backend/finance/api_users/infrastructure/controllers/CustomerControllerTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -103,9 +101,9 @@
       <list>
         <option value="Enum" />
         <option value="Record" />
-        <option value="Interface" />
         <option value="JUnit5 Test Class" />
         <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>

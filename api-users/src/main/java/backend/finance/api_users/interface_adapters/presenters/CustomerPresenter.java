@@ -13,5 +13,5 @@ public interface CustomerPresenter {
 
     Customer toEntity(CustomerJpa jpa);
 
-    CustomerMessage toMessage(CustomerResponse response);
+    CustomerMessage toMessage(Customer customer);
 }

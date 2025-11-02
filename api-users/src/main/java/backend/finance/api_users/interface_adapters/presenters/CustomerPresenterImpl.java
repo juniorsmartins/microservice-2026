@@ -32,7 +32,7 @@ public final class CustomerPresenterImpl implements CustomerPresenter {
     }
 
     @Override
-    public CustomerMessage toMessage(CustomerResponse response) {
-        return new CustomerMessage(response.id().toString(), response.name(), response.email());
+    public CustomerMessage toMessage(Customer customer) {
+        return new CustomerMessage(customer.getId().toString(), customer.getName(), customer.getEmail());
     }
 }

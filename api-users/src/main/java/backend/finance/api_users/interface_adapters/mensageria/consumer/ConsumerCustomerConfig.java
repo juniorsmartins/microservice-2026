@@ -1,4 +1,4 @@
-package backend.finance.api_users.interface_adapters.configs.consumer;
+package backend.finance.api_users.interface_adapters.mensageria.consumer;
 
 import backend.finance.api_users.CustomerMessage;
 import lombok.RequiredArgsConstructor;
