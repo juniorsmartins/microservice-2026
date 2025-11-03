@@ -15,13 +15,19 @@ public final class CustomerPresenterImpl implements CustomerPresenter {
 
     @Override
     public CustomerResponse toResponse(Customer customer) {
-        var userResponse = userPresenter.toUserResponse(customer.getUser());
+        var userResponse = userPresenter.toResponse(customer.getUser());
         return new CustomerResponse(customer.getId(), customer.getName(), customer.getEmail(), userResponse, customer.isActive());
     }
 
     @Override
+    public CustomerResponse toResponse(CustomerJpa jpa) {
+        var userResponse = userPresenter.toResponse(jpa.getUser());
+        return new CustomerResponse(jpa.getId(), jpa.getName(), jpa.getEmail(), userResponse, jpa.isActive());
+    }
+
+    @Override
     public CustomerJpa toJpa(Customer customer) {
-        var userJpa = userPresenter.toUserJpa(customer.getUser());
+        var userJpa = userPresenter.toJpa(customer.getUser());
         return new CustomerJpa(customer.getId(), customer.getName(), customer.getEmail(), userJpa, customer.isActive());
     }
 
@@ -32,7 +38,7 @@ public final class CustomerPresenterImpl implements CustomerPresenter {
     }
 
     @Override
-    public CustomerMessage toMessage(Customer customer) {
-        return new CustomerMessage(customer.getId().toString(), customer.getName(), customer.getEmail());
+    public CustomerMessage toMessage(CustomerResponse response) {
+        return new CustomerMessage(response.id().toString(), response.name(), response.email());
     }
 }

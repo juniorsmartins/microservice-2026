@@ -1,8 +1,8 @@
 package backend.finance.api_users.interface_adapters.mensageria.producer;
 
 import backend.finance.api_users.CustomerMessage;
+import backend.finance.api_users.application_business_rules.dtos.output.CustomerResponse;
 import backend.finance.api_users.application_business_rules.ports.output.CustomerEventPublisherOutputPort;
-import backend.finance.api_users.enterprise_business_rules.entities.Customer;
 import backend.finance.api_users.interface_adapters.mensageria.PropertiesConfig;
 import backend.finance.api_users.interface_adapters.presenters.CustomerPresenter;
 import lombok.RequiredArgsConstructor;
@@ -24,9 +24,9 @@ public final class KafkaCustomerEventPublisher implements CustomerEventPublisher
     private final CustomerPresenter customerPresenter;
 
     @Override
-    public void sendEventCreateCustomer(Customer customer) {
+    public void sendEventCreateCustomer(CustomerResponse response) {
 
-        var message = customerPresenter.toMessage(customer);
+        var message = customerPresenter.toMessage(response);
         kafkaTemplate.send(propertiesConfig.topicEventCreateCustomer, UUID.randomUUID().toString(), message);
         log.info("\n\n KafkaCustomerEventPublisher - Mensagem enviada: {}. \n\n", message);
     }

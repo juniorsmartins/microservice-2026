@@ -1,6 +1,7 @@
 package backend.finance.api_users.application_business_rules.usecases;
 
 import backend.finance.api_users.application_business_rules.dtos.input.CustomerRequest;
+import backend.finance.api_users.application_business_rules.dtos.output.CustomerResponse;
 import backend.finance.api_users.application_business_rules.exception.http404.CustomerNotFoundCustomException;
 import backend.finance.api_users.application_business_rules.ports.input.CustomerUpdateInputPort;
 import backend.finance.api_users.application_business_rules.ports.output.CustomerQueryOutputPort;
@@ -8,7 +9,6 @@ import backend.finance.api_users.application_business_rules.ports.output.Custome
 import backend.finance.api_users.application_business_rules.validation.CustomerValidation;
 import backend.finance.api_users.application_business_rules.validation.RoleValidation;
 import backend.finance.api_users.application_business_rules.validation.UserValidation;
-import backend.finance.api_users.enterprise_business_rules.entities.Customer;
 import backend.finance.api_users.enterprise_business_rules.entities.Permissao;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -30,7 +30,7 @@ public class CustomerUpdateUseCase implements CustomerUpdateInputPort {
     private final RoleValidation roleValidation;
 
     @Override
-    public Customer update(UUID customerId, CustomerRequest request) {
+    public CustomerResponse update(UUID customerId, CustomerRequest request) {
 
         var saved = customerQueryOutputPort.findByIdAndActiveTrue(customerId)
                 .orElseThrow(() -> new CustomerNotFoundCustomException(customerId));

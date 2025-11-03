@@ -1,8 +1,8 @@
 package backend.finance.api_users.application_business_rules.ports.output;
 
-import backend.finance.api_users.enterprise_business_rules.entities.Customer;
+import backend.finance.api_users.application_business_rules.dtos.output.CustomerResponse;
 
 public interface CustomerEventPublisherOutputPort {
 
-    void sendEventCreateCustomer(Customer customer);
+    void sendEventCreateCustomer(CustomerResponse response);
 }

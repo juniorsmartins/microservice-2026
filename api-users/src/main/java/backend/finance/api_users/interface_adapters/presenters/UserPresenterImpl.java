@@ -13,12 +13,17 @@ public final class UserPresenterImpl implements UserPresenter {
     private final RolePresenter rolePresenter;
 
     @Override
-    public UserResponse toUserResponse(Usuario usuario) {
+    public UserResponse toResponse(Usuario usuario) {
         return new UserResponse(usuario.getId(), usuario.getUsername(), usuario.isActive());
     }
 
     @Override
-    public UserJpa toUserJpa(Usuario usuario) {
+    public UserResponse toResponse(UserJpa jpa) {
+        return new UserResponse(jpa.getId(), jpa.getUsername(), jpa.isActive());
+    }
+
+    @Override
+    public UserJpa toJpa(Usuario usuario) {
         var roleJpa = rolePresenter.toRoleJpa(usuario.getRole());
         return new UserJpa(usuario.getId(), usuario.getUsername(), usuario.getPassword(), roleJpa, usuario.isActive());
     }

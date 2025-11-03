@@ -47,11 +47,11 @@
 
 ### Diagramas Users
 
-Arquitetura
+Arquitetura Limpa
 ![Arq api-users](docs/diagramas/api-users/API-USERS-Diagrama-v1.jpg)
 
 DER
-![DER api-users](docs/diagramas/api-users/DER-api-user.png)
+![DER api-users](docs/diagramas/api-users/DER-api-users.png)
 
 ## API - Accounts
 

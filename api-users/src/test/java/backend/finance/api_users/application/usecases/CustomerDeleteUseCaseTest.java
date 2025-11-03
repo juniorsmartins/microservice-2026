@@ -1,9 +1,9 @@
 package backend.finance.api_users.application.usecases;
 
+import backend.finance.api_users.application_business_rules.dtos.output.CustomerResponse;
 import backend.finance.api_users.application_business_rules.exception.http404.CustomerNotFoundCustomException;
 import backend.finance.api_users.application_business_rules.usecases.CustomerCreateUseCase;
 import backend.finance.api_users.application_business_rules.usecases.CustomerDisableUseCase;
-import backend.finance.api_users.enterprise_business_rules.entities.Customer;
 import backend.finance.api_users.enterprise_business_rules.enums.RoleEnum;
 import backend.finance.api_users.interface_adapters.repositories.CustomerRepository;
 import backend.finance.api_users.utils.BaseIntegrationTest;
@@ -32,7 +32,7 @@ class CustomerDeleteUseCaseTest extends BaseIntegrationTest {
     @Autowired
     private CustomerRepository customerRepository;
 
-    private Customer defaultCustomer;
+    private CustomerResponse defaultCustomer;
 
     @BeforeEach
     void setUp() {
@@ -53,7 +53,7 @@ class CustomerDeleteUseCaseTest extends BaseIntegrationTest {
         @Test
         @DisplayName("Deve desativar cliente, alterando o campo active para false, no banco de dados.")
         void shouldDisableCustomerInDatabaseWithFieldActiveFalse() {
-            var idCustomer = defaultCustomer.getId();
+            var idCustomer = defaultCustomer.id();
 
             var customerActiveTrue = customerRepository.findById(idCustomer);
             assertTrue(customerActiveTrue.isPresent());
@@ -83,7 +83,7 @@ class CustomerDeleteUseCaseTest extends BaseIntegrationTest {
         @Test
         @DisplayName("Deve lançar exceção ao desabilitar com ID existente, mas já desabilitado.")
         void dadaRequisicaoComIdDesativado_quandoDeleteById_entaoLancarExceptionAndTerNoBancoComoFalse() {
-            var idCustomer = defaultCustomer.getId();
+            var idCustomer = defaultCustomer.id();
 
             var customerBuscadoAntes = customerRepository.findById(idCustomer).orElseThrow();
             assertNotNull(customerBuscadoAntes);

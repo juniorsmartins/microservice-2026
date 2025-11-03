@@ -1,11 +1,11 @@
 package backend.finance.api_users.application.usecases;
 
+import backend.finance.api_users.application_business_rules.dtos.output.CustomerResponse;
 import backend.finance.api_users.application_business_rules.exception.http404.CustomerNotFoundCustomException;
 import backend.finance.api_users.application_business_rules.exception.http409.EmailConflictRulesCustomException;
 import backend.finance.api_users.application_business_rules.exception.http409.UsernameConflictRulesCustomException;
 import backend.finance.api_users.application_business_rules.usecases.CustomerCreateUseCase;
 import backend.finance.api_users.application_business_rules.usecases.CustomerUpdateUseCase;
-import backend.finance.api_users.enterprise_business_rules.entities.Customer;
 import backend.finance.api_users.enterprise_business_rules.enums.RoleEnum;
 import backend.finance.api_users.interface_adapters.repositories.CustomerRepository;
 import backend.finance.api_users.utils.BaseIntegrationTest;
@@ -37,7 +37,7 @@ class CustomerUpdateUseCaseTest extends BaseIntegrationTest {
     @Autowired
     private CustomerRepository customerRepository;
 
-    private Customer defaultCustomer;
+    private CustomerResponse defaultCustomer;
 
     @BeforeEach
     void setUp() {
@@ -56,9 +56,9 @@ class CustomerUpdateUseCaseTest extends BaseIntegrationTest {
             var request = buildRequest("username999", "password999",
                     RoleEnum.ROLE_ADMIN.getValue(), "John Atual Doe", "doe@yahoo.com");
 
-            customerUpdateUseCase.update(defaultCustomer.getId(), request);
+            customerUpdateUseCase.update(defaultCustomer.id(), request);
 
-            var saved = customerRepository.findById(defaultCustomer.getId()).orElseThrow();
+            var saved = customerRepository.findById(defaultCustomer.id()).orElseThrow();
             assertAll(
                     () -> assertEquals(request.name(), saved.getName()),
                     () -> assertEquals(request.email(), saved.getEmail()),
@@ -76,9 +76,9 @@ class CustomerUpdateUseCaseTest extends BaseIntegrationTest {
             var request = buildRequest(USERNAME_TESTE, "atual123",
                     RoleEnum.ROLE_ADMIN.getValue(), "John Atual Doe", EMAIL_TESTE);
 
-            customerUpdateUseCase.update(defaultCustomer.getId(), request);
+            customerUpdateUseCase.update(defaultCustomer.id(), request);
 
-            var saved = customerRepository.findById(defaultCustomer.getId()).orElseThrow();
+            var saved = customerRepository.findById(defaultCustomer.id()).orElseThrow();
             assertAll(
                     () -> assertEquals(request.name(), saved.getName()),
                     () -> assertEquals(EMAIL_TESTE, saved.getEmail()),
@@ -95,7 +95,7 @@ class CustomerUpdateUseCaseTest extends BaseIntegrationTest {
     @DisplayName("Update - casos inválidos")
     class UpdateInvalid {
 
-        private Customer customer;
+        private CustomerResponse customer;
 
         @BeforeEach
         void setUp() {
@@ -123,7 +123,7 @@ class CustomerUpdateUseCaseTest extends BaseIntegrationTest {
                     RoleEnum.ROLE_ADMIN.getValue(), "Anne Atual Frank", EMAIL_TESTE);
 
             assertThrows(EmailConflictRulesCustomException.class, () ->
-                    customerUpdateUseCase.update(customer.getId(), requestUpdate));
+                    customerUpdateUseCase.update(customer.id(), requestUpdate));
         }
 
         @Test
@@ -133,7 +133,7 @@ class CustomerUpdateUseCaseTest extends BaseIntegrationTest {
                     RoleEnum.ROLE_CUSTOMER.getValue(), "Anne Atual Frank", "emailqualquer@uol.com");
 
             assertThrows(UsernameConflictRulesCustomException.class, () ->
-                    customerUpdateUseCase.update(customer.getId(), requestUpdate));
+                    customerUpdateUseCase.update(customer.id(), requestUpdate));
         }
     }
 }
