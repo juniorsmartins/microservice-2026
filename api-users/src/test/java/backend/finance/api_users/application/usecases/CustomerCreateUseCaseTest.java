@@ -35,7 +35,7 @@ class CustomerCreateUseCaseTest extends BaseIntegrationTest {
 
             var created = customerCreateUseCase.create(request);
 
-            var saved = customerRepository.findById(created.getId()).orElseThrow();
+            var saved = customerRepository.findById(created.id()).orElseThrow();
             assertAll("Cliente salvo corretamente.",
                     () -> assertEquals(request.name(), saved.getName()),
                     () -> assertEquals(request.email(), saved.getEmail()),
@@ -55,7 +55,7 @@ class CustomerCreateUseCaseTest extends BaseIntegrationTest {
 
             var created = customerCreateUseCase.create(request);
 
-            var saved = customerRepository.findById(created.getId()).orElseThrow();
+            var saved = customerRepository.findById(created.id()).orElseThrow();
             assertEquals(RoleEnum.ROLE_ADMIN, saved.getUser().getRole().getName());
         }
     }

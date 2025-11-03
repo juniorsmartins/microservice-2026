@@ -2,11 +2,10 @@ package backend.finance.api_users.interface_adapters.controllers;
 
 import backend.finance.api_users.application_business_rules.dtos.input.CustomerRequest;
 import backend.finance.api_users.application_business_rules.dtos.output.CustomerResponse;
-import backend.finance.api_users.application_business_rules.exception.http404.CustomerNotFoundCustomException;
 import backend.finance.api_users.application_business_rules.ports.input.CustomerCreateInputPort;
 import backend.finance.api_users.application_business_rules.ports.input.CustomerDisableInputPort;
+import backend.finance.api_users.application_business_rules.ports.input.CustomerQueryInputPort;
 import backend.finance.api_users.application_business_rules.ports.input.CustomerUpdateInputPort;
-import backend.finance.api_users.application_business_rules.ports.output.CustomerQueryOutputPort;
 import backend.finance.api_users.interface_adapters.presenters.CustomerPresenter;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +28,7 @@ public class CustomerController {
 
     private final CustomerDisableInputPort customerDisableInputPort;
 
-    private final CustomerQueryOutputPort customerQueryOutputPort;
+    private final CustomerQueryInputPort customerQueryInputPort;
 
     private final CustomerPresenter customerPresenter;
 
@@ -37,22 +36,20 @@ public class CustomerController {
     public ResponseEntity<CustomerResponse> create(@RequestBody @Valid CustomerRequest request) {
 
         var created = customerCreateInputPort.create(request);
-        var response = customerPresenter.toResponse(created);
 
         return ResponseEntity
-                .created(URI.create(URI_CUSTOMERS + "/" + response.id()))
-                .body(response);
+                .created(URI.create(URI_CUSTOMERS + "/" + created.id()))
+                .body(created);
     }
 
     @PutMapping(path = "/{id}")
     public ResponseEntity<CustomerResponse> update(@PathVariable(name = "id") final UUID id, @RequestBody @Valid CustomerRequest request) {
 
-        var customer = customerUpdateInputPort.update(id, request);
-        var response = customerPresenter.toResponse(customer);
+        var updated = customerUpdateInputPort.update(id, request);
 
         return ResponseEntity
                 .ok()
-                .body(response);
+                .body(updated);
     }
 
     @DeleteMapping(path = "/{id}")
@@ -68,9 +65,11 @@ public class CustomerController {
     @GetMapping(path = "/{id}")
     public ResponseEntity<CustomerResponse> findById(@PathVariable(name = "id") final UUID id) {
 
-        return customerQueryOutputPort.findByIdAndActiveTrue(id)
-                .map(customerPresenter::toResponse)
-                .map(dto -> ResponseEntity.ok().body(dto))
-                .orElseThrow(() -> new CustomerNotFoundCustomException(id));
+        var customer = customerQueryInputPort.findByIdAndActiveTrue(id);
+        var response = customerPresenter.toResponse(customer);
+
+        return ResponseEntity
+                .ok()
+                .body(response);
     }
 }

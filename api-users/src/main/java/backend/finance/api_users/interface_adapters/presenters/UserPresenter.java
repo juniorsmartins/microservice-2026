@@ -6,9 +6,11 @@ import backend.finance.api_users.interface_adapters.jpas.UserJpa;
 
 public interface UserPresenter {
 
-    UserResponse toUserResponse(Usuario usuario);
+    UserResponse toResponse(Usuario usuario);
 
-    UserJpa toUserJpa(Usuario usuario);
+    UserResponse toResponse(UserJpa jpa);
+
+    UserJpa toJpa(Usuario usuario);
 
     Usuario toEntity(UserJpa jpa);
 }

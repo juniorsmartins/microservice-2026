@@ -9,9 +9,11 @@ public interface CustomerPresenter {
 
     CustomerResponse toResponse(Customer customer);
 
+    CustomerResponse toResponse(CustomerJpa jpa);
+
     CustomerJpa toJpa(Customer customer);
 
     Customer toEntity(CustomerJpa jpa);
 
-    CustomerMessage toMessage(Customer customer);
+    CustomerMessage toMessage(CustomerResponse response);
 }
