@@ -4,26 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a1ea8202-910b-4a63-8ece-9f6a9a5ee2c0" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/application_business_rules/ports/input/CustomerCreateInputPort.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/application_business_rules/ports/input/CustomerCreateInputPort.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/application_business_rules/ports/input/CustomerUpdateInputPort.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/application_business_rules/ports/input/CustomerUpdateInputPort.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/application_business_rules/ports/output/CustomerEventPublisherOutputPort.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/application_business_rules/ports/output/CustomerEventPublisherOutputPort.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/application_business_rules/ports/output/CustomerSaveOutputPort.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/application_business_rules/ports/output/CustomerSaveOutputPort.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/application_business_rules/usecases/CustomerCreateUseCase.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/application_business_rules/usecases/CustomerCreateUseCase.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/application_business_rules/usecases/CustomerUpdateUseCase.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/application_business_rules/usecases/CustomerUpdateUseCase.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/interface_adapters/controllers/CustomerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/interface_adapters/controllers/CustomerController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/interface_adapters/gateways/CustomerSaveGateway.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/interface_adapters/gateways/CustomerSaveGateway.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/interface_adapters/mensageria/producer/KafkaCustomerEventPublisher.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/interface_adapters/mensageria/producer/KafkaCustomerEventPublisher.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/interface_adapters/presenters/CustomerPresenter.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/interface_adapters/presenters/CustomerPresenter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/interface_adapters/presenters/CustomerPresenterImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/interface_adapters/presenters/CustomerPresenterImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/interface_adapters/presenters/UserPresenter.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/interface_adapters/presenters/UserPresenter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/interface_adapters/presenters/UserPresenterImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/main/java/backend/finance/api_users/interface_adapters/presenters/UserPresenterImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/src/test/java/backend/finance/api_users/application/usecases/CustomerCreateUseCaseTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/test/java/backend/finance/api_users/application/usecases/CustomerCreateUseCaseTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/src/test/java/backend/finance/api_users/application/usecases/CustomerDeleteUseCaseTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/test/java/backend/finance/api_users/application/usecases/CustomerDeleteUseCaseTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/src/test/java/backend/finance/api_users/application/usecases/CustomerUpdateUseCaseTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/test/java/backend/finance/api_users/application/usecases/CustomerUpdateUseCaseTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/src/test/java/backend/finance/api_users/infrastructure/controllers/CustomerControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/src/test/java/backend/finance/api_users/infrastructure/controllers/CustomerControllerTest.java" afterDir="false" />
-    </list>
+    <list default="true" id="a1ea8202-910b-4a63-8ece-9f6a9a5ee2c0" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -113,8 +94,8 @@
         <option value="Enum" />
         <option value="Record" />
         <option value="JUnit5 Test Class" />
-        <option value="Class" />
         <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
