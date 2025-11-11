@@ -20,20 +20,12 @@ public final class Usuario {
 
     private boolean active;
 
-    private Usuario(UUID id, String username, String password, Permissao role, boolean active) {
+    public Usuario(UUID id, String username, String password, Permissao role, boolean active) {
         this.id = id;
         this.username = checkValidUsername(username);
         this.password = checkValidPassword(password);
         this.role = role;
         this.active = active;
-    }
-
-    public static Usuario create(UUID id, String username, String password, Permissao permissao, boolean active) {
-        return new Usuario(id, username, password, permissao, active);
-    }
-
-    public static Usuario create(UUID id, String username, String password, Permissao permissao) {
-        return new Usuario(id, username, password, permissao, true);
     }
 
     private String checkValidUsername(String username) {

@@ -52,7 +52,7 @@ class CustomerQueryUseCaseTest {
             var customerDto = defaultDto();
             when(customerQueryOutputPort.findActiveById(customerDto.id())).thenReturn(Optional.of(customerDto));
 
-            assertDoesNotThrow(() -> customerQueryUseCase.findByIdAndActiveTrue(customerDto.id()));
+            assertDoesNotThrow(() -> customerQueryUseCase.findActiveById(customerDto.id()));
 
             verify(customerQueryOutputPort, times(1)).findActiveById(customerDto.id());
         }
@@ -71,7 +71,7 @@ class CustomerQueryUseCaseTest {
             when(customerQueryOutputPort.findActiveById(any())).thenReturn(Optional.empty());
 
             var excecao = assertThrows(CustomerNotFoundCustomException.class, () ->
-                    customerQueryUseCase.findByIdAndActiveTrue(idInexistente));
+                    customerQueryUseCase.findActiveById(idInexistente));
 
             assertEquals("exception.resource.not-found.customer", excecao.getMessage());
             assertEquals(idInexistente.toString(), excecao.getValue());

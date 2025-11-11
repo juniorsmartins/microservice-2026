@@ -61,7 +61,7 @@ public class CustomerController {
     @GetMapping(path = "/{id}")
     public ResponseEntity<CustomerResponse> findById(@PathVariable(name = "id") final UUID id) {
 
-        var response = customerQueryInputPort.findByIdAndActiveTrue(id);
+        var response = customerQueryInputPort.findActiveById(id);
 
         return ResponseEntity
                 .ok()

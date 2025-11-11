@@ -46,7 +46,7 @@ public class CustomerQueryUseCaseIntegrationTest extends BaseIntegrationTest {
         @DisplayName("Deve lançar exceção ao consultar por id inexistente.")
         void deveLancarExcecaoPorIdNaoEncontrado() {
             assertThrows(CustomerNotFoundCustomException.class, () -> customerQueryUseCase
-                    .findByIdAndActiveTrue(UUID.randomUUID()));
+                    .findActiveById(UUID.randomUUID()));
         }
 
         @Test
@@ -62,7 +62,7 @@ public class CustomerQueryUseCaseIntegrationTest extends BaseIntegrationTest {
             customerDisableUseCase.disableById(idCustomer);
 
             assertThrows(CustomerNotFoundCustomException.class, () -> customerQueryUseCase
-                    .findByIdAndActiveTrue(idCustomer));
+                    .findActiveById(idCustomer));
 
             var customerBuscadoDepois = customerRepository.findById(idCustomer).orElseThrow();
             assertNotNull(customerBuscadoDepois);

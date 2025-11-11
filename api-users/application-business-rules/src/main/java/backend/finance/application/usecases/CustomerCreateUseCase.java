@@ -62,8 +62,8 @@ public class CustomerCreateUseCase implements CustomerCreateInputPort {
         try {
             var roleDto = roleValidation.getOrCreateRole(request.user().role());
             var permissao = Permissao.create(roleDto.id(), RoleEnum.valueOf(roleDto.name()));
-            var usuario = Usuario.create(null, request.user().username(), request.user().password(), permissao, true);
-            return Customer.create(null, request.name(), request.email(), usuario);
+            var usuario = new Usuario(null, request.user().username(), request.user().password(), permissao, true);
+            return new Customer(null, request.name(), request.email(), usuario, true);
 
         } catch (BadRequestCustomException e) {
             throw new EnterpriseValidationException(e.getMessageKey(), e.getValue0(), e.getValue1());

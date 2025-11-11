@@ -21,7 +21,7 @@ public final class CustomerMapperImpl implements CustomerMapper {
     @Override
     public Customer toEntity(CustomerDto dto) {
         var usuario = userMapper.toEntity(dto.user());
-        return Customer.create(dto.id(), dto.name(), dto.email(), usuario);
+        return new Customer(dto.id(), dto.name(), dto.email(), usuario, dto.active());
     }
 
     @Override

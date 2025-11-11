@@ -32,7 +32,7 @@ class UsuarioTest {
             var username = "username123";
             var password = "password123";
             // Act
-            var usuario = Usuario.create(null, username, password, permissao, true);
+            var usuario = new Usuario(null, username, password, permissao, true);
             // Assert
             assertEquals(username, usuario.getUsername());
             assertEquals(password, usuario.getPassword());
@@ -41,8 +41,7 @@ class UsuarioTest {
         @Test
         @DisplayName("Deve desativar usuário alterando active para false.")
         void deveDesativarUsuario() {
-            var usuario = Usuario
-                    .create(null, "username123", "password123", permissao, true);
+            var usuario = new Usuario(null, "username123", "password123", permissao, true);
 
             assertTrue(usuario.isActive());
             usuario.disable();
@@ -60,7 +59,7 @@ class UsuarioTest {
         @DisplayName("Deve lançar exceção quando criar usuário com username nulo.")
         void deveLancarExcecaoQuandoCriarComUsernameNulo() {
             var exception = assertThrows(AllNullFieldsCustomException.class,
-                    () -> Usuario.create(null, null, "password123", permissao, true));
+                    () -> new Usuario(null, null, "password123", permissao, true));
             assertEquals("exception.field.null.request.all", exception.getMessage());
         }
 
@@ -69,7 +68,7 @@ class UsuarioTest {
         @DisplayName("Deve lançar exceção quando criar usuário com username vazio ou em branco.")
         void deveLancarExcecaoQuandoCriarComUsernameVazioOuEmBranco(String username) {
             var exception = assertThrows(AllNullFieldsCustomException.class,
-                    () -> Usuario.create(null, username, "password123", permissao, true));
+                    () -> new Usuario(null, username, "password123", permissao, true));
             assertEquals("exception.field.null.request.all", exception.getMessage());
         }
 
@@ -78,7 +77,7 @@ class UsuarioTest {
         void deveLancarExcecaoQuandoCriarComUsernameMaior() {
             var username = "abcdefghijlmnoperstuvxz123123123123123123123123123123123";
             var exception = assertThrows(AttributeExceededMaximumLimitException.class,
-                    () -> Usuario.create(null, username, "password123", permissao, true));
+                    () -> new Usuario(null, username, "password123", permissao, true));
             assertEquals("exception.field.exceeded-maximum-limit.request", exception.getMessage());
         }
 
@@ -91,8 +90,7 @@ class UsuarioTest {
                     "exception.field.exceeded-maximum-limit.request"
             );
 
-            var usuario = Usuario
-                    .create(null,"username123", "password123", permissao, true);
+            var usuario = new Usuario(null,"username123", "password123", permissao, true);
 
             var exception = assertThrows(BadRequestCustomException.class,
                     () -> usuario.setUsername(username));
@@ -112,7 +110,7 @@ class UsuarioTest {
         @DisplayName("Deve lançar exceção quando criar usuário com password nulo.")
         void deveLancarExcecaoQuandoCriarComPasswordNulo() {
             var exception = assertThrows(AllNullFieldsCustomException.class,
-                    () -> Usuario.create(null, "username123", null, permissao, true));
+                    () -> new Usuario(null, "username123", null, permissao, true));
             assertEquals("exception.field.null.request.all", exception.getMessage());
         }
 
@@ -121,7 +119,7 @@ class UsuarioTest {
         @DisplayName("Deve lançar exceção quando criar usuário com password vazio ou em branco.")
         void deveLancarExcecaoQuandoCriarComPasswordVazioOuEmBranco(String password) {
             var exception = assertThrows(AllNullFieldsCustomException.class,
-                    () -> Usuario.create(null, "username123", password, permissao, true));
+                    () -> new Usuario(null, "username123", password, permissao, true));
             assertEquals("exception.field.null.request.all", exception.getMessage());
         }
 
@@ -130,7 +128,7 @@ class UsuarioTest {
         void deveLancarExcecaoQuandoCriarComPasswordMaior() {
             var password = "abcdefghijlmnoperstuvxz123123123123123123123123123123123qreqreerwerqwerwqerwerwerwewerwerwer32145678abcdefghijlmnoperstuvxz123123123123123123123123123123123qreqreerwerqwerwqerwerwerwewerwerwer321456783";
             var exception = assertThrows(AttributeExceededMaximumLimitException.class,
-                    () -> Usuario.create(null, "username123", password, permissao, true));
+                    () -> new Usuario(null, "username123", password, permissao, true));
             assertEquals("exception.field.exceeded-maximum-limit.request", exception.getMessage());
         }
 
@@ -143,8 +141,7 @@ class UsuarioTest {
                     "exception.field.exceeded-maximum-limit.request"
             );
 
-            var usuario = Usuario
-                    .create(null,"username123", "password123", permissao, true);
+            var usuario = new Usuario(null,"username123", "password123", permissao, true);
 
             var exception = assertThrows(BadRequestCustomException.class,
                     () -> usuario.setPassword(password));

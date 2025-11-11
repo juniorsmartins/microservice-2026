@@ -21,7 +21,7 @@ public final class UserMapperImpl implements UserMapper {
     @Override
     public Usuario toEntity(UserDto dto) {
         var permissao = roleMapper.toEntity(dto.role());
-        return Usuario.create(dto.id(), dto.username(), dto.password(), permissao, dto.active());
+        return new Usuario(dto.id(), dto.username(), dto.password(), permissao, dto.active());
     }
 
     @Override

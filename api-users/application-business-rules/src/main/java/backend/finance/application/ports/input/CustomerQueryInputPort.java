@@ -6,5 +6,5 @@ import java.util.UUID;
 
 public interface CustomerQueryInputPort {
 
-    CustomerResponse findByIdAndActiveTrue(UUID id);
+    CustomerResponse findActiveById(UUID id);
 }
