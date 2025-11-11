@@ -50,11 +50,11 @@ class CustomerQueryUseCaseTest {
         @DisplayName("Deve consultar customer ativo por ID.")
         void deveConsultarCustomerAtivoPorId() {
             var customerDto = defaultDto();
-            when(customerQueryOutputPort.findByIdAndActiveTrue(customerDto.id())).thenReturn(Optional.of(customerDto));
+            when(customerQueryOutputPort.findActiveById(customerDto.id())).thenReturn(Optional.of(customerDto));
 
             assertDoesNotThrow(() -> customerQueryUseCase.findByIdAndActiveTrue(customerDto.id()));
 
-            verify(customerQueryOutputPort, times(1)).findByIdAndActiveTrue(customerDto.id());
+            verify(customerQueryOutputPort, times(1)).findActiveById(customerDto.id());
         }
     }
 
@@ -68,14 +68,14 @@ class CustomerQueryUseCaseTest {
         @DisplayName("Deve lançar exceção quando consultar customer ativo por ID inexistente.")
         void deveConsultarCustomerAtivoPorIdInexistente() {
             var idInexistente = UUID.randomUUID();
-            when(customerQueryOutputPort.findByIdAndActiveTrue(any())).thenReturn(Optional.empty());
+            when(customerQueryOutputPort.findActiveById(any())).thenReturn(Optional.empty());
 
             var excecao = assertThrows(CustomerNotFoundCustomException.class, () ->
                     customerQueryUseCase.findByIdAndActiveTrue(idInexistente));
 
             assertEquals("exception.resource.not-found.customer", excecao.getMessage());
             assertEquals(idInexistente.toString(), excecao.getValue());
-            verify(customerQueryOutputPort, times(1)).findByIdAndActiveTrue(idInexistente);
+            verify(customerQueryOutputPort, times(1)).findActiveById(idInexistente);
         }
     }
 }

@@ -21,8 +21,8 @@ public class CustomerQueryGateway implements CustomerQueryOutputPort {
 
     @Transactional(readOnly = true)
     @Override
-    public Optional<CustomerDto> findByIdAndActiveTrue(UUID id) {
-        return customerRepository.findByIdAndActiveTrue(id)
+    public Optional<CustomerDto> findActiveById(UUID id) {
+        return customerRepository.findActiveById(id)
                 .map(customerPresenter::toDto);
     }
 

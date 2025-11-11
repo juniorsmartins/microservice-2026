@@ -74,7 +74,7 @@ class CustomerUpdateUseCaseTest {
             var request = defaultRequest();
             var dto = buildDto("username_teste55", "password_teste55",
                     RoleEnum.ROLE_CUSTOMER, "name_teste55", "email_teste55@yahoo.com");
-            when(customerQueryOutputPort.findByIdAndActiveTrue(any())).thenReturn(Optional.of(dto));
+            when(customerQueryOutputPort.findActiveById(any())).thenReturn(Optional.of(dto));
 
             doNothing().when(customerValidation).checkDuplicateEmail(any(), anyString());
             doNothing().when(userValidation).checkDuplicateUsername(any(), anyString());
@@ -120,14 +120,14 @@ class CustomerUpdateUseCaseTest {
         void deveLancarExcecaoQuandoNaoEncontrarCustomer() {
             var idInexistente = UUID.randomUUID();
             var request = defaultRequest();
-            when(customerQueryOutputPort.findByIdAndActiveTrue(any())).thenReturn(Optional.empty());
+            when(customerQueryOutputPort.findActiveById(any())).thenReturn(Optional.empty());
 
             var excecao = assertThrows(CustomerNotFoundCustomException.class,
                     () -> customerUpdateUseCase.update(idInexistente, request));
 
             assertEquals("exception.resource.not-found.customer", excecao.getMessage());
             assertEquals(idInexistente.toString(), excecao.getValue());
-            verify(customerQueryOutputPort, times(1)).findByIdAndActiveTrue(idInexistente);
+            verify(customerQueryOutputPort, times(1)).findActiveById(idInexistente);
         }
     }
 }

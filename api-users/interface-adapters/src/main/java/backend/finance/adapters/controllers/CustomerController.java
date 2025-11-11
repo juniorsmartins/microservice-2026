@@ -1,6 +1,5 @@
 package backend.finance.adapters.controllers;
 
-import backend.finance.adapters.presenters.CustomerPresenter;
 import backend.finance.application.dtos.request.CustomerRequest;
 import backend.finance.application.dtos.response.CustomerResponse;
 import backend.finance.application.ports.input.CustomerCreateInputPort;
@@ -28,8 +27,6 @@ public class CustomerController {
     private final CustomerDisableInputPort customerDisableInputPort;
 
     private final CustomerQueryInputPort customerQueryInputPort;
-
-    private final CustomerPresenter customerPresenter;
 
     @PostMapping
     public ResponseEntity<CustomerResponse> create(@RequestBody CustomerRequest request) {

@@ -7,7 +7,7 @@ import java.util.UUID;
 
 public interface CustomerQueryOutputPort {
 
-    Optional<CustomerDto> findByIdAndActiveTrue(UUID id);
+    Optional<CustomerDto> findActiveById(UUID id);
 
     Optional<CustomerDto> findByEmail(String email);
 

@@ -55,7 +55,7 @@ class CustomerDisableUseCaseTest {
         @DisplayName("Deve desabilitar customer.")
         void deveDesabilitarCustomer() {
             var dtoTrue = defaultDto();
-            when(customerQueryOutputPort.findByIdAndActiveTrue(dtoTrue.id())).thenReturn(Optional.of(dtoTrue));
+            when(customerQueryOutputPort.findActiveById(dtoTrue.id())).thenReturn(Optional.of(dtoTrue));
 
             assertTrue(dtoTrue.active());
             assertTrue(dtoTrue.user().active());
@@ -83,14 +83,14 @@ class CustomerDisableUseCaseTest {
         @DisplayName("Deve lançar exceçao quando não encontrar customer.")
         void deveLancarExcecaoPorNaoEncontrarCustomer() {
             var idInexistente = UUID.randomUUID();
-            when(customerQueryOutputPort.findByIdAndActiveTrue(any())).thenReturn(Optional.empty());
+            when(customerQueryOutputPort.findActiveById(any())).thenReturn(Optional.empty());
 
             var excecao = assertThrows(CustomerNotFoundCustomException.class,
                     () -> customerDisableUseCase.disableById(idInexistente));
 
             assertEquals("exception.resource.not-found.customer", excecao.getMessage());
             assertEquals(idInexistente.toString(), excecao.getValue());
-            verify(customerQueryOutputPort, times(1)).findByIdAndActiveTrue(idInexistente);
+            verify(customerQueryOutputPort, times(1)).findActiveById(idInexistente);
         }
     }
 }

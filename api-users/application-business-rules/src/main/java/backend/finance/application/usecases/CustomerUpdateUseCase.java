@@ -44,7 +44,7 @@ public class CustomerUpdateUseCase implements CustomerUpdateInputPort {
     @Override
     public CustomerResponse update(UUID customerId, CustomerRequest request) {
 
-        var saved = customerQueryOutputPort.findByIdAndActiveTrue(customerId)
+        var saved = customerQueryOutputPort.findActiveById(customerId)
                 .map(customerMapper::toEntity)
                 .orElseThrow(() -> new CustomerNotFoundCustomException(customerId));
 

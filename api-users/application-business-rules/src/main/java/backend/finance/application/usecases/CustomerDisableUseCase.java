@@ -25,7 +25,7 @@ public class CustomerDisableUseCase implements CustomerDisableInputPort {
 
     @Override
     public void disableById(UUID id) {
-        customerQueryOutputPort.findByIdAndActiveTrue(id)
+        customerQueryOutputPort.findActiveById(id)
                 .ifPresentOrElse(dto -> {
                             var customer = customerMapper.toEntity(dto);
                             customer.disable();

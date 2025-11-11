@@ -21,7 +21,7 @@ public class CustomerQueryUseCase implements CustomerQueryInputPort {
 
     @Override
     public CustomerResponse findByIdAndActiveTrue(UUID id) {
-        return customerQueryOutputPort.findByIdAndActiveTrue(id)
+        return customerQueryOutputPort.findActiveById(id)
                 .map(customerMapper::toResponse)
                 .orElseThrow(() -> new CustomerNotFoundCustomException(id));
     }

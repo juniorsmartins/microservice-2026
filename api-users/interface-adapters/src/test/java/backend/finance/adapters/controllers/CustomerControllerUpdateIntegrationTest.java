@@ -1,6 +1,7 @@
 package backend.finance.adapters.controllers;
 
 import backend.finance.adapters.utils.BaseIntegrationTest;
+import backend.finance.adapters.utils.CustomerTestFactory;
 import backend.finance.application.dtos.response.CustomerResponse;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
@@ -15,6 +16,8 @@ import java.util.UUID;
 import static backend.finance.adapters.utils.CustomerTestFactory.buildRequest;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestClassOrder(ClassOrderer.OrderAnnotation.class)
@@ -56,7 +59,7 @@ class CustomerControllerUpdateIntegrationTest extends BaseIntegrationTest {
 
         @Test
         @DisplayName("Deve atualizar cliente via PUT e retornar 200.")
-        void shouldUpdateCustomer() {
+        void deveAtualizarCustomer() {
             var idCustomer = defaultCustomerResponse.id();
 
             var request = buildRequest("anne_frank_atual", "password123",
@@ -96,7 +99,7 @@ class CustomerControllerUpdateIntegrationTest extends BaseIntegrationTest {
 
         @Test
         @DisplayName("Deve retornar 404 com ID inexistente.")
-        void shouldReturnNotFoundOnInvalidId() {
+        void deveLancarExcecaoNotFoundPorIdNaoEncontrado() {
             var idCustomerInvalid = UUID.randomUUID();
 
             var request = buildRequest("robert_plant", "password123",
@@ -114,7 +117,7 @@ class CustomerControllerUpdateIntegrationTest extends BaseIntegrationTest {
 
         @Test
         @DisplayName("Deve retornar 409 com email duplicado.")
-        void shouldReturnConflictOnDuplicateEmail() {
+        void deveLancarExcecaoPorConflitoDeEmailDuplicado() {
             var requestUpdate = buildRequest("johnatualdoe", "password55544",
                     "ROLE_ADMIN", "John Atual Doe", EMAIL_TESTE);
 
@@ -130,7 +133,7 @@ class CustomerControllerUpdateIntegrationTest extends BaseIntegrationTest {
 
         @Test
         @DisplayName("Deve retornar 409 com username duplicado.")
-        void shouldReturnConflictOnDuplicateUsername() {
+        void deveLancarExcecaoPorConflitoDeUsernameDuplicado() {
             var requestUpdate = buildRequest(USERNAME_TESTE, "password3421", "ROLE_ADMIN",
                     "Jeff Sutherland Filho", "jsuther@gmail.com");
 
@@ -142,6 +145,27 @@ class CustomerControllerUpdateIntegrationTest extends BaseIntegrationTest {
                     .then()
                         .statusCode(HttpStatus.CONFLICT.value())
                         .body("title", equalTo("Esse username já existe no sistema: " + USERNAME_TESTE + "."));
+        }
+
+        @Test
+        @DisplayName("Deve lançar exceção ao consultar customer desativado.")
+        void deveLancarExcecaoQuandoConsultarCustomerDesativado() {
+            var request = CustomerTestFactory.defaultRequest();
+            var id = customerResponse.id();
+            assertTrue(customerResponse.active());
+
+            customerController.disableById(id);
+            var customerDoBanco = customerRepository.findById(id).orElseThrow();
+            assertFalse(customerDoBanco.isActive());
+
+            RestAssured.given()
+                        .contentType(ContentType.JSON)
+                        .body(request)
+                    .when()
+                        .put("/{id}", id)
+                    .then()
+                        .statusCode(HttpStatus.NOT_FOUND.value())
+                    .body("title", equalTo("Cliente não encontrado por id: " + id + "."));
         }
     }
 }
