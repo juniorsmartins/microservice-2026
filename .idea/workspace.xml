@@ -4,7 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a1ea8202-910b-4a63-8ece-9f6a9a5ee2c0" name="Changes" comment="" />
+    <list default="true" id="a1ea8202-910b-4a63-8ece-9f6a9a5ee2c0" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/application-business-rules/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/application-business-rules/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/enterprise-business-rules/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/enterprise-business-rules/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/gradle/wrapper/gradle-wrapper.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/gradlew" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/gradlew" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/gradlew.bat" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/gradlew.bat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/interface-adapters/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/interface-adapters/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/interface-adapters/src/main/java/backend/finance/adapters/gateways/CustomerQueryGateway.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/interface-adapters/src/main/java/backend/finance/adapters/gateways/CustomerQueryGateway.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/settings.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/settings.gradle" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -57,29 +68,21 @@
         <task path="$PROJECT_DIR$/api-user">
           <activation />
         </task>
+        <task path="$PROJECT_DIR$/api-users/application-business-rules">
+          <activation />
+        </task>
+        <task path="$PROJECT_DIR$/api-users/enterprise-business-rules">
+          <activation />
+        </task>
+        <task path="$PROJECT_DIR$/api-users/interface-adapters">
+          <activation />
+        </task>
         <projects_view>
           <tree_state>
             <expand>
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="api-users" type="f1a62948:ProjectNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="api-users" type="f1a62948:ProjectNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="api-users" type="f1a62948:ProjectNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-                <item name="build" type="c8890929:TasksNode$1" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="api-users" type="f1a62948:ProjectNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-                <item name="source generation" type="c8890929:TasksNode$1" />
               </path>
             </expand>
             <select />
@@ -93,8 +96,8 @@
       <list>
         <option value="Enum" />
         <option value="Record" />
-        <option value="JUnit5 Test Class" />
         <option value="Interface" />
+        <option value="JUnit5 Test Class" />
         <option value="Class" />
       </list>
     </option>
@@ -114,6 +117,7 @@
     &quot;accountId&quot;: &quot;c5f90d33-081e-42f2-88ed-2b8490b4985c&quot;
   }
 }</component>
+  <component name="GradleScriptDefinitionsStorage" workingDir="$PROJECT_DIR$/api-users" gradleHome="$USER_HOME$/.gradle/wrapper/dists/gradle-9.1.0-bin/9agqghryom9wkf8r80qlhnts3/gradle-9.1.0" javaHome="$USER_HOME$/.sdkman/candidates/java/21.0.7-oracle" gradleVersion="9.1.0" />
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 0
 }</component>
@@ -130,8 +134,12 @@
     &quot;Gradle.CustomerControllerIntegrationTest.executor&quot;: &quot;Run&quot;,
     &quot;Gradle.CustomerCreateUseCaseTest.executor&quot;: &quot;Run&quot;,
     &quot;Gradle.CustomerTest.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.CustomerValidationImplTest.executor&quot;: &quot;Run&quot;,
     &quot;Gradle.Download Sources.executor&quot;: &quot;Run&quot;,
     &quot;Gradle.Tests in 'api-user.test'.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Tests in 'api-users.application-business-rules.test'.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Tests in 'api-users.enterprise-business-rules.test'.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Tests in 'api-users.interface-adapters.test'.executor&quot;: &quot;Run&quot;,
     &quot;Gradle.Tests in 'api-users.test'.executor&quot;: &quot;Run&quot;,
     &quot;Gradle.api-user [:backend.finance.api_user.ApiUserApplication.main()].executor&quot;: &quot;Run&quot;,
     &quot;Gradle.api-user [build].executor&quot;: &quot;Run&quot;,
@@ -141,6 +149,13 @@
     &quot;Gradle.api-users [build].executor&quot;: &quot;Run&quot;,
     &quot;Gradle.api-users [clean].executor&quot;: &quot;Run&quot;,
     &quot;Gradle.api-users [generateAvroJava].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.api-users [testClasses].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.api-users:application-business-rules [build].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.api-users:application-business-rules [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.api-users:enterprise-business-rules [build].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.api-users:enterprise-business-rules [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.api-users:interface-adapters [build].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.api-users:interface-adapters [clean].executor&quot;: &quot;Run&quot;,
     &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
@@ -149,7 +164,8 @@
     &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
     &quot;git-widget-placeholder&quot;: &quot;develop&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/juniorsmartins/Projetos/microservice-2026/docs/diagramas/api-users&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/juniorsmartins/Projetos/microservice-2026/api-users/interface-adapters/src/main/resources/liquibase/changesets&quot;,
+    &quot;onboarding.tips.debug.path&quot;: &quot;/home/juniorsmartins/Projetos/microservice-2026/api-users/frameworks-drivers/src/main/java/backend/finance/Main.java&quot;,
     &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
@@ -158,83 +174,42 @@
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/docs/diagramas/api-users" />
-      <recent name="$PROJECT_DIR$/docs/diagramas" />
-      <recent name="$PROJECT_DIR$" />
-      <recent name="$PROJECT_DIR$/api-user/src/main/resources/db/changelog" />
-      <recent name="$PROJECT_DIR$/api-user" />
+      <recent name="$PROJECT_DIR$/api-users/interface-adapters/src/main/resources/liquibase/changesets" />
+      <recent name="$PROJECT_DIR$/api-users/interface-adapters/src/main/resources/liquibase/changelog/changesets" />
+      <recent name="$PROJECT_DIR$/api-users/interface-adapters/src/main/resources/exceptions" />
+      <recent name="$PROJECT_DIR$/api-users/interface-adapters/src/main/resources" />
+      <recent name="$PROJECT_DIR$/api-users/interface-adapters/src/test/resources" />
     </key>
     <key name="CreateTestDialog.Recents.Supers">
       <recent name="" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/docs/diagramas/api-users" />
-      <recent name="$PROJECT_DIR$/api-user/src/main" />
-      <recent name="$PROJECT_DIR$/api-user/src/avro" />
-      <recent name="$PROJECT_DIR$/api-user/src/main/resources" />
-      <recent name="$PROJECT_DIR$/docs/tutoriais" />
+      <recent name="$PROJECT_DIR$/api-users/interface-adapters/src/test/java/backend/finance/adapters/usecases" />
+      <recent name="$PROJECT_DIR$/api-users/interface-adapters/src/test/java/backend/finance/adapters/utils" />
+      <recent name="$PROJECT_DIR$/api-users/interface-adapters/src/main/avro" />
+      <recent name="$PROJECT_DIR$/api-users/interface-adapters/src/main/resources/liquibase" />
+      <recent name="$PROJECT_DIR$/api-users/interface-adapters/src/main/resources/liquibase/changelog" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="backend.finance.adapters" />
+      <recent name="backend.finance.dtos" />
     </key>
     <key name="CreateTestDialog.RecentsKey">
+      <recent name="backend.finance.adapters.controllers" />
+      <recent name="backend.finance.application.usecases" />
+      <recent name="backend.finance.application.validation" />
+      <recent name="backend.finance.enterprise.entities" />
       <recent name="backend.finance.api_user.infrastructure.gateways" />
-      <recent name="backend.finance.api_user.application.usecases" />
-      <recent name="backend.finance.api_user.domain.entities" />
-      <recent name="backend.finance.api_user.infrastructure.controllers" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="backend.finance.api_user.infrastructure.controllers" />
-      <recent name="backend.finance.api_user.utils" />
-      <recent name="backend.finance.api_user.application.configs.kafka" />
-      <recent name="backend.finance.api_user.application.configs.exception.http400" />
-      <recent name="backend.finance.api_user.domain.entities" />
+      <recent name="backend.finance.application.dtos" />
+      <recent name="backend.finance.controllers" />
+      <recent name="backend.finance.dtos.internal" />
+      <recent name="backend.finance.constants" />
+      <recent name="backend.finance.enums" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.Tests in 'api-users.test'">
-    <configuration name="CustomerCreateUseCaseTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/api-users" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value=":test" />
-            <option value="--tests" />
-            <option value="&quot;backend.finance.api_user.application.usecases.CustomerCreateUseCaseTest&quot;" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>true</RunAsTest>
-      <method v="2" />
-    </configuration>
-    <configuration name="Tests in 'api-users.test'" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/api-users" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value=":test" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>true</RunAsTest>
-      <method v="2" />
-    </configuration>
+  <component name="RunManager" selected="Gradle.api-users [build]">
     <configuration name="api-users [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -279,10 +254,10 @@
       <RunAsTest>false</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="api-users [generateAvroJava]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="api-users:application-business-rules [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/api-users" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/api-users/application-business-rules" />
         <option name="externalSystemIdString" value="GRADLE" />
         <option name="scriptParameters" />
         <option name="taskDescriptions">
@@ -290,7 +265,51 @@
         </option>
         <option name="taskNames">
           <list>
-            <option value="generateAvroJava" />
+            <option value="build" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="api-users:enterprise-business-rules [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/api-users/enterprise-business-rules" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="build" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="api-users:interface-adapters [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/api-users/interface-adapters" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="build" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -303,11 +322,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.Tests in 'api-users.test'" />
         <item itemvalue="Gradle.api-users [build]" />
+        <item itemvalue="Gradle.api-users:application-business-rules [build]" />
+        <item itemvalue="Gradle.api-users:interface-adapters [build]" />
+        <item itemvalue="Gradle.api-users:enterprise-business-rules [build]" />
         <item itemvalue="Gradle.api-users [clean]" />
-        <item itemvalue="Gradle.api-users [generateAvroJava]" />
-        <item itemvalue="Gradle.CustomerCreateUseCaseTest" />
       </list>
     </recent_temporary>
   </component>
@@ -322,7 +341,9 @@
     <servers />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/microservice_2026$Tests_in__api_users_application_business_rules_test_.ic" NAME="Tests in 'api-users.application-business-rules.test' Coverage Results" MODIFIED="1762541084689" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
     <SUITE FILE_PATH="coverage/microservice_2026$Tests_in__api_users_test_.ic" NAME="Tests in 'api-users.test' Coverage Results" MODIFIED="1761944739906" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
+    <SUITE FILE_PATH="coverage/microservice_2026$Tests_in__api_users_enterprise_business_rules_test_.ic" NAME="Tests in 'api-users.enterprise-business-rules.test' Coverage Results" MODIFIED="1762528403524" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
     <SUITE FILE_PATH="coverage/microservice_2026$Tests_in__api_user_test_.ic" NAME="Tests in 'api-user.test' Coverage Results" MODIFIED="1759259391843" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
   </component>
 </project>

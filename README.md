@@ -55,9 +55,13 @@ DER
 
 ## API - Accounts
 
+Arquitetura Hexagonal
+
 ## API - Investments
 
 ## API - Notifications
+
+Arquitetura Multicamadas
 
 ## API - Reports
 

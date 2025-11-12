@@ -1,1 +1,6 @@
 rootProject.name = 'api-users'
+
+include('enterprise-business-rules')
+include('application-business-rules')
+include('interface-adapters')
+

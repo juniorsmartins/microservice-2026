@@ -2,20 +2,28 @@
 ARG IMAGE_BUILD="amazoncorretto:25-alpine3.22-jdk"
 ARG IMAGE_RUN="amazoncorretto:25-alpine-full"
 
-# 1 - Estágio de construção/build
+# ================================
+# 1 - ESTÁGIO DE BUILD
+# ================================
 FROM ${IMAGE_BUILD} AS builder
 
 # Copiar todos os arquivos da raíz do projeto (origem) para dentro da imagem (destino)
+# Copia o projeto (incluindo settings.gradle e submódulos)
 COPY . .
 
-## Constrói o projeto com o Gradle
-RUN ./gradlew clean build --no-daemon --stacktrace
+# Gera apenas o bootJar do módulo interface-adapters
+RUN ./gradlew :interface-adapters:bootJar --no-daemon --stacktrace
+## Constrói o projeto com o Gradle (com ou sem teste)
+# RUN ./gradlew clean build --no-daemon --stacktrace
 # RUN ./gradlew clean build -x test --no-daemon --stacktrace
 
 
-# 2 - Estágio de execução
+# ================================
+# 2 - ESTÁGIO DE EXECUÇÃO
+# ================================
 FROM ${IMAGE_RUN} AS runner
 
+# Metadados
 # Variáveis de tempo de construção (com valor default - opcional)
 ARG APP_NAME="microsserviços"
 ARG APP_VERSION="v0.0.1"
@@ -24,7 +32,6 @@ ARG DEVELOPER="juniormartins"
 ARG MAINTAINER="juniormartins"
 ARG CONTATO="dev.juniorsmartins@gmail.com"
 
-# Metadados
 LABEL aplication=${APP_NAME} \
     version=${APP_VERSION} \
     description=${APP_DESCRIPTION} \
@@ -35,8 +42,11 @@ LABEL aplication=${APP_NAME} \
 # Instala o curl
 RUN apk add --no-cache curl
 
-COPY --from=builder /build/libs/*.jar app.jar
+# Copia APENAS o JAR gerado do módulo interface-adapters
+COPY --from=builder interface-adapters/build/libs/api-users.jar app.jar
+# Copiava o JAR quando ele estava no build da raiz.
+# COPY --from=builder /build/libs/*.jar app.jar
 
 # Comandos
-ENTRYPOINT ["java","-jar","app.jar"]
+ENTRYPOINT ["java", "--enable-preview","-jar","app.jar"]
 

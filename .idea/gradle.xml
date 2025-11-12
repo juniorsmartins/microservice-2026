@@ -45,6 +45,9 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$/api-users" />
+            <option value="$PROJECT_DIR$/api-users/application-business-rules" />
+            <option value="$PROJECT_DIR$/api-users/enterprise-business-rules" />
+            <option value="$PROJECT_DIR$/api-users/interface-adapters" />
           </set>
         </option>
       </GradleProjectSettings>
