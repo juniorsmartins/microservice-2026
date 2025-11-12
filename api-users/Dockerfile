@@ -3,7 +3,7 @@ ARG IMAGE_BUILD="amazoncorretto:25-alpine3.22-jdk"
 ARG IMAGE_RUN="amazoncorretto:25-alpine-full"
 
 # ================================
-# 1 - ESTÁGIO DE BUILD
+# 1 - ESTÁGIO DE BUILD (compilação)
 # ================================
 FROM ${IMAGE_BUILD} AS builder
 
