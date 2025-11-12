@@ -5,12 +5,14 @@ import backend.finance.adapters.repositories.CustomerRepository;
 import backend.finance.application.dtos.CustomerDto;
 import backend.finance.application.ports.output.CustomerQueryOutputPort;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 import java.util.UUID;
 
+@Slf4j
 @Repository
 @RequiredArgsConstructor
 public class CustomerQueryGateway implements CustomerQueryOutputPort {

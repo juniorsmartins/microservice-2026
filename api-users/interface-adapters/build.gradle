@@ -62,6 +62,10 @@ test {
 }
 
 bootJar {
-    mainClass = 'backend.finance.ApiUserApplication'
+    archiveFileName = 'api-users.jar' // padronização do nome. Garante sempre ser api-users.jar, independente da versão.
+}
+
+jar {
+    enabled = false
 }
 

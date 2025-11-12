@@ -6,17 +6,15 @@
   <component name="ChangeListManager">
     <list default="true" id="a1ea8202-910b-4a63-8ece-9f6a9a5ee2c0" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/application-business-rules/src/main/java/backend/finance/application/mappers/CustomerMapperImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/application-business-rules/src/main/java/backend/finance/application/mappers/CustomerMapperImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/application-business-rules/src/main/java/backend/finance/application/mappers/UserMapperImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/application-business-rules/src/main/java/backend/finance/application/mappers/UserMapperImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/application-business-rules/src/main/java/backend/finance/application/ports/input/CustomerQueryInputPort.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/application-business-rules/src/main/java/backend/finance/application/ports/input/CustomerQueryInputPort.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/application-business-rules/src/main/java/backend/finance/application/usecases/CustomerCreateUseCase.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/application-business-rules/src/main/java/backend/finance/application/usecases/CustomerCreateUseCase.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/application-business-rules/src/main/java/backend/finance/application/usecases/CustomerQueryUseCase.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/application-business-rules/src/main/java/backend/finance/application/usecases/CustomerQueryUseCase.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/application-business-rules/src/test/java/backend/finance/application/usecases/CustomerQueryUseCaseTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/application-business-rules/src/test/java/backend/finance/application/usecases/CustomerQueryUseCaseTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/enterprise-business-rules/src/main/java/backend/finance/enterprise/entities/Customer.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/enterprise-business-rules/src/main/java/backend/finance/enterprise/entities/Customer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/enterprise-business-rules/src/main/java/backend/finance/enterprise/entities/Usuario.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/enterprise-business-rules/src/main/java/backend/finance/enterprise/entities/Usuario.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/enterprise-business-rules/src/test/java/backend/finance/enterprise/entities/UsuarioTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/enterprise-business-rules/src/test/java/backend/finance/enterprise/entities/UsuarioTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/interface-adapters/src/main/java/backend/finance/adapters/controllers/CustomerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/interface-adapters/src/main/java/backend/finance/adapters/controllers/CustomerController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/interface-adapters/src/test/java/backend/finance/adapters/usecases/CustomerQueryUseCaseIntegrationTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/interface-adapters/src/test/java/backend/finance/adapters/usecases/CustomerQueryUseCaseIntegrationTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/application-business-rules/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/application-business-rules/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/enterprise-business-rules/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/enterprise-business-rules/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/gradle/wrapper/gradle-wrapper.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/gradlew" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/gradlew" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/gradlew.bat" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/gradlew.bat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/interface-adapters/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/interface-adapters/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/interface-adapters/src/main/java/backend/finance/adapters/gateways/CustomerQueryGateway.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/interface-adapters/src/main/java/backend/finance/adapters/gateways/CustomerQueryGateway.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/settings.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/settings.gradle" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,29 +68,21 @@
         <task path="$PROJECT_DIR$/api-user">
           <activation />
         </task>
+        <task path="$PROJECT_DIR$/api-users/application-business-rules">
+          <activation />
+        </task>
+        <task path="$PROJECT_DIR$/api-users/enterprise-business-rules">
+          <activation />
+        </task>
+        <task path="$PROJECT_DIR$/api-users/interface-adapters">
+          <activation />
+        </task>
         <projects_view>
           <tree_state>
             <expand>
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="api-users" type="f1a62948:ProjectNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="api-users" type="f1a62948:ProjectNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="api-users" type="f1a62948:ProjectNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-                <item name="build" type="c8890929:TasksNode$1" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="api-users" type="f1a62948:ProjectNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-                <item name="source generation" type="c8890929:TasksNode$1" />
               </path>
             </expand>
             <select />
@@ -160,6 +150,12 @@
     &quot;Gradle.api-users [clean].executor&quot;: &quot;Run&quot;,
     &quot;Gradle.api-users [generateAvroJava].executor&quot;: &quot;Run&quot;,
     &quot;Gradle.api-users [testClasses].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.api-users:application-business-rules [build].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.api-users:application-business-rules [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.api-users:enterprise-business-rules [build].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.api-users:enterprise-business-rules [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.api-users:interface-adapters [build].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.api-users:interface-adapters [clean].executor&quot;: &quot;Run&quot;,
     &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
@@ -213,73 +209,7 @@
       <recent name="backend.finance.enums" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.Tests in 'api-users.interface-adapters.test'">
-    <configuration name="Tests in 'api-users.application-business-rules.test'" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/api-users" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value=":application-business-rules:test" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>true</RunAsTest>
-      <method v="2" />
-    </configuration>
-    <configuration name="Tests in 'api-users.enterprise-business-rules.test'" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/api-users" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value=":enterprise-business-rules:test" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>true</RunAsTest>
-      <method v="2" />
-    </configuration>
-    <configuration name="Tests in 'api-users.interface-adapters.test'" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/api-users" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value=":interface-adapters:test" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>true</RunAsTest>
-      <method v="2" />
-    </configuration>
+  <component name="RunManager" selected="Gradle.api-users [build]">
     <configuration name="api-users [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -302,7 +232,7 @@
       <RunAsTest>false</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="api-users [testClasses]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="api-users [clean]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$/api-users" />
@@ -313,7 +243,73 @@
         </option>
         <option name="taskNames">
           <list>
-            <option value="testClasses" />
+            <option value="clean" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="api-users:application-business-rules [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/api-users/application-business-rules" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="build" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="api-users:enterprise-business-rules [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/api-users/enterprise-business-rules" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="build" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="api-users:interface-adapters [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/api-users/interface-adapters" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="build" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -326,11 +322,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.Tests in 'api-users.interface-adapters.test'" />
-        <item itemvalue="Gradle.Tests in 'api-users.application-business-rules.test'" />
-        <item itemvalue="Gradle.Tests in 'api-users.enterprise-business-rules.test'" />
         <item itemvalue="Gradle.api-users [build]" />
-        <item itemvalue="Gradle.api-users [testClasses]" />
+        <item itemvalue="Gradle.api-users:application-business-rules [build]" />
+        <item itemvalue="Gradle.api-users:interface-adapters [build]" />
+        <item itemvalue="Gradle.api-users:enterprise-business-rules [build]" />
+        <item itemvalue="Gradle.api-users [clean]" />
       </list>
     </recent_temporary>
   </component>
