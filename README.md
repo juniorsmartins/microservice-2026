@@ -34,8 +34,6 @@
 - Spring Boot (versão 3.5.7);
 - Spring Data Web;
 - Spring Data JPA;
-- Spring Security;
-- Bean Validation;
 - Liquibase (migration);
 - Apache Kafka, Schema Registry e Apache Avro (mensageria);
 - RestAssured, JUnit e Mockito (testes);
@@ -47,7 +45,7 @@
 
 ### Diagramas Users
 
-Arquitetura Limpa
+Arquitetura Limpa multi-modulo
 ![Arq api-users](docs/diagramas/api-users/ARQ-USERS-v2.png)
 
 DER
@@ -67,7 +65,7 @@ Arquitetura Multicamadas
 
 ## Tutoriais
 
-[Gradle multi-modulo](docs/tutoriais/multimodulo.md);
-[Liquibase](docs/tutoriais/liquibase.md);
-[Kafka](docs/tutoriais/kafka.md);
+- [Gradle multi-modulo](docs/tutoriais/multimodulo.md);
+- [Liquibase](docs/tutoriais/liquibase.md);
+- [Kafka](docs/tutoriais/kafka.md);
 
