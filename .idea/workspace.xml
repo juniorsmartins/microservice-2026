@@ -6,15 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="a1ea8202-910b-4a63-8ece-9f6a9a5ee2c0" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/application-business-rules/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/application-business-rules/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/enterprise-business-rules/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/enterprise-business-rules/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/gradle/wrapper/gradle-wrapper.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/gradlew" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/gradlew" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/gradlew.bat" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/gradlew.bat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/interface-adapters/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/interface-adapters/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/interface-adapters/src/main/java/backend/finance/adapters/gateways/CustomerQueryGateway.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/interface-adapters/src/main/java/backend/finance/adapters/gateways/CustomerQueryGateway.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/settings.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/settings.gradle" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -83,6 +74,11 @@
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="api-users" type="f1a62948:ProjectNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="api-users" type="f1a62948:ProjectNode" />
+                <item name="interface-adapters" type="2d1252cf:ModuleNode" />
               </path>
             </expand>
             <select />
