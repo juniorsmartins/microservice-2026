@@ -48,7 +48,7 @@
 ### Diagramas Users
 
 Arquitetura Limpa
-![Arq api-users](docs/diagramas/api-users/API-USERS-Diagrama-v1.jpg)
+![Arq api-users](docs/diagramas/api-users/ARQ-USERS-v2.png)
 
 DER
 ![DER api-users](docs/diagramas/api-users/DER-api-users.png)
