@@ -67,6 +67,7 @@ Arquitetura Multicamadas
 
 ## Tutoriais
 
+[Gradle multi-modulo](docs/tutoriais/multimodulo.md);
 [Liquibase](docs/tutoriais/liquibase.md);
 [Kafka](docs/tutoriais/kafka.md);
 
