@@ -34,7 +34,7 @@
 - Spring Boot (versão 3.5.7);
 - Spring Data Web;
 - Spring Data JPA;
-- Liquibase (migration);
+- Liquibase (migration em SQL);
 - Apache Kafka, Schema Registry e Apache Avro (mensageria);
 - RestAssured, JUnit e Mockito (testes);
 - PostgreSQL (versão 17 - banco de dados relacional);
