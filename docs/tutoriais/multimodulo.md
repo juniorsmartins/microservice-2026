@@ -1,6 +1,13 @@
-PASSO-A-PASSO 
+TUTORIAL
+
+Fontes:
+- https://docs.gradle.org/current/userguide/multi_project_builds.html
+- https://docs.gradle.org/current/userguide/how_to_convert_single_build_to_multi_build.html
 
 A API-USERS será o exemplo prático desse tutorial.
+
+
+PASSO-A-PASSO 
 
 1. Criar módulos na IDEA (new -> module);
 
