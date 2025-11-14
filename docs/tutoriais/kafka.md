@@ -140,7 +140,7 @@ Objetivo: 1 cluster (3 brokers), 1 tópico com 3 partições e com replicação 
 ```
 
 Diagrama de resumo do Kafka
-![Resumo Kafka](imagens/Diagrama-Kafka-v2.png)
+![Resumo Kafka](imagens/Diagrama-Kafka-v3.png)
 
 Anatomia da Mensagem Kafka
 ![Anatomia da Mensagem Kafka](imagens/AnatomiaMensagemKafka.png) 
