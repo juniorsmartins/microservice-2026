@@ -83,7 +83,7 @@ pode garantir que as mensagens sejam entregues ao consumidor na mesma ordem em q
 armazenadas na partição. O offset é um ID sequencial de cada mensagem na partição. O 
 consumer armazena o offset já processado (commit) para não reprocessar;
 
-- Replication Factor: número de cópias de cada partição no cluster. Garante 
+- Topic Replication Factor: número de cópias de cada partição no cluster. Garante 
 disponibilidade: se um broker falhar, outra cópia assume como leader. Ideal ≥3 em 
 produção.
 
@@ -136,10 +136,14 @@ uma plataforma ainda mais autônoma e eficiente.
 - Kafka Raft (KRaft): novo modo (sem Zookeeper). Usa Raft para consenso. Mais simples e 
 rápido.
 
-Objetivo: 1 tópico, com 2 partições e 1 cluster com 2 brokers (1 broker por partição); 
+Objetivo: 1 cluster (3 brokers), 1 tópico com 3 partições e com replicação 2; 
 ```
 
-![Anatomia da Mensagem Kafka](imagens/AnatomiaMensagemKafka.png)
+Diagrama de resumo do Kafka
+![Resumo Kafka](imagens/Diagrama-Kafka-v1.png)
+
+Anatomia da Mensagem Kafka
+![Anatomia da Mensagem Kafka](imagens/AnatomiaMensagemKafka.png) 
 
 PASSO-A-PASSO 
 
