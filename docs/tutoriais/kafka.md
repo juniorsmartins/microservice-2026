@@ -135,8 +135,6 @@ uma plataforma ainda mais autônoma e eficiente.
 
 - Kafka Raft (KRaft): novo modo (sem Zookeeper). Usa Raft para consenso. Mais simples e 
 rápido.
-
-Objetivo: 1 cluster (3 brokers), 1 tópico com 3 partições e com replicação 2; 
 ```
 
 Diagrama de resumo do Kafka
