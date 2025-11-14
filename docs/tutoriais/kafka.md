@@ -140,7 +140,7 @@ Objetivo: 1 tópico, com 2 partições e 1 cluster com 2 brokers (1 broker por p
 ```
 
 Anatomia da mensagem Kafka: 
-![Mensagem](../docs/tutoriais/imagens/AnatomiaMensagemKafka.png)
+![Mensagem](/imagens/AnatomiaMensagemKafka.png)
 
 PASSO-A-PASSO 
 
