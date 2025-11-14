@@ -139,6 +139,9 @@ rápido.
 Objetivo: 1 tópico, com 2 partições e 1 cluster com 2 brokers (1 broker por partição); 
 ```
 
+Anatomia da mensagem Kafka: 
+![Mensagem](docs/tutoriais/imagens/AnatomiaMensagemKafka.png)
+
 PASSO-A-PASSO 
 
 
