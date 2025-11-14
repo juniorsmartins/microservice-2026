@@ -47,11 +47,9 @@
 
 ### Diagramas Users
 
-Arquitetura Limpa multi-modulo
-![Arq api-users](docs/diagramas/api-users/ARQ-USERS-v2.png)
+![Arquitetura Limpa multi-modulo](docs/diagramas/api-users/ARQ-USERS-v2.png)
 
-DER
-![DER api-users](docs/diagramas/api-users/DER-api-users.png)
+![Diagrama Entidade Relacionamento](docs/diagramas/api-users/DER-api-users.png)
 
 ## API - Accounts
 
