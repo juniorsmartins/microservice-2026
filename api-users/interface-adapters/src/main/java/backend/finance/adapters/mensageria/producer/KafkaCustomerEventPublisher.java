@@ -10,8 +10,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
-import java.util.UUID;
-
 @Slf4j
 @Component
 @RequiredArgsConstructor
@@ -27,7 +25,19 @@ public final class KafkaCustomerEventPublisher implements CustomerEventPublisher
     public void sendEventCreateCustomer(CustomerResponse response) {
 
         var message = customerPresenter.toMessage(response);
-        kafkaTemplate.send(propertiesConfig.topicEventCreateCustomer, UUID.randomUUID().toString(), message);
-        log.info("\n\n KafkaCustomerEventPublisher - Mensagem enviada: {}. \n\n", message);
+
+        kafkaTemplate.send(propertiesConfig.topicEventCreateCustomer, message.getId(), message)
+                .whenComplete((result, exception) -> { // whenComplete é Callback
+                    if (exception == null) {
+                        log.info("\n\n ----- Metadados ----- \n" +
+                                "Topic: " + result.getRecordMetadata().topic() + "\n" +
+                                "Partition: " + result.getRecordMetadata().partition() + "\n" +
+                                "Offset: " + result.getRecordMetadata().offset() + "\n" +
+                                "Timestamp: " + result.getRecordMetadata().timestamp() + "\n" +
+                                "sendEventCreateCustomer - Mensagem enviada: " + result.getProducerRecord().value() + "\n\n");
+                    } else {
+                        log.error("Erro durante a produção: ", exception);
+                    }
+                });
     }
 }
