@@ -28,6 +28,18 @@ public class PropertiesProducerConfig {
     @Value("${spring.kafka.producer.acks}")
     public String acks;
 
+    @Value("${spring.kafka.producer.batch-size}")
+    public int batchSize;
+
+    @Value("${spring.kafka.producer.linger-ms}")
+    public String lingerMs;
+
+    @Value("${spring.kafka.producer.delivery.timeout.ms}")
+    public String deliveryTimeoutMs;
+
+    @Value("${spring.kafka.producer.request.timeout.ms}")
+    public String requestTimeoutMs;
+
     @Value("${spring.kafka.producer.properties.schema.registry.url}")
     public String schemaRegistryUrl;
 

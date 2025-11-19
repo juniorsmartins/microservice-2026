@@ -74,22 +74,33 @@ spring:
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: io.confluent.kafka.serializers.KafkaAvroSerializer
-      compression-type: zstd # (none, gzip, snappy, lz4, zstd)
-      max.in.flight.requests.per.connection: 5 # Permitir múltiplas requisições em voo para maior throughput (padrão 5)
-      # Padrão exactly-once (idempotence, acks e retries)
+
+      # === EXACTLY-ONCE (idempotence, acks e retries) ===
       enable.idempotence: true # Habilita idempotência (necessário para evitar duplicatas em retries)
       acks: -1 # Idempotência não funciona sem (0 - Producer nem espera resposta. Envia e esquece / 1 - Producer espera o líder confirmar que gravou no log (padrão). / all ou -1 - Producer espera líder + todas as réplicas ISR confirmarem (ou seja, RF=3 → 3 confirmações).
 #      retries: # Idempotência não funciona sem
+      max.in.flight.requests.per.connection: 5 # Permitir múltiplas requisições em voo para maior throughput (padrão 5)
+
+      # === THROUGHPUT MÁXIMO ===
+      batch-size: 131072 # 128 KB ← melhor custo-benefício
+      linger-ms: 5 # espera até 5ms pra encher o batch (usar obrigatório com batch-size)
+      compression-type: zstd # (none, gzip, snappy, lz4, zstd)
+
+      # === TIMEOUTS SEGUROS ===
+      delivery.timeout.ms: 120000 # 2 minutos (padrão seguro com retries altos)
+      request.timeout.ms: 60000 # 60s (melhor que 30s com zstd)
+
       properties:
         schema.registry.url: http://kafka:8081 # obrigatório com Avro
         specific.avro.reader: true
         auto.register.schemas: true # registra schema automaticamente (dev OK, prod = false)
+
     consumer:
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
       group-id: group-api-users-customer
       auto-offset-reset: earliest # Ou latest, dependendo do caso de uso - earliest lê desde o início do tópico
-      enable-auto-commit: false # Spring Kafka gerencia commit manual ou com listener
+      enable-auto-commit: false # Spring Kafka gerencia commit manual com @KafkaListener + Acknowledgment - o controle é seu no manual.
       isolation-level: read_committed # evita ler dados de transações não commitadas
       properties:
         schema.registry.url: http://kafka:8081 # obrigatório com Avro

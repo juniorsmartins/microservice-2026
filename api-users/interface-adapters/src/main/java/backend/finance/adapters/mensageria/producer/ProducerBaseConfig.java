@@ -32,6 +32,10 @@ public class ProducerBaseConfig {
         props.put(ProducerConfig.ENABLE_IDEMPOTENCE_CONFIG, propertiesProducerConfig.enableIdempotence); // Habilita idempotência (necessário para evitar duplicatas em retries)
         props.put(ProducerConfig.MAX_IN_FLIGHT_REQUESTS_PER_CONNECTION, propertiesProducerConfig.maxInFlightRequestsPerConnection); // Permitir múltiplas requisições em voo para maior throughput (padrão 5)
         props.put(ProducerConfig.ACKS_CONFIG, propertiesProducerConfig.acks);
+        props.put(ProducerConfig.BATCH_SIZE_CONFIG, propertiesProducerConfig.batchSize); // Tamanho máximo (em bytes) que o produtor tenta juntar em um único batch antes de enviar pro broker.
+        props.put(ProducerConfig.LINGER_MS_CONFIG, propertiesProducerConfig.lingerMs); // Espera até 5ms pra encher o batch - obrigatório usar com batch-size.
+        props.put(ProducerConfig.DELIVERY_TIMEOUT_MS_CONFIG, propertiesProducerConfig.deliveryTimeoutMs); // É o tempo máximo que o produtor vai ficar tentando entregar UMA mensagem antes de desistir e jogar exceção (Mesmo que tenha milhões de retries, depois de X tempo no total o produtor desiste e joga exceção). Ele controla o ciclo de vida da mensagem, incluindo: Todas as tentativas de retry; Espera no batch (linger.ms); Tempo de compressão; Tempo de envio pela rede; Espera pelo ack do broker.
+        props.put(ProducerConfig.REQUEST_TIMEOUT_MS_CONFIG, propertiesProducerConfig.requestTimeoutMs); // Especifica quanto tempo máximo por cada tentativa de enviar a mensagem.
         return props;
     }
 }

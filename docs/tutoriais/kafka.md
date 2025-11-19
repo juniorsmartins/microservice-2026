@@ -146,11 +146,12 @@ estratégias:
     latência maior e consome mais rede e CPU do broker. Ainda usado em sistemas legados 
     (vinha ativado por padrão). Uso não recomendado!
 
-    * Sticky Partitioner: é o padrão atual desde a versão 2.4 do Kafka. Envia mensagens à 
+    * Cooperative Sticky: é o padrão atual desde a versão 2.4 do Kafka. Envia mensagens à 
     mesma partição até o batch ficar cheio ou o linger.ms estourar, depois troca de 
     partição. Possui throughut até 50% maior, menor latência (menos trocas de conexão e 
     menos batches pequenos) e consumo menor de rede e CPU. Já vem ativado por padrão, mas 
-    dá para forçar configuração do uso de um ou de outro.
+    dá para forçar configuração do uso de um ou de outro. Observação: precisa ter mais de 
+    uma partição para ativar automático, caso contrário usará Range Assignor.
 
 - Logs do Kafka na inicialização da aplicação: primeiro é criado um AdminClient (usa só no 
 startup). O Spring Kafka cria automaticamente para verificar se os tópicos existem ou 
