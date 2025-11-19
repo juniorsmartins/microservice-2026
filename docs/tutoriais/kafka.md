@@ -136,9 +136,28 @@ uma plataforma ainda mais autônoma e eficiente.
 - Kafka Raft (KRaft): novo modo (sem Zookeeper). Usa Raft para consenso. Mais simples e 
 rápido.
 
-- Round Robin: 
+- O produtor escolhe em qual partição colocar a mensagem. O produtor faz essa escolha antes
+da mensagem chegar no Kafka. O Broker nem sabe qual estratégia foi usada. E pode usar duas 
+estratégias: 
 
-- Sticky Partitioner: 
+    * Round Robin Partitioner: foi o padrão de uso do Kafka até a versão 2.3. Envia uma 
+    mensagem para a partição 0, depois envia uma mensagem para a partição 1, depois para 
+    a 2 e assim sucessivamente até retornar para a 0 e seguir. Possui throughput menor, 
+    latência maior e consome mais rede e CPU do broker. Ainda usado em sistemas legados 
+    (vinha ativado por padrão). Uso não recomendado!
+
+    * Sticky Partitioner: é o padrão atual desde a versão 2.4 do Kafka. Envia mensagens à 
+    mesma partição até o batch ficar cheio ou o linger.ms estourar, depois troca de 
+    partição. Possui throughut até 50% maior, menor latência (menos trocas de conexão e 
+    menos batches pequenos) e consumo menor de rede e CPU. Já vem ativado por padrão, mas 
+    dá para forçar configuração do uso de um ou de outro.
+
+- Logs do Kafka na inicialização da aplicação: primeiro é criado um AdminClient (usa só no 
+startup). O Spring Kafka cria automaticamente para verificar se os tópicos existem ou 
+para criá-los automáticamente (se allow.auto.create.topics = true) e pegar metadados do 
+cluster. Depois que termina o startup, ele é fechado normalmente (por isso aparece 
+"unregistered" e "metrics scheduler closed" logo depois). Isso é totalmente normal.
+
 
 ```
 

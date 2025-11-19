@@ -1,7 +1,7 @@
 package backend.finance.adapters.mensageria.producer;
 
 import backend.finance.adapters.CustomerMessage;
-import backend.finance.adapters.mensageria.PropertiesBaseConfig;
+import backend.finance.adapters.mensageria.PropertiesConfig;
 import backend.finance.adapters.presenters.CustomerPresenter;
 import backend.finance.application.dtos.response.CustomerResponse;
 import backend.finance.application.ports.output.CustomerEventPublisherOutputPort;
@@ -17,7 +17,7 @@ public final class KafkaCustomerEventPublisher implements CustomerEventPublisher
 
     private final KafkaTemplate<String, CustomerMessage> kafkaTemplate;
 
-    private final PropertiesBaseConfig propertiesBaseConfig;
+    private final PropertiesConfig propertiesConfig;
 
     private final CustomerPresenter customerPresenter;
 
@@ -26,7 +26,7 @@ public final class KafkaCustomerEventPublisher implements CustomerEventPublisher
 
         var message = customerPresenter.toMessage(response);
 
-        kafkaTemplate.send(propertiesBaseConfig.topicEventCreateCustomer, message.getId(), message)
+        kafkaTemplate.send(propertiesConfig.topicEventCreateCustomer, message.getId(), message)
                 .whenComplete((result, exception) -> { // whenComplete é Callback
                     if (exception == null) {
                         log.info("\n\n ----- Metadados ----- \n" +
@@ -34,7 +34,7 @@ public final class KafkaCustomerEventPublisher implements CustomerEventPublisher
                                 "Partition: " + result.getRecordMetadata().partition() + "\n" +
                                 "Offset: " + result.getRecordMetadata().offset() + "\n" +
                                 "Timestamp: " + result.getRecordMetadata().timestamp() + "\n" +
-                                "sendEventCreateCustomer - Mensagem enviada: " + result.getProducerRecord().value() + "\n\n");
+                                "sendEventCreateCustomer - Mensagem enviada: \n" + result.getProducerRecord().value() + "\n\n");
                     } else {
                         log.error("Erro durante a produção: ", exception);
                     }

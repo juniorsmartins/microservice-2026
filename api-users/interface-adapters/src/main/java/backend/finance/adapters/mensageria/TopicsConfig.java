@@ -10,11 +10,11 @@ import org.springframework.kafka.config.TopicBuilder;
 @RequiredArgsConstructor
 public class TopicsConfig {
 
-    private final PropertiesBaseConfig propertiesBaseConfig; // Injetar a configuração de propriedades do Kafka
+    private final PropertiesConfig propertiesConfig; // Injetar a configuração de propriedades do Kafka
 
     @Bean
     public NewTopic upTopicEventCreateCustomer() {
-        return buildTopic(propertiesBaseConfig.topicEventCreateCustomer, 1, (short) 1);
+        return buildTopic(propertiesConfig.topicEventCreateCustomer, 1, (short) 1);
     }
 
     private NewTopic buildTopic(String nome, int numReplicas, short numParticoes) {

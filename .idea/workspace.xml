@@ -5,7 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a1ea8202-910b-4a63-8ece-9f6a9a5ee2c0" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/api-users/interface-adapters/src/main/java/backend/finance/adapters/mensageria/consumer/PropertiesConsumerConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/interface-adapters/src/main/java/backend/finance/adapters/mensageria/PropertiesBaseConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/interface-adapters/src/main/java/backend/finance/adapters/mensageria/PropertiesConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/interface-adapters/src/main/java/backend/finance/adapters/mensageria/TopicsConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/interface-adapters/src/main/java/backend/finance/adapters/mensageria/TopicsConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/interface-adapters/src/main/java/backend/finance/adapters/mensageria/consumer/ConsumerBaseConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/interface-adapters/src/main/java/backend/finance/adapters/mensageria/consumer/ConsumerBaseConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/interface-adapters/src/main/java/backend/finance/adapters/mensageria/producer/KafkaCustomerEventPublisher.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/interface-adapters/src/main/java/backend/finance/adapters/mensageria/producer/KafkaCustomerEventPublisher.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/interface-adapters/src/main/java/backend/finance/adapters/mensageria/producer/ProducerBaseConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/interface-adapters/src/main/java/backend/finance/adapters/mensageria/producer/ProducerBaseConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/interface-adapters/src/main/java/backend/finance/adapters/mensageria/producer/PropertiesProducerConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/interface-adapters/src/main/java/backend/finance/adapters/mensageria/producer/PropertiesProducerConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api-users/interface-adapters/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/interface-adapters/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/tutoriais/kafka.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/tutoriais/kafka.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -138,50 +147,50 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Gradle.CustomerControllerIntegrationTest.executor": "Run",
-    "Gradle.CustomerCreateUseCaseTest.executor": "Run",
-    "Gradle.CustomerTest.executor": "Run",
-    "Gradle.CustomerValidationImplTest.executor": "Run",
-    "Gradle.Download Sources.executor": "Run",
-    "Gradle.Tests in 'api-user.test'.executor": "Run",
-    "Gradle.Tests in 'api-users.application-business-rules.test'.executor": "Run",
-    "Gradle.Tests in 'api-users.enterprise-business-rules.test'.executor": "Run",
-    "Gradle.Tests in 'api-users.interface-adapters.test'.executor": "Run",
-    "Gradle.Tests in 'api-users.test'.executor": "Run",
-    "Gradle.api-user [:backend.finance.api_user.ApiUserApplication.main()].executor": "Run",
-    "Gradle.api-user [build].executor": "Run",
-    "Gradle.api-user [clean].executor": "Run",
-    "Gradle.api-user [diff].executor": "Run",
-    "Gradle.api-user [generateAvroJava].executor": "Run",
-    "Gradle.api-users [build].executor": "Run",
-    "Gradle.api-users [clean].executor": "Run",
-    "Gradle.api-users [generateAvroJava].executor": "Run",
-    "Gradle.api-users [testClasses].executor": "Run",
-    "Gradle.api-users:application-business-rules [build].executor": "Run",
-    "Gradle.api-users:application-business-rules [clean].executor": "Run",
-    "Gradle.api-users:enterprise-business-rules [build].executor": "Run",
-    "Gradle.api-users:enterprise-business-rules [clean].executor": "Run",
-    "Gradle.api-users:interface-adapters [build].executor": "Run",
-    "Gradle.api-users:interface-adapters [clean].executor": "Run",
-    "Gradle.api-users:interface-adapters [generateAvroJava].executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
-    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
-    "git-widget-placeholder": "feature/kafka-v1",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/home/juniorsmartins/Projetos/microservice-2026/docs/tutoriais/imagens",
-    "onboarding.tips.debug.path": "/home/juniorsmartins/Projetos/microservice-2026/api-users/frameworks-drivers/src/main/java/backend/finance/Main.java",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "File.Encoding"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Gradle.CustomerControllerIntegrationTest.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.CustomerCreateUseCaseTest.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.CustomerTest.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.CustomerValidationImplTest.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Download Sources.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Tests in 'api-user.test'.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Tests in 'api-users.application-business-rules.test'.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Tests in 'api-users.enterprise-business-rules.test'.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Tests in 'api-users.interface-adapters.test'.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Tests in 'api-users.test'.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.api-user [:backend.finance.api_user.ApiUserApplication.main()].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.api-user [build].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.api-user [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.api-user [diff].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.api-user [generateAvroJava].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.api-users [build].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.api-users [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.api-users [generateAvroJava].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.api-users [testClasses].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.api-users:application-business-rules [build].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.api-users:application-business-rules [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.api-users:enterprise-business-rules [build].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.api-users:enterprise-business-rules [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.api-users:interface-adapters [build].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.api-users:interface-adapters [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.api-users:interface-adapters [generateAvroJava].executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit5&quot;,
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;feature/kafka-v1&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/juniorsmartins/Projetos/microservice-2026/docs/tutoriais/imagens&quot;,
+    &quot;onboarding.tips.debug.path&quot;: &quot;/home/juniorsmartins/Projetos/microservice-2026/api-users/frameworks-drivers/src/main/java/backend/finance/Main.java&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;File.Encoding&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/docs/tutoriais/imagens" />
@@ -212,11 +221,11 @@
       <recent name="backend.finance.api_user.infrastructure.gateways" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="backend.finance.adapters.mensageria.consumer" />
       <recent name="backend.finance.adapters.mensageria.producer" />
       <recent name="backend.finance.application.dtos" />
       <recent name="backend.finance.controllers" />
       <recent name="backend.finance.dtos.internal" />
-      <recent name="backend.finance.constants" />
     </key>
   </component>
   <component name="RunManager" selected="Gradle.api-users:interface-adapters [generateAvroJava]">

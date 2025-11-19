@@ -24,4 +24,16 @@ public class PropertiesProducerConfig {
 
     @Value("${spring.kafka.producer.max.in.flight.requests.per.connection}")
     public int maxInFlightRequestsPerConnection;
+
+    @Value("${spring.kafka.producer.acks}")
+    public String acks;
+
+    @Value("${spring.kafka.producer.properties.schema.registry.url}")
+    public String schemaRegistryUrl;
+
+    @Value("${spring.kafka.producer.properties.specific.avro.reader}")
+    public boolean specificAvroReader;
+
+    @Value("${spring.kafka.producer.properties.auto.register.schemas}")
+    public boolean autoRegisterSchemas;
 }
