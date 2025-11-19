@@ -12,8 +12,8 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public final class Consumer {
 
-    @KafkaListener(topics = "${spring.kafka.topic.event-create-customer}", groupId = "group-api-user-customer", containerFactory = "customerListenerContainerFactory")
-    public void consumirEventoConsulta(CustomerMessage customerMessage, Acknowledgment ack) {
+    @KafkaListener(topics = "${spring.kafka.topic.event-create-customer}", groupId = "group-api-users-customer", containerFactory = "listenerContainerFactoryCustomerMessage")
+    public void consumerEventCreateCustomer(CustomerMessage customerMessage, Acknowledgment ack) {
 
         try {
             log.info("\n\n Consumer - Mensagem recebida: {}. \n\n", customerMessage);

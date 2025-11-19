@@ -135,6 +135,11 @@ uma plataforma ainda mais autônoma e eficiente.
 
 - Kafka Raft (KRaft): novo modo (sem Zookeeper). Usa Raft para consenso. Mais simples e 
 rápido.
+
+- Round Robin: 
+
+- Sticky Partitioner: 
+
 ```
 
 Diagrama de resumo do Kafka
@@ -145,6 +150,7 @@ Anatomia da Mensagem Kafka
 
 PASSO-A-PASSO 
 
-
+1. Adição de dependências;
+2. 
 
 

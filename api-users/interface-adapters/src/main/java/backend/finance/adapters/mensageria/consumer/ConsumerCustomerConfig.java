@@ -18,14 +18,14 @@ public class ConsumerCustomerConfig {
     private final ConsumerBaseConfig consumerBaseConfig;
 
     @Bean
-    public ConsumerFactory<String, CustomerMessage> consumerFactory() {
+    public ConsumerFactory<String, CustomerMessage> consumerFactoryCustomerMessage() {
         return new DefaultKafkaConsumerFactory<>(consumerBaseConfig.consumerConfigs()); // Criar a fábrica de consumidores
     }
 
     @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, CustomerMessage> customerListenerContainerFactory() {
+    public ConcurrentKafkaListenerContainerFactory<String, CustomerMessage> listenerContainerFactoryCustomerMessage() {
         ConcurrentKafkaListenerContainerFactory<String, CustomerMessage> factory = new ConcurrentKafkaListenerContainerFactory<>(); // Criar a fábrica de listeners
-        factory.setConsumerFactory(consumerFactory()); // Configurar a fábrica de consumidores
+        factory.setConsumerFactory(consumerFactoryCustomerMessage()); // Configurar a fábrica de consumidores
         factory.getContainerProperties().setAckMode(ContainerProperties.AckMode.MANUAL); // Usar confirmação manual - mais controle - pode ser útil para garantir que a mensagem foi processada antes de confirmar
         return factory;
     }

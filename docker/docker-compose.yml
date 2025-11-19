@@ -3,6 +3,10 @@ volumes: # Define o volume para persistência dos dados do banco de dados.
     name: db_users
   kafka-data:
     name: kafka-data
+  pg_data:
+    name: pg_data
+  conduktor_data:
+    name: conduktor_data
 
 networks: # Define a rede de comunicação entre os containers.
   communication:
@@ -10,6 +14,37 @@ networks: # Define a rede de comunicação entre os containers.
     driver: bridge # Usar driver bridge para comunicação local e acesso à internet. Permite isolamento e controle de rede.
 
 services: # Define os serviços (containers) que serão executados.
+
+  postgresql:
+    image: postgres:14
+    hostname: postgresql
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: "conduktor-console"
+      POSTGRES_USER: "conduktor"
+      POSTGRES_PASSWORD: "some_password"
+      POSTGRES_HOST_AUTH_METHOD: "scram-sha-256"
+    networks:
+      - communication
+
+  conduktor-console:
+    image: conduktor/conduktor-console:1.36.2
+    ports:
+      - "8080:8080"
+    volumes:
+      - conduktor_data:/var/conduktor
+    environment:
+      CDK_DATABASE_URL: "postgresql://conduktor:some_password@postgresql:5432/conduktor-console"
+      CDK_CLUSTERS_0_ID: "default"
+      CDK_CLUSTERS_0_NAME: "My Local Kafka Cluster"
+      CDK_CLUSTERS_0_COLOR: "#0013E7"
+      CDK_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:9092
+    networks:
+      - communication
+    depends_on:
+      - kafka
+      - postgresql
 
   kafka:
     image: lensesio/fast-data-dev:3.9
@@ -44,17 +79,17 @@ services: # Define os serviços (containers) que serão executados.
     networks:
       - communication
 
-  kafdrop:
-    image: obsidiandynamics/kafdrop:latest
-    container_name: kafdrop
-    ports:
-      - 9000:9000  # Acesse em http://localhost:9000
-    environment:
-      KAFKA_BROKERCONNECT: kafka:9092
-    depends_on:
-      - kafka
-    networks:
-      - communication
+#  kafdrop:
+#    image: obsidiandynamics/kafdrop:latest
+#    container_name: kafdrop
+#    ports:
+#      - 9000:9000  # Acesse em http://localhost:9000
+#    environment:
+#      KAFKA_BROKERCONNECT: kafka:9092
+#    depends_on:
+#      - kafka
+#    networks:
+#      - communication
 
   api_users:
     container_name: api_users

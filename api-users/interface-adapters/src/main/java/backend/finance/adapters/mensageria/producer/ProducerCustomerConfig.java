@@ -17,12 +17,12 @@ public class ProducerCustomerConfig {
     private final ProducerBaseConfig producerBaseConfig;
 
     @Bean
-    public ProducerFactory<String, CustomerMessage> producerFactory() {
+    public ProducerFactory<String, CustomerMessage> producerFactoryCustomerMessage() {
         return new DefaultKafkaProducerFactory<>(producerBaseConfig.producerConfigs()); // Criar a fábrica de produtores
     }
 
     @Bean
-    public KafkaTemplate<String, CustomerMessage> kafkaTemplate() {
-        return new KafkaTemplate<>(producerFactory()); // Criar o KafkaTemplate
+    public KafkaTemplate<String, CustomerMessage> kafkaTemplateCustomerMessage() {
+        return new KafkaTemplate<>(producerFactoryCustomerMessage()); // Criar o KafkaTemplate
     }
 }
