@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @Getter
 @Setter
-public class PropertiesConfig {
+public class PropertiesBaseConfig {
 
     @Value("${spring.kafka.bootstrap-servers}")
     public String bootstrapServers;
@@ -30,10 +30,4 @@ public class PropertiesConfig {
 
     @Value("${spring.kafka.consumer.auto-offset-reset}")
     public String consumerAutoOffsetReset;
-
-    @Value("${spring.kafka.properties.enable.idempotence}")
-    public boolean enableIdempotence;
-
-    @Value("${spring.kafka.properties.max.in.flight.requests.per.connection}")
-    public int maxInFlightRequestsPerConnection;
 }

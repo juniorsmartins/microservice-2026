@@ -74,18 +74,23 @@ spring:
     topic:
       event-create-customer: event-create-customer
     properties:
-      schema.registry.url: http://kafka:8081
+      schema.registry.url: http://kafka:8081 # obrigatório com Avro
       specific.avro.reader: true
-      auto.register.schemas: true
-      enable.idempotence: true # Habilita idempotência (necessário para evitar duplicatas em retries)
-      max.in.flight.requests.per.connection: 3 # Permitir múltiplas requisições em voo para maior throughput (padrão 5)
+      auto.register.schemas: true # registra schema automaticamente (dev OK, prod = false)
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: io.confluent.kafka.serializers.KafkaAvroSerializer
+      compression-type: zstd # (none, gzip, snappy, lz4, zstd)
+      enable.idempotence: true # Habilita idempotência (necessário para evitar duplicatas em retries)
+      max.in.flight.requests.per.connection: 4 # Permitir múltiplas requisições em voo para maior throughput (padrão 5)
+      acks: all
+#      retries:
     consumer:
-      group-id: group-api-users-customer
-      auto-offset-reset: earliest # Ou latest, dependendo do caso de uso - earliest lê desde o início do tópico
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
+      group-id: group-api-users-customer
+      auto-offset-reset: earliest # Ou latest, dependendo do caso de uso - earliest lê desde o início do tópico
+      enable-auto-commit: false # Spring Kafka gerencia commit manual ou com listener
+      isolation-level: read_committed # evita ler dados de transações não commitadas
 
 

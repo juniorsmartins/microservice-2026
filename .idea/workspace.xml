@@ -6,7 +6,13 @@
   <component name="ChangeListManager">
     <list default="true" id="a1ea8202-910b-4a63-8ece-9f6a9a5ee2c0" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/interface-adapters/src/main/java/backend/finance/adapters/mensageria/PropertiesConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/interface-adapters/src/main/java/backend/finance/adapters/mensageria/PropertiesBaseConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/interface-adapters/src/main/java/backend/finance/adapters/mensageria/TopicsConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/interface-adapters/src/main/java/backend/finance/adapters/mensageria/TopicsConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/interface-adapters/src/main/java/backend/finance/adapters/mensageria/consumer/ConsumerBaseConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/interface-adapters/src/main/java/backend/finance/adapters/mensageria/consumer/ConsumerBaseConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api-users/interface-adapters/src/main/java/backend/finance/adapters/mensageria/producer/KafkaCustomerEventPublisher.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/interface-adapters/src/main/java/backend/finance/adapters/mensageria/producer/KafkaCustomerEventPublisher.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/interface-adapters/src/main/java/backend/finance/adapters/mensageria/producer/ProducerBaseConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/interface-adapters/src/main/java/backend/finance/adapters/mensageria/producer/ProducerBaseConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/interface-adapters/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/interface-adapters/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker/docker-compose.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -213,11 +219,11 @@
       <recent name="backend.finance.api_user.infrastructure.gateways" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="backend.finance.adapters.mensageria.producer" />
       <recent name="backend.finance.application.dtos" />
       <recent name="backend.finance.controllers" />
       <recent name="backend.finance.dtos.internal" />
       <recent name="backend.finance.constants" />
-      <recent name="backend.finance.enums" />
     </key>
   </component>
   <component name="RunManager" selected="Gradle.api-users:interface-adapters [generateAvroJava]">

@@ -1,6 +1,6 @@
 package backend.finance.adapters.mensageria.consumer;
 
-import backend.finance.adapters.mensageria.PropertiesConfig;
+import backend.finance.adapters.mensageria.PropertiesBaseConfig;
 import io.confluent.kafka.serializers.AbstractKafkaSchemaSerDeConfig;
 import io.confluent.kafka.serializers.KafkaAvroDeserializer;
 import lombok.RequiredArgsConstructor;
@@ -18,18 +18,18 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class ConsumerBaseConfig {
 
-    private final PropertiesConfig propertiesConfig; // Injetar a configuração de propriedades do Kafka
+    private final PropertiesBaseConfig propertiesBaseConfig; // Injetar a configuração de propriedades do Kafka
 
     @Bean // A anotação Bean indica que o métdo retorna um objeto que será gerenciado pelo container Spring
     public Map<String, Object> consumerConfigs() {
         Map<String, Object> props = new HashMap<>(); // Um HashMap simples para armazenar as configurações no formato chave → valor.
-        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, propertiesConfig.bootstrapServers); // Servidor Kafka - Define onde está rodando
+        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, propertiesBaseConfig.bootstrapServers); // Servidor Kafka - Define onde está rodando
         props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class); // A chave da mensagem será desserializada como String
         props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, KafkaAvroDeserializer.class); // Indica que o produtor envia dados serializados com Avro e registrados no Schema Registry.
-        props.put(ConsumerConfig.GROUP_ID_CONFIG, propertiesConfig.consumerGroupId); // Define o grupo de consumidores
-        props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, propertiesConfig.consumerAutoOffsetReset); // Define o comportamento: "earliest" → lê desde o início do tópico; "latest" → lê apenas novas mensagens; "none" → lança exceção se não houver offset.
-        props.put(AbstractKafkaSchemaSerDeConfig.SCHEMA_REGISTRY_URL_CONFIG, propertiesConfig.schemaRegistryUrl); // Aponta o Schema Registry. Necessário para o KafkaAvroDeserializer baixar o schema e desserializar Avro corretamente.
-        props.put("specific.avro.reader", propertiesConfig.specificAvroReader); // Habilita o Specific Record do Avro (em vez de GenericRecord). Se true, espera que você use classes geradas pelo Avro (ex: User.java gerado a partir de .avsc). Muito útil para tipagem forte.
+        props.put(ConsumerConfig.GROUP_ID_CONFIG, propertiesBaseConfig.consumerGroupId); // Define o grupo de consumidores
+        props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, propertiesBaseConfig.consumerAutoOffsetReset); // Define o comportamento: "earliest" → lê desde o início do tópico; "latest" → lê apenas novas mensagens; "none" → lança exceção se não houver offset.
+        props.put(AbstractKafkaSchemaSerDeConfig.SCHEMA_REGISTRY_URL_CONFIG, propertiesBaseConfig.schemaRegistryUrl); // Aponta o Schema Registry. Necessário para o KafkaAvroDeserializer baixar o schema e desserializar Avro corretamente.
+        props.put("specific.avro.reader", propertiesBaseConfig.specificAvroReader); // Habilita o Specific Record do Avro (em vez de GenericRecord). Se true, espera que você use classes geradas pelo Avro (ex: User.java gerado a partir de .avsc). Muito útil para tipagem forte.
         return props;
     }
 }

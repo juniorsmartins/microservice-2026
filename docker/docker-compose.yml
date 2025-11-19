@@ -113,6 +113,7 @@ services: # Define os serviços (containers) que serão executados.
       - DB_NAME=db_users
       - DB_PORT=5432
       - SPRING_KAFKA_BOOTSTRAP_SERVERS=kafka:9092
+      - JAVA_TOOL_OPTIONS="--enable-native-access=ALL-UNNAMED" # Elimina alguns warnnings
     restart: on-failure
     networks:
       - communication

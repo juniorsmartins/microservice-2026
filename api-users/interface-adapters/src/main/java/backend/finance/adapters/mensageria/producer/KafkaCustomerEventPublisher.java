@@ -1,7 +1,7 @@
 package backend.finance.adapters.mensageria.producer;
 
 import backend.finance.adapters.CustomerMessage;
-import backend.finance.adapters.mensageria.PropertiesConfig;
+import backend.finance.adapters.mensageria.PropertiesBaseConfig;
 import backend.finance.adapters.presenters.CustomerPresenter;
 import backend.finance.application.dtos.response.CustomerResponse;
 import backend.finance.application.ports.output.CustomerEventPublisherOutputPort;
@@ -17,7 +17,7 @@ public final class KafkaCustomerEventPublisher implements CustomerEventPublisher
 
     private final KafkaTemplate<String, CustomerMessage> kafkaTemplate;
 
-    private final PropertiesConfig propertiesConfig;
+    private final PropertiesBaseConfig propertiesBaseConfig;
 
     private final CustomerPresenter customerPresenter;
 
@@ -26,7 +26,7 @@ public final class KafkaCustomerEventPublisher implements CustomerEventPublisher
 
         var message = customerPresenter.toMessage(response);
 
-        kafkaTemplate.send(propertiesConfig.topicEventCreateCustomer, message.getId(), message)
+        kafkaTemplate.send(propertiesBaseConfig.topicEventCreateCustomer, message.getId(), message)
                 .whenComplete((result, exception) -> { // whenComplete é Callback
                     if (exception == null) {
                         log.info("\n\n ----- Metadados ----- \n" +
