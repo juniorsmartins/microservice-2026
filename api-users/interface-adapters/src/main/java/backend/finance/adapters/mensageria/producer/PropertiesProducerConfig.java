@@ -43,9 +43,6 @@ public class PropertiesProducerConfig {
     @Value("${spring.kafka.producer.properties.schema.registry.url}")
     public String schemaRegistryUrl;
 
-    @Value("${spring.kafka.producer.properties.specific.avro.reader}")
-    public boolean specificAvroReader;
-
     @Value("${spring.kafka.producer.properties.auto.register.schemas}")
     public boolean autoRegisterSchemas;
 }

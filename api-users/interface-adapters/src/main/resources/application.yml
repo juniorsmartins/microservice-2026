@@ -72,27 +72,26 @@ spring:
   kafka:
     bootstrap-servers: kafka:9092
     producer:
-      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: io.confluent.kafka.serializers.KafkaAvroSerializer
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer # Define como serializar chaves (obrigatório)
+      value-serializer: io.confluent.kafka.serializers.KafkaAvroSerializer # Define como serializar o payload/mensagem - pode ser string, json, avro e etc (obrigatório)
 
       # === EXACTLY-ONCE (idempotence, acks e retries) ===
-      enable.idempotence: true # Habilita idempotência (necessário para evitar duplicatas em retries)
-      acks: -1 # Idempotência não funciona sem (0 - Producer nem espera resposta. Envia e esquece / 1 - Producer espera o líder confirmar que gravou no log (padrão). / all ou -1 - Producer espera líder + todas as réplicas ISR confirmarem (ou seja, RF=3 → 3 confirmações).
+      enable.idempotence: true # Habilita idempotência (necessário para evitar mensagens duplicadas, incluído em retries). Funciona em conjunto com acks e retries.
+      acks: -1 # Define se o producer deve esperar confirmação de entrega (0 - Producer nem espera resposta. Envia e esquece / 1 - Producer espera o líder confirmar que gravou no log (padrão). / all ou -1 - Producer espera líder + todas as réplicas ISR confirmarem (ou seja, RF=3 → 3 confirmações).
 #      retries: # Idempotência não funciona sem
       max.in.flight.requests.per.connection: 5 # Permitir múltiplas requisições em voo para maior throughput (padrão 5)
 
       # === THROUGHPUT MÁXIMO ===
-      batch-size: 131072 # 128 KB ← melhor custo-benefício
-      linger-ms: 5 # espera até 5ms pra encher o batch (usar obrigatório com batch-size)
-      compression-type: zstd # (none, gzip, snappy, lz4, zstd)
+      batch-size: 131072 # Tamanho máximo (em bytes) que o produtor tenta juntar em um único batch antes de enviar para o broker. Junta várias mensagens num pacote só.
+      linger-ms: 5 # Define quanto temo espera até encher o batch (usar obrigatório com batch-size)
+      compression-type: zstd # Define como a mensagem será comprimida antes de enviar (none, gzip, snappy, lz4, zstd). Isso reduz o tamanho.
 
       # === TIMEOUTS SEGUROS ===
-      delivery.timeout.ms: 120000 # 2 minutos (padrão seguro com retries altos)
-      request.timeout.ms: 60000 # 60s (melhor que 30s com zstd)
+      delivery.timeout.ms: 120000 # Tempo TOTAL que aceita tentar enviar uma mensagem antes de desistir e jogar exceção (Mesmo que tenha milhões de retries, depois de X tempo no total o produtor desiste e joga exceção). Ele controla o ciclo de vida da mensagem, incluindo: Todas as tentativas de retry; Espera no batch (linger.ms); Tempo de compressão; Tempo de envio pela rede; Espera pelo ack do broker.
+      request.timeout.ms: 60000 # Especifica o tempo máximo por cada tentativa de enviar um batch. Espera a resposta do broker em cada retry.
 
       properties:
-        schema.registry.url: http://kafka:8081 # obrigatório com Avro
-        specific.avro.reader: true
+        schema.registry.url: http://kafka:8081 # Endereço do esquema registry (obrigatório se usar Avro)
         auto.register.schemas: true # registra schema automaticamente (dev OK, prod = false)
 
     consumer:
