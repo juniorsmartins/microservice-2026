@@ -35,7 +35,7 @@ public final class EventPublisher implements CustomerEventPublisherOutputPort {
                                 "Offset: " + result.getRecordMetadata().offset() + "\n" +
                                 "Timestamp: " + result.getRecordMetadata().timestamp() + "\n" +
                                 "Key: " + result.getProducerRecord().key() + "\n" +
-                                "sendEventCreateCustomer - Mensagem enviada: \n" + result.getProducerRecord().value() + "\n\n");
+                                "sendEventCreateCustomer - Mensagem enviada: " + result.getProducerRecord().value() + "\n\n");
                     } else {
                         log.error("sendEventCreateCustomer - Erro durante a produção: ", exception);
                     }

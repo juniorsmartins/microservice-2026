@@ -28,6 +28,15 @@ public class PropertiesConsumerConfig {
     @Value("${spring.kafka.consumer.isolation-level}")
     public String isolationLevel;
 
+    @Value("${spring.kafka.consumer.max-poll-records}")
+    public String maxPollRecords;
+
+    @Value("${spring.kafka.consumer.request-timeout-ms}")
+    public String requestTimeoutMs;
+
+    @Value("${spring.kafka.consumer.partition.assignment.strategy}")
+    public String partitionAssignmentStrategy;
+
     @Value("${spring.kafka.consumer.properties.schema.registry.url}")
     public String schemaRegistryUrl;
 

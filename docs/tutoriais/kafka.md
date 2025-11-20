@@ -87,9 +87,53 @@ consumer armazena o offset já processado (commit) para não reprocessar;
 disponibilidade: se um broker falhar, outra cópia assume como leader. Ideal ≥3 em 
 produção.
 
-- Consumer group (group-id): conjunto de consumidores que dividem o processamento de um 
-tópico. Cada partição é consumida por apenas 1 consumer por grupo. Permite escalabilidade 
-horizontal (mais consumers = mais throughput);
+- Consumer Group (group-id): Identificador único do grupo de consumidores. Todos os 
+consumidores com o mesmo group-id formam um único grupo lógico. O Kafka garante que cada 
+partição seja lida por exatamente um consumidor do grupo. Se você tem 10 partições e 3 
+consumidores com group-id = meu-grupo, o Kafka divide as 10 partições entre os 3. Se um 
+consumidor morre ou sobe outro, acontece um rebalance → o Kafka redistribui as partições. 
+Estratégias de Assignment: RangeAssignor, RoundRobinAssignor, StickyAssignor e 
+CooperativeStickyAssignor. Consumers com o mesmo group-id formam um grupo que divide o 
+trabalho.
+
+    Observação: o produtor escolhe em qual partição colocar a mensagem. O produtor faz essa 
+    escolha antes da mensagem chegar no Kafka. O Broker nem sabe qual estratégia foi usada. 
+
+    * Eager Rebalance: procura balancear deixando cada partição ligada a um consumidor. 
+    Caso existam mais partições do que consumidores, então algum consumidor receberá 
+    mensagens de mais de uma partição. Quando está funcionando e entra outro consumidor 
+    no grupo, o Eager Rebalance faz todos os consumidores pararem de funcionar para 
+    redistribuir as partições aos consumidores. Há uma parada geral antes da 
+    redistribuição e isso não é bom.
+
+    * Cooperative Rebalance (ou Incremental Rebalance): ao invés de parar todos os 
+    consumidores para reatribuir todas as partições para eles, essa estratégia reatribui 
+    apenas as partições que não possuem um consumidor exclusivo. Por exemplo, um 
+    consumidor com duas partições terá uma delas removida e reatribuída e tudo isso sem 
+    precisar parar o consumidor. Bem como sem parar consumidores que só possuem uma 
+    partição. Isso evita a parada geral e permite que alguns consumidores não afetados 
+    continuem processando. 
+    
+    * RangeAssignor: Ordena partições e consumidores → cada consumidor pega um bloco 
+    contíguo. Ex: 10 partições e 3 consumers → 0-3, 4-6, 7-9.
+    
+    * RoundRobinAssignor: Distribui uma partição por vez, em ciclo. Ex: partição 0 → 
+    consumer A, 1 → B, 2 → C ... Envia uma mensagem para a partição 0, depois envia uma 
+    mensagem para a partição 1, depois para a 2 e assim sucessivamente até retornar para 
+    a 0 e seguir. Possui throughput menor, latência maior e consome mais rede e CPU do 
+    broker. Ainda usado em sistemas legados (vinha ativado por padrão). Uso não 
+    recomendado!
+    
+    * StickyAssignor: Faz o melhor balanceamento possível e tenta manter as partições nos 
+    mesmos consumidores no próximo rebalance. Menos movimento que RoundRobin, mas ainda 
+    para todos os consumidores para a reatribuição de partições.
+    
+    * CooperativeStickyAssignor: Padrão desde Kafka 2.4 → Rebalance incremental: só quem 
+    precisa (quem saiu ou entrou) perde/ganha partições → Mantém o máximo de atribuições 
+    antigas (sticky). Envia mensagens à mesma partição até o batch ficar cheio ou o 
+    linger.ms estourar, depois troca de partição. Possui throughut até 50% maior, menor 
+    latência (menos trocas de conexão e menos batches pequenos) e consumo menor de rede 
+    e CPU.
 
 - bootstrap-servers: lista de endereços de brokers usados para conectar no cluster (ex: 
 kafka1:9092,kafka2:9092).
@@ -135,23 +179,6 @@ uma plataforma ainda mais autônoma e eficiente.
 
 - Kafka Raft (KRaft): novo modo (sem Zookeeper). Usa Raft para consenso. Mais simples e 
 rápido.
-
-- O produtor escolhe em qual partição colocar a mensagem. O produtor faz essa escolha antes
-da mensagem chegar no Kafka. O Broker nem sabe qual estratégia foi usada. E pode usar duas 
-estratégias: 
-
-    * Round Robin Partitioner: foi o padrão de uso do Kafka até a versão 2.3. Envia uma 
-    mensagem para a partição 0, depois envia uma mensagem para a partição 1, depois para 
-    a 2 e assim sucessivamente até retornar para a 0 e seguir. Possui throughput menor, 
-    latência maior e consome mais rede e CPU do broker. Ainda usado em sistemas legados 
-    (vinha ativado por padrão). Uso não recomendado!
-
-    * Cooperative Sticky: é o padrão atual desde a versão 2.4 do Kafka. Envia mensagens à 
-    mesma partição até o batch ficar cheio ou o linger.ms estourar, depois troca de 
-    partição. Possui throughut até 50% maior, menor latência (menos trocas de conexão e 
-    menos batches pequenos) e consumo menor de rede e CPU. Já vem ativado por padrão, mas 
-    dá para forçar configuração do uso de um ou de outro. Observação: precisa ter mais de 
-    uma partição para ativar automático, caso contrário usará Range Assignor.
 
 - Logs do Kafka na inicialização da aplicação: primeiro é criado um AdminClient (usa só no 
 startup). O Spring Kafka cria automaticamente para verificar se os tópicos existem ou 

@@ -12,15 +12,15 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public final class EventSubscriber {
 
-    @KafkaListener(topics = "${spring.kafka.topic.event-create-customer}", groupId = "group-api-users-customer", containerFactory = "listenerContainerFactoryCustomerMessage")
-    public void consumerEventCreateCustomer(CustomerMessage customerMessage, Acknowledgment ack) {
+    @KafkaListener(topics = "${spring.kafka.topic.event-create-customer}", groupId = "${spring.kafka.consumer.group-id}", containerFactory = "listenerContainerFactoryCustomerMessage")
+    public void consumerEventCreateCustomer(CustomerMessage message, Acknowledgment ack) {
 
         try {
-            log.info("\n\n Consumer - Mensagem recebida: {}. \n\n", customerMessage);
-            ack.acknowledge(); // Confirmar o processamento da mensagem
+            log.info("\n\n consumerEventCreateCustomer - Mensagem recebida: {}. \n\n", message);
+            ack.acknowledge(); // Confirmar o processamento da mensagem - faz o commit
 
         } catch (Exception e) {
-            log.error("\n\n Consumer - Erro ao processar a mensagem: {}.\n\n", e.getMessage());
+            log.error("\n\n consumerEventCreateCustomer - Erro ao processar a mensagem: {}.\n\n", e.getMessage());
         }
     }
 }

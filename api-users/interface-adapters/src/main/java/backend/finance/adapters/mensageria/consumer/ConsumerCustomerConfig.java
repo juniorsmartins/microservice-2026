@@ -26,7 +26,7 @@ public class ConsumerCustomerConfig {
     public ConcurrentKafkaListenerContainerFactory<String, CustomerMessage> listenerContainerFactoryCustomerMessage() {
         ConcurrentKafkaListenerContainerFactory<String, CustomerMessage> factory = new ConcurrentKafkaListenerContainerFactory<>(); // Criar a fábrica de listeners
         factory.setConsumerFactory(consumerFactoryCustomerMessage()); // Configurar a fábrica de consumidores
-        factory.getContainerProperties().setAckMode(ContainerProperties.AckMode.MANUAL); // Usar confirmação manual - mais controle - pode ser útil para garantir que a mensagem foi processada antes de confirmar
+        factory.getContainerProperties().setAckMode(ContainerProperties.AckMode.MANUAL_IMMEDIATE); // Usar confirmação manual - mais controle - pode ser útil para garantir que a mensagem foi processada antes de confirmar
         return factory;
     }
 }
