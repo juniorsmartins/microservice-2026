@@ -13,9 +13,9 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public final class KafkaCustomerEventPublisher implements CustomerEventPublisherOutputPort {
+public final class EventPublisher implements CustomerEventPublisherOutputPort {
 
-    private final KafkaTemplate<String, CustomerMessage> kafkaTemplate;
+    private final KafkaTemplate<String, CustomerMessage> kafkaTemplateCustomerMessage;
 
     private final PropertiesConfig propertiesConfig;
 
@@ -26,17 +26,18 @@ public final class KafkaCustomerEventPublisher implements CustomerEventPublisher
 
         var message = customerPresenter.toMessage(response);
 
-        kafkaTemplate.send(propertiesConfig.topicEventCreateCustomer, message.getId(), message)
-                .whenComplete((result, exception) -> { // whenComplete é Callback
+        kafkaTemplateCustomerMessage.send(propertiesConfig.topicEventCreateCustomer, message.getId(), message)
+                .whenComplete((result, exception) -> { // whenComplete é Callback - será acionado sempre que uma mensagem for enviada ou lançar exceção
                     if (exception == null) {
                         log.info("\n\n ----- Metadados ----- \n" +
                                 "Topic: " + result.getRecordMetadata().topic() + "\n" +
                                 "Partition: " + result.getRecordMetadata().partition() + "\n" +
                                 "Offset: " + result.getRecordMetadata().offset() + "\n" +
                                 "Timestamp: " + result.getRecordMetadata().timestamp() + "\n" +
+                                "Key: " + result.getProducerRecord().key() + "\n" +
                                 "sendEventCreateCustomer - Mensagem enviada: \n" + result.getProducerRecord().value() + "\n\n");
                     } else {
-                        log.error("Erro durante a produção: ", exception);
+                        log.error("sendEventCreateCustomer - Erro durante a produção: ", exception);
                     }
                 });
     }

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public final class Consumer {
+public final class EventSubscriber {
 
     @KafkaListener(topics = "${spring.kafka.topic.event-create-customer}", groupId = "group-api-users-customer", containerFactory = "listenerContainerFactoryCustomerMessage")
     public void consumerEventCreateCustomer(CustomerMessage customerMessage, Acknowledgment ack) {
