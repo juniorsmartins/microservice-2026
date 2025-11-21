@@ -87,53 +87,54 @@ consumer armazena o offset já processado (commit) para não reprocessar;
 disponibilidade: se um broker falhar, outra cópia assume como leader. Ideal ≥3 em 
 produção.
 
-- Consumer Group (group-id): Identificador único do grupo de consumidores. Todos os 
-consumidores com o mesmo group-id formam um único grupo lógico. O Kafka garante que cada 
-partição seja lida por exatamente um consumidor do grupo. Se você tem 10 partições e 3 
-consumidores com group-id = meu-grupo, o Kafka divide as 10 partições entre os 3. Se um 
-consumidor morre ou sobe outro, acontece um rebalance → o Kafka redistribui as partições. 
-Estratégias de Assignment: RangeAssignor, RoundRobinAssignor, StickyAssignor e 
-CooperativeStickyAssignor. Consumers com o mesmo group-id formam um grupo que divide o 
-trabalho.
+1 - Consumer Group (group-id): Identificador único do grupo de consumidores. Todos os 
+consumidores com o mesmo group-id formam um único grupo lógico. Consumers com o mesmo 
+group-id formam um grupo que divide o trabalho. O Kafka garante que cada partição seja 
+lida por exatamente um consumidor do grupo. Se você tem 10 partições e 3 consumidores com 
+o mesmo group-id, o Kafka divide as 10 partições entre os 3. Se um consumidor morre ou 
+sobe outro, acontece um rebalance → o Kafka redistribui as partições. Veja quais são as 
+estratégias de rebalanceamento: RangeAssignor, RoundRobinAssignor, StickyAssignor e 
+CooperativeStickyAssignor. 
 
     Observação: o produtor escolhe em qual partição colocar a mensagem. O produtor faz essa 
     escolha antes da mensagem chegar no Kafka. O Broker nem sabe qual estratégia foi usada. 
 
-    * Eager Rebalance: procura balancear deixando cada partição ligada a um consumidor. 
-    Caso existam mais partições do que consumidores, então algum consumidor receberá 
-    mensagens de mais de uma partição. Quando está funcionando e entra outro consumidor 
-    no grupo, o Eager Rebalance faz todos os consumidores pararem de funcionar para 
-    redistribuir as partições aos consumidores. Há uma parada geral antes da 
-    redistribuição e isso não é bom.
+    1.1 - Eager Rebalance: procura balancear deixando cada partição ligada a um 
+    consumidor. Caso existam mais partições do que consumidores, então algum consumidor 
+    receberá mensagens de mais de uma partição. Quando está funcionando e entra ou sai 
+    um consumidor no grupo, o Eager Rebalance faz todos os consumidores pararem de 
+    funcionar para redistribuir as partições aos consumidores. Há uma parada geral antes 
+    da redistribuição e isso não é bom. Além disso, a redistribuição é aleatória, o que 
+    não garante que um consumidor pegará a mesma partição que já estava lendo.
+    
+        1.1.1 - RangeAssignor: ordena partições e consumidores → cada consumidor pega um 
+        bloco contíguo. Ex: 10 partições e 3 consumers → 0-3, 4-6, 7-9.
+        
+        1.1.2 - RoundRobinAssignor: distribui uma partição por vez, em ciclo. Ex: partição 
+        0 → consumer A, 1 → B, 2 → C ... Envia uma mensagem para a partição 0, depois 
+        envia uma mensagem para a partição 1, depois para a 2 e assim sucessivamente até 
+        retornar para a 0 e seguir. Possui throughput menor, latência maior e consome mais 
+        rede e CPU do broker. Ainda usado em sistemas legados (vinha ativado por padrão). 
+        Uso não recomendado!
 
-    * Cooperative Rebalance (ou Incremental Rebalance): ao invés de parar todos os 
+        1.1.3 - StickyAssignor: faz o melhor balanceamento possível e tenta manter as 
+        partições nos mesmos consumidores no próximo rebalance. Menos movimento que 
+        RoundRobin, mas ainda para todos os consumidores para a reatribuição de partições.
+
+    1.2 - Cooperative Rebalance (ou Incremental Rebalance): ao invés de parar todos os 
     consumidores para reatribuir todas as partições para eles, essa estratégia reatribui 
     apenas as partições que não possuem um consumidor exclusivo. Por exemplo, um 
     consumidor com duas partições terá uma delas removida e reatribuída e tudo isso sem 
     precisar parar o consumidor. Bem como sem parar consumidores que só possuem uma 
     partição. Isso evita a parada geral e permite que alguns consumidores não afetados 
     continuem processando. 
-    
-    * RangeAssignor: Ordena partições e consumidores → cada consumidor pega um bloco 
-    contíguo. Ex: 10 partições e 3 consumers → 0-3, 4-6, 7-9.
-    
-    * RoundRobinAssignor: Distribui uma partição por vez, em ciclo. Ex: partição 0 → 
-    consumer A, 1 → B, 2 → C ... Envia uma mensagem para a partição 0, depois envia uma 
-    mensagem para a partição 1, depois para a 2 e assim sucessivamente até retornar para 
-    a 0 e seguir. Possui throughput menor, latência maior e consome mais rede e CPU do 
-    broker. Ainda usado em sistemas legados (vinha ativado por padrão). Uso não 
-    recomendado!
-    
-    * StickyAssignor: Faz o melhor balanceamento possível e tenta manter as partições nos 
-    mesmos consumidores no próximo rebalance. Menos movimento que RoundRobin, mas ainda 
-    para todos os consumidores para a reatribuição de partições.
-    
-    * CooperativeStickyAssignor: Padrão desde Kafka 2.4 → Rebalance incremental: só quem 
-    precisa (quem saiu ou entrou) perde/ganha partições → Mantém o máximo de atribuições 
-    antigas (sticky). Envia mensagens à mesma partição até o batch ficar cheio ou o 
-    linger.ms estourar, depois troca de partição. Possui throughut até 50% maior, menor 
-    latência (menos trocas de conexão e menos batches pequenos) e consumo menor de rede 
-    e CPU.
+            
+        1.2.1 - CooperativeStickyAssignor: padrão desde Kafka 2.4. Somente quem precisa 
+        (quem saiu ou entrou) perde/ganha partições → Mantém o máximo de atribuições 
+        antigas (sticky). Envia mensagens à mesma partição até o batch ficar cheio ou o 
+        linger.ms estourar, depois troca de partição. Possui throughut até 50% maior, 
+        menor latência (menos trocas de conexão e menos batches pequenos) e consumo menor 
+        de rede e CPU.
 
 - bootstrap-servers: lista de endereços de brokers usados para conectar no cluster (ex: 
 kafka1:9092,kafka2:9092).
