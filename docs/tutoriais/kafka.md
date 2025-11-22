@@ -128,13 +128,13 @@ para partições de acordo com um mecanismo como hashing de chave. Para que uma 
 seja escrita com sucesso em um tópico, um produtor deve especificar um nível de 
 reconhecimento (acks).
 
-MESSAGE KEYS (hashing de chave) - Cada mensagem de evento contém uma chave opcional e um 
-valor. No caso da chave (key = null) não é especificado pelo produtor, as mensagens são 
-distribuídas uniformemente entre partições em um tópico. Isso significa que as mensagens 
-são enviadas de forma round-robin. Se uma chave for enviada (key != null), então todas as 
-mensagens que compartilham a mesma chave serão sempre enviadas e armazenadas na mesma 
-partição Kafka. Uma chave pode ser qualquer coisa para identificar uma mensagem - uma 
-string, valor numérico, valor binário, etc.
+MESSAGE KEYS - Cada mensagem de evento contém uma chave opcional e um valor. No caso da 
+chave (key = null) não é especificado pelo produtor, as mensagens são distribuídas 
+uniformemente entre partições em um tópico. Isso significa que as mensagens são enviadas 
+de forma round-robin. Se uma chave for enviada (key != null), então todas as mensagens que 
+compartilham a mesma chave serão sempre enviadas e armazenadas na mesma partição Kafka. 
+Uma chave pode ser qualquer coisa para identificar uma mensagem - uma string, valor 
+numérico, valor binário, etc.
 
 ANATOMIA DA MENSAGEM KAFKA - As mensagens Kafka são criadas pelo produtor. Estrutura:
 
@@ -160,91 +160,150 @@ ANATOMIA DA MENSAGEM KAFKA - As mensagens Kafka são criadas pelo produtor. Estr
     * Carimbo de data e hora (Timestamp): Um carimbo de data/hora é adicionado pelo 
     usuário ou pelo sistema na mensagem.
     
-    
-    
+CONSUMIDOR - Aplicativos que leem dados de tópicos são conhecidos como consumidores. Um 
+consumidor sempre lê dados de um offset mais baixo para um offset mais alto e não pode ler 
+dados de trás para frente. Os consumidores também são conhecidos por implementar um 
+“modelo de puxar”. Isso significa que os consumidores devem solicitar dados de brokers 
+para obtê-los (em vez de ter brokers continuamente empurrando dados para os 
+consumidores). Esta implementação foi feita para que os consumidores possam controlar a 
+velocidade com que os tópicos estão sendo consumidos.
 
-- Broker: um nó/servidor Kafka em execução. Recebe, armazena e entrega mensagens; 
+GRUPO DE CONSUMIDORES - Vimos que os consumidores podem consumir dados de partições de 
+tópicos individualmente, mas para fins de escalabilidade horizontal recomenda-se consumir 
+tópicos como um grupo. Os consumidores que fazem parte da mesma aplicação e, portanto, 
+executam o mesmo “trabalho lógico” podem ser agrupados como um grupo de consumidores. Um 
+tópico geralmente consiste em muitas partições. Essas partições são uma unidade de 
+paralelismo para os consumidores. O benefício de alavancar um grupo de consumidores é que 
+os consumidores dentro do grupo se coordenarão para dividir o trabalho de leitura de 
+diferentes partições.
 
-- Cluster: conjunto de brokers trabalhando juntos (cluster = vários brokers). Fornece 
-escalabilidade, alta disponibilidade e tolerância a falhas. Os brokers se comunicam 
-para coordenar líderes de partições, replication, etc;
+    * ID de grupo (group-id): Para indicar aos consumidores que fazem parte do mesmo 
+    grupo específico, temos de especificar a definição do lado do consumidor group.id. O 
+    Kafka garante que cada partição seja lida por exatamente um consumidor do grupo. Se 
+    você tem 10 partições e 3 consumidores com o mesmo group-id, o Kafka divide as 10 
+    partições entre os 3. Se um consumidor morre ou sobe outro, acontece um rebalance → o 
+    Kafka redistribui as partições. Veja quais são as estratégias de rebalanceamento: 
+    RangeAssignor, RoundRobinAssignor, StickyAssignor e CooperativeStickyAssignor.  
+    
+        1.1 - Eager Rebalance: procura balancear deixando cada partição ligada a um 
+        consumidor. Caso existam mais partições do que consumidores, então algum 
+        consumidor receberá mensagens de mais de uma partição. Quando está funcionando e 
+        entra ou sai um consumidor no grupo, o Eager Rebalance faz todos os consumidores 
+        pararem de funcionar para redistribuir as partições aos consumidores. Há uma 
+        parada geral antes da redistribuição e isso não é bom. Além disso, a 
+        redistribuição é aleatória, o que não garante que um consumidor pegará a mesma 
+        partição que já estava lendo.
+        
+            1.1.1 - RangeAssignor: ordena partições e consumidores → cada consumidor pega 
+            um bloco contíguo. Ex: 10 partições e 3 consumers → 0-3, 4-6, 7-9.
+            
+            1.1.2 - RoundRobinAssignor: distribui uma partição por vez, em ciclo. Ex: 
+            partição 0 → consumer A, 1 → B, 2 → C ... Envia uma mensagem para a partição 
+            0, depois envia uma mensagem para a partição 1, depois para a 2 e assim 
+            sucessivamente até retornar para a 0 e seguir. Possui throughput menor, 
+            latência maior e consome mais rede e CPU do broker. Ainda usado em sistemas 
+            legados (vinha ativado por padrão). Uso não recomendado!
+    
+            1.1.3 - StickyAssignor: faz o melhor balanceamento possível e tenta manter as 
+            partições nos mesmos consumidores no próximo rebalance. Menos movimento que 
+            RoundRobin, mas ainda para todos os consumidores para a reatribuição de 
+            partições.
+    
+        1.2 - Cooperative Rebalance (ou Incremental Rebalance): ao invés de parar todos 
+        os consumidores para reatribuir todas as partições para eles, essa estratégia 
+        reatribui apenas as partições que não possuem um consumidor exclusivo. Por 
+        exemplo, um consumidor com duas partições terá uma delas removida e reatribuída 
+        e tudo isso sem precisar parar o consumidor. Bem como sem parar consumidores que 
+        só possuem uma partição. Isso evita a parada geral e permite que alguns 
+        consumidores não afetados continuem processando. 
+                
+            1.2.1 - CooperativeStickyAssignor: somente quem precisa (quem saiu ou entrou) 
+            perde/ganha partições → Mantém o máximo de atribuições antigas (sticky). Envia 
+            mensagens à mesma partição até o batch ficar cheio ou o linger.ms estourar, 
+            depois troca de partição. Possui throughut até 50% maior, menor latência 
+            (menos trocas de conexão e menos batches pequenos) e consumo menor de rede e 
+            CPU.
+            
+            Observação: o padrão default do Kafka 3.0 é a lista [RangeAssignor, 
+            CooperativeStickyAssignor]. Ele usará o RangeAssignor, mas se você removê-lo, 
+            ele passará a usar o CooperativeStickyAssignor (partition.assignment.strategy). 
+            
+            Explicar: Static Group Membership (group.instance.id). Isso fornece 
+            identificação estática para o consumidor e evita rebalanceamentos. Todos os 
+            consumidores do grupo ficam tendo o mesmo ID estático. Então quando o 
+            consumidor sai, a partição dele não é reatribuída de imediato e espera por um 
+            tempo configurável (session.timeout.ms). Daí, quando um consumidor entrar, 
+            essa partição é reatribuída sem ter gerado a ação de rebalance geral. Isso 
+            evita o rebalanceamento. 
+    
+    * Balanceamento: Os consumidores usam automaticamente a GroupCoordinator e a 
+    ConsumerCoordinator para atribuir os consumidores a uma partição e garantir que o 
+    balanceamento de carga seja alcançado em todos os consumidores do mesmo grupo. É 
+    importante notar que cada partição de tópico é atribuída apenas a um consumidor 
+    dentro de um grupo de consumidores, mas um consumidor de um grupo de consumidores 
+    pode receber várias partições.
+    
+    * Consumer Offset: Os brokers usam um tópico interno nomeado __consumer_offsets que 
+    mantém o controle de quais mensagens um determinado grupo de consumidores foi 
+    processado por último com sucesso. Por qual motivo usar Consumer Offset? Se um 
+    cliente Kafka falhar, um reequilíbrio ocorre e o mais recente offset commitado ajuda 
+    os consumidores restantes a saber onde reiniciar a leitura e o processamento de 
+    mensagens.
+    
+    * Semântica de entrega/commit: Por padrão, os consumidores Java comitam automaticamente 
+    offsets (controlados pela propriedade enable.auto.commit = true) a cada 
+    (auto.commit.interval.ms) 5 segundos por padrão quando .poll() é chamado. Um consumidor 
+    pode optar por cometer compensações por si mesmo (enable.auto.commit = false). Há três 
+    estratégias de semânticas de entrega: No máximo uma vez (At most once), Pelo menos uma 
+    vez (At least once) e Exatamente uma vez (Exactly once).
+        
+        - No máximo uma vez (At most once): Os offsets são comitados assim que a mensagem 
+        é recebida. Se o processamento der errado, a mensagem será perdida (não será lida 
+        novamente).
+        
+        - Pelo menos uma vez (At least once): Os offsets são comitados após a mensagem 
+        ser processada. Se o processamento der errado, a mensagem será lida novamente. 
+        Isso pode resultar em processamento duplicado de mensagens. Portanto, é melhor 
+        prática garantir que o processamento de dados seja idempotente (ou seja, 
+        processar a mesma mensagem duas vezes não produzirá nenhum efeito indesejável).
+        
+        - Exatamente uma vez (Exactly once): Isso só pode ser alcançado para o tópico 
+        para fluxos de trabalho usando a API de transações. A API do Kafka Streams 
+        simplifica o uso dessa API e permite exatamente uma vez que usa a configuração 
+        processing.guarantee = exactly_once_v2.
+
+BROKER - um nó/servidor Kafka em execução. Recebe, armazena e entrega mensagens. Os 
+brokers armazenam dados em um diretório no disco do servidor em que são executados. Cada 
+partição de tópico recebe seu próprio subdiretório com o nome associado do tópico. Para 
+obter alto rendimento e escalabilidade em tópicos, os tópicos são divididos. Se houver 
+vários brokers em um cluster, então partições para um determinado tópico serão 
+distribuídas entre os brokers uniformemente, para obter balanceamento de carga e 
+escalabilidade.
+
+CLUSTER - conjunto de brokers trabalhando juntos (cluster = vários brokers). Fornece 
+escalabilidade, alta disponibilidade e tolerância a falhas. Os brokers se comunicam para 
+coordenar líderes de partições, replication, etc. 
+
+BOOTSTRAP SERVERS (bootstrap-servers): Um cliente que deseja enviar ou receber mensagens 
+do cluster do Kafka pode se conectar a qualquer broker do cluster. Todo broker no cluster 
+tem metadados sobre todos os outros e ajudará o cliente a se conectar a eles também, e, 
+portanto, qualquer broker no cluster também é chamado de servidor bootstrap. O servidor 
+bootstrap retornará metadados para o cliente que consiste em uma lista de todos os 
+brokers do cluster. Então, quando necessário, o cliente saberá a qual broker exatamente 
+se conectar para enviar ou receber dados e descobrir com precisão quais broker contêm a 
+partição de tópico relevante. Exemplo da lista de brokers: kafka1:9092,kafka2:9092... 
 
 
 
 - Topic Replication Factor: número de cópias de cada partição no cluster. Garante 
 disponibilidade: se um broker falhar, outra cópia assume como leader. Ideal ≥3 em 
 produção.
-
-  
-
-
-
-
-
 ```
 ### Configuração
 ```
-1 - Consumer Group (group-id): Identificador único do grupo de consumidores. Todos os 
-consumidores com o mesmo group-id formam um único grupo lógico. Consumers com o mesmo 
-group-id formam um grupo que divide o trabalho. O Kafka garante que cada partição seja 
-lida por exatamente um consumidor do grupo. Se você tem 10 partições e 3 consumidores com 
-o mesmo group-id, o Kafka divide as 10 partições entre os 3. Se um consumidor morre ou 
-sobe outro, acontece um rebalance → o Kafka redistribui as partições. Veja quais são as 
-estratégias de rebalanceamento: RangeAssignor, RoundRobinAssignor, StickyAssignor e 
-CooperativeStickyAssignor. 
 
-    Observação: o produtor escolhe em qual partição colocar a mensagem. O produtor faz essa 
-    escolha antes da mensagem chegar no Kafka. O Broker nem sabe qual estratégia foi usada. 
 
-    1.1 - Eager Rebalance: procura balancear deixando cada partição ligada a um 
-    consumidor. Caso existam mais partições do que consumidores, então algum consumidor 
-    receberá mensagens de mais de uma partição. Quando está funcionando e entra ou sai 
-    um consumidor no grupo, o Eager Rebalance faz todos os consumidores pararem de 
-    funcionar para redistribuir as partições aos consumidores. Há uma parada geral antes 
-    da redistribuição e isso não é bom. Além disso, a redistribuição é aleatória, o que 
-    não garante que um consumidor pegará a mesma partição que já estava lendo.
-    
-        1.1.1 - RangeAssignor: ordena partições e consumidores → cada consumidor pega um 
-        bloco contíguo. Ex: 10 partições e 3 consumers → 0-3, 4-6, 7-9.
-        
-        1.1.2 - RoundRobinAssignor: distribui uma partição por vez, em ciclo. Ex: partição 
-        0 → consumer A, 1 → B, 2 → C ... Envia uma mensagem para a partição 0, depois 
-        envia uma mensagem para a partição 1, depois para a 2 e assim sucessivamente até 
-        retornar para a 0 e seguir. Possui throughput menor, latência maior e consome mais 
-        rede e CPU do broker. Ainda usado em sistemas legados (vinha ativado por padrão). 
-        Uso não recomendado!
 
-        1.1.3 - StickyAssignor: faz o melhor balanceamento possível e tenta manter as 
-        partições nos mesmos consumidores no próximo rebalance. Menos movimento que 
-        RoundRobin, mas ainda para todos os consumidores para a reatribuição de partições.
-
-    1.2 - Cooperative Rebalance (ou Incremental Rebalance): ao invés de parar todos os 
-    consumidores para reatribuir todas as partições para eles, essa estratégia reatribui 
-    apenas as partições que não possuem um consumidor exclusivo. Por exemplo, um 
-    consumidor com duas partições terá uma delas removida e reatribuída e tudo isso sem 
-    precisar parar o consumidor. Bem como sem parar consumidores que só possuem uma 
-    partição. Isso evita a parada geral e permite que alguns consumidores não afetados 
-    continuem processando. 
-            
-        1.2.1 - CooperativeStickyAssignor: somente quem precisa (quem saiu ou entrou) 
-        perde/ganha partições → Mantém o máximo de atribuições antigas (sticky). Envia 
-        mensagens à mesma partição até o batch ficar cheio ou o linger.ms estourar, depois 
-        troca de partição. Possui throughut até 50% maior, menor latência (menos trocas de 
-        conexão e menos batches pequenos) e consumo menor de rede e CPU.
-        
-        Observação: o padrão default do Kafka 3.0 é a lista [RangeAssignor, 
-        CooperativeStickyAssignor]. Ele usará o RangeAssignor, mas se você removê-lo, ele 
-        passará a usar o CooperativeStickyAssignor (partition.assignment.strategy). 
-        
-        Explicar: Static Group Membership (group.instance.id). Isso fornece identificação
-        estática para o consumidor e evita rebalanceamentos. Todos os consumidores do grupo
-        ficam tendo o mesmo ID estático. Então quando o consumidor sai, a partição dele não 
-        é reatribuída de imediato e espera por um tempo configurável (session.timeout.ms). 
-        Daí, quando um consumidor entrar, essa partição é reatribuída sem ter gerado a ação 
-        de rebalance geral. Isso evita o rebalanceamento. 
-
-- bootstrap-servers: lista de endereços de brokers usados para conectar no cluster (ex: 
-kafka1:9092,kafka2:9092).
 
 - auto-offset-reset (earliest, latest e none): define onde começa a ler as mensagens. 
 earliest começa do início da partição; latest somente novas mensagens (padrão); none lança 
@@ -290,7 +349,8 @@ Anatomia da Mensagem Kafka
 
 PASSO-A-PASSO 
 
-1. Adição de dependências;
-2. 
+1. Adição de dependências no build.gradle;
+2. Configurações no application.yml;
+3. 
 
 
