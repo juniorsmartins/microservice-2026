@@ -1,6 +1,6 @@
-TUTORIAL
+# TUTORIAL
 
-Fontes: 
+#### Fontes: 
 - https://kafka.apache.org/intro 
 - https://kafka.apache.org/documentation/ 
 - https://kafka.apache.org/documentation/#design 
@@ -11,10 +11,15 @@ Fontes:
 - https://www.redhat.com/pt-br/topics/integration/what-is-apache-kafka 
 - https://www.baeldung.com/apache-kafka 
 - https://www.datacamp.com/pt/tutorial/apache-kafka-for-beginners-a-comprehensive-guide 
-- https://medium.com/@fabiosalomao/uma-breve-introdu%C3%A7%C3%A3o-ao-kafka-8bb32b2059ac
+- https://medium.com/@fabiosalomao/uma-breve-introdu%C3%A7%C3%A3o-ao-kafka-8bb32b2059ac 
+- https://kafka-options-explorer.conduktor.io/ 
+- https://docs.conduktor.io/learn/fundamentals/producers 
+- https://docs.conduktor.io/learn/fundamentals/consumers 
 
 
-Teoria:  
+## Teoria
+
+### Introdução
 ```
 Apache Kafka é uma plataforma open source distribuída para transmissão de dados capaz de 
 publicar, subscrever, armazenar e processar fluxos de registro em tempo real. 
@@ -25,19 +30,33 @@ mensagens de inscrição publicado distribuído. Os dados são gravados em tópi
 pelos produtores e consumidos pelos consumidores. Os tópicos do Kafka podem ser 
 particionados, habilitando o processamento paralelo de dados, e os tópicos podem ser 
 replicados em vários corretores para tolerância a falhas.
+```
+### Conceitos Centrais
+```
+EVENTO - Um evento registra o fato de que "algo aconteceu" no mundo ou no seu negócio. 
+Também é chamado de registro ou mensagem na documentação. Quando você lê ou grava dados 
+para o Kafka, você faz isso na forma de eventos. Conceitualmente, um evento tem uma chave, 
+valor, carimbo de data/hora e cabeçalhos de metadados opcionais.
 
-Principais Conceitos e Terminologia
+TÓPICO - Os tópicos do Kafka organizam eventos relacionados. Por exemplo, podemos ter um 
+tópico chamado logs, que contém logs de um aplicativo. Os tópicos são aproximadamente 
+análogos às tabelas SQL. No entanto, ao contrário das tabelas SQL, os tópicos do Kafka não 
+são consultáveis. Em vez disso, devemos criar produtores e consumidores da Kafka para 
+utilizar os dados. Os dados nos tópicos são armazenados na forma chave-valor em formato 
+binário.
 
-Um evento registra o fato de que "algo aconteceu" no mundo ou no seu negócio. Também é 
-chamado de registro ou mensagem na documentação. Quando você lê ou grava dados para o 
-Kafka, você faz isso na forma de eventos. Conceitualmente, um evento tem uma chave, valor, 
-carimbo de data/hora e cabeçalhos de metadados opcionais.
+PRODUTOR - Uma vez que um tópico é criado no Kafka, o próximo passo é enviar dados para o 
+tópico. Os aplicativos que enviam dados para um tópico são conhecidos como produtores de 
+Kafka. Os produtores publicam eventos (gravam) para o Kafka. Observe que os produtores de 
+Kafka são implantados fora do Kafka e só interagem com o Apache Kafka enviando dados 
+diretamente para os tópicos do Kafka.
 
-Os produtores são os aplicativos do cliente que publicam eventos (gravam) para o Kafka, e 
-os consumidores são aqueles que se inscrevem (leêm e processam) esses eventos. Em Kafka, 
-os produtores e consumidores são totalmente dissociados e agnósticos uns dos outros, o que 
-é um elemento-chave de design para alcançar a alta escalabilidade pela qual o Kafka é 
-conhecido. Por exemplo, os produtores nunca precisam esperar pelos consumidores.
+CONSUMIDOR - Uma vez que um tópico foi criado e os dados produzidos no tópico, podemos ter 
+aplicativos que fazem uso do fluxo de dados. Aplicativos que extraem dados de eventos de um 
+ou mais tópicos do Kafka são conhecidos como consumidores do Kafka. Os consumidores são 
+aqueles que se inscrevem (leêm e processam) esses eventos. Observe que os consumidores do 
+Kafka são implantados fora do Kafka e só interagem com o Apache Kafka lendo dados 
+diretamente dos tópicos do Kafka.
 
 Os eventos são organizados e armazenados de forma durável em tópicos. Muito simplificado, 
 um tópico é semelhante a uma pasta em um sistema de arquivos, e os eventos são os arquivos 
@@ -49,44 +68,122 @@ dos sistemas de mensagens tradicionais, os eventos não são excluídos após o 
 vez disso, você define por quanto tempo o Kafka deve reter seus eventos por meio de uma 
 configuração por tópico, após o qual os eventos antigos serão descartados. 
 
-Os tópicos são particionados, o que significa que um tópico é distribuído por uma série de 
-"baldes" localizados em diferentes corretores Kafka. Esse posicionamento distribuído de 
-seus dados é muito importante para a escalabilidade, pois permite que os aplicativos do 
-cliente leiam e escrevam os dados de/para muitos corretores ao mesmo tempo. Quando um novo 
-evento é publicado em um tópico, ele é realmente anexado a uma das partições do tópico. 
-Eventos com a mesma chave de evento (por exemplo, um cliente ou ID do veículo) são 
-gravados na mesma partição, e a Kafka garante que qualquer consumidor de um determinado 
+Os tópicos são particionados, o que significa que um tópico é distribuído por uma série 
+de "baldes" localizados em diferentes corretores Kafka. Esse posicionamento distribuído 
+de seus dados é muito importante para a escalabilidade, pois permite que os aplicativos 
+do cliente leiam e escrevam os dados de/para muitos corretores ao mesmo tempo. Quando um 
+novo evento é publicado em um tópico, ele é realmente anexado a uma das partições do 
+tópico. Eventos com a mesma chave de evento (por exemplo, um cliente ou ID do veículo) 
+são gravados na mesma partição, e a Kafka garante que qualquer consumidor de um determinado 
 tópico-partição sempre lerá os eventos dessa partição exatamente na mesma ordem em que 
 foram escritos. 
+
+ECOSSISTEMA KAFKA - Uma série de ferramentas e bibliotecas adicionais foram desenvolvidas 
+para o Kafka ao longo dos anos para expandir sua funcionalidade: Kafka Streams, Kafka 
+Connect, Schema Registry, Data schemas e KsqlDB. 
+
+- Zookeeper: foi usado para coordenar e gerenciar o cluster Kafka, mantendo informações 
+sobre os brokers, tópicos e partições. No entanto, com o desenvolvimento do KRaft (Kafka 
+Raft), o Zookeeper está sendo gradualmente substituído, permitindo que o Kafka se torne 
+uma plataforma ainda mais autônoma e eficiente. 
+
+- Kafka Raft (KRaft): novo modo sem Zookeeper. Mais simples e rápido.
+
+- Sobre os logs do Kafka na inicialização da aplicação: primeiro é criado um AdminClient 
+(usa só no startup). O Spring Kafka cria automaticamente para verificar se os tópicos 
+existem ou para criá-los automáticamente (se allow.auto.create.topics = true) e pegar 
+metadados do cluster. Depois que termina o startup, ele é fechado normalmente (por isso 
+aparece "unregistered" e "metrics scheduler closed" logo depois). Isso é totalmente 
+normal.
 ```
-Conceitos: 
+### Conceitos Avançados
 ```
+TÓPICO - Os tópicos do Kafka podem conter qualquer tipo de mensagem em qualquer formato e 
+a sequência de todas essas mensagens é chamada de fluxo de dados. Por padrão, os dados em 
+tópicos do Kafka são excluídos após uma semana (também chamado de período de retenção de 
+mensagens padrão) e esse valor é configurável. Este mecanismo de exclusão de dados antigos 
+garante que um cluster Kafka não fique sem espaço em disco por tópicos de reciclagem ao 
+longo do tempo. 
+
+PARTIÇÃO - Os tópicos são divididos em várias partições. Um único tópico pode ter mais de 
+uma partição, é comum ver tópicos com 100 partições. O número de partições de um tópico é 
+especificado no momento da criação do tópico. Os tópicos do Kafka são imutáveis: uma vez 
+que os dados são gravados em uma partição, eles não podem ser alterados. Cada tópico é 
+dividido em partições para permitir paralelismo e escalabilidade. É como dividir uma 
+estrada em várias faixas para aumentar o tráfego. A ordem das mensagens é garantida por 
+partição, não globalmente.
+
+OFFSETs - O offset é um ID sequencial de cada mensagem na partição. As mensagens recebem 
+um número de ordem (offset) dentro de uma partição. Isso garante que as mensagens sejam 
+entregues ao consumidor na mesma ordem em que foram armazenadas na partição. A numeração 
+começa em 0 e é incrementado em um para cada mensagem enviada para uma partição 
+específica. Isso significa que os offsets têm significado apenas para a partição 
+específica, por exemplo, o offset 3 na partição 0 não representa os mesmos dados que o 
+offset 3 na partição 1. Kafka offset ordering: se um tópico tem mais de uma partição, 
+Kafka garante a ordem de mensagens dentro de uma partição, mas não há ordenação de 
+mensagens entre partições.
+
+PRODUTOR - Um produtor envia mensagens para um tópico e as mensagens são distribuídas 
+para partições de acordo com um mecanismo como hashing de chave. Para que uma mensagem 
+seja escrita com sucesso em um tópico, um produtor deve especificar um nível de 
+reconhecimento (acks).
+
+MESSAGE KEYS (hashing de chave) - Cada mensagem de evento contém uma chave opcional e um 
+valor. No caso da chave (key = null) não é especificado pelo produtor, as mensagens são 
+distribuídas uniformemente entre partições em um tópico. Isso significa que as mensagens 
+são enviadas de forma round-robin. Se uma chave for enviada (key != null), então todas as 
+mensagens que compartilham a mesma chave serão sempre enviadas e armazenadas na mesma 
+partição Kafka. Uma chave pode ser qualquer coisa para identificar uma mensagem - uma 
+string, valor numérico, valor binário, etc.
+
+ANATOMIA DA MENSAGEM KAFKA - As mensagens Kafka são criadas pelo produtor. Estrutura:
+
+    * Chave: A chave é opcional na mensagem Kafka e pode ser nula. Uma chave pode ser uma 
+    cadeia de caracteres, número ou qualquer objeto e, em seguida, a chave é serializada 
+    em formato binário.
+    
+    * Valor: O valor representa o conteúdo da mensagem e também pode ser nulo. O formato 
+    de valor é arbitrário e também é serializado em formato binário.
+
+    * Tipo de Compressão: Mensagens Kafka podem ser comprimidas. O tipo de compressão 
+    pode ser especificado como parte da mensagem. As opções são none, gzip, lz4, 
+    snappy, e zstd.
+
+    * Cabeçalhos (Headers): Pode haver uma lista de cabeçalhos de mensagens Kafka 
+    opcionais na forma de pares de valor de chave. É comum adicionar cabeçalhos para 
+    especificar metadados sobre a mensagem, especialmente para rastreamento.
+    
+    * Partição + Offset: Uma vez que uma mensagem é enviada para um tópico do Kafka, ela 
+    recebe um número de partição e um id de deslocamento. A combinação de topic + 
+    partition + offset identifica exclusivamente a mensagem.
+    
+    * Carimbo de data e hora (Timestamp): Um carimbo de data/hora é adicionado pelo 
+    usuário ou pelo sistema na mensagem.
+    
+    
+    
+
 - Broker: um nó/servidor Kafka em execução. Recebe, armazena e entrega mensagens; 
 
 - Cluster: conjunto de brokers trabalhando juntos (cluster = vários brokers). Fornece 
 escalabilidade, alta disponibilidade e tolerância a falhas. Os brokers se comunicam 
 para coordenar líderes de partições, replication, etc;
 
-- Produtores: enviam mensagens para a Kafka. Pode escolher para qual partição do tópico;
 
-- Consumidores: lêem mensagens do Kafka. Faz parte de um consumer-group; 
-
-- Tópicos: categoria/nome lógico para agrupar mensagens. É particionado e replicado. São 
-imutáveis (não podem ser renomeados);
-
-- Partição: cada tópico é dividido em partições para permitir paralelismo e escalabilidade. 
-É como dividir uma estrada em várias faixas para aumentar o tráfego. A ordem das mensagens 
-é garantida por partição, não globalmente;
-
-- Offset: dentro de uma partição, as mensagens recebem um número de ordem (offset). Isso 
-pode garantir que as mensagens sejam entregues ao consumidor na mesma ordem em que foram 
-armazenadas na partição. O offset é um ID sequencial de cada mensagem na partição. O 
-consumer armazena o offset já processado (commit) para não reprocessar;
 
 - Topic Replication Factor: número de cópias de cada partição no cluster. Garante 
 disponibilidade: se um broker falhar, outra cópia assume como leader. Ideal ≥3 em 
 produção.
 
+  
+
+
+
+
+
+```
+### Configuração
+```
 1 - Consumer Group (group-id): Identificador único do grupo de consumidores. Todos os 
 consumidores com o mesmo group-id formam um único grupo lógico. Consumers com o mesmo 
 group-id formam um grupo que divide o trabalho. O Kafka garante que cada partição seja 
@@ -145,7 +242,7 @@ CooperativeStickyAssignor.
         é reatribuída de imediato e espera por um tempo configurável (session.timeout.ms). 
         Daí, quando um consumidor entrar, essa partição é reatribuída sem ter gerado a ação 
         de rebalance geral. Isso evita o rebalanceamento. 
-        
+
 - bootstrap-servers: lista de endereços de brokers usados para conectar no cluster (ex: 
 kafka1:9092,kafka2:9092).
 
@@ -182,21 +279,6 @@ false -> recebe GenericRecord;
 
 - Acks: configura como o produtor confirma envio: acks=0 não espera confirmação; acks=1 
 confirma no líder (rápido); acks=all confirma em todos os replicas (seguro);
-
-- Zookeeper: foi usado para coordenar e gerenciar o cluster Kafka, mantendo informações 
-sobre os brokers, tópicos e partições. No entanto, com o desenvolvimento do KRaft (Kafka 
-Raft), o Zookeeper está sendo gradualmente substituído, permitindo que o Kafka se torne 
-uma plataforma ainda mais autônoma e eficiente. 
-
-- Kafka Raft (KRaft): novo modo (sem Zookeeper). Usa Raft para consenso. Mais simples e 
-rápido.
-
-- Logs do Kafka na inicialização da aplicação: primeiro é criado um AdminClient (usa só no 
-startup). O Spring Kafka cria automaticamente para verificar se os tópicos existem ou 
-para criá-los automáticamente (se allow.auto.create.topics = true) e pegar metadados do 
-cluster. Depois que termina o startup, ele é fechado normalmente (por isso aparece 
-"unregistered" e "metrics scheduler closed" logo depois). Isso é totalmente normal.
-
 
 ```
 

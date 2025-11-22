@@ -75,10 +75,10 @@ spring:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer # Define como serializar chaves (obrigatório)
       value-serializer: io.confluent.kafka.serializers.KafkaAvroSerializer # Define como serializar o payload/mensagem - pode ser string, json, avro e etc (obrigatório)
 
-      # === EXACTLY-ONCE (idempotence, acks e retries) ===
+      # === Exactly-once (trio sagrado: idempotence, acks e retries) ===
       enable.idempotence: true # Habilita idempotência (necessário para evitar mensagens duplicadas, incluído em retries). Funciona em conjunto com acks e retries.
-      acks: -1 # Define se o producer deve esperar confirmação de entrega (0 - Producer nem espera resposta. Envia e esquece / 1 - Producer espera o líder confirmar que gravou no log (padrão). / all ou -1 - Producer espera líder + todas as réplicas ISR confirmarem (ou seja, RF=3 → 3 confirmações).
-#      retries: # Idempotência não funciona sem
+      acks: all # Define se o producer deve esperar confirmação de entrega (0 - Producer nem espera resposta. Envia e esquece / 1 - Producer espera o líder confirmar que gravou no log (padrão). / all ou -1 - Producer espera líder + todas as réplicas ISR confirmarem (ou seja, RF=3 → 3 confirmações).
+#      retries: # Idempotência não funciona sem (obrigatório). 2147483647 # Integer.MAX_VALUE — valor explícito
       max.in.flight.requests.per.connection: 5 # Permitir múltiplas requisições em voo para maior throughput (padrão 5)
 
       # === Throughput Máximo ===
@@ -87,8 +87,8 @@ spring:
       compression-type: zstd # Define como a mensagem será comprimida antes de enviar (none, gzip, snappy, lz4, zstd). Isso reduz o tamanho.
 
       # === Timeouts Seguros ===
-      delivery.timeout.ms: 120001 # Tempo TOTAL que aceita tentar enviar uma mensagem antes de desistir e jogar exceção (Mesmo que tenha milhões de retries, depois de X tempo no total o produtor desiste e joga exceção). Ele controla o ciclo de vida da mensagem, incluindo: Todas as tentativas de retry; Espera no batch (linger.ms); Tempo de compressão; Tempo de envio pela rede; Espera pelo ack do broker.
-      request.timeout.ms: 60001 # Especifica o tempo máximo por cada tentativa de enviar um batch. Espera a resposta do broker em cada retry.
+      delivery.timeout.ms: 120001 # Tempo TOTAL para tentar enviar mensagens antes de desistir e jogar exceção (Mesmo que tenha milhões de retries, depois de X tempo no total o produtor desiste e joga exceção). Ele controla o ciclo de vida, incluindo: Todas as tentativas de retry; Espera no batch (linger.ms); Tempo de compressão; Tempo de envio pela rede; Espera pelo ack do broker.
+      request.timeout.ms: 60001 # Especifica o tempo máximo unitário por cada tentativa de enviar. Espera a resposta do broker em cada retry.
 
       properties:
         schema.registry.url: http://kafka:8081 # Endereço do esquema registry (obrigatório se usar Avro)
@@ -101,17 +101,18 @@ spring:
       # === Estratégia de rebalance ===
       partition.assignment.strategy: org.apache.kafka.clients.consumer.CooperativeStickyAssignor
       group-id: ${spring.application.name}-v1 # Identificador único do grupo de consumidores. Consumers com o mesmo group.id formam um grupo que divide o trabalho (uma partição → um consumer por grupo). O coordinator usa isso para atribuir partições e armazenar offsets no tópico interno __consumer_offsets.
-      group.instance.id: ${spring.application.name}-${HOSTNAME} # Identificador estático do consumidor. Todos os consumidores do grupo ficam tendo o mesmo ID estático. Então quando o consumidor sai, a partição dele não é reatribuída de imediato e espera por um tempo configurável (session.timeout.ms). Daí, quando um consumidor entrar, essa partição é reatribuída sem ter gerado a ação de rebalance geral. Isso evita o rebalanceamento.
+      group.instance.id: ${spring.application.name}-${STATEFULSET_POD_INDEX:0} # Identificador estático do consumidor. Todos os consumidores do grupo ficam tendo o mesmo ID estático. Então quando o consumidor sai, a partição dele não é reatribuída de imediato e espera por um tempo configurável (session.timeout.ms). Daí, quando um consumidor entrar, essa partição é reatribuída sem ter gerado a ação de rebalance geral. Isso evita o rebalanceamento.
       session.timeout.ms: 45001 # Tempo que o coordinator espera heartbeat antes de marcar o consumidor como morto (padrão 45000).
 
       # === Forma de leitura e garantia de entrega ===
-      isolation-level: read_committed # evita ler dados de transações não commitadas (verificar se produtor precisa de transaction-id-prefix em conjunto). Só usar quando salvar no banco.
+      isolation-level: read_committed # evita ler dados de transações não commitadas (verificar se produtor precisa de transaction-id-prefix: tx-${spring.application.name} em conjunto). Só usar quando salvar no banco.
       auto-offset-reset: latest # latest lê a partir da mensagem mais recente do tópico / earliest lê todas as mensagens do tópico desde o início. Recomendado latest em produção.
       enable-auto-commit: false # O false permite controle sobre o commit (manual ou via Spring). Spring Kafka gerencia com @KafkaListener e Acknowledgment. Obrigatório false em produção.
+      # enable-auto-commit false precisa de tópico DLT
 
       # === Performance e Resiliência ===
       max-poll-records: 1001 # Mais mensagens por poll → menos chamadas de rede (padrão é 500)
-      max.poll.interval.ms: 300001 # Tempo máximo entre polls → se passar, expulsa do grupo.
+      max.poll.interval.ms: 600001 # Tempo máximo entre polls → se passar, expulsa do grupo.
       request-timeout-ms: 60001 # Evita timeout falso com rede ruim (padrão é 30000)
 
       # === Schema Registry ===
