@@ -129,13 +129,23 @@ CooperativeStickyAssignor.
     partição. Isso evita a parada geral e permite que alguns consumidores não afetados 
     continuem processando. 
             
-        1.2.1 - CooperativeStickyAssignor: padrão desde Kafka 2.4. Somente quem precisa 
-        (quem saiu ou entrou) perde/ganha partições → Mantém o máximo de atribuições 
-        antigas (sticky). Envia mensagens à mesma partição até o batch ficar cheio ou o 
-        linger.ms estourar, depois troca de partição. Possui throughut até 50% maior, 
-        menor latência (menos trocas de conexão e menos batches pequenos) e consumo menor 
-        de rede e CPU.
-
+        1.2.1 - CooperativeStickyAssignor: somente quem precisa (quem saiu ou entrou) 
+        perde/ganha partições → Mantém o máximo de atribuições antigas (sticky). Envia 
+        mensagens à mesma partição até o batch ficar cheio ou o linger.ms estourar, depois 
+        troca de partição. Possui throughut até 50% maior, menor latência (menos trocas de 
+        conexão e menos batches pequenos) e consumo menor de rede e CPU.
+        
+        Observação: o padrão default do Kafka 3.0 é a lista [RangeAssignor, 
+        CooperativeStickyAssignor]. Ele usará o RangeAssignor, mas se você removê-lo, ele 
+        passará a usar o CooperativeStickyAssignor (partition.assignment.strategy). 
+        
+        Explicar: Static Group Membership (group.instance.id). Isso fornece identificação
+        estática para o consumidor e evita rebalanceamentos. Todos os consumidores do grupo
+        ficam tendo o mesmo ID estático. Então quando o consumidor sai, a partição dele não 
+        é reatribuída de imediato e espera por um tempo configurável (session.timeout.ms). 
+        Daí, quando um consumidor entrar, essa partição é reatribuída sem ter gerado a ação 
+        de rebalance geral. Isso evita o rebalanceamento. 
+        
 - bootstrap-servers: lista de endereços de brokers usados para conectar no cluster (ex: 
 kafka1:9092,kafka2:9092).
 

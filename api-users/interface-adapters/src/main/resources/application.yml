@@ -81,12 +81,12 @@ spring:
 #      retries: # Idempotência não funciona sem
       max.in.flight.requests.per.connection: 5 # Permitir múltiplas requisições em voo para maior throughput (padrão 5)
 
-      # === THROUGHPUT MÁXIMO ===
+      # === Throughput Máximo ===
       batch-size: 131072 # Tamanho máximo (em bytes) que o produtor tenta juntar em um único batch antes de enviar para o broker. Junta várias mensagens num pacote só.
       linger-ms: 5 # Define quanto temo espera até encher o batch (usar obrigatório com batch-size)
       compression-type: zstd # Define como a mensagem será comprimida antes de enviar (none, gzip, snappy, lz4, zstd). Isso reduz o tamanho.
 
-      # === TIMEOUTS SEGUROS ===
+      # === Timeouts Seguros ===
       delivery.timeout.ms: 120001 # Tempo TOTAL que aceita tentar enviar uma mensagem antes de desistir e jogar exceção (Mesmo que tenha milhões de retries, depois de X tempo no total o produtor desiste e joga exceção). Ele controla o ciclo de vida da mensagem, incluindo: Todas as tentativas de retry; Espera no batch (linger.ms); Tempo de compressão; Tempo de envio pela rede; Espera pelo ack do broker.
       request.timeout.ms: 60001 # Especifica o tempo máximo por cada tentativa de enviar um batch. Espera a resposta do broker em cada retry.
 
@@ -98,22 +98,27 @@ spring:
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer # Define como desserializar chaves (obrigatório)
       value-deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer # Define como desserializar o payload/mensagem - pode ser string, json, avro e etc (obrigatório)
 
-      group-id: ${spring.application.name}-v1 # Identificador único do grupo de consumidores. Consumers com o mesmo group.id formam um grupo que divide o trabalho (uma partição → um consumer por grupo). O coordinator usa isso para atribuir partições e armazenar offsets no tópico interno __consumer_offsets.
-      auto-offset-reset: latest # latest lê a partir da mensagem mais recente do tópico / earliest lê todas as mensagens do tópico desde o início. Recomendado latest em produção.
-      enable-auto-commit: false # O false permite controle sobre o commit (manual ou via Spring). Spring Kafka gerencia com @KafkaListener e Acknowledgment. Precisa de idempotência com false.
-      isolation-level: read_committed # evita ler dados de transações não commitadas (verificar se produtor precisa de transaction-id-prefix em conjunto). Só usar quando salvar no banco.
-
+      # === Estratégia de rebalance ===
       partition.assignment.strategy: org.apache.kafka.clients.consumer.CooperativeStickyAssignor
+      group-id: ${spring.application.name}-v1 # Identificador único do grupo de consumidores. Consumers com o mesmo group.id formam um grupo que divide o trabalho (uma partição → um consumer por grupo). O coordinator usa isso para atribuir partições e armazenar offsets no tópico interno __consumer_offsets.
+      group.instance.id: ${spring.application.name}-${HOSTNAME} # Identificador estático do consumidor. Todos os consumidores do grupo ficam tendo o mesmo ID estático. Então quando o consumidor sai, a partição dele não é reatribuída de imediato e espera por um tempo configurável (session.timeout.ms). Daí, quando um consumidor entrar, essa partição é reatribuída sem ter gerado a ação de rebalance geral. Isso evita o rebalanceamento.
+      session.timeout.ms: 45001 # Tempo que o coordinator espera heartbeat antes de marcar o consumidor como morto (padrão 45000).
 
-      # === PERFORMANCE + RESILIÊNCIA ===
+      # === Forma de leitura e garantia de entrega ===
+      isolation-level: read_committed # evita ler dados de transações não commitadas (verificar se produtor precisa de transaction-id-prefix em conjunto). Só usar quando salvar no banco.
+      auto-offset-reset: latest # latest lê a partir da mensagem mais recente do tópico / earliest lê todas as mensagens do tópico desde o início. Recomendado latest em produção.
+      enable-auto-commit: false # O false permite controle sobre o commit (manual ou via Spring). Spring Kafka gerencia com @KafkaListener e Acknowledgment. Obrigatório false em produção.
+
+      # === Performance e Resiliência ===
       max-poll-records: 1001 # Mais mensagens por poll → menos chamadas de rede (padrão é 500)
-      max.poll.interval.ms: 300000 # Tempo máximo entre polls → se passar, expulsa do grupo.
+      max.poll.interval.ms: 300001 # Tempo máximo entre polls → se passar, expulsa do grupo.
       request-timeout-ms: 60001 # Evita timeout falso com rede ruim (padrão é 30000)
 
       # === Schema Registry ===
       properties:
         schema.registry.url: http://kafka:8081 # obrigatório com Avro
         specific.avro.reader: true # Usa SpecificRecord (classes geradas a partir do Avro), não GenericRecord.
+
     topic:
       event-create-customer: event-create-customer
 
