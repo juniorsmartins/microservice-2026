@@ -16,15 +16,6 @@ public class PropertiesConsumerConfig {
     @Value("${spring.kafka.consumer.value-deserializer}")
     public String valueDeserializer;
 
-    @Value("${spring.kafka.consumer.auto-offset-reset}")
-    public String autoOffsetReset;
-
-    @Value("${spring.kafka.consumer.enable-auto-commit}")
-    public boolean enableAutoCommit;
-
-    @Value("${spring.kafka.consumer.isolation-level}")
-    public String isolationLevel;
-
     //#region Estratégia de Rebalance
     @Value("${spring.kafka.consumer.partition.assignment.strategy}")
     public String partitionAssignmentStrategy;
@@ -36,19 +27,32 @@ public class PropertiesConsumerConfig {
     public String groupInstanceId;
 
     @Value("${spring.kafka.consumer.session.timeout.ms}")
-    public String sessionTimeoutMs;
+    public int sessionTimeoutMs;
     //#endregion Estratégia de Rebalance
 
-    //#region Performance e Resiliência
+    //#region Leitura e Garantia de Entrega
+    @Value("${spring.kafka.consumer.isolation-level}")
+    public String isolationLevel;
+
+    @Value("${spring.kafka.consumer.auto-offset-reset}")
+    public String autoOffsetReset;
+
+    @Value("${spring.kafka.consumer.enable-auto-commit}")
+    public boolean enableAutoCommit;
+    //#endregion Leitura e Garantia de Entrega
+
+    //#region Resiliência
+    @Value("${spring.kafka.consumer.request-timeout-ms}")
+    public String requestTimeoutMs;
+    //#endregion Resiliência
+
+    //#region Performance
     @Value("${spring.kafka.consumer.max-poll-records}")
     public String maxPollRecords;
 
     @Value("${spring.kafka.consumer.max.poll.interval.ms}")
     public String maxPollIntervalMs;
-
-    @Value("${spring.kafka.consumer.request-timeout-ms}")
-    public String requestTimeoutMs;
-    //#endregion Performance e Resiliência
+    //#endregion Performance
 
     //#region Schema Registry e Avro
     @Value("${spring.kafka.consumer.properties.schema.registry.url}")

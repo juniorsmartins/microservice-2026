@@ -25,8 +25,6 @@ public class ConsumerBaseConfig {
 
         Map<String, Object> props = new HashMap<>();
         props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, propertiesConfig.bootstrapServers);
-
-        // Deserializers
         props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, propertiesConsumerConfig.keyDeserializer);
         props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, propertiesConsumerConfig.valueDeserializer);
 
@@ -41,10 +39,12 @@ public class ConsumerBaseConfig {
         props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, propertiesConsumerConfig.autoOffsetReset);
         props.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, propertiesConsumerConfig.enableAutoCommit);
 
-        // === Performance e Resiliência ===
+        // === Resiliência ===
+        props.put(ConsumerConfig.REQUEST_TIMEOUT_MS_CONFIG, propertiesConsumerConfig.requestTimeoutMs);
+
+        // === Performance ===
         props.put(ConsumerConfig.MAX_POLL_RECORDS_CONFIG, propertiesConsumerConfig.maxPollRecords);
         props.put(ConsumerConfig.MAX_POLL_INTERVAL_MS_CONFIG, propertiesConsumerConfig.maxPollIntervalMs);
-        props.put(ConsumerConfig.REQUEST_TIMEOUT_MS_CONFIG, propertiesConsumerConfig.requestTimeoutMs);
 
         // === Schema Registry ===
         props.put(AbstractKafkaSchemaSerDeConfig.SCHEMA_REGISTRY_URL_CONFIG, propertiesConsumerConfig.schemaRegistryUrl); // Aponta o Schema Registry. Necessário para o KafkaAvroDeserializer baixar o schema e desserializar Avro corretamente.

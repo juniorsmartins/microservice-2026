@@ -28,19 +28,27 @@ public class PropertiesProducerConfig {
 
     @Value("${spring.kafka.producer.max.in.flight.requests.per.connection}")
     public int maxInFlightRequestsPerConnection;
+
+    @Value("${spring.kafka.producer.retries}")
+    public int retries;
     //#endregion Exactly-once
+
+    //#region Resiliência
+    @Value("${spring.kafka.producer.retry.backoff.ms}")
+    public int retryBackoffMs;
+
+    @Value("${spring.kafka.producer.request.timeout.ms}")
+    public int requestTimeoutMs;
+
+    @Value("${spring.kafka.producer.delivery.timeout.ms}")
+    public int deliveryTimeoutMs;
+    //#endregion Resiliência
 
     @Value("${spring.kafka.producer.batch-size}")
     public int batchSize;
 
     @Value("${spring.kafka.producer.linger-ms}")
     public String lingerMs;
-
-    @Value("${spring.kafka.producer.delivery.timeout.ms}")
-    public String deliveryTimeoutMs;
-
-    @Value("${spring.kafka.producer.request.timeout.ms}")
-    public String requestTimeoutMs;
 
     @Value("${spring.kafka.producer.properties.schema.registry.url}")
     public String schemaRegistryUrl;
