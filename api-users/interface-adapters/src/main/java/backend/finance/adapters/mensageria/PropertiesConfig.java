@@ -13,6 +13,6 @@ public class PropertiesConfig {
     @Value("${spring.kafka.bootstrap-servers}")
     public String bootstrapServers;
 
-    @Value(value = "${spring.kafka.topic.event-create-customer}")
-    public String topicEventCreateCustomer;
+    @Value(value = "${spring.kafka.topic.events.customer-created}")
+    public String topicEventsCustomerCreated;
 }

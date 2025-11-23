@@ -15,6 +15,7 @@
 - https://kafka-options-explorer.conduktor.io/ 
 - https://docs.conduktor.io/learn/fundamentals/producers 
 - https://docs.conduktor.io/learn/fundamentals/consumers 
+- https://docs.conduktor.io/learn/fundamentals/topic-replication 
 
 
 ## Teoria
@@ -104,6 +105,34 @@ tópicos do Kafka são excluídos após uma semana (também chamado de período 
 mensagens padrão) e esse valor é configurável. Este mecanismo de exclusão de dados antigos 
 garante que um cluster Kafka não fique sem espaço em disco por tópicos de reciclagem ao 
 longo do tempo. 
+
+    * Convenções de nomeação de tópico: os nomes podem conter letras minúsculas (a-z), 
+    letras maiúsculas (A-Z), números (0-9), períodos (.), underscores (_) e hífens (-). O 
+    comprimento máximo é de 255 caracteres mas mantenha com menos de 100 para 
+    legibilidade. Boa prática é usar os padrões kebab-case ou snake_case ou 
+    notação.de.ponto para nomear. Veja estratégias de nomeação organizacional: 
+    
+        1. Nomeação baseada em domínio: organizar tópicos por domínio empresarial. Ex: 
+        users.registration, orders.created, orders.updated, payment.failed e etc. 
+        
+        2. Nomeação baseada em serviço: organize tópicos possuindo serviços. Ex: 
+        user-service.events, user-service.replies, order-service.events e etc. 
+        
+        3. Nomeação baseada em tipo de dados: organize tópicos por características de 
+        dados. Ex: events.user-registered e events.order-placed (events - imutable facts); 
+        comands.process-payment, comands.update-inventory e comands.send-notification 
+        (comands - requests for actions); snapshots.user-profiles, 
+        snapshots.product-catalog e snapshot.inventory-levels (snapshots - current state).
+        
+        4. Nomeação específica do ambiente: pode usar prefixos de ambiente ou sufixos de 
+        ambiente ou separação por cluster. Ex: dev.user-events, prod.user-events, 
+        user-events.dev, user-events.prod e etc. 
+        
+        * Estratégia de versionamento: sufixo de versão (user-events-v1, user-events-v1 
+        ou order-schema-v1_0, order-schema-v1_1), evolução do esquema (esse padrão é 
+        preferencial - o versionamento é separado). 
+        
+        * Outras convenções aqui: https://docs.conduktor.io/learn/advanced/topics/naming-conventions 
 
 PARTIÇÃO - Os tópicos são divididos em várias partições. Um único tópico pode ter mais de 
 uma partição, é comum ver tópicos com 100 partições. O número de partições de um tópico é 
@@ -293,11 +322,48 @@ brokers do cluster. Então, quando necessário, o cliente saberá a qual broker 
 se conectar para enviar ou receber dados e descobrir com precisão quais broker contêm a 
 partição de tópico relevante. Exemplo da lista de brokers: kafka1:9092,kafka2:9092... 
 
+FATOR DE REPLICAÇÃO DE TÓPICO: Uma das principais razões para a popularidade da Kafka, é a 
+resiliência que ela oferece diante de falhas de broker. As máquinas falham, e muitas vezes 
+não podemos prever quando isso vai acontecer ou impedir isso. O Kafka foi projetado com a 
+replicação como um recurso central para suportar essas falhas, mantendo o tempo de 
+atividade e a precisão dos dados. O fator de replicação é uma configuração de tópico e é 
+especificado no tempo de criação do tópico. Um fator de replicação de 1 significa nenhuma 
+replicação. É usado principalmente para fins de desenvolvimento e deve ser evitado em 
+clusters de teste e de produção. Um fator de replicação de 3 é um fator de replicação 
+comumente usado, pois fornece o equilíbrio certo entre a perda de broker e a sobrecarga de 
+replicação.
 
+PARTIÇÃO LÍDER E RÉPLICAS: Para uma determinada partição de tópico, um broker é designado 
+pelo cluster para ser responsável pelo envio e recebimento de dados para os clientes. Esse 
+broker é conhecido como o líder dessa partição de tópico. Qualquer outro broker que esteja 
+armazenando dados replicados para essa partição é referido como uma réplica. Portanto, 
+cada partição tem um líder e várias réplicas. Se o líder falhar, uma das réplicas será 
+eleita como o novo líder de partição por uma eleição.
 
-- Topic Replication Factor: número de cópias de cada partição no cluster. Garante 
-disponibilidade: se um broker falhar, outra cópia assume como leader. Ideal ≥3 em 
-produção.
+    * RÉPLICAS IN-SYNC (ISR) - Uma ISR é uma réplica que está atualizada com o broker líder 
+    para uma partição. Qualquer réplica que não esteja atualizada com o líder está fora de 
+    sincronia. 
+
+ACKS: Os produtores só escrevem dados para o atual líder de uma partição. Os produtores 
+devem também especificar um nível de reconhecimento acks para definir se a mensagem deve 
+ser escrita para um número mínimo de réplicas antes de ser considerada uma gravação 
+bem-sucedida. O padrão é acks all a partir da versão 3 do Kafka. 
+
+    * ACKS = 0 - Quando acks=0 produtores consideram as mensagens como “escritas com 
+    sucesso” no momento em que a mensagem foi enviada sem esperar que o broker a 
+    aceitasse.
+
+    * ACKS = 1 - Quando acks=1, os produtores consideram as mensagens como “escritas com 
+    sucesso” quando a mensagem foi reconhecida apenas pelo líder. 
+
+    * ACKS = -1 ou all - Quando acks=all, os produtores consideram as mensagens como 
+    “escritas com sucesso” quando a mensagem é aceita por todas as réplicas in-sync (ISR).
+    
+        - O min.insync.replicas pode ser configurado tanto no tópico quanto no nível do 
+        broker. Os dados são considerados comprometidos quando são gravados em todas as 
+        réplicas em sincronia - min.insync.replicas. Um valor de 2 implica que pelo menos 
+        2 brokers que são ISR (incluindo líder) devem responder que eles têm os dados.
+
 ```
 ### Configuração
 ```

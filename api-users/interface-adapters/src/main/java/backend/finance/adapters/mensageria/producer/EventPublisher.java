@@ -22,11 +22,11 @@ public final class EventPublisher implements CustomerEventPublisherOutputPort {
     private final CustomerPresenter customerPresenter;
 
     @Override
-    public void sendEventCreateCustomer(CustomerResponse response) {
+    public void sendEventCustomerCreated(CustomerResponse response) {
 
         var message = customerPresenter.toMessage(response);
 
-        kafkaTemplateCustomerMessage.send(propertiesConfig.topicEventCreateCustomer, message.getId(), message)
+        kafkaTemplateCustomerMessage.send(propertiesConfig.topicEventsCustomerCreated, message.getId(), message)
                 .whenComplete((result, exception) -> { // whenComplete é Callback - será acionado sempre que uma mensagem for enviada ou lançar exceção
                     if (exception == null) {
                         log.info("\n\n ----- Metadados ----- \n" +
@@ -35,9 +35,10 @@ public final class EventPublisher implements CustomerEventPublisherOutputPort {
                                 "Offset: " + result.getRecordMetadata().offset() + "\n" +
                                 "Timestamp: " + result.getRecordMetadata().timestamp() + "\n" +
                                 "Key: " + result.getProducerRecord().key() + "\n" +
-                                "sendEventCreateCustomer - Mensagem enviada: " + result.getProducerRecord().value() + "\n\n");
+                                "sendEventCustomerCreated - Mensagem enviada: " + result.getProducerRecord().value() + "\n\n");
+
                     } else {
-                        log.error("sendEventCreateCustomer - Erro durante a produção: ", exception);
+                        log.error("sendEventCustomerCreated - Erro durante a produção: ", exception);
                     }
                 });
     }
