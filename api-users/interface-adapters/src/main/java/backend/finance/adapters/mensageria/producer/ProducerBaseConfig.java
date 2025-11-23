@@ -31,8 +31,8 @@ public class ProducerBaseConfig {
         props.put(AbstractKafkaSchemaSerDeConfig.SCHEMA_REGISTRY_URL_CONFIG, propertiesProducerConfig.schemaRegistryUrl); // Endereço do esquema registry (obrigatório se usar Avro)
         props.put(AbstractKafkaSchemaSerDeConfig.AUTO_REGISTER_SCHEMAS, propertiesProducerConfig.autoRegisterSchemas); // Registra o esquema Avro automático
         // === EXACTLY-ONCE (idempotence, acks e retries) ===
-        props.put(ProducerConfig.ENABLE_IDEMPOTENCE_CONFIG, propertiesProducerConfig.enableIdempotence); // Habilita idempotência (necessário para evitar mensagens duplicadas, incluído em retries). Funciona em conjunto com acks e retries.
         props.put(ProducerConfig.ACKS_CONFIG, propertiesProducerConfig.acks); // # Define se o producer deve esperar confirmação de entrega (0 - Producer nem espera resposta. Envia e esquece / 1 - Producer espera o líder confirmar que gravou no log (padrão). / all ou -1 - Producer espera líder + todas as réplicas ISR confirmarem (ou seja, RF=3 → 3 confirmações).
+        props.put(ProducerConfig.ENABLE_IDEMPOTENCE_CONFIG, propertiesProducerConfig.enableIdempotence); // Habilita idempotência (necessário para evitar mensagens duplicadas, incluído em retries). Funciona em conjunto com acks e retries.
         props.put(ProducerConfig.MAX_IN_FLIGHT_REQUESTS_PER_CONNECTION, propertiesProducerConfig.maxInFlightRequestsPerConnection); // Permitir múltiplas requisições em voo para maior throughput (padrão 5)
         // === THROUGHPUT MÁXIMO ===
         props.put(ProducerConfig.BATCH_SIZE_CONFIG, propertiesProducerConfig.batchSize); // Tamanho máximo (em bytes) que o produtor tenta juntar em um único batch antes de enviar para o broker. Junta várias mensagens num pacote só.

@@ -15,4 +15,7 @@ public class PropertiesConfig {
 
     @Value(value = "${spring.kafka.topic.events.customer-created}")
     public String topicEventsCustomerCreated;
+
+    @Value("${spring.kafka.topic.min.insync.replicas}")
+    public int minInsyncReplicas;
 }

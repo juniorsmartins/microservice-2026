@@ -19,14 +19,16 @@ public class PropertiesProducerConfig {
     @Value("${spring.kafka.producer.compression-type}")
     public String compressionType;
 
+    //#region Exactly-once
+    @Value("${spring.kafka.producer.acks}")
+    public String acks;
+
     @Value("${spring.kafka.producer.enable.idempotence}")
     public boolean enableIdempotence;
 
     @Value("${spring.kafka.producer.max.in.flight.requests.per.connection}")
     public int maxInFlightRequestsPerConnection;
-
-    @Value("${spring.kafka.producer.acks}")
-    public String acks;
+    //#endregion Exactly-once
 
     @Value("${spring.kafka.producer.batch-size}")
     public int batchSize;

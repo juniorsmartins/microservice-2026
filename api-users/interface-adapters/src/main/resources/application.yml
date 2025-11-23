@@ -76,10 +76,10 @@ spring:
       value-serializer: io.confluent.kafka.serializers.KafkaAvroSerializer # Define como serializar o payload/mensagem - pode ser string, json, avro e etc (obrigatório)
 
       # === Exactly-once (trio sagrado: idempotence, acks e retries) ===
-      enable.idempotence: true # Habilita idempotência (necessário para evitar mensagens duplicadas, incluído em retries). Funciona em conjunto com acks e retries.
       acks: all # Define se o producer deve esperar confirmação de entrega (0 - Producer nem espera resposta. Envia e esquece / 1 - Producer espera o líder confirmar que gravou. / all ou -1 - Producer espera líder + todas as réplicas ISR confirmarem (ou seja, RF=3 → 3 confirmações).
-#      retries: # Idempotência não funciona sem (obrigatório). 2147483647 # Integer.MAX_VALUE — valor explícito
+      enable.idempotence: true # Habilita idempotência (necessário para evitar mensagens duplicadas, incluído em retries). Funciona em conjunto com acks e retries.
       max.in.flight.requests.per.connection: 5 # Permitir múltiplas requisições em voo para maior throughput (padrão 5)
+#      retries: # Idempotência não funciona sem (obrigatório). 2147483647 # Integer.MAX_VALUE — valor explícito
 
       # === Throughput Máximo ===
       batch-size: 131072 # Tamanho máximo (em bytes) que o produtor tenta juntar em um único batch antes de enviar para o broker. Junta várias mensagens num pacote só.
@@ -122,5 +122,6 @@ spring:
 
     topic:
       events.customer-created: events.customer-created-v1
+      min.insync.replicas: 2 # O min.insync.replicas configuração trabalha em conjunto com acks=all para controlar a durabilidade.
 
 

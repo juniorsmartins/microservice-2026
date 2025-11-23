@@ -14,7 +14,7 @@ public class TopicsConfig {
 
     @Bean
     public NewTopic upTopicEventCreateCustomer() {
-        return buildTopic(propertiesConfig.topicEventsCustomerCreated, 3, (short) 3);
+        return buildTopic(propertiesConfig.topicEventsCustomerCreated, propertiesConfig.minInsyncReplicas, (short) 3);
     }
 
     private NewTopic buildTopic(String nome, int numReplicas, short numParticoes) {
