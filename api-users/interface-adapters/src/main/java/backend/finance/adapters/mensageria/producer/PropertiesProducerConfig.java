@@ -16,9 +16,6 @@ public class PropertiesProducerConfig {
     @Value("${spring.kafka.producer.value-serializer}")
     public String valueSerializer;
 
-    @Value("${spring.kafka.producer.compression-type}")
-    public String compressionType;
-
     //#region Exactly-once
     @Value("${spring.kafka.producer.acks}")
     public String acks;
@@ -44,15 +41,22 @@ public class PropertiesProducerConfig {
     public int deliveryTimeoutMs;
     //#endregion Resiliência
 
+    //#region Throughput Máximo
     @Value("${spring.kafka.producer.batch-size}")
     public int batchSize;
 
     @Value("${spring.kafka.producer.linger-ms}")
     public String lingerMs;
 
+    @Value("${spring.kafka.producer.compression-type}")
+    public String compressionType;
+    //#endregion Throughput Máximo
+
+    //#region Schema Registry e Avro
     @Value("${spring.kafka.producer.properties.schema.registry.url}")
     public String schemaRegistryUrl;
 
     @Value("${spring.kafka.producer.properties.auto.register.schemas}")
     public boolean autoRegisterSchemas;
+    //endregion Schema Registry e Avro
 }

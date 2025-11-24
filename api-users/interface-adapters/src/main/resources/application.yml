@@ -79,9 +79,9 @@ spring:
       acks: all # Define se o producer deve esperar confirmação de entrega (0 - Producer nem espera resposta. Envia e esquece / 1 - Producer espera o líder confirmar que gravou. / all ou -1 - Producer espera líder + todas as réplicas ISR confirmarem (ou seja, RF=3 → 3 confirmações).
       enable.idempotence: true # Habilita idempotência (necessário para evitar mensagens duplicadas, incluído em retries). Funciona em conjunto com acks e retries.
       max.in.flight.requests.per.connection: 5 # Permitir múltiplas requisições em voo para maior throughput (padrão 5)
-      retries: 2147483647 # Número de tentativas de retentativa (default 2147483647)
+      retries: 3 # Número de tentativas de retentativa (default 2147483647)
 
-      # === Resiliência (funciona com Retries) ===
+      # === Resiliência (funciona com o Retries) ===
       retry.backoff.ms: 100 # Tempo para esperar entre as tentativas (default: 100ms)
       request.timeout.ms: 30001 # Tempo máximo de espera pelo reconhecimento de entrega de uma tentativa (padrão: 30000). Espera a resposta do broker em cada retry.
       delivery.timeout.ms: 120001 # Tempo máximo para entregar uma mensagem incluindo todas as tentativas (padrão: 120000). Tempo TOTAL para enviar antes de desistir e jogar exceção (Mesmo que tenha milhões de retries, depois de X tempo no total o produtor desiste e joga exceção). Ele controla o ciclo de vida, incluindo: Todas as tentativas de retry; Espera no batch (linger.ms); Tempo de compressão; Tempo de envio pela rede; Espera pelo ack do broker.
