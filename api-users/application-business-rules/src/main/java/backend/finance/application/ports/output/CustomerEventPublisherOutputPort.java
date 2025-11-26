@@ -4,5 +4,5 @@ import backend.finance.application.dtos.response.CustomerResponse;
 
 public interface CustomerEventPublisherOutputPort {
 
-    void sendEventCreateCustomer(CustomerResponse response);
+    void sendEventCustomerCreated(CustomerResponse response);
 }
