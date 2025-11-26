@@ -52,7 +52,7 @@ public class CustomerCreateUseCase implements CustomerCreateInputPort {
         var customerDto = customerMapper.toDto(customer);
         var dtoSaved = customerSaveOutputPort.save(customerDto);
         var response = customerMapper.toResponse(dtoSaved);
-        eventPublisher.sendEventCreateCustomer(response);
+        eventPublisher.sendEventCustomerCreated(response);
 
         return response;
     }
