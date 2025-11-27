@@ -1,6 +1,12 @@
 volumes:
   db_users:
     name: db_users # Persiste dados do PostgreSQL entre restarts
+  kafka1-data:
+    name: kafka1-data
+  kafka2-data:
+    name: kafka2-data
+  kafka3-data:
+    name: kafka3-data
 
 networks:
   communication:
@@ -21,7 +27,7 @@ services:
     environment:
       KAFKA_NODE_ID: 1 # ID único do nó no cluster (obrigatório)
       KAFKA_PROCESS_ROLES: 'broker,controller' # Todos os nós são dual-role: tanto servem dados (broker - aceita producers/consumers) quanto gerenciam metadados (controller - antes era o papel do Zookeeper). Define que o nó atua como Broker (recebe mensagens) e Controller (gerencia o estado do cluster no modo KRaft).
-      KAFKA_LOG_DIRS: '/tmp/kraft-combined-logs' # Onde o Kafka grava os logs de tópicos + metadados KRaft. Em dev: /tmp → perde tudo ao reiniciar. Em prod: volume persistente.
+      KAFKA_LOG_DIRS: '/var/lib/kafka/data' # Onde o Kafka grava os logs de tópicos + metadados KRaft. Em dev: /tmp → perde tudo ao reiniciar (/tmp/kraft-combined-logs). Em prod: volume persistente (/var/lib/kafka/data).
 
       # === LISTENERS & ADVERTISED LISTENERS ===
       KAFKA_INTER_BROKER_LISTENER_NAME: 'PLAINTEXT' # Comunicação entre brokers usa o listener interno na porta 9092. Os brokers conversam entre si usando o listener PLAINTEXT. Quase sempre PLAINTEXT em dev.
@@ -46,6 +52,8 @@ services:
 
       # === SEGURANÇA ===
       KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'false'  # Evita tópicos fantasmas.
+    volumes:
+      - kafka1-data:/var/lib/kafka/data
     networks:
       - communication
 
@@ -61,7 +69,7 @@ services:
     environment:
       KAFKA_NODE_ID: 2
       KAFKA_PROCESS_ROLES: 'broker,controller'
-      KAFKA_LOG_DIRS: '/tmp/kraft-combined-logs'
+      KAFKA_LOG_DIRS: '/var/lib/kafka/data'
 
       # === LISTENERS & ADVERTISED LISTENERS ===
       KAFKA_INTER_BROKER_LISTENER_NAME: 'PLAINTEXT'
@@ -86,6 +94,8 @@ services:
 
       # === SEGURANÇA ===
       KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'false'
+    volumes:
+      - kafka2-data:/var/lib/kafka/data
     networks:
       - communication
 
@@ -101,7 +111,7 @@ services:
     environment:
       KAFKA_NODE_ID: 3
       KAFKA_PROCESS_ROLES: 'broker,controller'
-      KAFKA_LOG_DIRS: '/tmp/kraft-combined-logs'
+      KAFKA_LOG_DIRS: '/var/lib/kafka/data'
 
       # === LISTENERS & ADVERTISED LISTENERS ===
       KAFKA_INTER_BROKER_LISTENER_NAME: 'PLAINTEXT'
@@ -126,6 +136,8 @@ services:
 
       # === SEGURANÇA ===
       KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'false'
+    volumes:
+      - kafka3-data:/var/lib/kafka/data
     networks:
       - communication
 
@@ -151,7 +163,7 @@ services:
       - communication
 
   schema-registry: # gerenciamento de schemas Avro. O Schema Registry armazena schemas no tópico _schemas. Cada schema tem um id numérico (ex: 1, 2) e é associado a um subject (ex: events.customer-created-v1-value).
-    image: confluentinc/cp-schema-registry
+    image: confluentinc/cp-schema-registry:8.1.0
     container_name: schema-registry
     ports:
       - "8081:8081"
