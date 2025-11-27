@@ -1,40 +1,54 @@
 volumes:
   db_users:
-    name: db_users
+    name: db_users # Persiste dados do PostgreSQL entre restarts
 
 networks:
   communication:
     name: communication
-    driver: bridge
+    driver: bridge # Rede bridge personalizada → todos os containers se enxergam pelo nome
 
 services:
 
+  # ============================================================
+  # Cluster Kafka - Broker 1
+  # ============================================================
   kafka-1:
-    image: apache/kafka:4.1.1
+    image: apache/kafka:4.1.1 # Imagem oficial do Apache Kafka com KRaft nativo
     hostname: kafka-1
     container_name: kafka-1
     ports:
       - 19092:19092
     environment:
-      KAFKA_NODE_ID: 1
-      KAFKA_PROCESS_ROLES: 'broker,controller'
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: 'CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT,EXTERNAL:PLAINTEXT'
-      KAFKA_CONTROLLER_QUORUM_VOTERS: '1@kafka-1:9093,2@kafka-2:9093,3@kafka-3:9093'
-      KAFKA_LISTENERS: 'PLAINTEXT://:9092,CONTROLLER://:9093,EXTERNAL://:19092'
-      KAFKA_INTER_BROKER_LISTENER_NAME: 'PLAINTEXT'
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-1:9092,EXTERNAL://localhost:19092
+      KAFKA_NODE_ID: 1 # ID único do nó no cluster (obrigatório)
+      KAFKA_PROCESS_ROLES: 'broker,controller' # Todos os nós são dual-role: tanto servem dados (broker - aceita producers/consumers) quanto gerenciam metadados (controller - antes era o papel do Zookeeper).
+      KAFKA_LOG_DIRS: '/tmp/kraft-combined-logs' # Onde o Kafka salva tópicos e metadados (em tmp → não persiste entre restarts). Ok pra dev. Em prod usa volume.
+
+      # === LISTENERS & ADVERTISED LISTENERS ===
+      KAFKA_INTER_BROKER_LISTENER_NAME: 'PLAINTEXT' # Comunicação entre brokers usa o listener interno na porta 9092. Os brokers conversam entre si usando o listener PLAINTEXT.
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: 'CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT,EXTERNAL:PLAINTEXT' #
+      KAFKA_LISTENERS: 'PLAINTEXT://:9092,CONTROLLER://:9093,EXTERNAL://:19092' # Três listeners: PLAINTEXT://:9092 → comunicação interna entre brokers e dentro da rede docker; CONTROLLER://:9093 → comunicação entre controllers (eleição, metadados); EXTERNAL://:19092 → acesso do host (seu laptop, postman e etc). Separação clara de responsabilidades.
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-1:9092,EXTERNAL://localhost:19092 # O que o cliente vê: Interno: kafka-1:9092; Externo: localhost:19092 (kafka-1), 19093 (kafka-2) e 19094 (kafka-3). Containers acessam o broker pelo hostname kafka-1:9092. A sua máquina acessa pelo localhost:19092.
+
+      # === KRaft Quorum ===
       KAFKA_CONTROLLER_LISTENER_NAMES: 'CONTROLLER'
-      CLUSTER_ID: '4L6g3nShT-eMCtK--X86sw'
-      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_CONTROLLER_QUORUM_VOTERS: '1@kafka-1:9093,2@kafka-2:9093,3@kafka-3:9093' # Define quem participa do quorum de controllers. Forma um Raft com 3 nós → tolera 1 falha. Esses são os brokers que votam no líder.
+      CLUSTER_ID: '4L6g3nShT-eMCtK--X86sw' # ID único do cluster. Todos os nós precisam ter o mesmo.
+
+      # === PRODUÇÃO: Replicação dos tópicos internos ===
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 3 #
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 3 #
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 2 #
+      KAFKA_SHARE_COORDINATOR_STATE_TOPIC_REPLICATION_FACTOR: 3
+      KAFKA_SHARE_COORDINATOR_STATE_TOPIC_MIN_ISR: 2
+
+      # === PERFORMANCE / ESTABILIDADE ===
       KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
-      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
-      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
-      KAFKA_SHARE_COORDINATOR_STATE_TOPIC_REPLICATION_FACTOR: 1
-      KAFKA_SHARE_COORDINATOR_STATE_TOPIC_MIN_ISR: 1
-      KAFKA_LOG_DIRS: '/tmp/kraft-combined-logs'
     networks:
       - communication
 
+  # ============================================================
+  # Cluster Kafka - Broker 2
+  # ============================================================
   kafka-2:
     image: apache/kafka:4.1.1
     hostname: kafka-2
@@ -44,23 +58,34 @@ services:
     environment:
       KAFKA_NODE_ID: 2
       KAFKA_PROCESS_ROLES: 'broker,controller'
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: 'CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT,EXTERNAL:PLAINTEXT'
-      KAFKA_CONTROLLER_QUORUM_VOTERS: '1@kafka-1:9093,2@kafka-2:9093,3@kafka-3:9093'
-      KAFKA_LISTENERS: 'PLAINTEXT://:9092,CONTROLLER://:9093,EXTERNAL://:19092'
-      KAFKA_INTER_BROKER_LISTENER_NAME: 'PLAINTEXT'
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-2:9092,EXTERNAL://localhost:19093
-      KAFKA_CONTROLLER_LISTENER_NAMES: 'CONTROLLER'
-      CLUSTER_ID: '4L6g3nShT-eMCtK--X86sw'
-      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
-      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
-      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
-      KAFKA_SHARE_COORDINATOR_STATE_TOPIC_REPLICATION_FACTOR: 1
-      KAFKA_SHARE_COORDINATOR_STATE_TOPIC_MIN_ISR: 1
       KAFKA_LOG_DIRS: '/tmp/kraft-combined-logs'
+
+      # === LISTENERS & ADVERTISED LISTENERS ===
+      KAFKA_INTER_BROKER_LISTENER_NAME: 'PLAINTEXT'
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: 'CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT,EXTERNAL:PLAINTEXT'
+      KAFKA_LISTENERS: 'PLAINTEXT://:9092,CONTROLLER://:9093,EXTERNAL://:19092'
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-2:9092,EXTERNAL://localhost:19093
+
+      # === KRaft Quorum ===
+      KAFKA_CONTROLLER_LISTENER_NAMES: 'CONTROLLER'
+      KAFKA_CONTROLLER_QUORUM_VOTERS: '1@kafka-1:9093,2@kafka-2:9093,3@kafka-3:9093'
+      CLUSTER_ID: '4L6g3nShT-eMCtK--X86sw'
+
+      # === PRODUÇÃO: Replicação dos tópicos internos ===
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 3
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 3
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 2
+      KAFKA_SHARE_COORDINATOR_STATE_TOPIC_REPLICATION_FACTOR: 3
+      KAFKA_SHARE_COORDINATOR_STATE_TOPIC_MIN_ISR: 2
+
+      # === PERFORMANCE / ESTABILIDADE ===
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
     networks:
       - communication
 
+  # ============================================================
+  # Cluster Kafka - Broker 3
+  # ============================================================
   kafka-3:
     image: apache/kafka:4.1.1
     hostname: kafka-3
@@ -70,34 +95,42 @@ services:
     environment:
       KAFKA_NODE_ID: 3
       KAFKA_PROCESS_ROLES: 'broker,controller'
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: 'CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT,EXTERNAL:PLAINTEXT'
-      KAFKA_CONTROLLER_QUORUM_VOTERS: '1@kafka-1:9093,2@kafka-2:9093,3@kafka-3:9093'
-      KAFKA_LISTENERS: 'PLAINTEXT://:9092,CONTROLLER://:9093,EXTERNAL://:19092'
-      KAFKA_INTER_BROKER_LISTENER_NAME: 'PLAINTEXT'
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-3:9092,EXTERNAL://localhost:19094
-      KAFKA_CONTROLLER_LISTENER_NAMES: 'CONTROLLER'
-      CLUSTER_ID: '4L6g3nShT-eMCtK--X86sw'
-      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
-      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
-      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
-      KAFKA_SHARE_COORDINATOR_STATE_TOPIC_REPLICATION_FACTOR: 1
-      KAFKA_SHARE_COORDINATOR_STATE_TOPIC_MIN_ISR: 1
       KAFKA_LOG_DIRS: '/tmp/kraft-combined-logs'
+
+      # === LISTENERS & ADVERTISED LISTENERS ===
+      KAFKA_INTER_BROKER_LISTENER_NAME: 'PLAINTEXT'
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: 'CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT,EXTERNAL:PLAINTEXT'
+      KAFKA_LISTENERS: 'PLAINTEXT://:9092,CONTROLLER://:9093,EXTERNAL://:19092'
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-3:9092,EXTERNAL://localhost:19094
+
+      # === KRaft Quorum ===
+      KAFKA_CONTROLLER_LISTENER_NAMES: 'CONTROLLER'
+      KAFKA_CONTROLLER_QUORUM_VOTERS: '1@kafka-1:9093,2@kafka-2:9093,3@kafka-3:9093'
+      CLUSTER_ID: '4L6g3nShT-eMCtK--X86sw'
+
+      # === PRODUÇÃO: Replicação dos tópicos internos ===
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 3
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 3
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 2
+      KAFKA_SHARE_COORDINATOR_STATE_TOPIC_REPLICATION_FACTOR: 3
+      KAFKA_SHARE_COORDINATOR_STATE_TOPIC_MIN_ISR: 2
+
+      # === PERFORMANCE / ESTABILIDADE ===
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
     networks:
       - communication
 
-  kafka-ui:
+  kafka-ui: # interface gráfica para administração da mensageria
     image: provectuslabs/kafka-ui:latest
     container_name: kafka-ui
     ports:
       - "8080:8080"
     restart: always
     environment:
-      - DYNAMIC_CONFIG_ENABLED=true
-      - KAFKA_CLUSTERS_0_NAME=wizard_cluster
-      - KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS=kafka-1:9092,kafka-2:9092,kafka-3:9092
-      - KAFKA_CLUSTERS_0_PROPERTIES_SECURITY_PROTOCOL=PLAINTEXT
+      DYNAMIC_CONFIG_ENABLED: true
+      KAFKA_CLUSTERS_0_NAME: wizard_cluster
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka-1:9092,kafka-2:9092,kafka-3:9092
+      KAFKA_CLUSTERS_0_PROPERTIES_SECURITY_PROTOCOL: PLAINTEXT
     depends_on:
       - kafka-1
       - kafka-2
@@ -105,23 +138,25 @@ services:
     networks:
       - communication
 
-  schema-registry:
+  schema-registry: # gerenciamento de schemas Avro. O Schema Registry armazena schemas no tópico _schemas. Cada schema tem um id numérico (ex: 1, 2) e é associado a um subject (ex: events.customer-created-v1-value).
     image: confluentinc/cp-schema-registry
     container_name: schema-registry
     ports:
-      - "8081:8085"
+      - "8081:8081"
     restart: unless-stopped
     depends_on:
       - kafka-1
       - kafka-2
       - kafka-3
     environment:
+      SCHEMA_REGISTRY_KAFKASTORE_TOPIC: _schemas
+      SCHEMA_REGISTRY_KAFKASTORE_TOPIC_REPLICATION_FACTOR: 3
       SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: 'PLAINTEXT://kafka-1:9092,PLAINTEXT://kafka-2:9092,PLAINTEXT://kafka-3:9092'
       SCHEMA_REGISTRY_HOST_NAME: 'schema-registry'
-      SCHEMA_REGISTRY_LISTENERS: 'http://0.0.0.0:8085'
+      SCHEMA_REGISTRY_LISTENERS: 'http://0.0.0.0:8081'
       SCHEMA_REGISTRY_LOG4J_ROOT_LOGLEVEL: 'INFO'
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8085"]
+      test: ["CMD", "curl", "-f", "http://localhost:8081"]
       interval: 15s
       timeout: 5s
       start_period: 15s
@@ -160,7 +195,7 @@ services:
       database_users:
         condition: service_started
       schema-registry:
-        condition: service_started
+        condition: service_healthy
 
   database_users:
     container_name: database_users

@@ -414,10 +414,32 @@ Diagrama de resumo do Kafka
 Anatomia da Mensagem Kafka
 ![Anatomia da Mensagem Kafka](imagens/AnatomiaMensagemKafka.png) 
 
-PASSO-A-PASSO 
+## PASSO-A-PASSO 
 
 1. Adição de dependências no build.gradle;
 2. Configurações no application.yml;
-3. 
+3. Configurações no docker-compose.yml;
+4. Configuração Programática.
 
+## Implementação
 
+build.gradle
+```
+
+```
+
+application.yml
+```
+
+```
+
+docker-compose.yml
+
+- Apache Kafka 4.1.1 (KRaft puro): sem Zookeeper, mais rápido e mais simples;
+- Cluster - 3 nós (broker + controller): alta disponibilidade local (quorum de 3). Todos 
+os 3 nós são idênticos em poder: cada um é broker + controller (KRaft permite isso).
+- Kafka-UI (Provectus): interface web gratuita;
+
+```
+
+```
