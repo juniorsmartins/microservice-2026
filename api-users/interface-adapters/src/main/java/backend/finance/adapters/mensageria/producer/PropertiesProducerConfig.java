@@ -53,9 +53,6 @@ public class PropertiesProducerConfig {
     //#endregion Throughput Máximo
 
     //#region Schema Registry e Avro
-    @Value("${spring.kafka.producer.properties.schema.registry.url}")
-    public String schemaRegistryUrl;
-
     @Value("${spring.kafka.producer.properties.auto.register.schemas}")
     public boolean autoRegisterSchemas;
     //endregion Schema Registry e Avro

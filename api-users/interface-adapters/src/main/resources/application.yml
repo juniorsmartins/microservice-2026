@@ -71,6 +71,7 @@ spring:
 
   kafka:
     bootstrap-servers: kafka-1:9092,kafka-2:9092,kafka-3:9092
+    schema.registry.url: http://schema-registry:8081 # Endereço do esquema registry (obrigatório se usar Avro)
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer # Define como serializar chaves (obrigatório)
       value-serializer: io.confluent.kafka.serializers.KafkaAvroSerializer # Define como serializar o payload/mensagem - pode ser string, json, avro e etc (obrigatório)
@@ -92,7 +93,6 @@ spring:
       compression-type: zstd # Define como a mensagem será comprimida antes de enviar (none, gzip, snappy, lz4, zstd). Isso reduz o tamanho.
 
       properties:
-        schema.registry.url: http://schema-registry:8081 # Endereço do esquema registry (obrigatório se usar Avro)
         auto.register.schemas: true # registra schema automaticamente (dev OK, prod = false)
 
     consumer:
@@ -120,7 +120,6 @@ spring:
 
       # === Schema Registry ===
       properties:
-        schema.registry.url: http://schema-registry:8081 # obrigatório com Avro
         specific.avro.reader: true # Usa SpecificRecord (classes geradas a partir do Avro), não GenericRecord.
 
     topic:

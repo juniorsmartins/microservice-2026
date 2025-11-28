@@ -45,7 +45,7 @@ public class ProducerBaseConfig {
         props.put(ProducerConfig.COMPRESSION_TYPE_CONFIG, propertiesProducerConfig.compressionType); // Define como a mensagem será comprimida antes de enviar (none, gzip, snappy, lz4, zstd). Isso reduz o tamanho.
 
         // === MENSAGEM AVRO ===
-        props.put(AbstractKafkaSchemaSerDeConfig.SCHEMA_REGISTRY_URL_CONFIG, propertiesProducerConfig.schemaRegistryUrl); // Endereço do esquema registry (obrigatório se usar Avro)
+        props.put(AbstractKafkaSchemaSerDeConfig.SCHEMA_REGISTRY_URL_CONFIG, propertiesConfig.schemaRegistryUrl); // Endereço do esquema registry (obrigatório se usar Avro)
         props.put(AbstractKafkaSchemaSerDeConfig.AUTO_REGISTER_SCHEMAS, propertiesProducerConfig.autoRegisterSchemas); // Registra o esquema Avro automático
 
         return props;

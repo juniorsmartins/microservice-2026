@@ -55,9 +55,6 @@ public class PropertiesConsumerConfig {
     //#endregion Performance
 
     //#region Schema Registry e Avro
-    @Value("${spring.kafka.consumer.properties.schema.registry.url}")
-    public String schemaRegistryUrl;
-
     @Value("${spring.kafka.consumer.properties.specific.avro.reader}")
     public boolean specificAvroReader;
     //#endregion Schema Registry e Avro
