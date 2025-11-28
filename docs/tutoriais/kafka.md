@@ -368,40 +368,107 @@ bem-sucedida. O padrão é acks all a partir da versão 3 do Kafka.
 ```
 ### Configuração
 ```
-- auto-offset-reset (earliest, latest e none): define onde começa a ler as mensagens. 
-earliest começa do início da partição; latest somente novas mensagens (padrão); none lança 
-exceção se não houver offset; 
+- bootstrap.servers: uma lista de pares host/port usado para estabelecer a conexão inicial 
+com o cluster do Kafka. Os clientes usam esta lista para inicializar e descobrir o conjunto 
+completo de brokers. A ordem dos servidores na lista não importa. Recomenda-se incluir mais 
+de um servidor para garantir a resiliência, se algum servidor estiver fora do ar. Esta 
+lista não precisa conter todo o conjunto de brokers, pois os clientes do Kafka gerenciam e 
+atualizam automaticamente as conexões para o cluster de forma eficiente.
+
+- schema.registry.url: 
+- Schema Registry: controle de versão de mensagens (Avro, JSON Schema); Garante 
+compatibilidade entre producer/consumer.
 
 - key-serializer: como serializar a chave da mensagem;
 
 - value-serializer: como serializar o valor da mensagem;
 
-- Schema Registry: controle de versão de mensagens (Avro, JSON Schema); Garante 
-compatibilidade entre producer/consumer.
+- acks: o número de reconhecimentos que o produtor exige que o líder tenha recebido antes 
+de considerar um pedido concluído. Isso controla a durabilidade dos registros enviados. 
+Configura como o produtor confirma envio: acks=0 não espera confirmação; acks=1 confirma no 
+líder (rápido); acks=all confirma em todos os replicas (seguro); O acks=all garante que a 
+mensagem não será perdida enquanto pelo menos uma réplica sincronizada permanecer viva. 
+Note que ativar a idempotência exige que esse valor de configuração seja 'all'.
+
+- enable.idempotence (true / false): quando definido como 'verdadeiro', o produtor irá 
+garantir que exatamente uma cópia de cada mensagem é escrita no fluxo. Garante que 
+mensagens não sejam duplicadas mesmo com retries. Requer: acks=all e 
+max.in.flight.requests.per.connection ≤ 5 e retries > 0;
+
+- max.in.flight.requests.per.connection: o número máximo de solicitações não reconhecidas 
+que o cliente enviará em uma única conexão antes de bloquear. Controla quantas requisições 
+não confirmadas o produtor pode enviar ao mesmo tempo. 5 é seguro com idempotência.
+
+- retries: número de vezes para tentar novamente uma solicitação que falha com um erro 
+transitório. Definir um valor maior que zero fará com que o cliente reenvie qualquer 
+registro cujo envio falha com um erro potencialmente transitório.
+
+- retry.backoff.ms: a quantidade de tempo para esperar antes de tentar novamente uma 
+solicitação falhada para uma determinada partição de tópico. Isso evita o envio de 
+solicitações repetidamente em um loop apertado sob alguns cenários de falha. Este valor é o 
+valor inicial de backoff e aumentará exponencialmente para cada solicitação falhada, até o 
+valor de retry.backoff.max.ms.
+
+- retry.backoff.max.ms: a quantidade máxima de tempo em milissegundos para esperar ao 
+tentar novamente uma solicitação ao broker que falhou repetidamente (padrão: 1000).
+
+- request.timeout.ms: a configuração controla a quantidade máxima de tempo que o cliente 
+aguardará pela resposta de uma solicitação. Se a resposta não for recebida antes do tempo 
+limite decorrer, o cliente reenviará a solicitação, se necessário, ou falhará na 
+solicitação se as tentativas forem esgotadas. Isto deve ser maior do que 
+replica.lag.time.max.ms (uma configuração de broker) para reduzir a possibilidade de 
+duplicação de mensagens devido a tentativas desnecessárias de produtores.
+
+- delivery.timeout.ms: Um limite superior no momento de relatar o sucesso ou fracasso após 
+uma chamada para send(). Isso limita o tempo total que um registro será atrasado antes do 
+envio, o tempo para aguardar o reconhecimento do corretor (se esperado) e o tempo permitido 
+para falhas de envio replicáveis. O valor desta configuração deve ser maior ou igual à soma 
+de request.timeout.ms e linger.ms. 
+
+- batch-size: o produtor tentará agrupar registros em lote em menos solicitações sempre que 
+vários registros estiverem sendo enviados para a mesma partição. Isso ajuda o desempenho 
+tanto no cliente quanto no servidor. Esta configuração controla o tamanho padrão do lote em 
+bytes. Nenhuma tentativa será feita para registros em lote maiores do que este tamanho. 
+
+    Observação: essa configuração fornece o limite superior do tamanho do lote a ser 
+    enviado. Se tivermos menos do que este muitos bytes acumulados para esta partição, 
+    vamos 'perdurar' para o linger.ms tempo esperando mais registros aparecerem. Isto 
+    linger.ms definir padrões para 5, o que significa que o produtor vai esperar por 5ms 
+    ou até que encha o  lote até o batch.size (o que acontecer primeiro) antes de enviar 
+    o lote. 
+
+- linger-ms: o produtor agrupa quaisquer registros que cheguem entre as transmissões de 
+solicitação em uma única solicitação em lote. Normalmente, isso ocorre apenas sob carga 
+quando os registros chegam mais rápido do que podem ser enviados. No entanto, em algumas 
+circunstâncias, o cliente pode querer reduzir o número de solicitações, mesmo sob carga 
+moderada. Essa configuração realiza isso adicionando uma pequena quantidade de atraso 
+artificial – ou seja, em vez de enviar imediatamente um registro, o produtor aguardará até 
+o atraso para permitir que outros registros sejam enviados para que os envios possam ser 
+agrupados. 
+
+- compression-type: o tipo de compressão para todos os dados gerados pelo produtor. O 
+padrão é nenhum (ou seja, sem compressão). Valores válidos são none, gzip, snappy, lz4, ou 
+zstd. A compressão é de lotes completos de dados, portanto, a eficácia do lote também 
+afetará a taxa de compressão (mais lotes significa melhor compressão).
+
+- auto.register.schemas (true / false): 
+- auto.register.schemas (true ou false): true → Schema Registry registra schema 
+automaticamente. false -> só pode usar schemas já registrados → mais seguro.
+
+
+- auto-offset-reset (earliest, latest e none): define onde começa a ler as mensagens. 
+earliest começa do início da partição; latest somente novas mensagens (padrão); none lança 
+exceção se não houver offset; 
 
 - Dead Letter Topic (DLT): mensagens com falha de processamento são redirecionadas para 
 um tópico de erro.
-
-- producer.properties.enable.idempotence (true ou false): garante que mensagens não 
-sejam duplicadas mesmo com retries. Requer: acks=all, 
-max.in.flight.requests.per.connection ≤ 5, retries > 0;
-
-- max.in.flight.requests.per.connection: controla quantas requisições não confirmadas o 
-produtor pode enviar ao mesmo tempo. 5 é seguro com idempotência. >5 pode bagunçar ordem.
 
 - consumer.properties.spring.json.trusted.packages ("*"): define os pacotes com permissão 
 onde se pode desserializar. Evita ataques de desserialização. O uso do "*" permite 
 desserializar em qualquer pacote.
 
-- auto.register.schemas (true ou false): true → Schema Registry registra schema 
-automaticamente. false -> só pode usar schemas já registrados → mais seguro.
-
 - specific.avro.reader (true ou false): true -> o consumidor recebe classes Avro geradas.
 false -> recebe GenericRecord;
-
-- Acks: configura como o produtor confirma envio: acks=0 não espera confirmação; acks=1 
-confirma no líder (rápido); acks=all confirma em todos os replicas (seguro);
-
 ```
 
 Anatomia da Mensagem Kafka

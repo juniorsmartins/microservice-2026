@@ -36,6 +36,7 @@ public class ProducerBaseConfig {
 
         // === Resiliência (funciona com Retries) ===
         props.put(ProducerConfig.RETRY_BACKOFF_MS_CONFIG, propertiesProducerConfig.retryBackoffMs); // Tempo para esperar entre as tentativas (default: 100ms)
+        props.put(ProducerConfig.RETRY_BACKOFF_MAX_MS_CONFIG, propertiesProducerConfig.retryBackoffMaxMS); // A quantidade máxima de tempo em milissegundos para esperar ao tentar novamente uma solicitação ao corretor que falhou repetidamente (padrão: 1000).
         props.put(ProducerConfig.REQUEST_TIMEOUT_MS_CONFIG, propertiesProducerConfig.requestTimeoutMs); // Especifica o tempo máximo por cada tentativa de enviar um batch. Espera a resposta do broker em cada retry.
         props.put(ProducerConfig.DELIVERY_TIMEOUT_MS_CONFIG, propertiesProducerConfig.deliveryTimeoutMs); // É o tempo máximo geral que o produtor vai ficar tentando entregar UMA mensagem antes de desistir e jogar exceção (Mesmo que tenha milhões de retries, depois de X tempo no total o produtor desiste e joga exceção). Ele controla o ciclo de vida da mensagem, incluindo: Todas as tentativas de retry; Espera no batch (linger.ms); Tempo de compressão; Tempo de envio pela rede; Espera pelo ack do broker.
 

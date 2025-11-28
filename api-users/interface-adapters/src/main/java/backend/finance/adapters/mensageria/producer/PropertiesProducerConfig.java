@@ -34,6 +34,9 @@ public class PropertiesProducerConfig {
     @Value("${spring.kafka.producer.retry.backoff.ms}")
     public int retryBackoffMs;
 
+    @Value("${spring.kafka.producer.retry.backoff.max.ms}")
+    public int retryBackoffMaxMS;
+
     @Value("${spring.kafka.producer.request.timeout.ms}")
     public int requestTimeoutMs;
 

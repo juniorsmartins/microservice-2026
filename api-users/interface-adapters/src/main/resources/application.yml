@@ -83,9 +83,10 @@ spring:
       retries: 2147483647 # Número de tentativas de retentativa (default 2147483647)
 
       # === Resiliência (funciona com o Retries) ===
-      retry.backoff.ms: 1000 # Tempo para esperar entre as tentativas
-      request.timeout.ms: 30001 # Tempo máximo de espera pelo reconhecimento de entrega de uma tentativa (padrão: 30000). Espera a resposta do broker em cada retry.
-      delivery.timeout.ms: 120001 # Tempo máximo para entregar uma mensagem incluindo todas as tentativas (padrão: 120000). Tempo TOTAL para enviar antes de desistir e jogar exceção (Mesmo que tenha milhões de retries, depois de X tempo no total o produtor desiste e joga exceção). Ele controla o ciclo de vida, incluindo: Todas as tentativas de retry; Espera no batch (linger.ms); Tempo de compressão; Tempo de envio pela rede; Espera pelo ack do broker.
+      retry.backoff.ms: 100 # Tempo para esperar entre as tentativas (padrão: 100ms)
+      retry.backoff.max.ms: 1000 # A quantidade máxima de tempo em milissegundos para esperar ao tentar novamente uma solicitação ao corretor que falhou repetidamente (padrão: 1000).
+      request.timeout.ms: 30000 # Controla a quantidade máxima de tempo que o cliente aguardará pela resposta de uma solicitação (padrão: 30000).
+      delivery.timeout.ms: 120000 # Tempo máximo para entregar uma mensagem incluindo todas as tentativas (padrão: 120000). Tempo TOTAL para enviar antes de desistir e jogar exceção (Mesmo que tenha milhões de retries, depois de X tempo no total o produtor desiste e joga exceção). Ele controla o ciclo de vida, incluindo: Todas as tentativas de retry; Espera no batch (linger.ms); Tempo de compressão; Tempo de envio pela rede; Espera pelo ack do broker.
 
       # === Throughput Máximo ===
       batch-size: 131072 # Tamanho máximo (em bytes) que o produtor tenta juntar em um único batch antes de enviar para o broker. Junta várias mensagens num pacote só.
