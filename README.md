@@ -8,7 +8,8 @@
 
 ## Índice
 
-1.  [API - Users](#api---users)
+1. Arquitetura 
+2. [API - Users](#api---users)
     * [Tecnologias](#tecnologias-users);
     * [Diagramas](#diagramas-users);
 2.  [API - Accounts](#api---accounts)
@@ -27,6 +28,12 @@
 7.  [Como rodar a aplicação](#como-rodar-a-aplicacao) 
 8.  [Coleções de teste para Postman](#colecoes-de-teste-para-postman)
 
+## Arquitetura 
+
+Arquitetura de Microsserviços
+
+Arquitetura Orientada a Eventos
+
 ## API - Users
 
 ### Tecnologias Users
@@ -42,15 +49,14 @@
 - PostgreSQL (versão 17 - banco de dados relacional);
 - H2 Database (banco de dados em memória para testes);
 - Docker (dockerfile e docker compose);
-- Lombok;
-- DevTools.
+- Lombok.
 
 ### Diagramas Users
 
-Arquitetura Limpa multi-modulo
+Arquitetura Limpa multi-modulo 
 ![Arquitetura Limpa multi-modulo](docs/diagramas/api-users/ARQ-USERS-v2.png)
 
-Diagrama Entidade Relacionamento - DER
+Diagrama Entidade Relacionamento - DER 
 ![Diagrama Entidade Relacionamento](docs/diagramas/api-users/DER-api-users.png)
 
 ## API - Accounts
