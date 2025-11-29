@@ -31,9 +31,6 @@ public class PropertiesConsumerConfig {
     //#endregion Estratégia de Rebalance
 
     //#region Leitura e Garantia de Entrega
-    @Value("${spring.kafka.consumer.isolation-level}")
-    public String isolationLevel;
-
     @Value("${spring.kafka.consumer.auto-offset-reset}")
     public String autoOffsetReset;
 

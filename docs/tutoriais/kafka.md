@@ -365,6 +365,8 @@ bem-sucedida. O padrão é acks all a partir da versão 3 do Kafka.
         réplicas em sincronia - min.insync.replicas. Um valor de 2 implica que pelo menos 
         2 brokers que são ISR (incluindo líder) devem responder que eles têm os dados.
 
+Dead Letter Topic (DLT): mensagens com falha de processamento são redirecionadas para um 
+tópico de erro.
 ```
 ### Configuração
 ```
@@ -390,9 +392,9 @@ líder (rápido); acks=all confirma em todos os replicas (seguro); O acks=all ga
 mensagem não será perdida enquanto pelo menos uma réplica sincronizada permanecer viva. 
 Note que ativar a idempotência exige que esse valor de configuração seja 'all'.
 
-- enable.idempotence (true / false): quando definido como 'verdadeiro', o produtor irá 
-garantir que exatamente uma cópia de cada mensagem é escrita no fluxo. Garante que 
-mensagens não sejam duplicadas mesmo com retries. Requer: acks=all e 
+- enable.idempotence (boolean): quando definido como 'verdadeiro', o produtor irá garantir 
+que exatamente uma cópia de cada mensagem é escrita no fluxo. Garante que mensagens não 
+sejam duplicadas mesmo com retries. Requer: acks=all e 
 max.in.flight.requests.per.connection ≤ 5 e retries > 0;
 
 - max.in.flight.requests.per.connection: o número máximo de solicitações não reconhecidas 
@@ -451,23 +453,60 @@ padrão é nenhum (ou seja, sem compressão). Valores válidos são none, gzip, 
 zstd. A compressão é de lotes completos de dados, portanto, a eficácia do lote também 
 afetará a taxa de compressão (mais lotes significa melhor compressão).
 
-- auto.register.schemas (true / false): 
+- auto.register.schemas (boolean): 
 - auto.register.schemas (true ou false): true → Schema Registry registra schema 
 automaticamente. false -> só pode usar schemas já registrados → mais seguro.
 
+- partition.assignment.strategy: 
+
+- group-id: uma string única que identifica o grupo de consumidores a que este consumidor 
+pertence. Consumers com o mesmo group.id formam um grupo que divide o trabalho. O 
+coordinator usa isso para atribuir partições e armazenar offsets no tópico interno, que é 
+ chamado de __consumer_offsets.
+
+- group.instance.id: um identificador único da instância do consumidor fornecido pelo 
+usuário final. Apenas strings não vazias são permitidas. Se definido, o consumidor é 
+tratado como um membro estático, o que significa que apenas uma instância com este ID é 
+permitida no grupo de consumidores a qualquer momento. Isso pode ser usado em combinação 
+com um tempo limite de sessão maior para evitar reequilíbrios de grupo causados pela 
+indisponibilidade transitória (por exemplo, reinicializações de processo). Se não for 
+definido, o consumidor se juntará ao grupo como um membro dinâmico, que é o comportamento 
+tradicional. Quando o consumidor sai, a partição dele não é reatribuída de imediato e 
+espera por um tempo configurável (session.timeout.ms). Daí, quando um consumidor entrar, 
+essa partição é reatribuída sem ter gerado a ação de rebalance geral. Isso evita o 
+rebalanceamento.
+
+- session.timeout.ms: o tempo limite usado para detectar falhas do cliente ao usar a 
+instalação de gerenciamento de grupo da Kafka (padrão 45000). O cliente envia batimentos 
+cardíacos periódicos para indicar sua vivacidade ao broker. Se nenhum batimento cardíaco 
+for recebido pelo broker antes da expiração deste tempo limite de sessão, então o broker 
+removerá esse cliente do grupo e iniciará um reequilíbrio. 
+
+    Observação: observe que o valor deve estar no intervalo permitido, conforme configurado 
+    na configuração do broker por group.min.session.timeout.ms e 
+    group.max.session.timeout.ms. Observe que essa configuração de cliente não é suportada 
+    quando group.protocol está definido como "consumidor". Nesse caso, o tempo limite da 
+    sessão é controlado pela configuração do broker group.consumer.session.timeout.ms.
 
 - auto-offset-reset (earliest, latest e none): define onde começa a ler as mensagens. 
 earliest começa do início da partição; latest somente novas mensagens (padrão); none lança 
-exceção se não houver offset; 
+exceção se não houver offset. 
 
-- Dead Letter Topic (DLT): mensagens com falha de processamento são redirecionadas para 
-um tópico de erro.
+- enable-auto-commit (boolean): o false permite controle sobre o commit (manual ou via 
+Spring). Spring Kafka gerencia com @KafkaListener e Acknowledgment. Obrigatório false em 
+produção.
+
+- request-timeout-ms: 
+
+- max-poll-records: 
+
+- max.poll.interval.ms: 
 
 - consumer.properties.spring.json.trusted.packages ("*"): define os pacotes com permissão 
 onde se pode desserializar. Evita ataques de desserialização. O uso do "*" permite 
 desserializar em qualquer pacote.
 
-- specific.avro.reader (true ou false): true -> o consumidor recebe classes Avro geradas.
+- specific.avro.reader (boolean): true -> o consumidor recebe classes Avro geradas.
 false -> recebe GenericRecord;
 ```
 

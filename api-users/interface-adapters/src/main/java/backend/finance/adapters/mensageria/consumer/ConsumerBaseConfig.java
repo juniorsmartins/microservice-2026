@@ -35,7 +35,6 @@ public class ConsumerBaseConfig {
         props.put(ConsumerConfig.SESSION_TIMEOUT_MS_CONFIG, propertiesConsumerConfig.sessionTimeoutMs);
 
         // === Forma de leitura e garantia de entrega ===
-        props.put(ConsumerConfig.ISOLATION_LEVEL_CONFIG, propertiesConsumerConfig.isolationLevel);
         props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, propertiesConsumerConfig.autoOffsetReset);
         props.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, propertiesConsumerConfig.enableAutoCommit);
 
