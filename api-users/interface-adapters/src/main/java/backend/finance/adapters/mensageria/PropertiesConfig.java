@@ -13,6 +13,9 @@ public class PropertiesConfig {
     @Value("${spring.kafka.bootstrap-servers}")
     public String bootstrapServers;
 
+    @Value("${spring.kafka.schema.registry.url}")
+    public String schemaRegistryUrl;
+
     @Value(value = "${spring.kafka.topic.events.customer-created}")
     public String topicEventsCustomerCreated;
 
