@@ -1,5 +1,6 @@
 server:
   port: ${SERVER_PORT:9050}
+
 spring:
   application:
     name: api_users
@@ -44,12 +45,12 @@ spring:
     change-log: classpath:liquibase/changelog/master.yaml
     default-schema: public
 
-  security: # Configuracao do Sprint Security
-    form-login:
-      page: /login # Define a URL personalizada (caso precise ser usada em outra parte do sistema)
-
-  messages: # Configuracao de mensagem para login personalizado
-    basename: messages
+#  security: # Configuracao do Sprint Security
+#    form-login:
+#      page: /login # Define a URL personalizada (caso precise ser usada em outra parte do sistema)
+#
+#  messages: # Configuracao de mensagem para login personalizado
+#    basename: messages
 
 #  Kafka:
 #    bootstrap-servers: kafka:9092

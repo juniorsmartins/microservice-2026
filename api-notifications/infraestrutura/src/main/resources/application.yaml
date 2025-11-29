@@ -1,0 +1,42 @@
+server:
+  port: ${SERVER_PORT:9060}
+
+spring:
+  application:
+    name: api-notifications
+  profiles:
+    active: default
+
+---
+spring:
+  config:
+    activate:
+      on-profile: default
+
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://${DB_HOST:localhost}:${DB_PORT:3303}/${DB_NAME:db_notifications}
+    username: ${DB_USERNAME:mariadb}
+    password: ${DB_PASSWORD:mariadb}
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+    defer-datasource-initialization: false
+    properties:
+      hibernate:
+        format_sql: true
+        use_sql_comments: true
+        connection:
+          isolation: 2
+        cache:
+          use_second_level_cache: false
+          use_query_cache: false
+    open-in-view: false
+    show-sql: true
+
+  flyway:
+    enabled: true
+    locations: classpath:flyway
+
+
