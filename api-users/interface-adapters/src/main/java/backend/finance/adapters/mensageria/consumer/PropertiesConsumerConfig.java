@@ -31,9 +31,6 @@ public class PropertiesConsumerConfig {
     //#endregion Estratégia de Rebalance
 
     //#region Leitura e Garantia de Entrega
-    @Value("${spring.kafka.consumer.isolation-level}")
-    public String isolationLevel;
-
     @Value("${spring.kafka.consumer.auto-offset-reset}")
     public String autoOffsetReset;
 
@@ -55,9 +52,6 @@ public class PropertiesConsumerConfig {
     //#endregion Performance
 
     //#region Schema Registry e Avro
-    @Value("${spring.kafka.consumer.properties.schema.registry.url}")
-    public String schemaRegistryUrl;
-
     @Value("${spring.kafka.consumer.properties.specific.avro.reader}")
     public boolean specificAvroReader;
     //#endregion Schema Registry e Avro

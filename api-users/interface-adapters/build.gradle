@@ -56,6 +56,7 @@ avro {
     createSetters = true // Gera métodos setters nos POJOs gerados a partir do Avro.
     fieldVisibility = "PRIVATE" // Define que os campos das classes geradas serão privados.
     outputCharacterEncoding = "UTF-8"
+    enableDecimalLogicalType = true // suporte correto a BigDecimal (tipo logical decimal do Avro)
 }
 
 test {
