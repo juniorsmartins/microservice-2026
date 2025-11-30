@@ -36,7 +36,30 @@ spring:
     show-sql: true
 
   flyway:
-    enabled: true
-    locations: classpath:flyway
+    # --- Controle de Execução (Obrigatório) ---
+    enabled: true # Liga o Flyway no Spring Boot
+#    baseline-on-empty-db: false # [SEGURANÇA] Não executa o baseline automaticamente
+    baseline-on-migrate: true # a mais segura e usada por 99 % das empresas
+    baseline-version: 0       # ou 1, depende da sua convenção
+    baseline-description: "Initial structure"
+    # --- Localização e Nomenclatura dos Scripts ---
+    locations: classpath:flyway # Onde o Flyway procura os scripts (padrão: db/migration)
+    sql-migration-prefix: V # Prefixo padrão para migrações versionadas
+    sql-migration-separator: __ # Separador entre versão e nome no arquivo SQL
+    sql-migration-suffixes: .sql # Suporta apenas arquivos com sufixo .sql
+    # --- Validação e Segurança (Produção) ---
+    validate-on-migrate: true # [SEGURANÇA] Valida checksums antes de migrar. Antes de aplicar novas migrations, valida que todas as já aplicadas batem com os scripts no classpath. Protege contra alguém apagar ou alterar um script antigo.
+    clean-disabled: true # [SEGURANÇA] DESABILITA o comando 'clean' em produção! Impede acidental flyway:clean em prod.
+    out-of-order: false # [SEGURANÇA] Não permite migrações fora de ordem
+    target: latest # Garantir que migre sempre para a última versão
+    connect-retries: 3 # Número de tentativas de conexão antes de falhar
+    connect-retries-interval: 5
+    # --- Tabela de Schema (Opcional, mas Útil) ---
+    table: flyway_schema_history # padrão já é esse, mas deixar explícito.
+    schemas: db-notifications # Defina explicitamente o schema/banco. Importante quando há múltiplos databases.
+    encoding: UTF-8 # Encoding dos arquivos SQL
+
+
+
 
 

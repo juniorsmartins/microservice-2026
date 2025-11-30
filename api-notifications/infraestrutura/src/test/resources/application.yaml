@@ -19,7 +19,6 @@ server:
       path: /h2-console
 
   flyway:
-    enabled: true
-    locations: classpath:flyway
+    enabled: false
 
 
