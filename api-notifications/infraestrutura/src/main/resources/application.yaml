@@ -15,9 +15,9 @@ spring:
 
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
-    url: jdbc:mariadb://${DB_HOST:localhost}:${DB_PORT:3303}/${DB_NAME:db_notifications}
-    username: ${DB_USERNAME:mariadb}
-    password: ${DB_PASSWORD:mariadb}
+    url: jdbc:mariadb://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:db-notifications}?serverTimezone=UTC
+    username: ${MARIADB_USER:mariadb}
+    password: ${MARIADB_PASSWORD:mariadb}
 
   jpa:
     hibernate:
