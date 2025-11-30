@@ -1,25 +1,24 @@
 # TUTORIAL
 
-#### Fontes: 
-- https://kafka.apache.org/intro 
-- https://kafka.apache.org/documentation/ 
-- https://kafka.apache.org/documentation/#design 
-- https://kafka.apache.org/documentation.html#adminapi 
-- https://docs.confluent.io/kafka/introduction.html 
-- https://avro.apache.org/docs/1.12.0/getting-started-java/ 
-- https://aws.amazon.com/pt/what-is/apache-kafka/ (Kafka x RabbitMQ) 
-- https://www.redhat.com/pt-br/topics/integration/what-is-apache-kafka 
-- https://www.baeldung.com/apache-kafka 
-- https://www.datacamp.com/pt/tutorial/apache-kafka-for-beginners-a-comprehensive-guide 
-- https://medium.com/@fabiosalomao/uma-breve-introdu%C3%A7%C3%A3o-ao-kafka-8bb32b2059ac 
-- https://kafka-options-explorer.conduktor.io/ 
-- https://docs.conduktor.io/learn/fundamentals/producers 
-- https://docs.conduktor.io/learn/fundamentals/consumers 
-- https://docs.conduktor.io/learn/fundamentals/topic-replication 
-- https://hub.docker.com/r/lensesio/fast-data-dev 
+## 1. Teoria
 
-
-## Teoria
+### Fontes:
+- https://kafka.apache.org/intro
+- https://kafka.apache.org/documentation/
+- https://kafka.apache.org/documentation/#design
+- https://kafka.apache.org/documentation.html#adminapi
+- https://docs.confluent.io/kafka/introduction.html
+- https://avro.apache.org/docs/1.12.0/getting-started-java/
+- https://aws.amazon.com/pt/what-is/apache-kafka/ (Kafka x RabbitMQ)
+- https://www.redhat.com/pt-br/topics/integration/what-is-apache-kafka
+- https://www.baeldung.com/apache-kafka
+- https://www.datacamp.com/pt/tutorial/apache-kafka-for-beginners-a-comprehensive-guide
+- https://medium.com/@fabiosalomao/uma-breve-introdu%C3%A7%C3%A3o-ao-kafka-8bb32b2059ac
+- https://kafka-options-explorer.conduktor.io/
+- https://docs.conduktor.io/learn/fundamentals/producers
+- https://docs.conduktor.io/learn/fundamentals/consumers
+- https://docs.conduktor.io/learn/fundamentals/topic-replication
+- https://hub.docker.com/r/lensesio/fast-data-dev
 
 ### Introdução
 ```
@@ -513,7 +512,9 @@ false -> recebe GenericRecord;
 Anatomia da Mensagem Kafka
 ![Anatomia da Mensagem Kafka](imagens/AnatomiaMensagemKafka.png) 
 
-## PASSO-A-PASSO 
+## 2. Configuração 
+
+### Passo-a-passo 
 
 1. Adições no build.gradle;
    2. Plugin do avro;
@@ -524,7 +525,7 @@ Anatomia da Mensagem Kafka
 3. Configurações no docker-compose.yml;
 4. Configuração Programática.
 
-## Implementação
+### Implementação
 
 build.gradle
 ```

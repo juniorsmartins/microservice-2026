@@ -69,6 +69,21 @@ Arquitetura Hexagonal
 
 Arquitetura Multicamadas
 
+### Tecnologias Notifications 
+
+- Java (versão 25);
+- Gradle (versão 9.1.0);
+- Spring Boot (versão 4.0.0);
+- Spring Data Web;
+- Spring Data JPA;
+- Flyway (migration em SQL);
+- Apache Kafka, Schema Registry e Apache Avro (mensageria);
+- RestAssured, JUnit e Mockito (testes);
+- MariaDB (banco de dados relacional);
+- H2 Database (banco de dados em memória para testes);
+- Docker (dockerfile e docker compose);
+- Lombok.
+
 ## API - Reports
 
 ## Tutoriais

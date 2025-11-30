@@ -7,7 +7,7 @@
         <processorPath useClasspath="false">
           <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.projectlombok/lombok/1.18.42/8365263844ebb62398e0dc33057ba10ba472d3b8/lombok-1.18.42.jar" />
         </processorPath>
-        <module name="api-notifications.main" />
+        <module name="api-notifications.infraestrutura.main" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -21,7 +21,15 @@
       <module name="api-investments" target="25" />
       <module name="api-investments.main" target="25" />
       <module name="api-investments.test" target="25" />
-      <module name="api-notifications" target="25" />
+      <module name="api-notifications.aplicacao" target="25" />
+      <module name="api-notifications.aplicacao.main" target="25" />
+      <module name="api-notifications.aplicacao.test" target="25" />
+      <module name="api-notifications.dominio" target="25" />
+      <module name="api-notifications.dominio.main" target="25" />
+      <module name="api-notifications.dominio.test" target="25" />
+      <module name="api-notifications.infraestrutura" target="25" />
+      <module name="api-notifications.infraestrutura.main" target="25" />
+      <module name="api-notifications.infraestrutura.test" target="25" />
       <module name="api-notifications.main" target="25" />
       <module name="api-notifications.test" target="25" />
       <module name="api-report" target="25" />
@@ -61,7 +69,9 @@
       <module name="api-investments" options="-parameters" />
       <module name="api-investments.main" options="-parameters" />
       <module name="api-investments.test" options="-parameters" />
-      <module name="api-notifications" options="-parameters" />
+      <module name="api-notifications.infraestrutura" options="-parameters" />
+      <module name="api-notifications.infraestrutura.main" options="-parameters" />
+      <module name="api-notifications.infraestrutura.test" options="-parameters" />
       <module name="api-notifications.main" options="-parameters" />
       <module name="api-notifications.test" options="-parameters" />
       <module name="api-report" options="-parameters" />

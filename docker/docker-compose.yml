@@ -1,6 +1,8 @@
 volumes:
   db_users:
-    name: db_users # Persiste dados do PostgreSQL entre restarts
+    name: db_users
+  db-notifications:
+    name: db-notifications
   kafka1-data:
     name: kafka1-data
   kafka2-data:
@@ -244,5 +246,61 @@ services:
       POSTGRES_PASSWORD: postgres
     volumes:
       - db_users:/var/lib/postgresql/data
+    networks:
+      - communication
+
+  api-notifications:
+    image: juniorsmartins/api-notifications:v0.0.1
+    container_name: api-notifications
+    hostname: api-notifications
+    build:
+      context: ../api-notifications
+      dockerfile: Dockerfile
+      args:
+        APP_NAME: "api-notifications"
+        APP_VERSION: "v0.0.1"
+        APP_DESCRIPTION: "API para notificações de cliente via email."
+    ports:
+      - "9060:9060"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 256M
+    environment:
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka-1:9092,kafka-2:9092,kafka-3:9092
+      SPRING_KAFKA_PROPERTIES_SCHEMA_REGISTRY_URL: http://schema-registry:8081
+      DB_HOST: database-notifications
+      DB_PORT: 3306
+      DB_NAME: db-notifications
+      JAVA_TOOL_OPTIONS: "--enable-native-access=ALL-UNNAMED" # Elimina alguns warnnings
+    restart: on-failure
+    networks:
+      - communication
+    depends_on:
+      database-notifications:
+        condition: service_started
+      schema-registry:
+        condition: service_healthy
+
+  database-notifications:
+    image: mariadb:12.1.2
+    container_name: database-notifications
+    hostname: database-notifications
+    ports:
+      - "3306:3306"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 256M
+    restart: always
+    environment:
+      MARIADB_ROOT_PASSWORD: root123
+      MARIADB_DATABASE: db-notifications
+      MARIADB_USER: mariadb
+      MARIADB_PASSWORD: mariadb
+    volumes:
+      - db-notifications:/var/lib/mysql
     networks:
       - communication
