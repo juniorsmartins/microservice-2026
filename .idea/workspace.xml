@@ -7,16 +7,10 @@
     <list default="true" id="a1ea8202-910b-4a63-8ece-9f6a9a5ee2c0" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-notifications/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/api-notifications/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-notifications/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" afterPath="$PROJECT_DIR$/api-notifications/gradle/wrapper/gradle-wrapper.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-notifications/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/api-notifications/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-notifications/gradlew" beforeDir="false" afterPath="$PROJECT_DIR$/api-notifications/gradlew" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-notifications/gradlew.bat" beforeDir="false" afterPath="$PROJECT_DIR$/api-notifications/gradlew.bat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-notifications/src/main/resources/application.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/interface-adapters/src/main/java/backend/finance/adapters/mensageria/consumer/ConsumerBaseConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/interface-adapters/src/main/java/backend/finance/adapters/mensageria/consumer/ConsumerBaseConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/interface-adapters/src/main/java/backend/finance/adapters/mensageria/consumer/PropertiesConsumerConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/interface-adapters/src/main/java/backend/finance/adapters/mensageria/consumer/PropertiesConsumerConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/interface-adapters/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/interface-adapters/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/tutoriais/kafka.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/tutoriais/kafka.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-notifications/infraestrutura/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/api-notifications/infraestrutura/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-notifications/infraestrutura/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/api-notifications/infraestrutura/src/main/resources/application.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/tutoriais/flyway.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/tutoriais/flyway.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -79,30 +73,30 @@
         <task path="$PROJECT_DIR$/api-users/interface-adapters">
           <activation />
         </task>
+        <task path="$PROJECT_DIR$/api-notifications">
+          <activation />
+        </task>
         <projects_view>
           <tree_state>
             <expand>
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="api-users" type="f1a62948:ProjectNode" />
+                <item name="api-notifications" type="f1a62948:ProjectNode" />
               </path>
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="api-users" type="f1a62948:ProjectNode" />
-                <item name="interface-adapters" type="2d1252cf:ModuleNode" />
+                <item name="api-notifications" type="f1a62948:ProjectNode" />
+                <item name="infraestrutura" type="2d1252cf:ModuleNode" />
               </path>
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="api-users" type="f1a62948:ProjectNode" />
-                <item name="interface-adapters" type="2d1252cf:ModuleNode" />
+                <item name="api-notifications" type="f1a62948:ProjectNode" />
+                <item name="infraestrutura" type="2d1252cf:ModuleNode" />
                 <item name="Tasks" type="e4a08cd1:TasksNode" />
               </path>
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="api-users" type="f1a62948:ProjectNode" />
-                <item name="interface-adapters" type="2d1252cf:ModuleNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-                <item name="source generation" type="c8890929:TasksNode$1" />
               </path>
             </expand>
             <select />
@@ -161,6 +155,7 @@
     &quot;Gradle.Tests in 'api-users.enterprise-business-rules.test'.executor&quot;: &quot;Run&quot;,
     &quot;Gradle.Tests in 'api-users.interface-adapters.test'.executor&quot;: &quot;Run&quot;,
     &quot;Gradle.Tests in 'api-users.test'.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.api-notifications [:infraestrutura:backend.communication.ApiNotificationsApplication.main()].executor&quot;: &quot;Run&quot;,
     &quot;Gradle.api-user [:backend.finance.api_user.ApiUserApplication.main()].executor&quot;: &quot;Run&quot;,
     &quot;Gradle.api-user [build].executor&quot;: &quot;Run&quot;,
     &quot;Gradle.api-user [clean].executor&quot;: &quot;Run&quot;,
@@ -183,10 +178,10 @@
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit5&quot;,
     &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;feature/kafka-v1&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;feature/notifications-v1&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/juniorsmartins/Projetos/microservice-2026/docs/tutoriais/imagens&quot;,
-    &quot;onboarding.tips.debug.path&quot;: &quot;/home/juniorsmartins/Projetos/microservice-2026/api-users/frameworks-drivers/src/main/java/backend/finance/Main.java&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/juniormartins/Codigo/microservice-2026/api-notifications&quot;,
+    &quot;onboarding.tips.debug.path&quot;: &quot;/home/juniormartins/Codigo/microservice-2026/api-notifications/infraestrutura/src/main/java/backend/communication/Main.java&quot;,
     &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
@@ -195,21 +190,21 @@
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/api-notifications" />
+      <recent name="$PROJECT_DIR$/api-notifications/infraestrutura/src/test/resources" />
       <recent name="$PROJECT_DIR$/docs/tutoriais/imagens" />
       <recent name="$PROJECT_DIR$/docs/diagramas/api-users" />
       <recent name="$PROJECT_DIR$/api-users/interface-adapters/src/main/resources/liquibase/changesets" />
-      <recent name="$PROJECT_DIR$/api-users/interface-adapters/src/main/resources/liquibase/changelog/changesets" />
-      <recent name="$PROJECT_DIR$/api-users/interface-adapters/src/main/resources/exceptions" />
     </key>
     <key name="CreateTestDialog.Recents.Supers">
       <recent name="" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/api-notifications/infraestrutura/src/main/resources" />
       <recent name="$PROJECT_DIR$/api-users/interface-adapters/src/test/java/backend/finance/adapters/usecases" />
       <recent name="$PROJECT_DIR$/api-users/interface-adapters/src/test/java/backend/finance/adapters/utils" />
       <recent name="$PROJECT_DIR$/api-users/interface-adapters/src/main/avro" />
       <recent name="$PROJECT_DIR$/api-users/interface-adapters/src/main/resources/liquibase" />
-      <recent name="$PROJECT_DIR$/api-users/interface-adapters/src/main/resources/liquibase/changelog" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="backend.finance.adapters" />
@@ -230,28 +225,19 @@
       <recent name="backend.finance.dtos.internal" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.api-users:interface-adapters [generateAvroJava]">
-    <configuration name="api-users [clean]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/api-users" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="clean" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>false</RunAsTest>
-      <method v="2" />
+  <component name="RunManager" selected="Application.ApiNotificationsApplication">
+    <configuration name="ApiNotificationsApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="backend.communication.ApiNotificationsApplication" />
+      <module name="api-notifications.infraestrutura.main" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="backend.communication.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
     </configuration>
     <configuration name="api-users:application-business-rules [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
@@ -343,11 +329,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.ApiNotificationsApplication" />
         <item itemvalue="Gradle.api-users:interface-adapters [generateAvroJava]" />
         <item itemvalue="Gradle.api-users:interface-adapters [build]" />
         <item itemvalue="Gradle.api-users:enterprise-business-rules [build]" />
         <item itemvalue="Gradle.api-users:application-business-rules [build]" />
-        <item itemvalue="Gradle.api-users [clean]" />
       </list>
     </recent_temporary>
   </component>

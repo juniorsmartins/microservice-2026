@@ -27,6 +27,9 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$/api-notifications" />
+            <option value="$PROJECT_DIR$/api-notifications/aplicacao" />
+            <option value="$PROJECT_DIR$/api-notifications/dominio" />
+            <option value="$PROJECT_DIR$/api-notifications/infraestrutura" />
           </set>
         </option>
       </GradleProjectSettings>
