@@ -30,19 +30,59 @@ spring:
 
   kafka:
     bootstrap-servers: ${spring.embedded.kafka.brokers} # Usa broker embutido
-    topic:
-      event-create-customer: event-create-customer
-    properties:
-      schema.registry.url: mock://localhost # Usa o mock do Schema Registry
-      specific.avro.reader: true
-      auto.register.schemas: true
-      enable.idempotence: true # Habilita idempotência (necessário para evitar duplicatas em retries)
-      max.in.flight.requests.per.connection: 3 # Permitir múltiplas requisições em voo para maior throughput (padrão 5)
+    schema.registry.url: mock://localhost
+
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: io.confluent.kafka.serializers.KafkaAvroSerializer
+
+      # === Exactly-once (trio sagrado: idempotence, acks e retries) ===
+      acks: 0
+      enable.idempotence: false
+      max.in.flight.requests.per.connection: 5
+      retries: 0
+
+      # === Resiliência (funciona com o Retries) ===
+      retry.backoff.ms: 100
+      retry.backoff.max.ms: 1000
+      request.timeout.ms: 30000
+      delivery.timeout.ms: 120000
+
+      # === Throughput Máximo ===
+      batch-size: 131072
+      linger-ms: 5
+      compression-type: zstd
+
+      properties:
+        auto.register.schemas: true
+
     consumer:
-      group-id: group-api-user-customer
-      auto-offset-reset: earliest # Ou latest, dependendo do caso de uso - earliest lê desde o início do tópico
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
+
+      # === Estratégia de rebalance ===
+      partition.assignment.strategy: org.apache.kafka.clients.consumer.CooperativeStickyAssignor
+      group-id: ${spring.application.name}-v1
+      group.instance.id: ${spring.application.name}-${STATEFULSET_POD_INDEX:0}
+      session.timeout.ms: 45000
+
+      # === Forma de leitura e garantia de entrega ===
+      auto-offset-reset: latest
+      enable-auto-commit: false
+
+      # === Resiliência (funciona com Retries) ===
+      request-timeout-ms: 45000
+
+      # === Performance ===
+      max-poll-records: 500
+      max.poll.interval.ms: 600000
+
+      # === Schema Registry ===
+      properties:
+        specific.avro.reader: true
+
+    topic:
+      events:
+        customer-created: events.customer-created-test
+      min.insync.replicas: 0
+

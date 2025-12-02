@@ -1,6 +1,6 @@
 package backend.finance.adapters.mensageria.producer;
 
-import backend.finance.adapters.CustomerMessage;
+import backend.CustomerMessage;
 import backend.finance.adapters.mensageria.PropertiesConfig;
 import backend.finance.adapters.presenters.CustomerPresenter;
 import backend.finance.application.dtos.response.CustomerResponse;

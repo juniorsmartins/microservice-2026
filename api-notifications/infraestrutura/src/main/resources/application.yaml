@@ -58,7 +58,39 @@ spring:
     schemas: db-notifications # Defina explicitamente o schema/banco. Importante quando há múltiplos databases.
     encoding: UTF-8 # Encoding dos arquivos SQL
 
+  kafka:
+    bootstrap-servers: kafka-1:9092,kafka-2:9092,kafka-3:9092
+    schema.registry.url: http://schema-registry:8081
+    consumer:
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
 
+      # === Estratégia de rebalance ===
+      partition.assignment.strategy: org.apache.kafka.clients.consumer.CooperativeStickyAssignor
+      group-id: ${spring.application.name}-v1
+      group.instance.id: ${spring.application.name}-${STATEFULSET_POD_INDEX:0}
+      session.timeout.ms: 45000
+
+      # === Forma de leitura e garantia de entrega ===
+      auto-offset-reset: latest
+      enable-auto-commit: false
+      # enable-auto-commit false precisa de tópico DLT
+
+      # === Resiliência (funciona com Retries) ===
+      request-timeout-ms: 45000
+
+      # === Performance ===
+      max-poll-records: 500
+      max.poll.interval.ms: 600000
+
+      # === Schema Registry ===
+      properties:
+        specific.avro.reader: true
+
+    topic:
+      events:
+        customer-created: events.customer-created-v1
+      min.insync.replicas: 2
 
 
 

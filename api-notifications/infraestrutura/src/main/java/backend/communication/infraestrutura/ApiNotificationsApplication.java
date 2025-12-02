@@ -1,4 +1,4 @@
-package backend.communication;
+package backend.communication.infraestrutura;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

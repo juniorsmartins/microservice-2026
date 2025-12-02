@@ -1,4 +1,4 @@
-package backend.finance.adapters.mensageria.consumer;
+package backend.communication.infraestrutura.mensageria.consumer;
 
 import backend.CustomerMessage;
 import lombok.RequiredArgsConstructor;

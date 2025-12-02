@@ -45,34 +45,10 @@ spring:
     change-log: classpath:liquibase/changelog/master.yaml
     default-schema: public
 
-#  security: # Configuracao do Sprint Security
-#    form-login:
-#      page: /login # Define a URL personalizada (caso precise ser usada em outra parte do sistema)
-#
-#  messages: # Configuracao de mensagem para login personalizado
-#    basename: messages
-
-#  Kafka:
-#    bootstrap-servers: kafka:9092
-#    properties:
-#      schema:
-#        registry:
-#          url: kafka-cluster:8081
-#      specific:
-#        avro:
-#          reader: true
-#    topic:
-#      event-create-customer: event-create-customer
-#    producer:
-#      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-#      value-serializer: io.confluent.kafka.serializers.KafkaAvroSerializer
-#      properties:
-#        spring.json.trusted.packages: "*" # Asterisco para confiar em todos os pacotes para desserializacao
-#        spring.json.add.type.headers: false # Opcional: Evita headers de tipo para simplicidade
-
   kafka:
     bootstrap-servers: kafka-1:9092,kafka-2:9092,kafka-3:9092
     schema.registry.url: http://schema-registry:8081 # Endereço do esquema registry (obrigatório se usar Avro)
+
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer # Define como serializar chaves (obrigatório)
       value-serializer: io.confluent.kafka.serializers.KafkaAvroSerializer # Define como serializar o payload/mensagem - pode ser string, json, avro e etc (obrigatório)
@@ -124,7 +100,8 @@ spring:
         specific.avro.reader: true # Usa SpecificRecord (classes geradas a partir do Avro), não GenericRecord.
 
     topic:
-      events.customer-created: events.customer-created-v1
+      events:
+        customer-created: events.customer-created-v1
       min.insync.replicas: 2 # O min.insync.replicas configuração trabalha em conjunto com acks=all para controlar a durabilidade.
 
 
