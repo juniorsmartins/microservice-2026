@@ -38,7 +38,6 @@ spring:
   flyway:
     # --- Controle de Execução (Obrigatório) ---
     enabled: true # Liga o Flyway no Spring Boot
-#    baseline-on-empty-db: false # [SEGURANÇA] Não executa o baseline automaticamente
     baseline-on-migrate: true # a mais segura e usada por 99 % das empresas
     baseline-version: 0       # ou 1, depende da sua convenção
     baseline-description: "Initial structure"

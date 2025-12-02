@@ -3,7 +3,10 @@
 ## 1. Teoria
 
 ### Fontes:
+- https://docs.spring.io/spring-boot/how-to/data-initialization.html#howto.data-initialization.migration-tool.flyway 
 - https://documentation.red-gate.com/fd/quickstart-gradle-184127577.html
+- https://documentation.red-gate.com/fd/flyway-namespace-277578913.html 
+- https://docs.spring.io/spring-boot/api/rest/actuator/flyway.html 
 - https://www.baeldung.com/database-migrations-with-flyway
 - https://www.baeldung.com/liquibase-vs-flyway 
 - https://www.baeldung.com/flyway-roll-back 

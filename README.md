@@ -1,6 +1,7 @@
 # PROJETO: currículo vivo
 
-# EM CONSTRUÇÃO...
+O projeto utiliza Arquitetura de Microsserviços, com comunicação Assíncrona Não Bloqueante 
+e colaboração Orientada a Eventos. 
 
 ## Autoria
 
