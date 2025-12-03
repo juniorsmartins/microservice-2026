@@ -1,5 +1,5 @@
 rootProject.name = 'api-notifications'
 
-include 'dominio'
-include 'aplicacao'
-include 'infraestrutura'
+include('dominio')
+include('aplicacao')
+include('infraestrutura')

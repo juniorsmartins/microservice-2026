@@ -6,8 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="a1ea8202-910b-4a63-8ece-9f6a9a5ee2c0" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-notifications/infraestrutura/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/api-notifications/infraestrutura/src/main/resources/application.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-notifications/infraestrutura/src/main/java/backend/communication/infraestrutura/mensageria/consumer/EventSubscriber.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-notifications/infraestrutura/src/main/java/backend/communication/infraestrutura/mensageria/consumer/EventSubscriber.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-notifications/settings.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/api-notifications/settings.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/tutoriais/spring-mail.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/tutoriais/spring-mail.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -115,8 +116,8 @@
         <option value="Enum" />
         <option value="Record" />
         <option value="JUnit5 Test Class" />
-        <option value="Interface" />
         <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -235,11 +236,11 @@
       <recent name="backend.finance.api_user.infrastructure.gateways" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="backend.communication.infraestrutura.mensageria" />
-      <recent name="backend.finance.adapters.mensageria.consumer" />
-      <recent name="backend.finance.adapters.mensageria.producer" />
-      <recent name="backend.finance.application.dtos" />
-      <recent name="backend.finance.controllers" />
+      <recent name="backend.communication.infraestrutura.configs" />
+      <recent name="backend.communication.infraestrutura.presenters" />
+      <recent name="backend.communication.aplicacao.mappers" />
+      <recent name="backend.communication.aplicacao.dtos" />
+      <recent name="backend.communication.infraestrutura.jpas" />
     </key>
   </component>
   <component name="RunManager" selected="Gradle.api-notifications [:infraestrutura:build]">

@@ -17,8 +17,6 @@
 O Spring Framework fornece uma abstração para o envio de e-mails através da JavaMailSender 
 interface e o Spring Boot oferece configuração automática e um módulo inicializador para essa 
 abstração.
-
-
 ```
 
 ## 2. Configuração
