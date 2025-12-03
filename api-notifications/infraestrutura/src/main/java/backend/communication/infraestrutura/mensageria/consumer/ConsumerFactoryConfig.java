@@ -1,6 +1,6 @@
-package backend.finance.adapters.mensageria.consumer;
+package backend.communication.infraestrutura.mensageria.consumer;
 
-import backend.finance.adapters.CustomerMessage;
+import backend.CustomerMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,7 +15,7 @@ import java.util.Map;
 @Configuration
 @EnableKafka
 @RequiredArgsConstructor
-public class ConsumerCustomerConfig {
+public class ConsumerFactoryConfig {
 
     private final Map<String, Object> consumerConfigs;
 
@@ -26,9 +26,9 @@ public class ConsumerCustomerConfig {
 
     @Bean
     public ConcurrentKafkaListenerContainerFactory<String, CustomerMessage> listenerContainerFactoryCustomerMessage(ConsumerFactory<String, CustomerMessage> consumerFactoryCustomerMessage) {
-        ConcurrentKafkaListenerContainerFactory<String, CustomerMessage> factory = new ConcurrentKafkaListenerContainerFactory<>(); // Criar a fábrica de listeners
-        factory.setConsumerFactory(consumerFactoryCustomerMessage); // Configurar a fábrica de consumidores
-        factory.getContainerProperties().setAckMode(ContainerProperties.AckMode.MANUAL_IMMEDIATE); // Usar confirmação manual - mais controle - pode ser útil para garantir que a mensagem foi processada antes de confirmar
+        ConcurrentKafkaListenerContainerFactory<String, CustomerMessage> factory = new ConcurrentKafkaListenerContainerFactory<>();
+        factory.setConsumerFactory(consumerFactoryCustomerMessage);
+        factory.getContainerProperties().setAckMode(ContainerProperties.AckMode.MANUAL_IMMEDIATE);
         return factory;
     }
 }

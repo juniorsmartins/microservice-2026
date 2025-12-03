@@ -1,6 +1,6 @@
 volumes:
-  db_users:
-    name: db_users
+  db-users:
+    name: db-users
   db-notifications:
     name: db-notifications
   kafka1-data:
@@ -193,15 +193,15 @@ services:
     networks:
       - communication
 
-  api_users:
-    image: juniorsmartins/api_users:v0.0.1
-    container_name: api_users
-    hostname: api_users
+  api-users:
+    image: juniorsmartins/api-users:v0.0.1
+    container_name: api-users
+    hostname: api-users
     build:
       context: ../api-users
       dockerfile: Dockerfile
       args:
-        APP_NAME: "api_users"
+        APP_NAME: "api-users"
         APP_VERSION: "v0.0.1"
         APP_DESCRIPTION: "API de Usuários para segurança de sistema financeiro."
     ports:
@@ -214,23 +214,23 @@ services:
     environment:
       SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka-1:9092,kafka-2:9092,kafka-3:9092
       SPRING_KAFKA_PROPERTIES_SCHEMA_REGISTRY_URL: http://schema-registry:8081
-      DB_HOST: database_users
-      DB_NAME: db_users
+      DB_HOST: database-users
+      DB_NAME: db-users
       DB_PORT: 5432
       JAVA_TOOL_OPTIONS: "--enable-native-access=ALL-UNNAMED" # Elimina alguns warnnings
     restart: on-failure
     networks:
       - communication
     depends_on:
-      database_users:
+      database-users:
         condition: service_started
       schema-registry:
         condition: service_healthy
 
-  database_users:
+  database-users:
     image: postgres:17.0
-    container_name: database_users
-    hostname: database_users
+    container_name: database-users
+    hostname: database-users
     ports:
       - "5501:5432"
     deploy:
@@ -240,12 +240,12 @@ services:
           memory: 256M
     restart: always
     environment:
-      POSTGRES_DB: db_users
+      POSTGRES_DB: db-users
 #      POSTGRES_MULTIPLE_DATABASES: db_user, db_outro1, db_outro2
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
     volumes:
-      - db_users:/var/lib/postgresql/data
+      - db-users:/var/lib/postgresql/data
     networks:
       - communication
 
@@ -273,7 +273,7 @@ services:
       DB_HOST: database-notifications
       DB_PORT: 3306
       DB_NAME: db-notifications
-      JAVA_TOOL_OPTIONS: "--enable-native-access=ALL-UNNAMED" # Elimina alguns warnnings
+      JAVA_TOOL_OPTIONS: "--enable-native-access=ALL-UNNAMED"
     restart: on-failure
     networks:
       - communication

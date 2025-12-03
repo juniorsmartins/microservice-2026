@@ -1,6 +1,6 @@
 package backend.finance.adapters.mensageria.producer;
 
-import backend.finance.adapters.CustomerMessage;
+import backend.CustomerMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,7 +12,7 @@ import java.util.Map;
 
 @Configuration
 @RequiredArgsConstructor
-public class ProducerCustomerConfig {
+public class ProducerFactoryConfig {
 
     private final Map<String, Object> producerConfigs;
 
