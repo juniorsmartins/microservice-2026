@@ -5,12 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a1ea8202-910b-4a63-8ece-9f6a9a5ee2c0" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-notifications/infraestrutura/src/main/java/backend/communication/infraestrutura/mensageria/consumer/ConsumerFactoryConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-notifications/infraestrutura/src/main/java/backend/communication/infraestrutura/mensageria/consumer/ConsumerFactoryConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/interface-adapters/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/interface-adapters/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/interface-adapters/src/test/java/backend/finance/adapters/utils/BaseIntegrationTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/interface-adapters/src/test/java/backend/finance/adapters/utils/BaseIntegrationTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/interface-adapters/src/test/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/interface-adapters/src/test/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-notifications/infraestrutura/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/api-notifications/infraestrutura/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-notifications/infraestrutura/src/test/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/api-notifications/infraestrutura/src/test/resources/application.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
