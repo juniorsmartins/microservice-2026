@@ -5,8 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a1ea8202-910b-4a63-8ece-9f6a9a5ee2c0" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/api-notifications/infraestrutura/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/api-notifications/infraestrutura/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-notifications/infraestrutura/src/test/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/api-notifications/infraestrutura/src/test/resources/application.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-notifications/infraestrutura/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/api-notifications/infraestrutura/src/main/resources/application.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -77,32 +78,29 @@
             <expand>
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="api-users" type="f1a62948:ProjectNode" />
+                <item name="api-notifications" type="f1a62948:ProjectNode" />
               </path>
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="api-users" type="f1a62948:ProjectNode" />
-                <item name="interface-adapters" type="2d1252cf:ModuleNode" />
+                <item name="api-notifications" type="f1a62948:ProjectNode" />
+                <item name="infraestrutura" type="2d1252cf:ModuleNode" />
               </path>
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="api-users" type="f1a62948:ProjectNode" />
-                <item name="interface-adapters" type="2d1252cf:ModuleNode" />
+                <item name="api-notifications" type="f1a62948:ProjectNode" />
+                <item name="infraestrutura" type="2d1252cf:ModuleNode" />
                 <item name="Tasks" type="e4a08cd1:TasksNode" />
               </path>
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="api-users" type="f1a62948:ProjectNode" />
-                <item name="interface-adapters" type="2d1252cf:ModuleNode" />
+                <item name="api-notifications" type="f1a62948:ProjectNode" />
+                <item name="infraestrutura" type="2d1252cf:ModuleNode" />
                 <item name="Tasks" type="e4a08cd1:TasksNode" />
                 <item name="build" type="c8890929:TasksNode$1" />
               </path>
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="api-users" type="f1a62948:ProjectNode" />
-                <item name="interface-adapters" type="2d1252cf:ModuleNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-                <item name="source generation" type="c8890929:TasksNode$1" />
               </path>
             </expand>
             <select />
@@ -116,8 +114,8 @@
       <list>
         <option value="Enum" />
         <option value="Record" />
-        <option value="Interface" />
         <option value="JUnit5 Test Class" />
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -195,7 +193,7 @@
     "RunOnceActivity.git.unshallow": "true",
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
-    "git-widget-placeholder": "feature/notifications-v1",
+    "git-widget-placeholder": "feature/notifications-mail-v1",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "/home/juniormartins/Codigo/microservice-2026/api-notifications/infraestrutura/src/main/java/backend/communication/infraestrutura/mensageria/consumer",
     "onboarding.tips.debug.path": "/home/juniormartins/Codigo/microservice-2026/api-notifications/infraestrutura/src/main/java/backend/communication/Main.java",
@@ -224,6 +222,8 @@
       <recent name="$PROJECT_DIR$/api-users/interface-adapters/src/main/resources/liquibase" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="backend.communication.aplicacao.dtos" />
+      <recent name="backend.communication.aplicacao" />
       <recent name="backend.finance.adapters" />
       <recent name="backend.finance.dtos" />
     </key>
@@ -242,7 +242,7 @@
       <recent name="backend.finance.controllers" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.api-users [:interface-adapters:build]">
+  <component name="RunManager" selected="Gradle.api-notifications [:infraestrutura:build]">
     <configuration name="api-notifications [:infraestrutura:build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -355,10 +355,10 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.api-notifications [:infraestrutura:build]" />
         <item itemvalue="Gradle.api-users [:interface-adapters:build]" />
         <item itemvalue="Gradle.api-users [:interface-adapters:generateAvroJava]" />
         <item itemvalue="Gradle.api-users [:interface-adapters:clean]" />
-        <item itemvalue="Gradle.api-notifications [:infraestrutura:build]" />
         <item itemvalue="Gradle.api-notifications [:infraestrutura:generateAvroJava]" />
       </list>
     </recent_temporary>
