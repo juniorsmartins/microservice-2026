@@ -1,6 +1,6 @@
 package backend.finance.adapters.presenters;
 
-import backend.finance.adapters.CustomerMessage;
+import backend.CustomerMessage;
 import backend.finance.adapters.jpas.CustomerJpa;
 import backend.finance.application.dtos.CustomerDto;
 import backend.finance.application.dtos.response.CustomerResponse;
