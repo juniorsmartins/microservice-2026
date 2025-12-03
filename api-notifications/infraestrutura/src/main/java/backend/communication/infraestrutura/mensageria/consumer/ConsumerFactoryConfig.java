@@ -1,6 +1,6 @@
 package backend.communication.infraestrutura.mensageria.consumer;
 
-import backend.communication.infraestrutura.CustomerMessage;
+import backend.CustomerMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

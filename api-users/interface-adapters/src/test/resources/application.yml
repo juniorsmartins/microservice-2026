@@ -62,8 +62,8 @@ spring:
 
       # === Estratégia de rebalance ===
       partition.assignment.strategy: org.apache.kafka.clients.consumer.CooperativeStickyAssignor
-      group-id: ${spring.application.name}-v1
-      group.instance.id: ${spring.application.name}-${STATEFULSET_POD_INDEX:0}
+      group-id: api-users-v1
+      group.instance.id: api-users-0
       session.timeout.ms: 45000
 
       # === Forma de leitura e garantia de entrega ===

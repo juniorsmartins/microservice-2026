@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: api_users
+    name: api-users
   profiles:
     active: default
 
@@ -15,7 +15,7 @@ spring:
 
   datasource: # Configura o datasource do banco de dados.
     driver-class-name: org.postgresql.Driver # Especifica o driver JDBC (neste caso, para Postgres).
-    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:db_users} # Define a URL de conexao ao banco.
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:db-users} # Define a URL de conexao ao banco.
     username: ${DB_USERNAME:postgres}
     password: ${DB_PASSWORD:postgres}
 

@@ -6,19 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="a1ea8202-910b-4a63-8ece-9f6a9a5ee2c0" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-notifications/infraestrutura/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/api-notifications/infraestrutura/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-notifications/infraestrutura/src/main/java/backend/communication/ApiNotificationsApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-notifications/infraestrutura/src/main/java/backend/communication/infraestrutura/ApiNotificationsApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-notifications/infraestrutura/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/api-notifications/infraestrutura/src/main/resources/application.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/interface-adapters/src/main/avro/customer.avsc" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/interface-adapters/src/main/avro/customer.avsc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/interface-adapters/src/main/java/backend/finance/adapters/mensageria/consumer/ConsumerCustomerConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/interface-adapters/src/main/java/backend/finance/adapters/mensageria/consumer/ConsumerFactoryConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/interface-adapters/src/main/java/backend/finance/adapters/mensageria/consumer/EventSubscriber.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/interface-adapters/src/main/java/backend/finance/adapters/mensageria/consumer/EventSubscriber.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/interface-adapters/src/main/java/backend/finance/adapters/mensageria/producer/EventPublisher.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/interface-adapters/src/main/java/backend/finance/adapters/mensageria/producer/EventPublisher.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/interface-adapters/src/main/java/backend/finance/adapters/mensageria/producer/ProducerCustomerConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/interface-adapters/src/main/java/backend/finance/adapters/mensageria/producer/ProducerFactoryConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/interface-adapters/src/main/java/backend/finance/adapters/presenters/CustomerPresenter.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/interface-adapters/src/main/java/backend/finance/adapters/presenters/CustomerPresenter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/interface-adapters/src/main/java/backend/finance/adapters/presenters/CustomerPresenterImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/interface-adapters/src/main/java/backend/finance/adapters/presenters/CustomerPresenterImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-notifications/infraestrutura/src/main/java/backend/communication/infraestrutura/mensageria/consumer/ConsumerFactoryConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-notifications/infraestrutura/src/main/java/backend/communication/infraestrutura/mensageria/consumer/ConsumerFactoryConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api-users/interface-adapters/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/interface-adapters/src/main/resources/application.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api-users/interface-adapters/src/test/java/backend/finance/adapters/utils/BaseIntegrationTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/interface-adapters/src/test/java/backend/finance/adapters/utils/BaseIntegrationTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api-users/interface-adapters/src/test/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/interface-adapters/src/test/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker/docker-compose.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -87,28 +79,6 @@
         <projects_view>
           <tree_state>
             <expand>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="api-notifications" type="f1a62948:ProjectNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="api-notifications" type="f1a62948:ProjectNode" />
-                <item name="infraestrutura" type="2d1252cf:ModuleNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="api-notifications" type="f1a62948:ProjectNode" />
-                <item name="infraestrutura" type="2d1252cf:ModuleNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="api-notifications" type="f1a62948:ProjectNode" />
-                <item name="infraestrutura" type="2d1252cf:ModuleNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-                <item name="source generation" type="c8890929:TasksNode$1" />
-              </path>
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="api-users" type="f1a62948:ProjectNode" />
@@ -198,6 +168,7 @@
     "Gradle.api-notifications [:aplicacao:clean].executor": "Run",
     "Gradle.api-notifications [:dominio:clean].executor": "Run",
     "Gradle.api-notifications [:infraestrutura:backend.communication.ApiNotificationsApplication.main()].executor": "Run",
+    "Gradle.api-notifications [:infraestrutura:build].executor": "Run",
     "Gradle.api-notifications [:infraestrutura:clean].executor": "Run",
     "Gradle.api-notifications [:infraestrutura:generateAvroJava].executor": "Run",
     "Gradle.api-notifications [clean].executor": "Run",
@@ -276,10 +247,10 @@
     </key>
   </component>
   <component name="RunManager" selected="Gradle.api-users [:interface-adapters:build]">
-    <configuration name="api-users [:application-business-rules:clean]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="api-notifications [:infraestrutura:build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/api-users" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/api-notifications" />
         <option name="externalSystemIdString" value="GRADLE" />
         <option name="scriptParameters" />
         <option name="taskDescriptions">
@@ -287,7 +258,7 @@
         </option>
         <option name="taskNames">
           <list>
-            <option value=":application-business-rules:clean" />
+            <option value=":infraestrutura:build" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -298,10 +269,10 @@
       <RunAsTest>false</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="api-users [:enterprise-business-rules:clean]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="api-notifications [:infraestrutura:generateAvroJava]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/api-users" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/api-notifications" />
         <option name="externalSystemIdString" value="GRADLE" />
         <option name="scriptParameters" />
         <option name="taskDescriptions">
@@ -309,7 +280,7 @@
         </option>
         <option name="taskNames">
           <list>
-            <option value=":enterprise-business-rules:clean" />
+            <option value=":infraestrutura:generateAvroJava" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -391,8 +362,8 @@
         <item itemvalue="Gradle.api-users [:interface-adapters:build]" />
         <item itemvalue="Gradle.api-users [:interface-adapters:generateAvroJava]" />
         <item itemvalue="Gradle.api-users [:interface-adapters:clean]" />
-        <item itemvalue="Gradle.api-users [:enterprise-business-rules:clean]" />
-        <item itemvalue="Gradle.api-users [:application-business-rules:clean]" />
+        <item itemvalue="Gradle.api-notifications [:infraestrutura:build]" />
+        <item itemvalue="Gradle.api-notifications [:infraestrutura:generateAvroJava]" />
       </list>
     </recent_temporary>
   </component>

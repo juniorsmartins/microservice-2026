@@ -14,7 +14,6 @@ import org.springframework.test.annotation.DirtiesContext;
 @SpringBootTest
 @EmbeddedKafka(partitions = 3, // Configuração do Kafka embutido para testes
         topics = {"${spring.kafka.topic.events.customer-created}"},
-//        topics = {"events.customer-created-test"},
         brokerProperties = {"listeners=PLAINTEXT://localhost:0",
         "auto.create.topics.enable=true"})
 @DirtiesContext // Para garantir que o contexto seja reiniciado entre os testes, evitando interferências
