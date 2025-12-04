@@ -11,7 +11,7 @@ public class NotificationPresenterImpl implements NotificationPresenter {
 
     @Override
     public NotificationJpa toJpa(NotificationDto dto) {
-        return new NotificationJpa(null, dto.customerCode(), dto.customerEmail(), dto.message(), dto.reason(), null);
+        return new NotificationJpa(dto.id(), dto.customerCode(), dto.customerEmail(), dto.message(), dto.reason(), dto.createdAt());
     }
 
     @Override

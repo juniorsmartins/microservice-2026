@@ -9,6 +9,7 @@
 - https://www.baeldung.com/java-email-sendgrid 
 - https://javaee.github.io/javamail/ 
 - https://mailtrap.io/blog/spring-send-email/ 
+- https://www.youtube.com/watch?v=_MwdIaMy_Ao 
 
 
 ### Introdução

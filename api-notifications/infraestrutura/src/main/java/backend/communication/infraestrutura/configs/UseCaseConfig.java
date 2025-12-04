@@ -1,6 +1,7 @@
 package backend.communication.infraestrutura.configs;
 
 import backend.communication.aplicacao.mappers.NotificationMapper;
+import backend.communication.aplicacao.ports.output.EmailOutputPort;
 import backend.communication.aplicacao.ports.output.NotificationSaveOutputPort;
 import backend.communication.aplicacao.usecases.EmailEventCustomerCreatedUseCase;
 import org.springframework.context.annotation.Bean;
@@ -11,7 +12,7 @@ public class UseCaseConfig {
 
     @Bean
     public EmailEventCustomerCreatedUseCase emailEventCustomerCreatedUseCase(
-            NotificationSaveOutputPort notificationSaveOutputPort, NotificationMapper notificationMapper) {
-        return new EmailEventCustomerCreatedUseCase(notificationSaveOutputPort, notificationMapper);
+            NotificationSaveOutputPort notificationSaveOutputPort, NotificationMapper notificationMapper, EmailOutputPort emailOutputPort) {
+        return new EmailEventCustomerCreatedUseCase(notificationSaveOutputPort, notificationMapper, emailOutputPort);
     }
 }

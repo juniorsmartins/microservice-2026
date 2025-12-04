@@ -96,7 +96,7 @@ spring:
     host: smtp.gmail.com
     port: 587
     username: dev.juniorsmartins@gmail.com
-    password: ljiz cypm zghp wxnw
+    password: nrqd slph cgpq tlit
     properties:
       mail:
         smtp:

@@ -2,6 +2,7 @@ package backend.communication.aplicacao.usecases;
 
 import backend.communication.aplicacao.mappers.NotificationMapper;
 import backend.communication.aplicacao.ports.input.EmailEventCustomerCreatedInputPort;
+import backend.communication.aplicacao.ports.output.EmailOutputPort;
 import backend.communication.aplicacao.ports.output.NotificationSaveOutputPort;
 import backend.communication.dominio.entities.Notification;
 import backend.communication.dominio.enuns.ReasonEnum;
@@ -14,9 +15,15 @@ public class EmailEventCustomerCreatedUseCase implements EmailEventCustomerCreat
 
     private final NotificationMapper notificationMapper;
 
-    public EmailEventCustomerCreatedUseCase(NotificationSaveOutputPort notificationSaveOutputPort, NotificationMapper notificationMapper) {
+    private final EmailOutputPort emailOutputPort;
+
+    public EmailEventCustomerCreatedUseCase(
+            NotificationSaveOutputPort notificationSaveOutputPort,
+            NotificationMapper notificationMapper,
+            EmailOutputPort emailOutputPort) {
         this.notificationSaveOutputPort = notificationSaveOutputPort;
         this.notificationMapper = notificationMapper;
+        this.emailOutputPort = emailOutputPort;
     }
 
     @Override
@@ -26,6 +33,7 @@ public class EmailEventCustomerCreatedUseCase implements EmailEventCustomerCreat
         var notification = checkNotification(id, email, message);
         var notificationDto = notificationMapper.toDto(notification);
         var notificationDtoSaved = notificationSaveOutputPort.save(notificationDto);
+        emailOutputPort.sendEmail(notificationDtoSaved.customerEmail(), "Cadastro", message);
     }
 
     private String prepareMessage(String nome) {
