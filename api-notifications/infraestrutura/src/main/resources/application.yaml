@@ -92,5 +92,15 @@ spring:
         customer-created: events.customer-created-v1
       min.insync.replicas: 2
 
-
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: dev.juniorsmartins@gmail.com
+    password: nrqd slph cgpq tlit
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
 

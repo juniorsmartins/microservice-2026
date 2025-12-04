@@ -11,23 +11,13 @@ e colaboração Orientada a Eventos.
 
 1. Arquitetura 
 2. [API - Users](#api---users)
-    * [Tecnologias](#tecnologias-users);
-    * [Diagramas](#diagramas-users);
-2.  [API - Accounts](#api---accounts)
-    * [Entidades](#entidades-account)
-    * [Endpoints](#endpoints-account)
-3.  [API - Investments](#api---investments)
-    * [Entidades](#entidades-investment)
-    * [Endpoints](#endpoints-investment)
-4.  [API - Notifications](#api---notifications)
-    * [Entidades](#entidades-notifications)
-    * [Endpoints](#endpoints-notifications)
-5.  [API - Reports](#api---reports)
-    * [Entidades](#entidades-report)
-    * [Endpoints](#endpoints-report)
-6.  [Tutoriais](#tutoriais)
-7.  [Como rodar a aplicação](#como-rodar-a-aplicacao) 
-8.  [Coleções de teste para Postman](#colecoes-de-teste-para-postman)
+3.  [API - Accounts](#api---accounts)
+4.  [API - Investments](#api---investments)
+5.  [API - Notifications](#api---notifications)
+6.  [API - Reports](#api---reports)
+7.  [Tutoriais](#tutoriais)
+8.  [Como rodar a aplicação](#como-rodar-a-aplicacao) 
+9.  [Coleções de teste para Postman](#colecoes-de-teste-para-postman)
 
 ## Arquitetura 
 
@@ -68,7 +58,6 @@ Arquitetura Hexagonal
 
 ## API - Notifications
 
-Arquitetura Multicamadas
 
 ### Tecnologias Notifications 
 
@@ -77,6 +66,7 @@ Arquitetura Multicamadas
 - Spring Boot (versão 4.0.0);
 - Spring Data Web;
 - Spring Data JPA;
+- Spring Mail;
 - Flyway (migration em SQL);
 - Apache Kafka, Schema Registry e Apache Avro (mensageria);
 - RestAssured, JUnit e Mockito (testes);
