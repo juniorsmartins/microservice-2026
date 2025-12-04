@@ -64,7 +64,7 @@ Arquitetura Hexagonal
 - Java (versão 25);
 - Gradle (versão 9.1.0);
 - Spring Boot (versão 4.0.0);
-- Spring Data Web;
+- Spring Data WebMVC;
 - Spring Data JPA;
 - Spring Mail;
 - Flyway (migration em SQL);
@@ -80,6 +80,8 @@ Arquitetura Hexagonal
 ## Tutoriais
 
 - [Gradle multi-modulo](docs/tutoriais/multimodulo.md);
-- [Liquibase](docs/tutoriais/liquibase.md);
 - [Kafka](docs/tutoriais/kafka.md);
+- [Liquibase](docs/tutoriais/liquibase.md);
+- [Flyway](docs/tutoriais/flyway.md);
+- [Spring Mail](docs/tutoriais/spring-mail.md);
 
