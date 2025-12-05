@@ -21,8 +21,8 @@ import org.mockito.MockitoAnnotations;
 import java.util.Optional;
 import java.util.UUID;
 
-import static backend.finance.application.utils.CustomerTestFactory.buildDto;
-import static backend.finance.application.utils.CustomerTestFactory.defaultRequest;
+import static backend.finance.application.Utils.CustomerTestFactory.buildDto;
+import static backend.finance.application.Utils.CustomerTestFactory.defaultRequest;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;

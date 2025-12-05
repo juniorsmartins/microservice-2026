@@ -1,4 +1,4 @@
-package backend.finance.application.utils;
+package backend.finance.application.Utils;
 
 import backend.finance.application.dtos.CustomerDto;
 import backend.finance.application.dtos.RoleDto;

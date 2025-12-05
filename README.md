@@ -83,5 +83,6 @@ Arquitetura Hexagonal
 - [Kafka](docs/tutoriais/kafka.md);
 - [Liquibase](docs/tutoriais/liquibase.md);
 - [Flyway](docs/tutoriais/flyway.md);
-- [Spring Mail](docs/tutoriais/spring-mail.md);
+- [Spring Mail](docs/tutoriais/spring-mail.md); 
+- [Padrões e Utilidades](docs/tutoriais/padroes_utils.md)
 

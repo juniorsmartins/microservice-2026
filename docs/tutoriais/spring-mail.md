@@ -112,7 +112,7 @@ jar {
 }
 ```
 
-Configuração do servidor de email no application.yml (TODO - falta configurar nos testes)
+Configuração do servidor de email no application.yml (TODO - falta configurar nos testes):
 ```
 spring:
   mail:
@@ -128,7 +128,7 @@ spring:
             enable: true
 ```
 
-configuração programática
+Configuração programática:
 ```
 @Configuration
 @Getter

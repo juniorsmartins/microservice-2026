@@ -6,8 +6,16 @@
   <component name="ChangeListManager">
     <list default="true" id="a1ea8202-910b-4a63-8ece-9f6a9a5ee2c0" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-notifications/aplicacao/src/main/java/backend/communication/aplicacao/usecases/EmailEventCustomerCreatedUseCase.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-notifications/aplicacao/src/main/java/backend/communication/aplicacao/usecases/EmailEventCustomerCreatedUseCase.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-notifications/infraestrutura/src/main/java/backend/communication/infraestrutura/email/EmailPropertiesConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-notifications/infraestrutura/src/main/java/backend/communication/infraestrutura/email/EmailPropertiesConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-notifications/infraestrutura/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/api-notifications/infraestrutura/src/main/resources/application.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/application-business-rules/src/test/java/backend/finance/application/usecases/CustomerCreateUseCaseTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/application-business-rules/src/test/java/backend/finance/application/usecases/CustomerCreateUseCaseTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/application-business-rules/src/test/java/backend/finance/application/usecases/CustomerDisableUseCaseTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/application-business-rules/src/test/java/backend/finance/application/usecases/CustomerDisableUseCaseTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/application-business-rules/src/test/java/backend/finance/application/usecases/CustomerQueryUseCaseTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/application-business-rules/src/test/java/backend/finance/application/usecases/CustomerQueryUseCaseTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/application-business-rules/src/test/java/backend/finance/application/usecases/CustomerUpdateUseCaseTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/application-business-rules/src/test/java/backend/finance/application/usecases/CustomerUpdateUseCaseTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/application-business-rules/src/test/java/backend/finance/application/utils/CustomerTestFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/application-business-rules/src/test/java/backend/finance/application/Utils/CustomerTestFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/application-business-rules/src/test/java/backend/finance/application/validation/CustomerValidationImplTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/application-business-rules/src/test/java/backend/finance/application/validation/CustomerValidationImplTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/application-business-rules/src/test/java/backend/finance/application/validation/UserValidationImplTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/application-business-rules/src/test/java/backend/finance/application/validation/UserValidationImplTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/interface-adapters/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/interface-adapters/src/main/resources/application.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docs/tutoriais/spring-mail.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/tutoriais/spring-mail.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -133,9 +141,9 @@
       <list>
         <option value="Enum" />
         <option value="Record" />
-        <option value="JUnit5 Test Class" />
         <option value="Interface" />
         <option value="Class" />
+        <option value="JUnit5 Test Class" />
       </list>
     </option>
   </component>
@@ -247,11 +255,11 @@
       <recent name="backend.finance.dtos" />
     </key>
     <key name="CreateTestDialog.RecentsKey">
+      <recent name="backend.finance.application.tools" />
+      <recent name="backend.finance.application.utils" />
       <recent name="backend.finance.adapters.controllers" />
       <recent name="backend.finance.application.usecases" />
       <recent name="backend.finance.application.validation" />
-      <recent name="backend.finance.enterprise.entities" />
-      <recent name="backend.finance.api_user.infrastructure.gateways" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="backend.communication.infraestrutura.configs" />
@@ -261,7 +269,51 @@
       <recent name="backend.communication.infraestrutura.jpas" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.api-notifications [:infraestrutura:build]">
+  <component name="RunManager" selected="Gradle.Tests in 'api-users.application-business-rules.test'">
+    <configuration name="Tests in 'api-users.application-business-rules.test'" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/api-users" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":application-business-rules:test" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="Tests in 'api-users.interface-adapters.test'" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/api-users" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":interface-adapters:test" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
     <configuration name="api-notifications [:infraestrutura:build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -284,28 +336,6 @@
       <RunAsTest>false</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="api-notifications [:infraestrutura:generateAvroJava]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/api-notifications" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value=":infraestrutura:generateAvroJava" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>false</RunAsTest>
-      <method v="2" />
-    </configuration>
     <configuration name="api-users [:interface-adapters:build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -318,28 +348,6 @@
         <option name="taskNames">
           <list>
             <option value=":interface-adapters:build" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>false</RunAsTest>
-      <method v="2" />
-    </configuration>
-    <configuration name="api-users [:interface-adapters:clean]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/api-users" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value=":interface-adapters:clean" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -374,11 +382,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.Tests in 'api-users.application-business-rules.test'" />
+        <item itemvalue="Gradle.Tests in 'api-users.interface-adapters.test'" />
         <item itemvalue="Gradle.api-notifications [:infraestrutura:build]" />
         <item itemvalue="Gradle.api-users [:interface-adapters:build]" />
         <item itemvalue="Gradle.api-users [:interface-adapters:generateAvroJava]" />
-        <item itemvalue="Gradle.api-users [:interface-adapters:clean]" />
-        <item itemvalue="Gradle.api-notifications [:infraestrutura:generateAvroJava]" />
       </list>
     </recent_temporary>
   </component>
