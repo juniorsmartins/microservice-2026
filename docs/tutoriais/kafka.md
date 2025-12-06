@@ -18,7 +18,8 @@
 - https://docs.conduktor.io/learn/fundamentals/producers
 - https://docs.conduktor.io/learn/fundamentals/consumers
 - https://docs.conduktor.io/learn/fundamentals/topic-replication
-- https://hub.docker.com/r/lensesio/fast-data-dev
+- https://hub.docker.com/r/lensesio/fast-data-dev 
+- https://docs.spring.io/spring-boot/reference/features/ssl.html 
 
 ### Introdução
 ```

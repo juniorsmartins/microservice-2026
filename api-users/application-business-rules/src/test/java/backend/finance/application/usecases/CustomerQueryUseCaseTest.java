@@ -13,7 +13,7 @@ import org.mockito.MockitoAnnotations;
 import java.util.Optional;
 import java.util.UUID;
 
-import static backend.finance.application.utils.CustomerTestFactory.defaultDto;
+import static backend.finance.application.Utils.CustomerTestFactory.defaultDto;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;

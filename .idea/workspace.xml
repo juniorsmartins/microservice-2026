@@ -6,9 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="a1ea8202-910b-4a63-8ece-9f6a9a5ee2c0" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-notifications/aplicacao/src/main/java/backend/communication/aplicacao/usecases/EmailEventCustomerCreatedUseCase.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-notifications/aplicacao/src/main/java/backend/communication/aplicacao/usecases/EmailEventCustomerCreatedUseCase.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-notifications/infraestrutura/src/main/java/backend/communication/infraestrutura/configs/UseCaseConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-notifications/infraestrutura/src/main/java/backend/communication/infraestrutura/configs/UseCaseConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-notifications/infraestrutura/src/main/java/backend/communication/infraestrutura/repositories/NotificationRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-notifications/infraestrutura/src/main/java/backend/communication/infraestrutura/repositories/NotificationRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-notifications/infraestrutura/src/main/java/backend/communication/infraestrutura/gateways/NotificationFindGateway.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-notifications/infraestrutura/src/main/java/backend/communication/infraestrutura/gateways/NotificationQueryGateway.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-notifications/infraestrutura/src/main/java/backend/communication/infraestrutura/presenters/NotificationPresenter.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-notifications/infraestrutura/src/main/java/backend/communication/infraestrutura/presenters/NotificationPresenter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-notifications/infraestrutura/src/main/java/backend/communication/infraestrutura/presenters/NotificationPresenterImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-notifications/infraestrutura/src/main/java/backend/communication/infraestrutura/presenters/NotificationPresenterImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -134,8 +134,8 @@
         <option value="Enum" />
         <option value="Record" />
         <option value="JUnit5 Test Class" />
-        <option value="Interface" />
         <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -247,21 +247,65 @@
       <recent name="backend.finance.dtos" />
     </key>
     <key name="CreateTestDialog.RecentsKey">
+      <recent name="backend.finance.application.tools" />
+      <recent name="backend.finance.application.utils" />
       <recent name="backend.finance.adapters.controllers" />
       <recent name="backend.finance.application.usecases" />
       <recent name="backend.finance.application.validation" />
-      <recent name="backend.finance.enterprise.entities" />
-      <recent name="backend.finance.api_user.infrastructure.gateways" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="backend.communication.aplicacao.dtos.response" />
       <recent name="backend.communication.infraestrutura.configs" />
       <recent name="backend.communication.infraestrutura.presenters" />
       <recent name="backend.communication.aplicacao.mappers" />
       <recent name="backend.communication.aplicacao.dtos" />
-      <recent name="backend.communication.infraestrutura.jpas" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.api-notifications [:infraestrutura:build]">
+  <component name="RunManager" selected="Gradle.api-users [:interface-adapters:build]">
+    <configuration name="Tests in 'api-users.application-business-rules.test'" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/api-users" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":application-business-rules:test" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="Tests in 'api-users.interface-adapters.test'" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/api-users" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":interface-adapters:test" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
     <configuration name="api-notifications [:infraestrutura:build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -284,28 +328,6 @@
       <RunAsTest>false</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="api-notifications [:infraestrutura:generateAvroJava]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/api-notifications" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value=":infraestrutura:generateAvroJava" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>false</RunAsTest>
-      <method v="2" />
-    </configuration>
     <configuration name="api-users [:interface-adapters:build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -318,28 +340,6 @@
         <option name="taskNames">
           <list>
             <option value=":interface-adapters:build" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>false</RunAsTest>
-      <method v="2" />
-    </configuration>
-    <configuration name="api-users [:interface-adapters:clean]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/api-users" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value=":interface-adapters:clean" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -374,11 +374,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.api-notifications [:infraestrutura:build]" />
         <item itemvalue="Gradle.api-users [:interface-adapters:build]" />
+        <item itemvalue="Gradle.api-notifications [:infraestrutura:build]" />
+        <item itemvalue="Gradle.Tests in 'api-users.application-business-rules.test'" />
+        <item itemvalue="Gradle.Tests in 'api-users.interface-adapters.test'" />
         <item itemvalue="Gradle.api-users [:interface-adapters:generateAvroJava]" />
-        <item itemvalue="Gradle.api-users [:interface-adapters:clean]" />
-        <item itemvalue="Gradle.api-notifications [:infraestrutura:generateAvroJava]" />
       </list>
     </recent_temporary>
   </component>

@@ -8,7 +8,7 @@ import backend.finance.application.mappers.RoleMapperImpl;
 import backend.finance.application.mappers.UserMapperImpl;
 import backend.finance.application.ports.output.CustomerEventPublisherOutputPort;
 import backend.finance.application.ports.output.CustomerSaveOutputPort;
-import backend.finance.application.utils.CustomerTestFactory;
+import backend.finance.application.Utils.CustomerTestFactory;
 import backend.finance.application.validation.CustomerValidation;
 import backend.finance.application.validation.RoleValidation;
 import backend.finance.application.validation.UserValidation;
