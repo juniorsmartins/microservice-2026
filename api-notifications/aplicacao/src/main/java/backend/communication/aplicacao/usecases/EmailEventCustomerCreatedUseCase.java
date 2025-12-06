@@ -39,6 +39,8 @@ public class EmailEventCustomerCreatedUseCase implements EmailEventCustomerCreat
 
         UUID customerCode = parseUUID(id);
         if (customerCode == null) return;
+        if (nome == null) return;
+        if (email == null) return;
 
         if (checkIdempotency(customerCode, ReasonEnum.CUSTOMER_CREATED.getValue())) {
             log.info("Evento de customer " + customerCode + " já foi processado (idempotência).");
