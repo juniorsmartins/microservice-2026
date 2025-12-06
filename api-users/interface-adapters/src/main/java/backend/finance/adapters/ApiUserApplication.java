@@ -3,6 +3,8 @@ package backend.finance.adapters;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.util.TimeZone;
+
 @SpringBootApplication(
         scanBasePackages = {
                 "backend.finance.adapters",            // interface-adapters
@@ -12,7 +14,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 )
 public class ApiUserApplication {
 
-    public static void main(String[] args) {
+    static void main(String[] args) {
+        TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
         SpringApplication.run(ApiUserApplication.class, args);
     }
 }
