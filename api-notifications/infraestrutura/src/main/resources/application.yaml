@@ -25,6 +25,28 @@ spring:
     username: ${MARIADB_USER:mariadb}
     password: ${MARIADB_PASSWORD:mariadb}
 
+  # --------------------------------------------------
+  # Config de Pool de Conexões
+  # --------------------------------------------------
+  hikari:
+    # Nome do pool (útil em logs / monitoramento)
+    pool-name: ${spring.application.name}
+    # Quantidade mínima de conexões ociosas mantidas no pool
+    minimum-idle: 5
+    # Quantidade máxima de conexões simultâneas
+    maximum-pool-size: 20
+    # Define tempo limite de ociosidade para conexões excedentes. Serão removidas após esse tempo.
+    idle-timeout: 600000
+    # Tempo máximo de vida de uma conexão antes de ser reciclada
+    max-lifetime: 1800000
+    # Tempo máximo esperando uma conexão antes de erro. Se todas as conexões estiverem em uso e outra requisição chegar, ela espera até 3s. Se passar disso → SQLTransientConnectionException.
+    connection-timeout: 3000
+    # Timeout de validação de conexão. Evita travamento ao testar conexões ruins.
+    validation-timeout: 5000
+    # Valida conexão antes de emprestar (para DB instável). Excelente para ambientes com queda ou timeout no DB
+    connection-test-query: SELECT 1
+  # --------------------------------------------------
+
   jpa:
     hibernate:
       ddl-auto: none

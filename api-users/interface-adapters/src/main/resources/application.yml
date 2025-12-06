@@ -19,6 +19,30 @@ spring:
     username: ${DB_USERNAME:postgres}
     password: ${DB_PASSWORD:postgres}
 
+
+    # --------------------------------------------------
+    # Config de Pool de Conexões
+    # --------------------------------------------------
+    hikari:
+      # Nome do pool (útil em logs / monitoramento)
+      pool-name: ${spring.application.name}
+      # Quantidade mínima de conexões ociosas mantidas no pool
+      minimum-idle: 5
+      # Quantidade máxima de conexões simultâneas
+      maximum-pool-size: 20
+      # Define tempo limite de ociosidade para conexões excedentes. Serão removidas após esse tempo.
+      idle-timeout: 600000
+      # Tempo máximo de vida de uma conexão antes de ser reciclada
+      max-lifetime: 1800000
+      # Tempo máximo esperando uma conexão antes de erro. Se todas as conexões estiverem em uso e outra requisição chegar, ela espera até 3s. Se passar disso → SQLTransientConnectionException.
+      connection-timeout: 3000
+      # Timeout de validação de conexão. Evita travamento ao testar conexões ruins.
+      validation-timeout: 5000
+      # Valida conexão antes de emprestar (para DB instável). Excelente para ambientes com queda ou timeout no DB
+      connection-test-query: SELECT 1
+    # --------------------------------------------------
+
+
   jpa: # Configura o JPA/Hibernate.
     hibernate:
       jdbc.time_zone: UTC # força o Hibernate a usar UTC ao gravar LocalDateTime/Instant
@@ -41,11 +65,20 @@ spring:
     open-in-view: false #  Define se o Hibernate deve manter a sessao aberta durante a renderizacao da view. O false e recomendado para evitar problemas de performance e lazy loading.
     show-sql: true # Habilita a exibicao do SQL gerado no console.
 
+
+  # --------------------------------------------------
+  # Config de Liquibase (migration)
+  # --------------------------------------------------
   liquibase:
     enabled: true
     change-log: classpath:liquibase/changelog/master.yaml
     default-schema: public
+  # --------------------------------------------------
 
+
+  # --------------------------------------------------
+  # Config de Kafka (mensageria)
+  # --------------------------------------------------
   kafka:
     bootstrap-servers: kafka-1:9092,kafka-2:9092,kafka-3:9092
     schema.registry.url: http://schema-registry:8081 # Endereço do esquema registry (obrigatório se usar Avro)
@@ -104,5 +137,5 @@ spring:
       events:
         customer-created: events.customer-created-v1
       min.insync.replicas: 2 # O min.insync.replicas configuração trabalha em conjunto com acks=all para controlar a durabilidade.
-
+  # --------------------------------------------------
 
