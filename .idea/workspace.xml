@@ -6,12 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="a1ea8202-910b-4a63-8ece-9f6a9a5ee2c0" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-notifications/infraestrutura/src/main/java/backend/communication/infraestrutura/ApiNotificationsApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-notifications/infraestrutura/src/main/java/backend/communication/infraestrutura/ApiNotificationsApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-notifications/infraestrutura/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/api-notifications/infraestrutura/src/main/resources/application.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-notifications/infraestrutura/src/main/resources/flyway/V20251130073300__create_table_notifications.sql" beforeDir="false" afterPath="$PROJECT_DIR$/api-notifications/infraestrutura/src/main/resources/flyway/V20251130073300__create_table_notifications.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/interface-adapters/src/main/java/backend/finance/adapters/ApiUserApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/interface-adapters/src/main/java/backend/finance/adapters/ApiUserApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker/docker-compose.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/tutoriais/padroes_utils.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/tutoriais/padroes_utils.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-notifications/infraestrutura/src/main/java/backend/communication/infraestrutura/gateways/NotificationFindGateway.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-notifications/infraestrutura/src/main/java/backend/communication/infraestrutura/gateways/NotificationQueryGateway.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-notifications/infraestrutura/src/main/java/backend/communication/infraestrutura/presenters/NotificationPresenter.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-notifications/infraestrutura/src/main/java/backend/communication/infraestrutura/presenters/NotificationPresenter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-notifications/infraestrutura/src/main/java/backend/communication/infraestrutura/presenters/NotificationPresenterImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-notifications/infraestrutura/src/main/java/backend/communication/infraestrutura/presenters/NotificationPresenterImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -136,9 +133,9 @@
       <list>
         <option value="Enum" />
         <option value="Record" />
-        <option value="Interface" />
-        <option value="Class" />
         <option value="JUnit5 Test Class" />
+        <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -257,14 +254,14 @@
       <recent name="backend.finance.application.validation" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="backend.communication.aplicacao.dtos.response" />
       <recent name="backend.communication.infraestrutura.configs" />
       <recent name="backend.communication.infraestrutura.presenters" />
       <recent name="backend.communication.aplicacao.mappers" />
       <recent name="backend.communication.aplicacao.dtos" />
-      <recent name="backend.communication.infraestrutura.jpas" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.Tests in 'api-users.application-business-rules.test'">
+  <component name="RunManager" selected="Gradle.api-users [:interface-adapters:build]">
     <configuration name="Tests in 'api-users.application-business-rules.test'" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -377,10 +374,10 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.api-users [:interface-adapters:build]" />
+        <item itemvalue="Gradle.api-notifications [:infraestrutura:build]" />
         <item itemvalue="Gradle.Tests in 'api-users.application-business-rules.test'" />
         <item itemvalue="Gradle.Tests in 'api-users.interface-adapters.test'" />
-        <item itemvalue="Gradle.api-notifications [:infraestrutura:build]" />
-        <item itemvalue="Gradle.api-users [:interface-adapters:build]" />
         <item itemvalue="Gradle.api-users [:interface-adapters:generateAvroJava]" />
       </list>
     </recent_temporary>
