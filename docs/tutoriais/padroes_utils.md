@@ -42,12 +42,18 @@ Segue abaixo a descrição dos componentes:
     Coordenado (UTC).
 ```
 
-Passo-a-passo: 
-1. Adicionar serverTimeZone (serverTimezone=UTC) na url do datasource;
+* Passo-a-passo: 
+
+1. Add serverTimeZone (serverTimezone=UTC) na url do datasource (UTC no database);
+2. Add TimeZone (TimeZone.setDefault(TimeZone.getTimeZone("UTC"))) na Main (UTC na aplicação).
+
+* Configuração:
+
+1. application.yml
 ```
 url: jdbc:mariadb://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:db-notifications}?serverTimezone=UTC
 ```
-2. Adicionar TimeZone (TimeZone.setDefault(TimeZone.getTimeZone("UTC"))) na classe Main.
+2. Classe Main
 ```
 static void main(String[] args) {
     TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
@@ -56,7 +62,51 @@ static void main(String[] args) {
 ```
 
 
-## Locale 
+## Pool de Conexões
 
+* Fontes:
+- https://www.baeldung.com/java-connection-pooling 
+- https://www.baeldung.com/hikaricp 
+- https://github.com/brettwooldridge/HikariCP 
+- https://www.baeldung.com/spring-boot-hikari 
+- https://docs.spring.io/spring-boot/reference/data/sql.html#data.sql.datasource.connection-pool 
+- https://docs.spring.io/spring-boot/how-to/data-access.html 
+- https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/javax/sql/DataSource.html 
+- https://dev.mysql.com/doc/connector-j/en/connector-j-reference-configuration-properties.html 
+- https://github.com/brettwooldridge/HikariCP/wiki/Hibernate4 
+- https://github.com/brettwooldridge/HikariCP/wiki/MySQL-Configuration 
+- https://medium.com/@AlexanderObregon/how-spring-boot-optimizes-database-connections-through-hikaricp-f19be1a246d7 
 
+O pool de conexões é um padrão de acesso a dados bem conhecido. Seu principal objetivo é 
+reduzir a sobrecarga envolvida na realização de conexões de banco de dados e operações de 
+banco de dados de leitura / gravação. No nível mais básico, um pool de conexão é uma 
+implementação de cache de conexão de banco de dados que pode ser configurada para atender a 
+requisitos específicos.
 
+Se analisarmos a sequência de etapas envolvidas em um ciclo de vida de conexão de banco de 
+dados típico, entenderemos o porquê:
+
+    1. Abrindo uma conexão com o banco de dados usando o driver de banco de dados
+    2. Abrindo um soquete TCP para dados de leitura/escrita
+    3. Leitura / gravação de dados sobre a tomada
+    4. Fechando a conexão
+    5. Fechando o soquete
+
+Torna-se evidente que as conexões de banco de dados são operações bastante caras e, como 
+tal, devem ser reduzidas ao mínimo em todos os casos de uso possíveis.
+
+Apenas implementando um contêiner de conexão de banco de dados, que nos permite reutilizar 
+uma série de conexões existentes, podemos efetivamente economizar o custo de realizar um 
+grande número de viagens de banco de dados caras. Isso aumenta o desempenho geral de nossos 
+aplicativos orientados por banco de dados.
+
+* Passo-a-passo: 
+
+1. Adicionar propriedades no application.yml;
+
+* Configuração:
+
+application.yml (default e test)
+```
+
+```
