@@ -18,6 +18,7 @@
 - https://mariadb.com/docs/server/reference/data-types/date-and-time-data-types/datetime 
 - https://mariadb.com/docs/server/reference/sql-statements/data-definition/create/create-index 
 - https://mariadb.com/docs/server/reference/data-types/string-data-types/character-sets/supported-character-sets-and-collations 
+- https://javadoc.io/doc/org.flywaydb/flyway-core/11.14.1/org/flywaydb/core/Flyway.html 
 
 
 ### Introdução: 

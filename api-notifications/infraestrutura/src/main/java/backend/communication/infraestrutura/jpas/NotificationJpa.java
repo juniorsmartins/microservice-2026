@@ -3,6 +3,8 @@ package backend.communication.infraestrutura.jpas;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.time.OffsetDateTime;
 import java.util.UUID;
 
@@ -12,7 +14,10 @@ import java.util.UUID;
 @AllArgsConstructor
 @Getter
 @EqualsAndHashCode(of = {"id"})
-public final class NotificationJpa {
+public final class NotificationJpa implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

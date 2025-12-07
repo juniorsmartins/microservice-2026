@@ -19,7 +19,48 @@ spring:
     username: ${DB_USERNAME:postgres}
     password: ${DB_PASSWORD:postgres}
 
+    # --------------------------------------------------
+    # Config de Pool de Conexões
+    # --------------------------------------------------
+    hikari:
+      # Se true, cada operação SQL é automaticamente commitada ao fim da execução se não houver transação explícita. true é adequado em cenários simples. Em aplicações com transações claras via Spring, normalmente fica false, pois o controle é feito pelo gerenciador transacional.
+      autoCommit: false
+      # Nome do pool (útil em logs / monitoramento)
+      pool-name: ${spring.application.name}-hikariPool
+      # Quantidade mínima de conexões ociosas mantidas no pool
+      minimum-idle: 5
+      # Quantidade máxima de conexões simultâneas
+      maximum-pool-size: 20
+      # Define tempo limite de ociosidade para conexões excedentes. Serão removidas após esse tempo.
+      idle-timeout: 600000
+      # Tempo máximo de vida de uma conexão antes de ser reciclada
+      max-lifetime: 1800000
+      # Tempo máximo esperando uma conexão antes de erro. Se todas as conexões estiverem em uso e outra requisição chegar, ela espera até 3s. Se passar disso → SQLTransientConnectionException.
+      connection-timeout: 3000
+      # Timeout de validação de conexão. Evita travamento ao testar conexões ruins.
+      validation-timeout: 5000
+      # Valida conexão antes de emprestar (para DB instável). Excelente para ambientes com queda ou timeout no DB
+      connection-test-query: SELECT 1
+      # Os pings periódicos mantêm as conexões ativas e impedem que sejam fechadas pelo banco de dados.
+      keepalive-time: 300000
+      # Queries internas (validação) rodam separadas da aplicação. Evita interferência em monitoramentos e transações. Recomendado.
+      isolate-internal-queries: true
+      # Essas configs aumentam performance usando prepared statements, diminuindo roundtrips e reuso de conexões:
+      data-source-properties:
+        cachePrepStmts: true # Ativa cache de Prepared Statements. Reutiliza queries → aumenta performance.
+        prepStmtCacheSize: 250 # Tamanho do cache de statements. Quanto maior, mais reuso (consome memória).
+        prepStmtCacheSqlLimit: 2048 # Tamanho máximo da query cacheável. Permite cache de queries grandes.
+        useServerPrepStmts: true # Usa prepared statements do servidor, não só em memória. Menos parsing no servidor → ganho real em produção.
+        useLocalSessionState: true # Evita roundtrips para verificar estados de sessão. Ganho de performance reduzindo I/O.
+        rewriteBatchedStatements: true # Junta statements em batch para enviar em um único pacote. Acelera inserts/lotes (muito eficiente).
+        cacheResultSetMetadata: true # Cache de metadados dos ResultSets. Menos comunicação e parsing → aumenta performance.
+        cacheServerConfiguration: true # Armazena configurações do servidor localmente. Reduz consultas no handshake e ao longo da execução.
+        elideSetAutoCommits: true # Evita chamadas repetidas de setAutoCommit(...). Útil se usa transações com frequência.
+        maintainTimeStats: false # Não coleta estatísticas internas de tempo. Reduz overhead, aumenta performance.
+    # --------------------------------------------------
+
   jpa: # Configura o JPA/Hibernate.
+    database: POSTGRESQL
     hibernate:
       jdbc.time_zone: UTC # força o Hibernate a usar UTC ao gravar LocalDateTime/Instant
       ddl-auto: none # Define a estrategia de criacao do schema do banco de dados. Pode ser 'none', 'validate', 'update', 'create', 'create-drop'.
@@ -41,11 +82,20 @@ spring:
     open-in-view: false #  Define se o Hibernate deve manter a sessao aberta durante a renderizacao da view. O false e recomendado para evitar problemas de performance e lazy loading.
     show-sql: true # Habilita a exibicao do SQL gerado no console.
 
+
+  # --------------------------------------------------
+  # Config de Liquibase (migration)
+  # --------------------------------------------------
   liquibase:
     enabled: true
     change-log: classpath:liquibase/changelog/master.yaml
     default-schema: public
+  # --------------------------------------------------
 
+
+  # --------------------------------------------------
+  # Config de Kafka (mensageria)
+  # --------------------------------------------------
   kafka:
     bootstrap-servers: kafka-1:9092,kafka-2:9092,kafka-3:9092
     schema.registry.url: http://schema-registry:8081 # Endereço do esquema registry (obrigatório se usar Avro)
@@ -104,5 +154,11 @@ spring:
       events:
         customer-created: events.customer-created-v1
       min.insync.replicas: 2 # O min.insync.replicas configuração trabalha em conjunto com acks=all para controlar a durabilidade.
+  # --------------------------------------------------
+
+logging:
+  level:
+    com.zaxxer.hikari: DEBUG
+    com.zaxxer.hikari.pool.HikariPool: TRACE
 
 
