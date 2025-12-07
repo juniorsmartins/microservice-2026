@@ -70,6 +70,12 @@ static void main(String[] args) {
 - https://github.com/brettwooldridge/HikariCP 
 - https://www.baeldung.com/spring-boot-hikari 
 - https://docs.spring.io/spring-boot/reference/data/sql.html#data.sql.datasource.connection-pool 
+- https://docs.spring.io/spring-boot/how-to/data-access.html 
+- https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/javax/sql/DataSource.html 
+- https://dev.mysql.com/doc/connector-j/en/connector-j-reference-configuration-properties.html 
+- https://github.com/brettwooldridge/HikariCP/wiki/Hibernate4 
+- https://github.com/brettwooldridge/HikariCP/wiki/MySQL-Configuration 
+- https://medium.com/@AlexanderObregon/how-spring-boot-optimizes-database-connections-through-hikaricp-f19be1a246d7 
 
 O pool de conexões é um padrão de acesso a dados bem conhecido. Seu principal objetivo é 
 reduzir a sobrecarga envolvida na realização de conexões de banco de dados e operações de 

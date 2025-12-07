@@ -6,22 +6,37 @@ spring:
     username: sa
     password:
 
-  # --------------------------------------------------
-  # Config de Pool de Conexões
-  # --------------------------------------------------
-  hikari:
-    pool-name: ${spring.application.name}
-    minimum-idle: 2
-    maximum-pool-size: 10
-    idle-timeout: 600000
-    max-lifetime: 1800000
-    connection-timeout: 3000
-    validation-timeout: 5000
-    connection-test-query: SELECT 1
-  # --------------------------------------------------
+    # --------------------------------------------------
+    # Config de Pool de Conexões
+    # --------------------------------------------------
+    hikari:
+      autoCommit: false
+      pool-name: ${spring.application.name}-hikariPool
+      minimum-idle: 5
+      maximum-pool-size: 20
+      idle-timeout: 600000
+      max-lifetime: 1800000
+      connection-timeout: 3000
+      validation-timeout: 5000
+      connection-test-query: SELECT 1
+      keepalive-time: 300000
+      isolate-internal-queries: true
+      data-source-properties:
+        cachePrepStmts: true
+        prepStmtCacheSize: 250
+        prepStmtCacheSqlLimit: 2048
+        useServerPrepStmts: true
+        useLocalSessionState: true
+        rewriteBatchedStatements: true
+        cacheResultSetMetadata: true
+        cacheServerConfiguration: true
+        elideSetAutoCommits: true
+        maintainTimeStats: false
+    # --------------------------------------------------
 
   # Configurações de JPA e de Hibernate
   jpa:
+    database: POSTGRESQL
     database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
       ddl-auto: create-drop
