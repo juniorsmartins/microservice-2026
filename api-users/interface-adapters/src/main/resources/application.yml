@@ -28,9 +28,9 @@ spring:
       # Nome do pool (útil em logs / monitoramento)
       pool-name: ${spring.application.name}-hikariPool
       # Quantidade mínima de conexões ociosas mantidas no pool
-      minimum-idle: 5
+      minimum-idle: 10
       # Quantidade máxima de conexões simultâneas
-      maximum-pool-size: 20
+      maximum-pool-size: 25
       # Define tempo limite de ociosidade para conexões excedentes. Serão removidas após esse tempo.
       idle-timeout: 600000
       # Tempo máximo de vida de uma conexão antes de ser reciclada
@@ -156,9 +156,13 @@ spring:
       min.insync.replicas: 2 # O min.insync.replicas configuração trabalha em conjunto com acks=all para controlar a durabilidade.
   # --------------------------------------------------
 
+
+  # --------------------------------------------------
+  # Config de logging
+  # --------------------------------------------------
 logging:
   level:
     com.zaxxer.hikari: DEBUG
     com.zaxxer.hikari.pool.HikariPool: TRACE
-
+  # --------------------------------------------------
 

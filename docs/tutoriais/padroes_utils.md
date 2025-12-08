@@ -106,7 +106,35 @@ aplicativos orientados por banco de dados.
 
 * Configuração:
 
-application.yml (default e test)
+application.yml
 ```
-
+spring:
+  datasource: 
+    driver-class-name: org.postgresql.Driver 
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:db-users}?serverTimezone=UTC 
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:postgres}
+    hikari:
+      autoCommit: false
+      pool-name: ${spring.application.name}-hikariPool
+      minimum-idle: 10
+      maximum-pool-size: 25
+      idle-timeout: 600000
+      max-lifetime: 1800000
+      connection-timeout: 3000
+      validation-timeout: 5000
+      connection-test-query: SELECT 1
+      keepalive-time: 300000
+      isolate-internal-queries: true
+      data-source-properties:
+        cachePrepStmts: true 
+        prepStmtCacheSize: 250 
+        prepStmtCacheSqlLimit: 2048 
+        useServerPrepStmts: true 
+        useLocalSessionState: true 
+        rewriteBatchedStatements: true 
+        cacheResultSetMetadata: true 
+        cacheServerConfiguration: true 
+        elideSetAutoCommits: true 
+        maintainTimeStats: false
 ```
