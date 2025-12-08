@@ -7,6 +7,8 @@
 - https://docs.spring.io/spring-boot/reference/features/external-config.html
 - https://www.baeldung.com/java-format-localdate-iso-8601-t-z
 - https://www.baeldung.com/java-jackson-offsetdatetime 
+- https://www.baeldung.com/spring-boot-set-default-timezone 
+- https://www.baeldung.com/java-jvm-time-zone
 - https://en.wikipedia.org/wiki/ISO_8601 
 - https://docs.spring.io/spring-boot/reference/web/servlet.html#web.servlet.spring-mvc.conversion-service 
 - https://www.youtube.com/watch?v=aAUopejsqIc 
@@ -59,6 +61,31 @@ static void main(String[] args) {
     TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
     SpringApplication.run(ApiNotificationsApplication.class, args);
 }
+```
+
+
+```
+server.locale=en-US
+server.time-zone=UTC
+
+jdbc:mysql://localhost:3306/seubanco?useTimezone=true&serverTimezone=UTC
+
+spring.jackson.time-zone=UTC 
+
+@PostConstruct
+public void init() {
+    TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
+}
+
+TimeZone.setDefault(TimeZone.getTimeZone(env.getProperty("server.time-zone", "UTC")));
+Locale.setDefault(Locale.forLanguageTag(env.getProperty("server.locale", "en-US"))
+
+//    @Test
+//    void quando() {
+//        Calendar calendar = Calendar.getInstance();
+//        assertEquals(calendar.getTimeZone(), TimeZone.getTimeZone("Portugal"));
+//    }
+
 ```
 
 
