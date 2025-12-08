@@ -63,32 +63,6 @@ static void main(String[] args) {
 }
 ```
 
-
-```
-server.locale=en-US
-server.time-zone=UTC
-
-jdbc:mysql://localhost:3306/seubanco?useTimezone=true&serverTimezone=UTC
-
-spring.jackson.time-zone=UTC 
-
-@PostConstruct
-public void init() {
-    TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
-}
-
-TimeZone.setDefault(TimeZone.getTimeZone(env.getProperty("server.time-zone", "UTC")));
-Locale.setDefault(Locale.forLanguageTag(env.getProperty("server.locale", "en-US"))
-
-//    @Test
-//    void quando() {
-//        Calendar calendar = Calendar.getInstance();
-//        assertEquals(calendar.getTimeZone(), TimeZone.getTimeZone("Portugal"));
-//    }
-
-```
-
-
 ## Pool de Conexões
 
 * Fontes:
