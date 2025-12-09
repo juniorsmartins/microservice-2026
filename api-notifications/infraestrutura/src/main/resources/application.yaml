@@ -70,7 +70,7 @@ spring:
     baseline-version: 0       # ou 1, depende da sua convenção
     baseline-description: "Initial structure"
     # --- Localização e Nomenclatura dos Scripts ---
-    locations: classpath:flyway # Onde o Flyway procura os scripts (padrão: db/migration)
+    locations: classpath:flyway/migration,classpath:flyway/testdata # Onde o Flyway procura os scripts (padrão: db/migration)
     sql-migration-prefix: V # Prefixo padrão para migrações versionadas
     sql-migration-separator: __ # Separador entre versão e nome no arquivo SQL
     sql-migration-suffixes: .sql # Suporta apenas arquivos com sufixo .sql

@@ -69,7 +69,7 @@ banco de dados:
 1. Adicionar no build.gradle;
    2. Plugin;
    3. Dependências (uma do Flyway e uma do Flyway/database).
-2. Criar diretório em resource (flyway ou o padrão db/migration);
+2. Criar diretório em resource (flyway/migration para produção e flyway/testdata para inserir dados de teste);
 3. Configurar application.yml (default e test);
 4. Criar Scripts (SQL e etc);
 
@@ -167,7 +167,7 @@ spring:
     baseline-version: 0       # ou 1, depende da sua convenção
     baseline-description: "Initial structure"
     # --- Localização e Nomenclatura dos Scripts ---
-    locations: classpath:flyway # Onde o Flyway procura os scripts (padrão: db/migration)
+    locations: classpath:flyway/migration # Onde o Flyway procura os scripts (padrão: db/migration)
     sql-migration-prefix: V # Prefixo padrão para migrações versionadas
     sql-migration-separator: __ # Separador entre versão e nome no arquivo SQL
     sql-migration-suffixes: .sql # Suporta apenas arquivos com sufixo .sql
@@ -192,7 +192,10 @@ application.yml (test - flyway desativado)
 ```
 spring:
   flyway:
-    enabled: false
+    enabled: true
+    locations: classpath:flyway/migration,classpath:flyway/testdata
+    schemas: db-notifications
+    encoding: UTF-8
 ```
 
 Script (exemplo)
