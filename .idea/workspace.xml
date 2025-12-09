@@ -4,12 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a1ea8202-910b-4a63-8ece-9f6a9a5ee2c0" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-notifications/infraestrutura/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/api-notifications/infraestrutura/src/main/resources/application.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-notifications/infraestrutura/src/main/resources/flyway/V20251130073300__create_table_notifications.sql" beforeDir="false" afterPath="$PROJECT_DIR$/api-notifications/infraestrutura/src/main/resources/flyway/migration/V20251130073300__create_table_notifications.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-notifications/infraestrutura/src/test/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/api-notifications/infraestrutura/src/test/resources/application.yaml" afterDir="false" />
-    </list>
+    <list default="true" id="a1ea8202-910b-4a63-8ece-9f6a9a5ee2c0" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
