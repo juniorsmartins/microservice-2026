@@ -115,3 +115,5 @@ spring:
         customer-created: events.customer-created-test
       min.insync.replicas: 0
 
+
+
