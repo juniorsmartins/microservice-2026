@@ -6,9 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="a1ea8202-910b-4a63-8ece-9f6a9a5ee2c0" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/interface-adapters/src/main/resources/liquibase/changesets/20250928120810_create_table_roles.sql" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/interface-adapters/src/main/resources/liquibase/changesets/20250928120810_create_table_roles.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/interface-adapters/src/main/resources/liquibase/changesets/20250928120922_create_table_users.sql" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/interface-adapters/src/main/resources/liquibase/changesets/20250928120922_create_table_users.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/interface-adapters/src/main/resources/liquibase/changesets/20250928121015_create_table_customers.sql" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/interface-adapters/src/main/resources/liquibase/changesets/20250928121015_create_table_customers.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-notifications/infraestrutura/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/api-notifications/infraestrutura/src/main/resources/application.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/tutoriais/flyway.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/tutoriais/flyway.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

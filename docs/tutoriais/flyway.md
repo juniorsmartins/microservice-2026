@@ -68,8 +68,8 @@ banco de dados:
 
 1. Adicionar no build.gradle;
    2. Plugin;
-   3. Dependências.
-2. Criar diretório em resource (flyway);
+   3. Dependências (uma do Flyway e uma do Flyway/database).
+2. Criar diretório em resource (flyway ou o padrão db/migration);
 3. Configurar application.yml (default e test);
 4. Criar Scripts (SQL e etc);
 
@@ -159,6 +159,7 @@ jar {
 application.yml (default - flyway ativado)
 ```
 spring:
+   
   flyway:
     # --- Controle de Execução (Obrigatório) ---
     enabled: true # Liga o Flyway no Spring Boot
@@ -181,6 +182,10 @@ spring:
     table: flyway_schema_history # padrão já é esse, mas deixar explícito.
     schemas: db-notifications # Defina explicitamente o schema/banco. Importante quando há múltiplos databases.
     encoding: UTF-8 # Encoding dos arquivos SQL
+
+  jpa:
+    hibernate:
+      ddl-auto: none # Precisa estar none para o Flyway
 ```
 
 application.yml (test - flyway desativado)

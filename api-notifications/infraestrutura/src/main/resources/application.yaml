@@ -13,12 +13,6 @@ spring:
     activate:
       on-profile: default
 
-#  mvc:
-#    format:
-#      date: yyyy-MM-dd
-#      time: HH:mm:ss
-#      date-time: yyyy-MM-dd HH:mm:ss
-
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
     url: jdbc:mariadb://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:db-notifications}?serverTimezone=UTC
