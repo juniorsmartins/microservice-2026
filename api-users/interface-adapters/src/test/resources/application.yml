@@ -56,8 +56,6 @@ spring:
 
   liquibase:
     enabled: false
-#    change-log: classpath:liquibase/changelog/master.yaml
-#    default-schema: public
 
   kafka:
     bootstrap-servers: ${spring.embedded.kafka.brokers} # Usa broker embutido
