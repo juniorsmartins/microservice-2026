@@ -1,7 +1,7 @@
 package backend.finance.adapters.usecases;
 
 import backend.finance.adapters.repositories.CustomerRepository;
-import backend.finance.adapters.utils.BaseIntegrationTest;
+import backend.finance.adapters.utils.KafkaAvroIntegrationTest;
 import backend.finance.adapters.utils.CustomerTestFactory;
 import backend.finance.application.exceptions.http404.CustomerNotFoundCustomException;
 import backend.finance.application.usecases.CustomerCreateUseCase;
@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @Tag("Find")
 @Tag("Query")
 @Tag("Integration")
-public class CustomerQueryUseCaseIntegrationTest extends BaseIntegrationTest {
+public class CustomerQueryUseCaseIntegrationTest extends KafkaAvroIntegrationTest {
 
     @Autowired
     private CustomerQueryUseCase customerQueryUseCase;
