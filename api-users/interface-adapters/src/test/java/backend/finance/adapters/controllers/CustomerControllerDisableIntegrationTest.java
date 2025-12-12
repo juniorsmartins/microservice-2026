@@ -47,12 +47,6 @@ class CustomerControllerDisableIntegrationTest extends KafkaAvroIntegrationTest 
         defaultCustomerResponse = customerController.create(request).getBody();
     }
 
-    @Test
-    void testando() {
-        assert defaultCustomerResponse != null : "CustomerResponse is null!";
-        assert defaultCustomerResponse.id() != null : "Customer ID is null!";
-    }
-
     @Nested
     @Order(1)
     @DisplayName("Disable - casos válidos.")

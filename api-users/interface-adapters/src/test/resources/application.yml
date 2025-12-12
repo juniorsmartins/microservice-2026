@@ -36,7 +36,7 @@ spring:
 
   # Configurações de JPA e de Hibernate
   jpa:
-    database: POSTGRESQL
+    database: H2
     database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
       ddl-auto: create-drop
