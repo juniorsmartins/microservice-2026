@@ -59,7 +59,8 @@ PASSO-A-PASSO
 1. build.grade
 
 ```
-implementation 'org.liquibase:liquibase-core'
+implementation 'org.springframework.boot:spring-boot-starter-liquibase'
+testImplementation 'org.springframework.boot:spring-boot-starter-liquibase-test'
 ```
 
 2. Diretórios
