@@ -1,7 +1,7 @@
 package backend.finance.adapters.usecases;
 
 import backend.finance.adapters.repositories.CustomerRepository;
-import backend.finance.adapters.utils.BaseIntegrationTest;
+import backend.finance.adapters.utils.KafkaAvroIntegrationTest;
 import backend.finance.adapters.utils.CustomerTestFactory;
 import backend.finance.application.dtos.response.CustomerResponse;
 import backend.finance.application.exceptions.http404.CustomerNotFoundCustomException;
@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @Tag("UseCase")
 @Tag("Disable")
 @Tag("Integration")
-class CustomerDisableUseCaseIntegrationTest extends BaseIntegrationTest {
+class CustomerDisableUseCaseIntegrationTest extends KafkaAvroIntegrationTest {
 
     private static final String EMAIL_TESTE = "teste@email.com";
 

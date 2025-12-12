@@ -20,6 +20,7 @@
 - https://docs.conduktor.io/learn/fundamentals/topic-replication
 - https://hub.docker.com/r/lensesio/fast-data-dev 
 - https://docs.spring.io/spring-boot/reference/features/ssl.html 
+- https://docs.spring.io/spring-kafka/reference/testing.html 
 
 ### Introdução
 ```

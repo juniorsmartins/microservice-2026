@@ -1,6 +1,6 @@
 package backend.finance.adapters.controllers;
 
-import backend.finance.adapters.utils.BaseIntegrationTest;
+import backend.finance.adapters.utils.KafkaAvroIntegrationTest;
 import backend.finance.application.dtos.response.CustomerResponse;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
@@ -21,7 +21,7 @@ import static org.hamcrest.Matchers.equalTo;
 @Tag("Controller")
 @Tag("Disable")
 @Tag("Integration")
-class CustomerControllerDisableIntegrationTest extends BaseIntegrationTest {
+class CustomerControllerDisableIntegrationTest extends KafkaAvroIntegrationTest {
 
     private static final String URI_CUSTOMER = "/v1/customers";
 
@@ -45,6 +45,12 @@ class CustomerControllerDisableIntegrationTest extends BaseIntegrationTest {
         var request = buildRequest(USERNAME_TESTE, "password123",
                 "ROLE_CUSTOMER", "Anne Frank", EMAIL_TESTE);
         defaultCustomerResponse = customerController.create(request).getBody();
+    }
+
+    @Test
+    void testando() {
+        assert defaultCustomerResponse != null : "CustomerResponse is null!";
+        assert defaultCustomerResponse.id() != null : "Customer ID is null!";
     }
 
     @Nested
