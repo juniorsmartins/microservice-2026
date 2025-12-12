@@ -12,9 +12,9 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-@EqualsAndHashCode(of = {"email"})
+@EqualsAndHashCode(of = {"email"}, callSuper = false)
 @ToString
-public final class CustomerJpa implements Serializable {
+public final class CustomerJpa extends AbstractAuditingJpa implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
