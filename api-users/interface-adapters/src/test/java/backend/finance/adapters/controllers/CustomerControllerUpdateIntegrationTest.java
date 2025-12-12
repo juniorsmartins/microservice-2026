@@ -1,7 +1,7 @@
 package backend.finance.adapters.controllers;
 
-import backend.finance.adapters.utils.BaseIntegrationTest;
 import backend.finance.adapters.utils.CustomerTestFactory;
+import backend.finance.adapters.utils.KafkaAvroIntegrationTest;
 import backend.finance.application.dtos.response.CustomerResponse;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
@@ -25,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @Tag("Controller")
 @Tag("Update")
 @Tag("Integration")
-class CustomerControllerUpdateIntegrationTest extends BaseIntegrationTest {
+class CustomerControllerUpdateIntegrationTest extends KafkaAvroIntegrationTest {
 
     private static final String URI_CUSTOMER = "/v1/customers";
 
@@ -43,8 +43,10 @@ class CustomerControllerUpdateIntegrationTest extends BaseIntegrationTest {
 
     @BeforeEach
     void setUp() {
+        RestAssured.baseURI = "http://localhost";
         RestAssured.port = randomPort; // Configura a porta dinâmica
         RestAssured.basePath = URI_CUSTOMER;
+        RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
 
         var request = buildRequest(USERNAME_TESTE, "password123",
                 "ROLE_CUSTOMER", "Anne Frank", EMAIL_TESTE);

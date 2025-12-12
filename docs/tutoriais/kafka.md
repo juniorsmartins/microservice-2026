@@ -20,6 +20,7 @@
 - https://docs.conduktor.io/learn/fundamentals/topic-replication
 - https://hub.docker.com/r/lensesio/fast-data-dev 
 - https://docs.spring.io/spring-boot/reference/features/ssl.html 
+- https://docs.spring.io/spring-kafka/reference/testing.html 
 
 ### Introdução
 ```
@@ -532,7 +533,7 @@ build.gradle
 ```
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '3.5.7'
+    id 'org.springframework.boot' version '4.0.0'
     id 'io.spring.dependency-management' version '1.1.7'
     id "com.github.davidmc24.gradle.plugin.avro" version "1.9.1"
 }
@@ -562,25 +563,27 @@ repositories {
 dependencies {
     implementation project(':application-business-rules')
 
-    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-webmvc'
 
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.liquibase:liquibase-core'
     runtimeOnly 'org.postgresql:postgresql'
     runtimeOnly 'com.h2database:h2'
 
-    implementation 'org.springframework.kafka:spring-kafka'
+    implementation 'org.springframework.boot:spring-boot-starter-kafka'
     implementation group: 'io.confluent', name: 'kafka-avro-serializer', version: '8.0.0' //  Fornece a serialização e desserialização de mensagens Avro para o Kafka, permitindo enviar e receber dados codificados em Avro nos tópicos do Kafka.
     implementation group: 'io.confluent', name: 'kafka-schema-registry-client', version: '8.0.0' // Permite que sua aplicação interaja com o Schema Registry da Confluent, que gerencia os esquemas Avro, garantindo compatibilidade e evolução dos esquemas ao produzir ou consumir mensagens.
     implementation group: 'org.apache.avro', name: 'avro', version: '1.12.0' // Utilizada para trabalhar com esquemas Avro e serializar/desserializar mensagens.
-    testImplementation 'org.springframework.kafka:spring-kafka-test'
-    testImplementation group: 'io.confluent', name: 'kafka-schema-registry', version: '8.0.0' // Necessário para mockar schema registry nos testes
 
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
 
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation group: 'io.rest-assured', name: 'rest-assured', version: '5.5.6'
+    testImplementation group: 'io.rest-assured', name: 'rest-assured', version: '6.0.0' // versão 6 compatível com Spring Boot 4
+    testImplementation 'org.springframework.boot:spring-boot-starter-data-jpa-test'
+    testImplementation 'org.springframework.boot:spring-boot-starter-kafka-test'
+    testImplementation group: 'io.confluent', name: 'kafka-schema-registry', version: '8.0.0' // Necessário para mockar schema registry nos testes
+    testImplementation 'org.springframework.boot:spring-boot-starter-mail-test'
+    testImplementation 'org.springframework.boot:spring-boot-starter-webmvc-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 

@@ -1,6 +1,6 @@
 package backend.finance.adapters.controllers;
 
-import backend.finance.adapters.utils.BaseIntegrationTest;
+import backend.finance.adapters.utils.KafkaAvroIntegrationTest;
 import backend.finance.adapters.utils.CustomerTestFactory;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
@@ -20,7 +20,7 @@ import static org.hamcrest.Matchers.notNullValue;
 @Tag("Controller")
 @Tag("Create")
 @Tag("Integration")
-class CustomerControllerCreateIntegrationTest extends BaseIntegrationTest {
+class CustomerControllerCreateIntegrationTest extends KafkaAvroIntegrationTest {
 
     private static final String URI_CUSTOMER = "/v1/customers";
 

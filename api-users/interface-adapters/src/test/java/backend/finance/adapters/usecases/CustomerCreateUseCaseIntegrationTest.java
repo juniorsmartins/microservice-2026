@@ -1,7 +1,7 @@
 package backend.finance.adapters.usecases;
 
 import backend.finance.adapters.repositories.CustomerRepository;
-import backend.finance.adapters.utils.BaseIntegrationTest;
+import backend.finance.adapters.utils.KafkaAvroIntegrationTest;
 import backend.finance.adapters.utils.CustomerTestFactory;
 import backend.finance.application.exceptions.http404.RoleNotFoundCustomException;
 import backend.finance.application.exceptions.http409.EmailConflictRulesCustomException;
@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @Tag("UseCase")
 @Tag("Create")
 @Tag("Integration")
-class CustomerCreateUseCaseIntegrationTest extends BaseIntegrationTest {
+class CustomerCreateUseCaseIntegrationTest extends KafkaAvroIntegrationTest {
 
     @Autowired
     private CustomerCreateUseCase customerCreateUseCase;

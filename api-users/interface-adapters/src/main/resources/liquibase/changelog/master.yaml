@@ -1,8 +1,29 @@
 databaseChangeLog:
-  - include:
-      file: liquibase/changesets/20250928120810_create_table_roles.sql
-  - include:
-      file: liquibase/changesets/20250928120922_create_table_users.sql
-  - include:
-      file: liquibase/changesets/20250928121015_create_table_customers.sql
+  - changeSet:
+      id: 1
+      author: Junior Martins
+      dbms: postgresql
+      changes:
+        - sqlFile:
+            path: classpath:liquibase/changesets/20250928120810_create_table_roles.sql
+            relativeToChangelogFile: false
+
+  - changeSet:
+      id: 2
+      author: Junior Martins
+      dbms: postgresql
+      changes:
+        - sqlFile:
+            path: classpath:liquibase/changesets/20250928120922_create_table_users.sql
+            relativeToChangelogFile: false
+
+  - changeSet:
+      id: 3
+      author: Junior Martins
+      dbms: postgresql
+      changes:
+        - sqlFile:
+            path: classpath:liquibase/changesets/20250928121015_create_table_customers.sql
+            relativeToChangelogFile: false
+
 
