@@ -2,6 +2,7 @@ package backend.finance.adapters.presenters;
 
 import backend.finance.adapters.jpas.UserJpa;
 import backend.finance.application.dtos.UserDto;
+import backend.finance.application.dtos.response.UserAllResponse;
 import backend.finance.application.dtos.response.UserResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -27,5 +28,11 @@ public final class UserPresenterImpl implements UserPresenter {
     public UserJpa toJpa(UserDto dto) {
         var roleJpa = rolePresenter.toRoleJpa(dto.role());
         return new UserJpa(dto.id(), dto.username(), dto.password(), roleJpa, dto.active());
+    }
+
+    @Override
+    public UserAllResponse toAllResponse(UserJpa jpa) {
+        return new UserAllResponse(jpa.getId(), jpa.getUsername(), jpa.isActive(), jpa.getCreatedBy(),
+                jpa.getLastModifiedBy(), jpa.getCreatedDate(), jpa.getLastModifiedDate());
     }
 }

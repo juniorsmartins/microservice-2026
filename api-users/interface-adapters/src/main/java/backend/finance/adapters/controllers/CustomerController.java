@@ -1,12 +1,18 @@
 package backend.finance.adapters.controllers;
 
+import backend.finance.adapters.gateways.CustomerPagePort;
 import backend.finance.application.dtos.request.CustomerRequest;
+import backend.finance.application.dtos.response.CustomerAllResponse;
 import backend.finance.application.dtos.response.CustomerResponse;
 import backend.finance.application.ports.input.CustomerCreateInputPort;
 import backend.finance.application.ports.input.CustomerDisableInputPort;
 import backend.finance.application.ports.input.CustomerQueryInputPort;
 import backend.finance.application.ports.input.CustomerUpdateInputPort;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,6 +33,8 @@ public class CustomerController {
     private final CustomerDisableInputPort customerDisableInputPort;
 
     private final CustomerQueryInputPort customerQueryInputPort;
+
+    private final CustomerPagePort customerPagePort;
 
     @PostMapping
     public ResponseEntity<CustomerResponse> create(@RequestBody CustomerRequest request) {
@@ -66,5 +74,16 @@ public class CustomerController {
         return ResponseEntity
                 .ok()
                 .body(response);
+    }
+
+    @GetMapping
+    public ResponseEntity<Page<CustomerAllResponse>> pageAll(
+            @PageableDefault(sort = "createdDate", direction = Sort.Direction.DESC, page = 0, size = 5) Pageable paginacao) {
+
+        var responsePage = customerPagePort.pageAll(paginacao);
+
+        return ResponseEntity
+                .ok()
+                .body(responsePage);
     }
 }

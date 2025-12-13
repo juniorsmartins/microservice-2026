@@ -68,7 +68,7 @@ public class JpaAuditingConfiguration {
 }
 ```
 
-Script
+Script (banco PostgreSQL)
 ```
 created_by VARCHAR(50),
 created_date TIMESTAMP WITH TIME ZONE NOT NULL,
