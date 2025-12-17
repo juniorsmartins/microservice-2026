@@ -1,20 +1,23 @@
 package backend.finance.adapters.jpas;
 
+import backend.finance.adapters.jpas.auditoria.AbstractAuditingJpa;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.envers.Audited;
 
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.UUID;
 
+@Audited
 @Entity
 @Table(name = "users", indexes = {@Index(name = "idx_users_username", columnList = "username")})
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-@EqualsAndHashCode(of = {"username"})
+@EqualsAndHashCode(of = {"username"}, callSuper = false)
 @ToString
-public final class UserJpa implements Serializable {
+public final class UserJpa extends AbstractAuditingJpa implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
