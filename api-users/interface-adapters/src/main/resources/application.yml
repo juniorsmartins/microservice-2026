@@ -164,6 +164,20 @@ spring:
 
 
   # --------------------------------------------------
+  # Config de actuator
+  # --------------------------------------------------
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,liquibase # Expõe endpoints para monitoramento
+  endpoint:
+    health:
+      show-details: always # Mostra detalhes completos de saúde
+  # --------------------------------------------------
+
+
+  # --------------------------------------------------
   # Config de logging
   # --------------------------------------------------
 logging:

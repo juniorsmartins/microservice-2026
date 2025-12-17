@@ -5,7 +5,58 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a1ea8202-910b-4a63-8ece-9f6a9a5ee2c0" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/docs/tutoriais/spring-cloud.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-accounts/.gitattributes" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-accounts/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-accounts/build.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-accounts/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-accounts/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-accounts/gradlew" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-accounts/gradlew.bat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-accounts/settings.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-accounts/src/main/java/backend/finance/api_account/ApiAccountApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-accounts/src/main/java/backend/finance/api_account/application/utils/ValidationUtilities.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-accounts/src/main/java/backend/finance/api_account/domain/entities/Account.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-accounts/src/main/java/backend/finance/api_account/domain/entities/CashBook.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-accounts/src/main/java/backend/finance/api_account/domain/entities/Customer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-accounts/src/main/java/backend/finance/api_account/domain/entities/Transaction.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-accounts/src/main/java/backend/finance/api_account/domain/enums/AccountTypeEnum.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-accounts/src/main/java/backend/finance/api_account/domain/enums/CostCenterEnum.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-accounts/src/main/java/backend/finance/api_account/domain/enums/TransactionTypeEnum.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-accounts/src/main/java/backend/finance/api_account/infrastructure/daos/AccountJpa.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-accounts/src/main/java/backend/finance/api_account/infrastructure/daos/CashBookJpa.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-accounts/src/main/java/backend/finance/api_account/infrastructure/daos/CustomerJpa.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-accounts/src/main/java/backend/finance/api_account/infrastructure/daos/TransactionJpa.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-accounts/src/main/resources/application.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-accounts/src/test/java/backend/finance/api_account/ApiAccountApplicationTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-accounts/src/test/resources/application.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-investments/.gitattributes" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-investments/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-investments/build.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-investments/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-investments/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-investments/gradlew" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-investments/gradlew.bat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-investments/settings.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-investments/src/main/java/backend/finance/api_investment/ApiInvestmentApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-investments/src/main/resources/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-investments/src/test/java/backend/finance/api_investment/ApiInvestmentApplicationTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-reports/.gitattributes" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-reports/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-reports/build.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-reports/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-reports/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-reports/gradlew" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-reports/gradlew.bat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-reports/settings.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-reports/src/main/java/backend/finance/api_report/ApiReportApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-reports/src/main/resources/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-reports/src/test/java/backend/finance/api_report/ApiReportApplicationTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/interface-adapters/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/interface-adapters/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/interface-adapters/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/interface-adapters/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/tutoriais/auditoria.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/tutoriais/auditoria.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -14,6 +65,9 @@
   </component>
   <component name="CodeInsightWorkspaceSettings">
     <option name="optimizeImportsOnTheFly" value="true" />
+  </component>
+  <component name="CompilerWorkspaceConfiguration">
+    <option name="MAKE_PROJECT_ON_SAVE" value="true" />
   </component>
   <component name="CoverageOptionsProvider">
     <option name="myAddOrReplace" value="0" />
@@ -74,10 +128,6 @@
         <projects_view>
           <tree_state>
             <expand>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="api-notifications" type="f1a62948:ProjectNode" />
-              </path>
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="api-users" type="f1a62948:ProjectNode" />
@@ -212,7 +262,7 @@
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.pluginManager"
+    "settings.editor.selected.configurable": "project.propCompiler"
   }
 }]]></component>
   <component name="RecentsManager">
@@ -382,11 +432,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.Tests in 'api-users.interface-adapters.test'" />
         <item itemvalue="Gradle.api-users [:interface-adapters:generateAvroJava]" />
         <item itemvalue="Gradle.api-users [:interface-adapters:clean]" />
         <item itemvalue="Gradle.api-users [:interface-adapters:build]" />
         <item itemvalue="Gradle.api-users [:interface-adapters:buildDependents]" />
-        <item itemvalue="Gradle.Tests in 'api-users.interface-adapters.test'" />
       </list>
     </recent_temporary>
   </component>
