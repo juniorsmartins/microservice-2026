@@ -17,7 +17,7 @@ import java.time.Instant;
 public class CustomRevisionEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // Deve bater com o GENERATED AS IDENTITY do seu SQL
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @RevisionNumber
     @Column(name = "revision_id")
     private Long revisionId;
@@ -25,7 +25,4 @@ public class CustomRevisionEntity {
     @RevisionTimestamp
     @Column(name = "revision_timestamp")
     private Instant revisionTimestamp;
-
-    @Column(name = "usuario") // Nome que você definiu no último script SQL
-    private String usuario;
 }
