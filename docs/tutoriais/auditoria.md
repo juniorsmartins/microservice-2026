@@ -68,8 +68,6 @@ Spring Data Envers:
 5. Configurar application.yml (necessário para customizar nomes de tabelas e campos);
 6. Criar RevisionEntity (importante, especialmente para customizar os nomes);
 
-
-
 ### Implementação: 
 
 Spring Data Jpa Auditing
