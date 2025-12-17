@@ -69,6 +69,7 @@ Spring Data Envers:
    a. Fiz uso de nomes personalizados para as tabelas e campos (fora do padrão do Envers);
 5. Configurar application.yml (necessário para customizar nomes de tabelas e campos);
 6. Criar RevisionEntity;
+7. Adicionar anotação @Audited na classe mãe de auditoria do Spring Data JPA. 
 
 
 ### Implementação: 
