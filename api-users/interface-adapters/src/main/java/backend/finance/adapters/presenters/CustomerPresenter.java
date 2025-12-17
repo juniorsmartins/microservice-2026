@@ -3,6 +3,7 @@ package backend.finance.adapters.presenters;
 import backend.CustomerMessage;
 import backend.finance.adapters.jpas.CustomerJpa;
 import backend.finance.application.dtos.CustomerDto;
+import backend.finance.application.dtos.response.CustomerAllResponse;
 import backend.finance.application.dtos.response.CustomerResponse;
 
 public interface CustomerPresenter {
@@ -14,4 +15,6 @@ public interface CustomerPresenter {
     CustomerDto toDto(CustomerJpa jpa);
 
     CustomerJpa toJpa(CustomerDto dto);
+
+    CustomerAllResponse toAllResponse(CustomerJpa jpa);
 }

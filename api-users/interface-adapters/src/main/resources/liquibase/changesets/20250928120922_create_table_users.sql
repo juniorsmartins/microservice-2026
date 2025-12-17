@@ -7,6 +7,10 @@ CREATE TABLE IF NOT EXISTS users (
     password VARCHAR(200) NOT NULL,
     role_id UUID NOT NULL,
     active BOOLEAN NOT NULL DEFAULT TRUE,
+    created_by VARCHAR(50),
+    created_date TIMESTAMP WITH TIME ZONE NOT NULL,
+    last_modified_by VARCHAR(50),
+    last_modified_date TIMESTAMP WITH TIME ZONE,
     CONSTRAINT fk_users_roles FOREIGN KEY (role_id) REFERENCES roles (id)
 );
 
@@ -16,5 +20,9 @@ COMMENT ON COLUMN users.username IS 'Username do Usuário para login no sistema.
 COMMENT ON COLUMN users.password IS 'Password do Usuário para acesso ao sistema. Não pode ser nulo.';
 COMMENT ON COLUMN users.role_id IS 'Chave estrangeira da tabela roles. Aponta qual a permissão do usuário.';
 COMMENT ON COLUMN users.active IS 'Indica se o usuário está ativo. Padrão: TRUE.';
+COMMENT ON COLUMN users.created_date IS 'Data e hora de criação do registro do cliente para auditoria.';
+COMMENT ON COLUMN users.last_modified_date IS 'Data e hora da última modificação do registro do cliente para auditoria.';
+COMMENT ON COLUMN users.created_by IS 'Define quem criou o registro do cliente para auditoria.';
+COMMENT ON COLUMN users.last_modified_by IS 'Define quem modificou o registro do cliente pela última vez para auditoria.';
 
 CREATE INDEX idx_users_username ON users (username);

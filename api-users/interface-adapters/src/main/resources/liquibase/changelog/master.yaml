@@ -26,4 +26,38 @@ databaseChangeLog:
             path: classpath:liquibase/changesets/20250928121015_create_table_customers.sql
             relativeToChangelogFile: false
 
+  - changeSet:
+      id: 4
+      author: Junior Martins
+      dbms: postgresql
+      changes:
+        - sqlFile:
+            path: classpath:liquibase/changesets/20251213095410_create_table_revision_info.sql
+            relativeToChangelogFile: false
 
+  - changeSet:
+      id: 5
+      author: Junior Martins
+      dbms: postgresql
+      changes:
+        - sqlFile:
+            path: classpath:liquibase/changesets/20251213095910_create_table_roles_audit.sql
+            relativeToChangelogFile: false
+
+  - changeSet:
+      id: 6
+      author: Junior Martins
+      dbms: postgresql
+      changes:
+        - sqlFile:
+            path: classpath:liquibase/changesets/20251213100522_create_table_users_audit.sql
+            relativeToChangelogFile: false
+
+  - changeSet:
+      id: 7
+      author: Junior Martins
+      dbms: postgresql
+      changes:
+        - sqlFile:
+            path: classpath:liquibase/changesets/20251213100915_create_table_customers_audit.sql
+            relativeToChangelogFile: false
