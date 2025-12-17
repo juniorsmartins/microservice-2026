@@ -1,12 +1,15 @@
 package backend.finance.adapters.jpas;
 
+import backend.finance.adapters.jpas.auditoria.AbstractAuditingJpa;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.envers.Audited;
 
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.UUID;
 
+@Audited
 @Entity
 @Table(name = "customers", indexes = {@Index(name = "idx_customers_email", columnList = "email")})
 @AllArgsConstructor

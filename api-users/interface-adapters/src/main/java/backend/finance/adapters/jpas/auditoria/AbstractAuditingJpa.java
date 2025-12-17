@@ -1,4 +1,4 @@
-package backend.finance.adapters.jpas;
+package backend.finance.adapters.jpas.auditoria;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;
@@ -18,16 +18,16 @@ import java.time.OffsetDateTime;
 public abstract class AbstractAuditingJpa {
 
     @Column(name = "created_by", updatable = false)
-    private String createdBy;
+    private String createdBy; // Este campo é usado para registrar quem criou a entidade.
 
     @Column(name = "last_modified_by")
-    private String lastModifiedBy;
+    private String lastModifiedBy; // Usado para identificar quem modificou a entidade pela última vez.
 
     @CreatedDate
     @Column(name = "created_date", nullable = false, updatable = false)
-    private OffsetDateTime createdDate;
+    private OffsetDateTime createdDate; // Para registrar a data e a hora em que a entidade foi criada.
 
     @LastModifiedDate
     @Column(name = "last_modified_date")
-    private OffsetDateTime lastModifiedDate;
+    private OffsetDateTime lastModifiedDate; // Usado para registrar quando uma entidade foi modificada pela última vez.
 }

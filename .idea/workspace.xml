@@ -6,12 +6,16 @@
   <component name="ChangeListManager">
     <list default="true" id="a1ea8202-910b-4a63-8ece-9f6a9a5ee2c0" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/interface-adapters/src/main/java/backend/finance/adapters/controllers/CustomerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/interface-adapters/src/main/java/backend/finance/adapters/controllers/CustomerController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/interface-adapters/src/main/java/backend/finance/adapters/gateways/CustomerQueryGateway.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/interface-adapters/src/main/java/backend/finance/adapters/gateways/CustomerQueryGateway.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/interface-adapters/src/main/java/backend/finance/adapters/presenters/CustomerPresenter.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/interface-adapters/src/main/java/backend/finance/adapters/presenters/CustomerPresenter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/interface-adapters/src/main/java/backend/finance/adapters/presenters/CustomerPresenterImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/interface-adapters/src/main/java/backend/finance/adapters/presenters/CustomerPresenterImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/interface-adapters/src/main/java/backend/finance/adapters/presenters/UserPresenter.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/interface-adapters/src/main/java/backend/finance/adapters/presenters/UserPresenter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/interface-adapters/src/main/java/backend/finance/adapters/presenters/UserPresenterImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/interface-adapters/src/main/java/backend/finance/adapters/presenters/UserPresenterImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/interface-adapters/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/interface-adapters/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/interface-adapters/src/main/java/backend/finance/adapters/configs/JpaAuditingConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/interface-adapters/src/main/java/backend/finance/adapters/configs/JpaAuditingConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/interface-adapters/src/main/java/backend/finance/adapters/jpas/AbstractAuditingJpa.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/interface-adapters/src/main/java/backend/finance/adapters/jpas/auditoria/AbstractAuditingJpa.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/interface-adapters/src/main/java/backend/finance/adapters/jpas/CustomerJpa.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/interface-adapters/src/main/java/backend/finance/adapters/jpas/CustomerJpa.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/interface-adapters/src/main/java/backend/finance/adapters/jpas/RoleJpa.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/interface-adapters/src/main/java/backend/finance/adapters/jpas/RoleJpa.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/interface-adapters/src/main/java/backend/finance/adapters/jpas/UserJpa.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/interface-adapters/src/main/java/backend/finance/adapters/jpas/UserJpa.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/interface-adapters/src/main/java/backend/finance/adapters/repositories/CustomerRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/interface-adapters/src/main/java/backend/finance/adapters/repositories/CustomerRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/interface-adapters/src/main/java/backend/finance/adapters/repositories/RoleRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/interface-adapters/src/main/java/backend/finance/adapters/repositories/RoleRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/interface-adapters/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/interface-adapters/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/interface-adapters/src/main/resources/liquibase/changelog/master.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/interface-adapters/src/main/resources/liquibase/changelog/master.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docs/tutoriais/auditoria.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/tutoriais/auditoria.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -127,8 +131,8 @@
         <option value="Enum" />
         <option value="Record" />
         <option value="JUnit5 Test Class" />
-        <option value="Class" />
         <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -214,7 +218,7 @@
     &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
     &quot;git-widget-placeholder&quot;: &quot;feature/users-auditoria-v1&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/juniormartins/Codigo/microservice-2026/api-investments&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/juniormartins/Codigo/microservice-2026/api-users/interface-adapters/src/main/resources/liquibase/changesets&quot;,
     &quot;onboarding.tips.debug.path&quot;: &quot;/home/juniormartins/Codigo/microservice-2026/api-notifications/infraestrutura/src/main/java/backend/communication/Main.java&quot;,
     &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
@@ -224,11 +228,11 @@
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/api-users/interface-adapters/src/main/resources/liquibase/changesets" />
       <recent name="$PROJECT_DIR$/api-notifications/infraestrutura/src/main/java/backend/communication/infraestrutura/mensageria/consumer" />
       <recent name="$PROJECT_DIR$/api-notifications/infraestrutura/src/main/avro" />
       <recent name="$PROJECT_DIR$/api-notifications" />
       <recent name="$PROJECT_DIR$/api-notifications/infraestrutura/src/test/resources" />
-      <recent name="$PROJECT_DIR$/docs/tutoriais/imagens" />
     </key>
     <key name="CreateTestDialog.Recents.Supers">
       <recent name="" />
@@ -389,11 +393,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.Tests in 'api-users.interface-adapters.test'" />
-        <item itemvalue="Gradle.api-users [:interface-adapters:build]" />
         <item itemvalue="Gradle.api-users [:interface-adapters:generateAvroJava]" />
         <item itemvalue="Gradle.api-users [:interface-adapters:clean]" />
+        <item itemvalue="Gradle.api-users [:interface-adapters:build]" />
         <item itemvalue="Gradle.api-users [:interface-adapters:buildDependents]" />
+        <item itemvalue="Gradle.Tests in 'api-users.interface-adapters.test'" />
       </list>
     </recent_temporary>
   </component>

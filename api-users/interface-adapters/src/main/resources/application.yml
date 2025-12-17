@@ -67,7 +67,14 @@ spring:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl # Define a estrategia de nomeacao fisica (padrao). Usar CamelCase no Java e snake_case no banco.
     defer-datasource-initialization: false # True adia a execucao do import.sql ate que o schema JPA esteja inicializado. Usar false com Liquibase.
     properties:
-      hibernate: # Configuracoes avancadas do Hibernate.
+      org:
+        hibernate: # Configuracoes avancadas do Hibernate.
+          envers:
+            audit_table_name: revision_info # Nome da tabela de revisoes do Envers (padrão REVINFO).
+            audit_table_suffix: _audit # Sufixo para tabelas de auditoria do Envers (padrão _aud).
+            revision_field_name: revision_id # Nome do campo de revisão.
+            revision_type_field_name: revision_type # Nome do campo de tipo de revisão.
+      hibernate:
         format_sql: true # Formata o SQL gerado para melhor legibilidade.
         use_sql_comments: true # Adiciona comentarios ao SQL gerado.
         connection: # Define o nivel de isolamento de transacao.

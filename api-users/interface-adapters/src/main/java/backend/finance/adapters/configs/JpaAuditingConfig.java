@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @Configuration
 @EnableJpaAuditing(dateTimeProviderRef = "auditingDateTimeProvider")
-public class JpaAuditingConfiguration {
+public class JpaAuditingConfig {
 
     @Bean(name = "auditingDateTimeProvider")
     public DateTimeProvider auditingDateTimeProvider() {
