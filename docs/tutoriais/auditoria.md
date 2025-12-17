@@ -18,7 +18,7 @@
 ### Introdução: 
 
 ```
-Em qualquer aplicação,  auditoria  significa rastrear e registrar cada alteração em todos os 
+Em qualquer aplicação, auditoria significa rastrear e registrar cada alteração em todos os 
 objetos de negócio, ou seja, rastrear cada operação de inserção, atualização e exclusão. 
 Basicamente, envolve o rastreamento de três coisas.
 
@@ -26,16 +26,14 @@ Basicamente, envolve o rastreamento de três coisas.
 * Quem fez isso?
 * Quando foi feito?
 
-A auditoria  nos ajuda a manter registros históricos, o que posteriormente pode nos 
+A auditoria nos ajuda a manter registros históricos, o que posteriormente pode nos 
 auxiliar no rastreamento das atividades dos usuários.
 
-Embora o JPA Auditing oferecesse configuração fácil para auditoria básica, ela não fornece 
+Embora o JPA Auditing oferece configuração fácil para auditoria básica, ela não fornece 
 detalhes de todas as alterações/atualizações feitas em uma entidade. Por exemplo, uma 
 entidade Cliente pode ter sido modificada 5 vezes. Com a auditoria JPA, não há como 
 descobrir o que foi alterado na entidade em cada uma das 5 atualizações. E assim Envers 
 entra em cena, fornecendo o histórico de auditoria completo de uma entidade. 
-
-Envers é um módulo do Hibernate que adiciona recursos de auditoria às entidades JPA. 
 ```
 
 Spring Data Jpa Auditing
@@ -48,7 +46,7 @@ detalhado das alterações feitas nos dados.
 
 Spring Data Envers
 ```
- 
+Envers é um módulo do Hibernate que adiciona recursos de auditoria às entidades JPA.  
 ```
 
 ## 2. Configuração
@@ -64,19 +62,19 @@ Spring Data Jpa Auditing:
 Spring Data Envers: 
 1. Adicionar dependência no build.gradle;
 2. Extender repositorios JPA a partir de RevisionRepository;
-3. Habilitar auditoria Envers nas entidades que precisam de auditoria com @Audited;
+3. Habilitar auditoria Envers nas entidades que precisam de auditoria com @Audited e classe pai;
 4. Criar script de criação das tabelas de auditoria (opcional, o Envers cria automaticamente, mas não recomendado em produção);
    a. Fiz uso de nomes personalizados para as tabelas e campos (fora do padrão do Envers);
 5. Configurar application.yml (necessário para customizar nomes de tabelas e campos);
-6. Criar RevisionEntity;
-7. Adicionar anotação @Audited na classe mãe de auditoria do Spring Data JPA. 
+6. Criar RevisionEntity (importante, especialmente para customizar os nomes);
+
 
 
 ### Implementação: 
 
-Spring Data Jpa Auditing:
+Spring Data Jpa Auditing
 
-Classe mãe de auditoria
+1. Classe mãe de auditoria:
 ```
 @MappedSuperclass 
 @EntityListeners(AuditingEntityListener.class) 
@@ -85,26 +83,57 @@ Classe mãe de auditoria
 public abstract class AbstractAuditingJpa {
 
     @Column(name = "created_by", updatable = false)
-    private String createdBy;
+    private String createdBy; 
 
     @Column(name = "last_modified_by")
-    private String lastModifiedBy;
+    private String lastModifiedBy; 
 
     @CreatedDate
     @Column(name = "created_date", nullable = false, updatable = false)
-    private OffsetDateTime createdDate;
+    private OffsetDateTime createdDate; 
 
     @LastModifiedDate
     @Column(name = "last_modified_date")
-    private OffsetDateTime lastModifiedDate;
+    private OffsetDateTime lastModifiedDate; 
 }
 ```
+2. Extender as entidades:
+```
+@Entity
+@Table(name = "customers", indexes = {@Index(name = "idx_customers_email", columnList = "email")})
+@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Getter
+@EqualsAndHashCode(of = {"email"}, callSuper = false)
+@ToString
+public final class CustomerJpa extends AbstractAuditingJpa implements Serializable {
 
-Classe de configuração
+    @Serial
+    private static final long serialVersionUID = 1L;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
+
+    @Column(name = "name", nullable = false)
+    private String name;
+
+    @Column(name = "email", nullable = false, unique = true)
+    private String email;
+
+    @OneToOne(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, optional = false, orphanRemoval = true)
+    @JoinColumn(name = "user_id", nullable = false, unique = true)
+    private UserJpa user;
+
+    @Column(name = "active", nullable = false, columnDefinition = "BOOLEAN DEFAULT TRUE")
+    private boolean active;
+}
+```
+3. Classe de configuração:
 ```
 @Configuration
 @EnableJpaAuditing(dateTimeProviderRef = "auditingDateTimeProvider")
-public class JpaAuditingConfiguration {
+public class JpaAuditingConfig {
 
     @Bean(name = "auditingDateTimeProvider")
     public DateTimeProvider auditingDateTimeProvider() {
@@ -112,8 +141,7 @@ public class JpaAuditingConfiguration {
     }
 }
 ```
-
-Script (banco PostgreSQL)
+4. Script (banco PostgreSQL):
 ```
 created_by VARCHAR(50),
 created_date TIMESTAMP WITH TIME ZONE NOT NULL,
@@ -125,15 +153,37 @@ Spring Data Envers:
 
 1. Dependência no build.gradle;
 ```
-implementation 'org.springframework.data:spring-data-envers:4.0.1' 
+implementation 'org.springframework.data:spring-data-envers:4.0.1'
 ```
 2. Extender repositórios JPA;
 ```
 public interface UserRepository extends JpaRepository<UserJpa, UUID>, RevisionRepository<UserJpa, UUID, Long>  {
 }
 ```
-3. Habilitar auditoria Envers nas entidades (@Audited);
+3. Habilitar auditoria Envers nas entidades e classe pai (@Audited);
 ```
+@Audited
+@MappedSuperclass 
+@EntityListeners(AuditingEntityListener.class) 
+@Getter
+@Setter
+public abstract class AbstractAuditingJpa {
+
+    @Column(name = "created_by", updatable = false)
+    private String createdBy; 
+
+    @Column(name = "last_modified_by")
+    private String lastModifiedBy; 
+
+    @CreatedDate
+    @Column(name = "created_date", nullable = false, updatable = false)
+    private OffsetDateTime createdDate; 
+
+    @LastModifiedDate
+    @Column(name = "last_modified_date")
+    private OffsetDateTime lastModifiedDate; 
+}
+
 @Audited 
 @Entity
 @Table(name = "users", indexes = {@Index(name = "idx_users_username", columnList = "username")})
@@ -168,19 +218,18 @@ public final class UserJpa extends AbstractAuditingJpa implements Serializable {
 4. Scripts auditoria
 ```
 CREATE TABLE IF NOT EXISTS revision_info (
-    revision_id LONG PRIMARY KEY AUTO_INCREMENT,
-    revision_timestamp TIMESTAMP NOT NULL,
-    user VARCHAR(50) NOT NULL
+    revision_id BIGINT GENERATED BY DEFAULT AS IDENTITY PRIMARY KEY,
+    revision_timestamp TIMESTAMP WITH TIME ZONE NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS roles_audit (
-    revision_id LONG NOT NULL,
-    revision_type TINYINT NOT NULL,
+    revision_id INTEGER NOT NULL,
+    revision_type SMALLINT NOT NULL,
 
     id UUID NOT NULL,
     name VARCHAR(50) NOT NULL,
     created_by VARCHAR(50),
-    created_date TIMESTAMP WITH TIME ZONE NOT NULL,
+    created_date TIMESTAMP WITH TIME ZONE,
     last_modified_by VARCHAR(50),
     last_modified_date TIMESTAMP WITH TIME ZONE,
 
@@ -190,10 +239,35 @@ CREATE TABLE IF NOT EXISTS roles_audit (
 ```
 5. Configuração application.yml
 ```
-
+spring:
+  jpa: 
+    properties:
+      org:
+        hibernate: 
+          envers:
+            audit_table_name: revision_info # Nome da tabela de revisões do Envers (padrão REVINFO).
+            audit_table_suffix: _audit # Sufixo para tabelas de auditoria do Envers (padrão _aud).
+            revision_field_name: revision_id # Nome do campo de revisão.
+            revision_type_field_name: revision_type # Nome do campo de tipo de revisão.
 ```
-6. RevisionEntity
+6. CustomRevisionEntity
 ```
+@Entity
+@Table(name = "revision_info")
+@RevisionEntity // Indica ao Envers que esta é a classe de controle de revisões
+@Getter
+@Setter
+public class CustomRevisionEntity {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @RevisionNumber
+    @Column(name = "revision_id")
+    private Long revisionId;
+
+    @RevisionTimestamp
+    @Column(name = "revision_timestamp")
+    private Instant revisionTimestamp;
+}
 ```
 
