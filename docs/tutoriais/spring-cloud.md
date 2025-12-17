@@ -1,0 +1,53 @@
+# TUTORIAL
+
+## 1. Teoria
+
+### Fontes:
+- https://www.udemy.com/course/microservices-do-0-a-gcp-com-spring-boot-kubernetes-e-docker/ 
+- https://spring.io/projects/spring-cloud-config 
+- https://docs.spring.io/spring-boot/api/rest/actuator/index.html#page-title 
+- https://docs.spring.io/spring-boot/api/rest/actuator/liquibase.html 
+
+
+### Introdução: 
+
+```
+Spring Cloud Config é uma solução do ecossistema Spring que resolve um dos principais 
+desafios no desenvolvimento de aplicações baseadas em microsserviços: a centralização e 
+gestão eficiente de configurações. Em ambientes de microsserviços, cada serviço pode ter 
+suas próprias configurações, o que pode levar a inconsistências e dificuldades na 
+manutenção. O Spring Cloud Config permite que as aplicações obtenham suas configurações de 
+um repositório centralizado, facilitando a gestão e atualização dessas configurações sem a
+necessidade de redeploy das aplicações. 
+
+Composto por dois componentes principais: o servidor de configuração (Config Server) e o 
+cliente de configuração (Config Client). O Config Server atua como um ponto central onde as 
+configurações são armazenadas, geralmente em repositórios Git, SVN ou sistemas de arquivos. 
+Já o Config Client é integrado às aplicações Spring Boot, permitindo que elas busquem suas 
+configurações do Config Server durante a inicialização ou em tempo de execução.
+```
+
+## 2. Configuração
+
+### Passo-a-passo
+
+Cliente
+1. Adicionar dependência no build.gradle:
+  - a. Spring Boot Actuator;
+  - b. Spring Cloud Config Client;
+2. Configurar application.yml: 
+
+### Implementação: 
+
+1. build.gradle:
+  a. Spring Boot Actuator
+```
+implementation 'org.springframework.boot:spring-boot-starter-actuator' 
+testImplementation 'org.springframework.boot:spring-boot-starter-actuator-test'
+```
+  b. Spring Cloud Config Client
+```
+
+```
+
+
