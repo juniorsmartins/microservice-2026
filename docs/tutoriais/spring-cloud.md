@@ -11,6 +11,11 @@
 
 ### Introdução: 
 
+Spring Boot Actuator
+```
+
+```
+Spring Cloud Config
 ```
 Spring Cloud Config é uma solução do ecossistema Spring que resolve um dos principais 
 desafios no desenvolvimento de aplicações baseadas em microsserviços: a centralização e 
@@ -37,8 +42,17 @@ Cliente
   - b. Spring Cloud Config Client;
 2. Configurar application.yml: 
 
+Servidor
+1. Criar projeto Spring com duas dependências:
+  - a. Spring Boot Actuator;
+  - b. Spring Cloud Config Server;
+2. Configurar application.yml;
+3. Habilitar o Config Server na classe principal com a anotação @EnableConfigServer;
+4. Criar repositório Git para armazenar os arquivos de configuração.
+
 ### Implementação: 
 
+Cliente
 1. build.gradle:
   a. Spring Boot Actuator
 ```

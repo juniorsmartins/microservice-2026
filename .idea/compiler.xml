@@ -3,57 +3,26 @@
   <component name="CompilerConfiguration">
     <annotationProcessing>
       <profile default="true" name="Default" enabled="true" />
-      <profile name="Gradle Imported" enabled="true">
-        <outputRelativeToContentRoot value="true" />
-        <processorPath useClasspath="false">
-          <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.projectlombok/lombok/1.18.42/8365263844ebb62398e0dc33057ba10ba472d3b8/lombok-1.18.42.jar" />
-        </processorPath>
-        <module name="api-notifications.infraestrutura.main" />
-      </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="api-account.main" target="25" />
       <module name="api-account.test" target="25" />
       <module name="api-accounts" target="25" />
-      <module name="api-accounts.main" target="25" />
-      <module name="api-accounts.test" target="25" />
       <module name="api-investment.main" target="25" />
       <module name="api-investment.test" target="25" />
       <module name="api-investments" target="25" />
-      <module name="api-investments.main" target="25" />
-      <module name="api-investments.test" target="25" />
-      <module name="api-notifications.aplicacao" target="25" />
-      <module name="api-notifications.aplicacao.main" target="25" />
-      <module name="api-notifications.aplicacao.test" target="25" />
-      <module name="api-notifications.dominio" target="25" />
-      <module name="api-notifications.dominio.main" target="25" />
-      <module name="api-notifications.dominio.test" target="25" />
-      <module name="api-notifications.infraestrutura" target="25" />
-      <module name="api-notifications.infraestrutura.main" target="25" />
-      <module name="api-notifications.infraestrutura.test" target="25" />
       <module name="api-notifications.main" target="25" />
       <module name="api-notifications.test" target="25" />
       <module name="api-report" target="25" />
       <module name="api-report.main" target="25" />
       <module name="api-report.test" target="25" />
       <module name="api-reports" target="25" />
-      <module name="api-reports.main" target="25" />
-      <module name="api-reports.test" target="25" />
       <module name="api-user" target="25" />
       <module name="api-user.main" target="25" />
       <module name="api-user.test" target="25" />
-      <module name="api-users.application-business-rules" target="25" />
-      <module name="api-users.application-business-rules.main" target="25" />
-      <module name="api-users.application-business-rules.test" target="25" />
-      <module name="api-users.enterprise-business-rules" target="25" />
-      <module name="api-users.enterprise-business-rules.main" target="25" />
-      <module name="api-users.enterprise-business-rules.test" target="25" />
       <module name="api-users.frameworks-drivers" target="25" />
       <module name="api-users.frameworks-drivers.main" target="25" />
       <module name="api-users.frameworks-drivers.test" target="25" />
-      <module name="api-users.interface-adapters" target="25" />
-      <module name="api-users.interface-adapters.main" target="25" />
-      <module name="api-users.interface-adapters.test" target="25" />
       <module name="api-users.main" target="25" />
       <module name="api-users.test" target="25" />
     </bytecodeTargetLevel>
@@ -90,6 +59,9 @@
       <module name="api-users.interface-adapters" options="-parameters" />
       <module name="api-users.interface-adapters.main" options="-parameters" />
       <module name="api-users.interface-adapters.test" options="-parameters" />
+      <module name="configserver" options="-parameters" />
+      <module name="configserver.main" options="-parameters" />
+      <module name="configserver.test" options="-parameters" />
     </option>
   </component>
 </project>

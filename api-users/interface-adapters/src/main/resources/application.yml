@@ -19,6 +19,7 @@ spring:
     username: ${DB_USERNAME:postgres}
     password: ${DB_PASSWORD:postgres}
 
+
     # --------------------------------------------------
     # Config de Pool de Conexões
     # --------------------------------------------------
@@ -59,6 +60,7 @@ spring:
         maintainTimeStats: false # Não coleta estatísticas internas de tempo. Reduz overhead, aumenta performance.
     # --------------------------------------------------
 
+
   jpa: # Configura o JPA/Hibernate.
     database: POSTGRESQL
     hibernate:
@@ -90,7 +92,7 @@ spring:
 
 
   # --------------------------------------------------
-  # Config de Liquibase (migration)
+  # Config de Liquibase
   # --------------------------------------------------
   liquibase:
     enabled: true
@@ -100,7 +102,7 @@ spring:
 
 
   # --------------------------------------------------
-  # Config de Kafka (mensageria)
+  # Config de Kafka
   # --------------------------------------------------
   kafka:
     bootstrap-servers: kafka-1:9092,kafka-2:9092,kafka-3:9092
@@ -169,6 +171,7 @@ spring:
 management:
   endpoints:
     web:
+      base-path: /actuator # Define o path base dos endpoints do actuator (padrão /actuator)
       exposure:
         include: health,info,metrics,liquibase # Expõe endpoints para monitoramento
   endpoint:

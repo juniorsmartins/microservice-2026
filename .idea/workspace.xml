@@ -5,58 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a1ea8202-910b-4a63-8ece-9f6a9a5ee2c0" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/docs/tutoriais/spring-cloud.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-accounts/.gitattributes" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-accounts/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-accounts/build.gradle" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-accounts/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-accounts/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-accounts/gradlew" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-accounts/gradlew.bat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-accounts/settings.gradle" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-accounts/src/main/java/backend/finance/api_account/ApiAccountApplication.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-accounts/src/main/java/backend/finance/api_account/application/utils/ValidationUtilities.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-accounts/src/main/java/backend/finance/api_account/domain/entities/Account.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-accounts/src/main/java/backend/finance/api_account/domain/entities/CashBook.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-accounts/src/main/java/backend/finance/api_account/domain/entities/Customer.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-accounts/src/main/java/backend/finance/api_account/domain/entities/Transaction.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-accounts/src/main/java/backend/finance/api_account/domain/enums/AccountTypeEnum.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-accounts/src/main/java/backend/finance/api_account/domain/enums/CostCenterEnum.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-accounts/src/main/java/backend/finance/api_account/domain/enums/TransactionTypeEnum.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-accounts/src/main/java/backend/finance/api_account/infrastructure/daos/AccountJpa.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-accounts/src/main/java/backend/finance/api_account/infrastructure/daos/CashBookJpa.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-accounts/src/main/java/backend/finance/api_account/infrastructure/daos/CustomerJpa.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-accounts/src/main/java/backend/finance/api_account/infrastructure/daos/TransactionJpa.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-accounts/src/main/resources/application.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-accounts/src/test/java/backend/finance/api_account/ApiAccountApplicationTests.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-accounts/src/test/resources/application.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-investments/.gitattributes" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-investments/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-investments/build.gradle" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-investments/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-investments/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-investments/gradlew" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-investments/gradlew.bat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-investments/settings.gradle" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-investments/src/main/java/backend/finance/api_investment/ApiInvestmentApplication.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-investments/src/main/resources/application.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-investments/src/test/java/backend/finance/api_investment/ApiInvestmentApplicationTests.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-reports/.gitattributes" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-reports/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-reports/build.gradle" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-reports/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-reports/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-reports/gradlew" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-reports/gradlew.bat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-reports/settings.gradle" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-reports/src/main/java/backend/finance/api_report/ApiReportApplication.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-reports/src/main/resources/application.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-reports/src/test/java/backend/finance/api_report/ApiReportApplicationTests.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/interface-adapters/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/interface-adapters/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api-users/interface-adapters/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/interface-adapters/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/tutoriais/auditoria.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/tutoriais/auditoria.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/tutoriais/spring-cloud.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/tutoriais/spring-cloud.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -100,6 +54,9 @@
     <projectState path="$PROJECT_DIR$/api-users">
       <ProjectState />
     </projectState>
+    <projectState path="$PROJECT_DIR$/configserver">
+      <ProjectState />
+    </projectState>
   </component>
   <component name="ExternalProjectsManager">
     <system id="GRADLE">
@@ -127,37 +84,7 @@
         </task>
         <projects_view>
           <tree_state>
-            <expand>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="api-users" type="f1a62948:ProjectNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="api-users" type="f1a62948:ProjectNode" />
-                <item name="interface-adapters" type="2d1252cf:ModuleNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="api-users" type="f1a62948:ProjectNode" />
-                <item name="interface-adapters" type="2d1252cf:ModuleNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="api-users" type="f1a62948:ProjectNode" />
-                <item name="interface-adapters" type="2d1252cf:ModuleNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-                <item name="build" type="c8890929:TasksNode$1" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="api-users" type="f1a62948:ProjectNode" />
-                <item name="interface-adapters" type="2d1252cf:ModuleNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-                <item name="source generation" type="c8890929:TasksNode$1" />
-              </path>
-            </expand>
+            <expand />
             <select />
           </tree_state>
         </projects_view>
@@ -257,12 +184,12 @@
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
     "git-widget-placeholder": "feature/spring-cloud-v1",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/home/juniormartins/Codigo/microservice-2026/api-users/interface-adapters/src/main/resources/liquibase/changesets",
+    "last_opened_file_path": "/home/juniormartins/Codigo/microservice-2026/configserver",
     "onboarding.tips.debug.path": "/home/juniormartins/Codigo/microservice-2026/api-notifications/infraestrutura/src/main/java/backend/communication/Main.java",
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "project.propCompiler"
+    "settings.editor.selected.configurable": "preferences.pluginManager"
   }
 }]]></component>
   <component name="RecentsManager">
@@ -456,6 +383,24 @@
       <updated>1758467583880</updated>
     </task>
     <servers />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="dependencySupport" implementationName="java:org.springframework:spring-core" />
+    <option featureType="dependencySupport" implementationName="java:org.apache.kafka:kafka_2.13" />
+    <option featureType="dependencySupport" implementationName="java:jakarta.enterprise:jakarta.enterprise.cdi-api" />
+    <option featureType="dependencySupport" implementationName="java:jakarta.validation:jakarta.validation-api" />
+    <option featureType="dependencySupport" implementationName="java:org.springframework.data:spring-data-commons" />
+    <option featureType="dependencySupport" implementationName="java:org.springframework.cloud:spring-cloud-context" />
+    <option featureType="dependencySupport" implementationName="java:org.hibernate.validator:hibernate-validator" />
+    <option featureType="dependencySupport" implementationName="java:javax.validation:validation-api" />
+    <option featureType="dependencySupport" implementationName="java:org.springframework:spring-webmvc" />
+    <option featureType="dependencySupport" implementationName="java:org.projectlombok:lombok" />
+    <option featureType="dependencySupport" implementationName="java:jakarta.persistence:jakarta.persistence-api" />
+    <option featureType="dependencySupport" implementationName="java:org.flywaydb:flyway-core" />
+    <option featureType="dependencySupport" implementationName="java:io.confluent:kafka-schema-registry-client" />
+    <option featureType="dependencySupport" implementationName="java:jakarta.ws.rs:jakarta.ws.rs-api" />
+    <option featureType="dependencySupport" implementationName="java:org.springframework:spring-messaging" />
+    <option featureType="dependencySupport" implementationName="java:org.springframework.boot:spring-boot" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/microservice_2026$Tests_in__api_users_application_business_rules_test_.ic" NAME="Tests in 'api-users.application-business-rules.test' Coverage Results" MODIFIED="1762541084689" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />

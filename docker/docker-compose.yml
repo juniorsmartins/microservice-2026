@@ -203,6 +203,30 @@ services:
     networks:
       - communication
 
+  configserver:
+    image: juniorsmartins/configserver:v0.0.1
+    container_name: configserver
+    hostname: configserver
+    build:
+      context: ../configserver
+      dockerfile: Dockerfile
+      args:
+        APP_NAME: "configserver"
+        APP_VERSION: "v0.0.1"
+        APP_DESCRIPTION: "Servidor de Configuração Centralizada."
+    ports:
+      - "8888:8888"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 256M
+    environment:
+      JAVA_TOOL_OPTIONS: "--enable-native-access=ALL-UNNAMED" # Elimina alguns warnnings
+    restart: on-failure
+    networks:
+      - communication
+
   api-users:
     image: juniorsmartins/api-users:v0.0.1
     container_name: api-users

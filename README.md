@@ -31,9 +31,11 @@ Arquitetura Orientada a Eventos
 
 - Java (versão 25);
 - Gradle (versão 9.1.0);
-- Spring Boot (versão 3.5.7);
-- Spring Data Web;
+- Spring Boot (versão 4.0.0);
+- Spring Data WebMVC;
 - Spring Data JPA;
+- Spring Data Envers (auditoria - versão 4.0.1);
+- Spring Boot Actuator (monitoramento);
 - Liquibase (migration em SQL);
 - Apache Kafka, Schema Registry e Apache Avro (mensageria);
 - RestAssured, JUnit e Mockito (testes);
@@ -50,14 +52,17 @@ Arquitetura Limpa multi-modulo
 Diagrama Entidade Relacionamento - DER 
 ![Diagrama Entidade Relacionamento](docs/diagramas/api-users/DER-api-users.png)
 
-## API - Accounts
+## Config Server
 
-Arquitetura Hexagonal
+### Tecnologias ConfigServer
 
-## API - Investments
+- Java (versão 25);
+- Gradle (versão 9.1.0);
+- Spring Boot Actuator (monitoramento);
+- Spring Cloud Config Server;
+- Docker (dockerfile e docker compose);
 
 ## API - Notifications
-
 
 ### Tecnologias Notifications 
 
@@ -75,8 +80,6 @@ Arquitetura Hexagonal
 - Docker (dockerfile e docker compose);
 - Lombok.
 
-## API - Reports
-
 ## Tutoriais
 
 - [Gradle multi-modulo](docs/tutoriais/multimodulo.md);
@@ -84,5 +87,7 @@ Arquitetura Hexagonal
 - [Liquibase](docs/tutoriais/liquibase.md);
 - [Flyway](docs/tutoriais/flyway.md);
 - [Spring Mail](docs/tutoriais/spring-mail.md); 
+- [Spring Cloud](docs/tutoriais/spring-cloud.md);
+- [Auditoria](docs/tutoriais/auditoria.md);
 - [Padrões e Utilidades](docs/tutoriais/padroes_utils.md)
 
