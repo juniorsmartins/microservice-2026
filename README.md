@@ -10,14 +10,12 @@ e colaboração Orientada a Eventos.
 ## Índice
 
 1. Arquitetura 
-2. [API - Users](#api---users)
-3.  [API - Accounts](#api---accounts)
-4.  [API - Investments](#api---investments)
-5.  [API - Notifications](#api---notifications)
-6.  [API - Reports](#api---reports)
-7.  [Tutoriais](#tutoriais)
-8.  [Como rodar a aplicação](#como-rodar-a-aplicacao) 
-9.  [Coleções de teste para Postman](#colecoes-de-teste-para-postman)
+2.  [API - Users](#api---users)
+3.  [API - Notifications](#api---notifications)
+4.  [Config Server](#config-server)
+5.  [Tutoriais](#tutoriais)
+6.  [Como rodar a aplicação](#como-rodar-a-aplicacao) 
+7.  [Coleções de teste para Postman](#colecoes-de-teste-para-postman)
 
 ## Arquitetura 
 
