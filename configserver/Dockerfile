@@ -11,10 +11,8 @@ FROM ${IMAGE_BUILD} AS builder
 # Copia o projeto (incluindo settings.gradle e submódulos)
 COPY . .
 
-# Gera apenas o bootJar do módulo interface-adapters
-RUN ./gradlew :infraestrutura:bootJar --no-daemon --stacktrace
 ## Constrói o projeto com o Gradle (com ou sem teste)
-# RUN ./gradlew clean build --no-daemon --stacktrace
+RUN ./gradlew clean build --no-daemon --stacktrace
 # RUN ./gradlew clean build -x test --no-daemon --stacktrace
 
 
@@ -42,10 +40,7 @@ LABEL aplication=${APP_NAME} \
 # Instala o curl
 RUN apk add --no-cache curl
 
-# Copia APENAS o JAR gerado do módulo interface-adapters
-COPY --from=builder infraestrutura/build/libs/api-notifications.jar app.jar
-# Copiava o JAR quando ele estava no build da raiz.
-# COPY --from=builder /build/libs/*.jar app.jar
+COPY --from=builder /build/libs/*.jar app.jar
 
 # Comandos
 ENTRYPOINT ["java", "--enable-preview","-jar","app.jar"]
