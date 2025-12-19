@@ -10,14 +10,12 @@ e colaboração Orientada a Eventos.
 ## Índice
 
 1. Arquitetura 
-2. [API - Users](#api---users)
-3.  [API - Accounts](#api---accounts)
-4.  [API - Investments](#api---investments)
-5.  [API - Notifications](#api---notifications)
-6.  [API - Reports](#api---reports)
-7.  [Tutoriais](#tutoriais)
-8.  [Como rodar a aplicação](#como-rodar-a-aplicacao) 
-9.  [Coleções de teste para Postman](#colecoes-de-teste-para-postman)
+2.  [API - Users](#api---users)
+3.  [API - Notifications](#api---notifications)
+4.  [Config Server](#config-server)
+5.  [Tutoriais](#tutoriais)
+6.  [Como rodar a aplicação](#como-rodar-a-aplicacao) 
+7.  [Coleções de teste para Postman](#colecoes-de-teste-para-postman)
 
 ## Arquitetura 
 
@@ -31,9 +29,11 @@ Arquitetura Orientada a Eventos
 
 - Java (versão 25);
 - Gradle (versão 9.1.0);
-- Spring Boot (versão 3.5.7);
-- Spring Data Web;
+- Spring Boot (versão 4.0.0);
+- Spring Data WebMVC;
 - Spring Data JPA;
+- Spring Data Envers (auditoria - versão 4.0.1);
+- Spring Boot Actuator (monitoramento);
 - Liquibase (migration em SQL);
 - Apache Kafka, Schema Registry e Apache Avro (mensageria);
 - RestAssured, JUnit e Mockito (testes);
@@ -50,14 +50,17 @@ Arquitetura Limpa multi-modulo
 Diagrama Entidade Relacionamento - DER 
 ![Diagrama Entidade Relacionamento](docs/diagramas/api-users/DER-api-users.png)
 
-## API - Accounts
+## Config Server
 
-Arquitetura Hexagonal
+### Tecnologias ConfigServer
 
-## API - Investments
+- Java (versão 25);
+- Gradle (versão 9.1.0);
+- Spring Boot Actuator (monitoramento);
+- Spring Cloud Config Server;
+- Docker (dockerfile e docker compose);
 
 ## API - Notifications
-
 
 ### Tecnologias Notifications 
 
@@ -75,8 +78,6 @@ Arquitetura Hexagonal
 - Docker (dockerfile e docker compose);
 - Lombok.
 
-## API - Reports
-
 ## Tutoriais
 
 - [Gradle multi-modulo](docs/tutoriais/multimodulo.md);
@@ -84,5 +85,7 @@ Arquitetura Hexagonal
 - [Liquibase](docs/tutoriais/liquibase.md);
 - [Flyway](docs/tutoriais/flyway.md);
 - [Spring Mail](docs/tutoriais/spring-mail.md); 
+- [Spring Cloud](docs/tutoriais/spring-cloud.md);
+- [Auditoria](docs/tutoriais/auditoria.md);
 - [Padrões e Utilidades](docs/tutoriais/padroes_utils.md)
 
