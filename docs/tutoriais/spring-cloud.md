@@ -43,12 +43,22 @@ Cliente
 2. Configurar application.yml: 
 
 Servidor
-1. Criar projeto Spring com duas dependências:
+1. Criar projeto Spring com apenas duas dependências (ficará no monorepo das demais aplicações):
   - a. Spring Boot Actuator;
   - b. Spring Cloud Config Server;
-2. Configurar application.yml;
-3. Habilitar o Config Server na classe principal com a anotação @EnableConfigServer;
-4. Criar repositório Git para armazenar os arquivos de configuração.
+2. Habilitar o Config Server na classe principal Main com a anotação @EnableConfigServer;
+3. Criar novo repositório Git exclusivo para armazenar os arquivos de configuração;
+   a.Criar diretório, como nome da api, onde serão colocados os respectivos arquivos de configuração;
+   b. Criar os arquivos de configuração que serão consumidos pela aplicação cliente;
+   c. Nome dos arquivos: {application-name}-{profile}.yml (configuração específica para cada aplicação e perfil,
+   como dev, prod e etc.);
+4. Configurar application.yml padrão do Config Server:
+  - a. Apontar repositório Git para buscar arquivos de configuração;
+  - b. Configurar endpoints do Actuator no application.yml padrão;
+5. Criar diretório "config" no resources do ConfigServer para arquivos de configuração;
+
+  
+
 
 ### Implementação: 
 
