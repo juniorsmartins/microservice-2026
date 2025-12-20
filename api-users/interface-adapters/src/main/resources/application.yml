@@ -179,10 +179,12 @@ management:
     web:
       base-path: /actuator # Define o path base dos endpoints do actuator (padrão /actuator)
       exposure:
-        include: health,info,metrics,liquibase,refresh # Expõe endpoints para monitoramento
+        include: refresh,health,info,metrics,liquibase,configprops # Expõe endpoints para monitoramento
   endpoint:
     health:
       show-details: always # Mostra detalhes completos de saúde
+    configprops:
+      show-values: always
   # --------------------------------------------------
 
 
