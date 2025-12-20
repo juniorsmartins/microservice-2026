@@ -18,6 +18,6 @@ spring:
           clone-on-start: true # Clona o repositório ao iniciar o servidor
           force-pull: true # Força a atualização do repositório a cada solicitação
           search-paths: # Caminhos de busca para arquivos de configuração
-            - 'users*'
+            - 'api-users*'
             - 'notifications*'
             - 'configserver*'

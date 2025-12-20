@@ -9,7 +9,9 @@
 - https://docs.spring.io/spring-boot/api/rest/actuator/liquibase.html 
 - https://docs.spring.io/spring-cloud-config/reference/server/environment-repository/git-backend.html 
 - https://spring.io/guides/gs/centralized-configuration 
-- 
+- https://www.udemy.com/course/microservices-do-0-a-gcp-com-spring-boot-kubernetes-e-docker/learn/lecture/50949711#overview 
+- https://www.youtube.com/watch?v=E2HkL766VHs 
+- https://www.youtube.com/watch?v=yNnLICy2zk4 
 
 
 ### Introdução: 
@@ -44,8 +46,9 @@ Cliente
   - a. Spring Boot Actuator;
   - b. Spring Cloud Config Client;
 2. Configurar application.yml: 
-3. Adicionar anotação @RefreshScope na classe Main para permitir refresh das configurações em tempo de execução;
+3. Adicionar anotação @RefreshScope na Main e em todas as classes que deseja atualizar em tempo de execução;
 4. Adicionar "refresh" na configuração de endpoints do Actuator no application.yml;
+5. Fazer POST no endpoint /actuator/refresh para atualizar as configurações em tempo de execução;
 
 Servidor
 1. Criar projeto Spring com apenas duas dependências (ficará no monorepo das demais aplicações):
