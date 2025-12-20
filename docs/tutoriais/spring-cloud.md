@@ -51,7 +51,7 @@ Cliente
   - a. Spring Boot Actuator;
   - b. Spring Cloud Config Client;
 2. Configurar application.yml: 
-3. Adicionar anotação @RefreshScope na Main e em todas as classes que deseja atualizar em tempo de execução;
+3. Adicionar anotação @RefreshScope em todos os Beans que deseja atualizar em tempo de execução;
 4. Adicionar "refresh" na configuração de endpoints do Actuator no application.yml;
 5. Fazer POST no endpoint /actuator/refresh para atualizar as configurações em tempo de execução;
 
