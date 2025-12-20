@@ -19,5 +19,6 @@ spring:
           force-pull: true # Força a atualização do repositório a cada solicitação
           search-paths: # Caminhos de busca para arquivos de configuração
             - 'api-users*'
-            - 'notifications*'
-            - 'configserver*'
+            - 'api-notifications*'
+
+

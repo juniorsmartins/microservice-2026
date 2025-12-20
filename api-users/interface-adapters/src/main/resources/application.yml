@@ -5,8 +5,8 @@ spring:
   application:
     name: api-users
   config:
-    import: configserver:${SPRING_CLOUD_CONFIG_URI:http://localhost:8888} # Importa configurações do Config Server. Remover o optional:prefixo fará com que o Cliente de Configuração falhe se não conseguir se conectar ao Servidor de Configuração.
-#    import: optional:configserver:${SPRING_CLOUD_CONFIG_URI:http://localhost:8888}
+    import: optional:configserver:${SPRING_CLOUD_CONFIG_URI:http://localhost:8888} # Importa configurações do Config Server. Remover o optional:prefixo fará com que o Cliente de Configuração falhe se não conseguir se conectar ao Servidor de Configuração.
+#    import: configserver:${SPRING_CLOUD_CONFIG_URI:http://localhost:8888}
     cloud:
       config:
         profile: ${SPRING_PROFILES_ACTIVE:prod} # Define o perfil ativo (padrão 'dev' se não especificado)
