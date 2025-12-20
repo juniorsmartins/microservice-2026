@@ -10,6 +10,8 @@ import org.springframework.kafka.annotation.EnableKafka;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
 
 @Configuration
 @EnableKafka
@@ -24,7 +26,7 @@ public class ConsumerBaseConfig {
     public Map<String, Object> consumerConfigs() {
 
         Map<String, Object> props = new HashMap<>();
-        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, propertiesConfig.bootstrapServers);
+        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, Optional.ofNullable(propertiesConfig.bootstrapServers).orElse("http://schema-registry:8081"));
         props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, propertiesConsumerConfig.keyDeserializer);
         props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, propertiesConsumerConfig.valueDeserializer);
 
@@ -48,6 +50,8 @@ public class ConsumerBaseConfig {
         // === Schema Registry ===
         props.put(AbstractKafkaSchemaSerDeConfig.SCHEMA_REGISTRY_URL_CONFIG, propertiesConfig.schemaRegistryUrl); // Aponta o Schema Registry. Necessário para o KafkaAvroDeserializer baixar o schema e desserializar Avro corretamente.
         props.put("specific.avro.reader", propertiesConsumerConfig.specificAvroReader); // Habilita o Specific Record do Avro (em vez de GenericRecord). Se true, espera que você use classes geradas pelo Avro (ex: User.java gerado a partir de .avsc). Muito útil para tipagem forte.
+
+        props.values().removeIf(Objects::isNull); // Remove propriedades com valor null
 
         return props;
     }

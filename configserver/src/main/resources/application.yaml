@@ -13,9 +13,12 @@ spring:
         git: # Configurações do repositório Git
           uri: https://github.com/juniorsmartins/microservice-2026-config-server
           default-label: master # Branch padrão do repositório Git
+          deleteUntrackedBranches: true # Remove branches não rastreados
           timeout: 5 # Tempo limite para conexões Git em segundos
           clone-on-start: true # Clona o repositório ao iniciar o servidor
           force-pull: true # Força a atualização do repositório a cada solicitação
           search-paths: # Caminhos de busca para arquivos de configuração
-            - 'users*'
-            - 'notifications*'
+            - 'api-users*'
+            - 'api-notifications*'
+
+

@@ -1,5 +1,12 @@
 spring:
 
+  config:
+    import: optional:configserver:${SPRING_CLOUD_CONFIG_URI:http://localhost:8888}
+    cloud:
+      config:
+        profile: ${SPRING_PROFILES_ACTIVE:dev}
+        fail-fast: false
+
   datasource: # Configura o datasource do banco de dados.
     driver-class-name: org.h2.Driver
     url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE # Define a URL de conexão ao banco.
@@ -126,4 +133,17 @@ spring:
       min.insync.replicas: 0
 
 
+  # --------------------------------------------------
+  # Config de actuator
+  # --------------------------------------------------
+management:
+  endpoints:
+    web:
+      base-path: /actuator
+      exposure:
+        include: health,info,metrics,liquibase,refresh
+  endpoint:
+    health:
+      show-details: always
+  # --------------------------------------------------
 
