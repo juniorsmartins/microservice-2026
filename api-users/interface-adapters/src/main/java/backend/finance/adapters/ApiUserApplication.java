@@ -2,6 +2,7 @@ package backend.finance.adapters;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 
 import java.util.TimeZone;
 
@@ -12,6 +13,7 @@ import java.util.TimeZone;
                 "backend.finance.enterprise"          // enterprise
         }
 )
+@RefreshScope
 public class ApiUserApplication {
 
     static void main(String[] args) {
