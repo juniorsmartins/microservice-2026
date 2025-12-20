@@ -5,13 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a1ea8202-910b-4a63-8ece-9f6a9a5ee2c0" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-notifications/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/api-notifications/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/configserver/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/configserver/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/configserver/src/main/java/backend/communication/configserver/ConfigserverApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/configserver/src/main/java/backend/communication/configserver/ConfigserverApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/interface-adapters/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/interface-adapters/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/interface-adapters/src/main/java/backend/finance/adapters/ApiUserApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/interface-adapters/src/main/java/backend/finance/adapters/ApiUserApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/interface-adapters/src/main/java/backend/finance/adapters/mensageria/consumer/ConsumerBaseConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/interface-adapters/src/main/java/backend/finance/adapters/mensageria/consumer/ConsumerBaseConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/interface-adapters/src/main/java/backend/finance/adapters/mensageria/producer/ProducerBaseConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/interface-adapters/src/main/java/backend/finance/adapters/mensageria/producer/ProducerBaseConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/interface-adapters/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/interface-adapters/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/interface-adapters/src/test/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/interface-adapters/src/test/resources/application.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/configserver/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/configserver/src/main/resources/application.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/configserver/src/test/java/backend/communication/configserver/ConfigserverApplicationTests.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/docker/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker/docker-compose.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docs/tutoriais/spring-cloud.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/tutoriais/spring-cloud.md" afterDir="false" />
     </list>
@@ -187,7 +189,7 @@
     &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
     &quot;git-widget-placeholder&quot;: &quot;feature/spring-cloud-v1&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/juniormartins/Codigo/microservice-2026/configserver/src/main/resources/config&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/juniormartins/Codigo/microservice-2026-config-server&quot;,
     &quot;onboarding.tips.debug.path&quot;: &quot;/home/juniormartins/Codigo/microservice-2026/api-notifications/infraestrutura/src/main/java/backend/communication/Main.java&quot;,
     &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,

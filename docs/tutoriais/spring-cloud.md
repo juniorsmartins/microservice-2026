@@ -7,6 +7,9 @@
 - https://spring.io/projects/spring-cloud-config 
 - https://docs.spring.io/spring-boot/api/rest/actuator/index.html#page-title 
 - https://docs.spring.io/spring-boot/api/rest/actuator/liquibase.html 
+- https://docs.spring.io/spring-cloud-config/reference/server/environment-repository/git-backend.html 
+- https://spring.io/guides/gs/centralized-configuration 
+- 
 
 
 ### Introdução: 
@@ -41,6 +44,8 @@ Cliente
   - a. Spring Boot Actuator;
   - b. Spring Cloud Config Client;
 2. Configurar application.yml: 
+3. Adicionar anotação @RefreshScope na classe Main para permitir refresh das configurações em tempo de execução;
+4. Adicionar "refresh" na configuração de endpoints do Actuator no application.yml;
 
 Servidor
 1. Criar projeto Spring com apenas duas dependências (ficará no monorepo das demais aplicações):

@@ -10,6 +10,8 @@ import org.springframework.kafka.annotation.EnableKafka;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
 
 @Configuration
 @EnableKafka
@@ -24,7 +26,7 @@ public class ProducerBaseConfig {
     public Map<String, Object> producerConfigs() {
 
         Map<String, Object> props = new HashMap<>();
-        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, propertiesConfig.bootstrapServers); // Endereço do cluster Kafka (obrigatório)
+        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, Optional.ofNullable(propertiesConfig.bootstrapServers).orElse("http://schema-registry:8081")); // Endereço do cluster Kafka (obrigatório)
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, propertiesProducerConfig.keySerializer); // Define como serializar chaves (obrigatório)
         props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, propertiesProducerConfig.valueSerializer); // Define como serializar o payload/mensagem - pode ser string, json, avro e etc (obrigatório)
 
@@ -48,6 +50,8 @@ public class ProducerBaseConfig {
         // === MENSAGEM AVRO ===
         props.put(AbstractKafkaSchemaSerDeConfig.SCHEMA_REGISTRY_URL_CONFIG, propertiesConfig.schemaRegistryUrl); // Endereço do esquema registry (obrigatório se usar Avro)
         props.put(AbstractKafkaSchemaSerDeConfig.AUTO_REGISTER_SCHEMAS, propertiesProducerConfig.autoRegisterSchemas); // Registra o esquema Avro automático
+
+        props.values().removeIf(Objects::isNull); // Remove propriedades com valor null
 
         return props;
     }
