@@ -16,6 +16,7 @@
 - https://www.youtube.com/watch?v=E2HkL766VHs 
 - https://www.youtube.com/watch?v=yNnLICy2zk4 
 - https://www.youtube.com/watch?v=AiGCx0raQfs 
+- https://www.youtube.com/watch?v=20KlqncKmw8 
 
 
 ### Introdução: 
