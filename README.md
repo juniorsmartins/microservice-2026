@@ -85,7 +85,7 @@ Diagrama Entidade Relacionamento - DER
 - [Liquibase](docs/tutoriais/liquibase.md);
 - [Flyway](docs/tutoriais/flyway.md);
 - [Spring Mail](docs/tutoriais/spring-mail.md); 
-- [Spring Cloud](docs/tutoriais/spring-cloud.md);
+- [Config Server](docs/tutoriais/config-server.md);
 - [Auditoria](docs/tutoriais/auditoria.md);
-- [Padrões e Utilidades](docs/tutoriais/padroes_utils.md)
+- [Padrões e Utilidades](docs/tutoriais/padroes-utils.md)
 

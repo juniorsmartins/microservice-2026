@@ -53,6 +53,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-actuator' // Para monitoramento e gerenciamento da aplicação
     testImplementation 'org.springframework.boot:spring-boot-starter-actuator-test'
     implementation 'org.springframework.cloud:spring-cloud-starter-config' // Para configuração centralizada com Spring Cloud Config
+    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client' // Para registro e descoberta de serviços com Eureka
 
     testImplementation group: 'io.rest-assured', name: 'rest-assured', version: '6.0.0' // versão 6 compatível com Spring Boot 4
     testImplementation 'org.springframework.boot:spring-boot-starter-data-jpa-test'

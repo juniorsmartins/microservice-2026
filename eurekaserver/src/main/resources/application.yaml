@@ -1,0 +1,31 @@
+server:
+  port: ${SERVER_PORT:8761} # Porta padrão do Eureka Server é 8761
+
+spring:
+  application:
+    name: eurekaserver
+
+eureka:
+  client:
+    register-with-eureka: false # False = Diz ao servidor: "Não tente se registrar em nenhum outro eureka, você é o próprio servidor". (true em prod)
+    fetch-registry: false # False = Diz: "Não tente baixar a lista de serviços de outros servidores eureka". (true em prod)
+ #    service-url:
+#      defaultZone: http://${spring.application.name}:${server.port}/eureka/
+
+
+  # --------------------------------------------------
+  # Config de actuator
+  # --------------------------------------------------
+management:
+  endpoints:
+    web:
+      base-path: /actuator # Define o path base dos endpoints do actuator (padrão /actuator)
+      exposure:
+        include: refresh,health,info,metrics,configprops # Expõe endpoints para monitoramento
+  endpoint:
+    health:
+      show-details: always # Mostra detalhes completos de saúde
+    configprops:
+      show-values: always # Mostra valores das propriedades de configuração
+  # --------------------------------------------------
+
