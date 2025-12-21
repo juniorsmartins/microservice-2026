@@ -5,9 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a1ea8202-910b-4a63-8ece-9f6a9a5ee2c0" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/configserver/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/configserver/src/main/resources/application.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/tutoriais/spring-cloud.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/tutoriais/spring-cloud.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/interface-adapters/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/interface-adapters/src/main/resources/application.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,6 +50,9 @@
       <ProjectState />
     </projectState>
     <projectState path="$PROJECT_DIR$/configserver">
+      <ProjectState />
+    </projectState>
+    <projectState path="$PROJECT_DIR$/eurekaserver">
       <ProjectState />
     </projectState>
   </component>
@@ -181,7 +182,7 @@
     &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
     &quot;git-widget-placeholder&quot;: &quot;feature/spring-cloud-v1&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/juniormartins/Codigo/microservice-2026-config-server&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/juniormartins/Codigo/microservice-2026/eurekaserver&quot;,
     &quot;onboarding.tips.debug.path&quot;: &quot;/home/juniormartins/Codigo/microservice-2026/api-notifications/infraestrutura/src/main/java/backend/communication/Main.java&quot;,
     &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
