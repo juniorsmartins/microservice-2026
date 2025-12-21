@@ -1,11 +1,17 @@
 spring:
 
+  # --------------------------------------------------
+  # Config de Config Server
+  # --------------------------------------------------
   config:
     import: optional:configserver:${SPRING_CLOUD_CONFIG_URI:http://localhost:8888}
     cloud:
       config:
-        profile: ${SPRING_PROFILES_ACTIVE:dev}
-        fail-fast: false
+        enabled: false
+      discovery:
+        enabled: false
+  # --------------------------------------------------
+
 
   datasource: # Configura o datasource do banco de dados.
     driver-class-name: org.h2.Driver
@@ -145,5 +151,14 @@ management:
   endpoint:
     health:
       show-details: always
+  # --------------------------------------------------
+
+
+  # --------------------------------------------------
+  # Config de Eureka Server
+  # --------------------------------------------------
+eureka:
+  client:
+    enabled: false
   # --------------------------------------------------
 

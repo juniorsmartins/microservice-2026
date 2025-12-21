@@ -228,6 +228,31 @@ services:
     networks:
       - communication
 
+  eurekaserver:
+    image: juniorsmartins/eurekaserver:v0.0.1
+    container_name: eurekaserver
+    hostname: eurekaserver
+    build:
+      context: ../eurekaserver
+      dockerfile: Dockerfile
+      args:
+        APP_NAME: "eurekaserver"
+        APP_VERSION: "v0.0.1"
+        APP_DESCRIPTION: "Servidor de Registro e Descoberta de serviços."
+    ports:
+      - "8761:8761"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 256M
+    environment:
+      JAVA_TOOL_OPTIONS: "--enable-native-access=ALL-UNNAMED" # Elimina alguns warnnings
+      SERVER_PORT: 8761
+    restart: on-failure
+    networks:
+      - communication
+
   api-users:
     image: juniorsmartins/api-users:v0.0.1
     container_name: api-users
@@ -248,7 +273,8 @@ services:
           memory: 256M
     environment:
       SERVER_PORT: 9050
-      SPRING_CLOUD_CONFIG_URI: http://configserver:8888
+      SPRING_CLOUD_CONFIG_SERVER_URI: http://configserver:8888
+      SPRING_CLOUD_EUREKA_SERVER_URI: http://eurekaserver:8761/eureka/
       SPRING_PROFILES_ACTIVE: dev
       SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka-1:9092,kafka-2:9092,kafka-3:9092
       SPRING_KAFKA_PROPERTIES_SCHEMA_REGISTRY_URL: http://schema-registry:8081
@@ -264,6 +290,10 @@ services:
         condition: service_started
       schema-registry:
         condition: service_healthy
+      configserver:
+        condition: service_started
+      eurekaserver:
+        condition: service_started
 
   database-users:
     image: postgres:17.0

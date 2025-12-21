@@ -23,7 +23,11 @@
 
 Spring Boot Actuator
 ```
+É um conjunto de ferramentas "prontas para produção" que permite que você monitore e 
+gerencie sua aplicação sem precisar escrever código extra para isso.
 
+Imagine que sua aplicação é um carro: o código de negócio é o motor, mas o Actuator é o 
+painel de instrumentos (velocímetro, temperatura, nível de óleo) e o scâner do mecânico.
 ```
 Spring Cloud Config
 ```
@@ -51,6 +55,8 @@ Cliente
   - a. Spring Boot Actuator;
   - b. Spring Cloud Config Client;
 2. Configurar application.yml: 
+   - Ambientes de trabalho;
+   - Ambiente de testes.
 3. Adicionar anotação @RefreshScope (+ @Primary) em todos os Beans que deseja atualizar em tempo de execução;
 4. Adicionar "refresh" na configuração de endpoints do Actuator no application.yml;
 5. Fazer POST no endpoint /actuator/refresh para atualizar as configurações em tempo de execução;
@@ -125,6 +131,18 @@ management:
     configprops:
       show-values: always
 ```
+Ambiente de teste
+```
+spring:
+  config:
+    import: optional:configserver:${SPRING_CLOUD_CONFIG_URI:http://localhost:8888}
+    cloud:
+      config:
+        enabled: false
+      discovery:
+        enabled: false
+```
+
 3. Adicionar anotação @RefreshScope (+ @Primary) em todos os Beans que deseja atualizar em tempo de execução;
 ```
 @Configuration
