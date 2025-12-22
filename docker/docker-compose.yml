@@ -254,6 +254,11 @@ services:
     environment:
       JAVA_TOOL_OPTIONS: "--enable-native-access=ALL-UNNAMED" # Elimina alguns warnnings
       SERVER_PORT: 8761
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8761/actuator/health" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     restart: on-failure
     networks:
       - communication
@@ -301,7 +306,7 @@ services:
       configserver:
         condition: service_healthy
       eurekaserver:
-        condition: service_started
+        condition: service_healthy
 
   database-users:
     image: postgres:17.0
@@ -346,6 +351,7 @@ services:
     environment:
       SERVER_PORT: 9060
       SPRING_CLOUD_CONFIG_SERVER_URI: http://configserver:8888
+      SPRING_CLOUD_EUREKA_SERVER_URI: http://eurekaserver:8761/eureka/
       SPRING_PROFILES_ACTIVE: dev
       SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka-1:9092,kafka-2:9092,kafka-3:9092
       SPRING_KAFKA_PROPERTIES_SCHEMA_REGISTRY_URL: http://schema-registry:8081
@@ -362,6 +368,8 @@ services:
       schema-registry:
         condition: service_healthy
       configserver:
+        condition: service_healthy
+      eurekaserver:
         condition: service_healthy
 
   database-notifications:
