@@ -4,14 +4,19 @@ server:
 spring:
   application:
     name: api-notifications
-  profiles:
-    active: default
 
----
-spring:
   config:
-    activate:
-      on-profile: default
+    import: optional:configserver:${SPRING_CLOUD_CONFIG_SERVER_URI:http://localhost:8888}
+  cloud:
+    config:
+      profile: ${SPRING_PROFILES_ACTIVE:prod}
+      fail-fast: true
+      refresh:
+        enable: true
+      retry:
+        initial-interval: 3000
+        max-interval: 9000
+        max-attempts: 3
 
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
@@ -132,8 +137,30 @@ spring:
           starttls:
             enable: true
 
+
+  # --------------------------------------------------
+  # Config de actuator
+  # --------------------------------------------------
+management:
+  endpoints:
+    web:
+      base-path: /actuator # Define o path base dos endpoints do actuator (padrão /actuator)
+      exposure:
+        include: refresh,health,info,metrics,configprops,flyway # Expõe endpoints para monitoramento
+  endpoint:
+    health:
+      show-details: always # Mostra detalhes completos de saúde
+    configprops:
+      show-values: always # Mostra valores das propriedades de configuração
+  # --------------------------------------------------
+
+
+  # --------------------------------------------------
+  # Config de logging
+  # --------------------------------------------------
 logging:
   level:
     com.zaxxer.hikari: DEBUG
     com.zaxxer.hikari.pool.HikariPool: TRACE
+  # --------------------------------------------------
 

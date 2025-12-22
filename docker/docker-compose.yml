@@ -224,6 +224,11 @@ services:
     environment:
       JAVA_TOOL_OPTIONS: "--enable-native-access=ALL-UNNAMED" # Elimina alguns warnnings
       SERVER_PORT: 8888
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8888/actuator/health" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     restart: on-failure
     networks:
       - communication
@@ -252,6 +257,9 @@ services:
     restart: on-failure
     networks:
       - communication
+    depends_on:
+      configserver:
+        condition: service_healthy
 
   api-users:
     image: juniorsmartins/api-users:v0.0.1
@@ -291,7 +299,7 @@ services:
       schema-registry:
         condition: service_healthy
       configserver:
-        condition: service_started
+        condition: service_healthy
       eurekaserver:
         condition: service_started
 
@@ -337,6 +345,8 @@ services:
           memory: 256M
     environment:
       SERVER_PORT: 9060
+      SPRING_CLOUD_CONFIG_SERVER_URI: http://configserver:8888
+      SPRING_PROFILES_ACTIVE: dev
       SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka-1:9092,kafka-2:9092,kafka-3:9092
       SPRING_KAFKA_PROPERTIES_SCHEMA_REGISTRY_URL: http://schema-registry:8081
       DB_HOST: database-notifications
@@ -350,6 +360,8 @@ services:
       database-notifications:
         condition: service_started
       schema-registry:
+        condition: service_healthy
+      configserver:
         condition: service_healthy
 
   database-notifications:

@@ -5,7 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a1ea8202-910b-4a63-8ece-9f6a9a5ee2c0" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api-users/interface-adapters/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/interface-adapters/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/interface-adapters/src/test/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/interface-adapters/src/test/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/configserver/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/configserver/src/main/resources/application.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/tutoriais/padroes-utils.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/tutoriais/padroes-utils.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eurekaserver/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/eurekaserver/src/main/resources/application.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -192,11 +199,11 @@
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/eurekaserver" />
       <recent name="$PROJECT_DIR$/configserver/src/main/resources/config" />
       <recent name="$PROJECT_DIR$/configserver" />
       <recent name="$PROJECT_DIR$/api-users/interface-adapters/src/main/resources/liquibase/changesets" />
       <recent name="$PROJECT_DIR$/api-notifications/infraestrutura/src/main/java/backend/communication/infraestrutura/mensageria/consumer" />
-      <recent name="$PROJECT_DIR$/api-notifications/infraestrutura/src/main/avro" />
     </key>
     <key name="CreateTestDialog.Recents.Supers">
       <recent name="" />
