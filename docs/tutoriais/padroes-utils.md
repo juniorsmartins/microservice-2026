@@ -101,6 +101,9 @@ uma série de conexões existentes, podemos efetivamente economizar o custo de r
 grande número de viagens de banco de dados caras. Isso aumenta o desempenho geral de nossos 
 aplicativos orientados por banco de dados.
 
+O pool de conexões não pode se tornar um gargalo do microsserviço, pois se tornaria um 
+problema de escalabilidade e desempenho durante o armazenamento de dados. 
+
 * Passo-a-passo: 
 
 1. Adicionar propriedades no application.yml;

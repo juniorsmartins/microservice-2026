@@ -1,10 +1,24 @@
-server:
+spring:
+
+  # --------------------------------------------------
+  # Config de Config Server
+  # --------------------------------------------------
+  config:
+    import: optional:configserver:${SPRING_CLOUD_CONFIG_SERVER_URI:http://localhost:8888}
+  cloud:
+    config:
+      enabled: false
+    discovery:
+      enabled: false
+  # --------------------------------------------------
+
 
   datasource:
     driver-class-name: org.h2.Driver
     url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
     username: sa
     password:
+
 
     # --------------------------------------------------
     # Config de Pool de Conexões
@@ -33,6 +47,7 @@ server:
         elideSetAutoCommits: true
         maintainTimeStats: false
     # --------------------------------------------------
+
 
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
@@ -109,4 +124,22 @@ server:
       events:
         customer-created: events.customer-created-test
       min.insync.replicas: 0
+
+
+  # --------------------------------------------------
+  # Config de actuator
+  # --------------------------------------------------
+management:
+  endpoints:
+    web:
+      base-path: /actuator # Define o path base dos endpoints do actuator (padrão /actuator)
+      exposure:
+        include: refresh,health,info,metrics,configprops,flyway # Expõe endpoints para monitoramento
+  endpoint:
+    health:
+      show-details: always # Mostra detalhes completos de saúde
+    configprops:
+      show-values: always # Mostra valores das propriedades de configuração
+  # --------------------------------------------------
+
 

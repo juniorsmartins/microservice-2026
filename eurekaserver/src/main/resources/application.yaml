@@ -9,8 +9,6 @@ eureka:
   client:
     register-with-eureka: false # False = Diz ao servidor: "Não tente se registrar em nenhum outro eureka, você é o próprio servidor". (true em prod)
     fetch-registry: false # False = Diz: "Não tente baixar a lista de serviços de outros servidores eureka". (true em prod)
- #    service-url:
-#      defaultZone: http://${spring.application.name}:${server.port}/eureka/
 
 
   # --------------------------------------------------

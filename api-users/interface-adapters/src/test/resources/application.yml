@@ -4,12 +4,12 @@ spring:
   # Config de Config Server
   # --------------------------------------------------
   config:
-    import: optional:configserver:${SPRING_CLOUD_CONFIG_URI:http://localhost:8888}
-    cloud:
-      config:
-        enabled: false
-      discovery:
-        enabled: false
+    import: optional:configserver:${SPRING_CLOUD_CONFIG_SERVER_URI:http://localhost:8888}
+  cloud:
+    config:
+      enabled: false
+    discovery:
+      enabled: false
   # --------------------------------------------------
 
 
@@ -147,10 +147,12 @@ management:
     web:
       base-path: /actuator
       exposure:
-        include: health,info,metrics,liquibase,refresh
+        include: refresh,health,info,metrics,configprops,liquibase
   endpoint:
     health:
       show-details: always
+    configprops:
+      show-values: always
   # --------------------------------------------------
 
 

@@ -107,17 +107,17 @@ spring:
   application:
     name: api-users
   config:
-    import: optional:configserver:${SPRING_CLOUD_CONFIG_URI:http://localhost:8888} 
-    cloud:
-      config:
-        profile: ${SPRING_PROFILES_ACTIVE:prod} 
-        fail-fast: true 
-        refresh:
-          enable: true 
-        retry: 
-          initial-interval: 3000 
-          max-interval: 9000 
-          max-attempts: 3 
+    import: optional:configserver:${SPRING_CLOUD_CONFIG_SERVER_URI:http://localhost:8888} 
+  cloud:
+    config:
+      profile: ${SPRING_PROFILES_ACTIVE:prod} 
+      fail-fast: true 
+      refresh:
+        enable: true 
+      retry: 
+        initial-interval: 3000 
+        max-interval: 9000 
+        max-attempts: 3 
 
 management:
   endpoints:
@@ -135,12 +135,12 @@ Ambiente de teste
 ```
 spring:
   config:
-    import: optional:configserver:${SPRING_CLOUD_CONFIG_URI:http://localhost:8888}
-    cloud:
-      config:
-        enabled: false
-      discovery:
-        enabled: false
+    import: optional:configserver:${SPRING_CLOUD_CONFIG_SERVER_URI:http://localhost:8888}
+  cloud:
+    config:
+      enabled: false
+    discovery:
+      enabled: false
 ```
 
 3. Adicionar anotação @RefreshScope (+ @Primary) em todos os Beans que deseja atualizar em tempo de execução;
