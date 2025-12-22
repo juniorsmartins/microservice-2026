@@ -11,7 +11,9 @@
 - https://spring.io/guides/gs/service-registration-and-discovery 
 - https://www.youtube.com/watch?v=ju7NTqJxKRs 
 - https://www.youtube.com/watch?v=054sZsBc8ao&t=522s 
+- https://www.youtube.com/watch?v=_QezR9wkBKs 
 - https://javafullstackdev.medium.com/how-to-use-spring-boot-eureka-server-in-spring-boot-3-3-0-794e8d173d9e 
+- https://medium.com/@vishnuganb/eureka-server-the-ultimate-service-registry-for-microservices-359af8013dc3 
 
 ### Introdução: 
 ```
