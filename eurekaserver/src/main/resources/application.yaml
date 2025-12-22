@@ -5,10 +5,15 @@ spring:
   application:
     name: eurekaserver
 
+
+  # --------------------------------------------------
+  # Config de Eureka Server
+  # --------------------------------------------------
 eureka:
   client:
     register-with-eureka: false # False = Diz ao servidor: "Não tente se registrar em nenhum outro eureka, você é o próprio servidor". (true em prod)
     fetch-registry: false # False = Diz: "Não tente baixar a lista de serviços de outros servidores eureka". (true em prod)
+  # --------------------------------------------------
 
 
   # --------------------------------------------------
@@ -27,3 +32,12 @@ management:
       show-values: always # Mostra valores das propriedades de configuração
   # --------------------------------------------------
 
+
+  # --------------------------------------------------
+  # Config de logging
+  # --------------------------------------------------
+logging:
+  level:
+    com.netflix.eureka: OFF
+    com.netflix.discovery: OFF
+  # --------------------------------------------------

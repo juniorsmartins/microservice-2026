@@ -13,15 +13,18 @@ e colaboração Orientada a Eventos.
 2.  [API - Users](#api---users)
 3.  [API - Notifications](#api---notifications)
 4.  [Config Server](#config-server)
-5.  [Tutoriais](#tutoriais)
-6.  [Como rodar a aplicação](#como-rodar-a-aplicacao) 
-7.  [Coleções de teste para Postman](#colecoes-de-teste-para-postman)
+5.  [Eureka Server](#eureka-server)
+6.  [Tutoriais](#tutoriais)
+7.  [Como rodar a aplicação](#como-rodar-a-aplicacao) 
+8.  [Coleções de teste para Postman](#colecoes-de-teste-para-postman)
 
 ## Arquitetura 
 
 Arquitetura de Microsserviços
+![Arquitetura de Microsserviços](docs/diagramas/Microservice-v1.jpg)
 
 Arquitetura Orientada a Eventos
+![Arquitetura Orientada a Eventos](docs/diagramas/ArquiteturaEventos-v1.jpg)
 
 ## API - Users
 
@@ -34,6 +37,8 @@ Arquitetura Orientada a Eventos
 - Spring Data JPA;
 - Spring Data Envers (auditoria - versão 4.0.1);
 - Spring Boot Actuator (monitoramento);
+- Spring Cloud Config Client (versão 2025.1.0);
+- Spring Cloud Netflix Eureka Client (versão 2025.1.0);
 - Liquibase (migration em SQL);
 - Apache Kafka, Schema Registry e Apache Avro (mensageria);
 - RestAssured, JUnit e Mockito (testes);
@@ -50,16 +55,6 @@ Arquitetura Limpa multi-modulo
 Diagrama Entidade Relacionamento - DER 
 ![Diagrama Entidade Relacionamento](docs/diagramas/api-users/DER-api-users.png)
 
-## Config Server
-
-### Tecnologias ConfigServer
-
-- Java (versão 25);
-- Gradle (versão 9.1.0);
-- Spring Boot Actuator (monitoramento);
-- Spring Cloud Config Server;
-- Docker (dockerfile e docker compose);
-
 ## API - Notifications
 
 ### Tecnologias Notifications 
@@ -69,6 +64,9 @@ Diagrama Entidade Relacionamento - DER
 - Spring Boot (versão 4.0.0);
 - Spring Data WebMVC;
 - Spring Data JPA;
+- Spring Boot Actuator (monitoramento);
+- Spring Cloud Config Client (versão 2025.1.0);
+- Spring Cloud Netflix Eureka Client (versão 2025.1.0);
 - Spring Mail;
 - Flyway (migration em SQL);
 - Apache Kafka, Schema Registry e Apache Avro (mensageria);
@@ -78,6 +76,26 @@ Diagrama Entidade Relacionamento - DER
 - Docker (dockerfile e docker compose);
 - Lombok.
 
+## Config Server
+
+### Tecnologias ConfigServer
+
+- Java (versão 25);
+- Gradle (versão 9.1.0);
+- Spring Boot Actuator (monitoramento);
+- Spring Cloud Config Server (versão 2025.1.0);
+- Docker (dockerfile e docker compose);
+
+## Eureka Server
+
+### Tecnologias EurekaServer
+
+- Java (versão 25);
+- Gradle (versão 9.1.0);
+- Spring Boot Actuator (monitoramento);
+- Spring Cloud Netflix Eureka Server (versão 2025.1.0);
+- Docker (dockerfile e docker compose);
+
 ## Tutoriais
 
 - [Gradle multi-modulo](docs/tutoriais/multimodulo.md);
@@ -86,6 +104,7 @@ Diagrama Entidade Relacionamento - DER
 - [Flyway](docs/tutoriais/flyway.md);
 - [Spring Mail](docs/tutoriais/spring-mail.md); 
 - [Config Server](docs/tutoriais/config-server.md);
+- [Eureka Server](docs/tutoriais/eureka-server.md);
 - [Auditoria](docs/tutoriais/auditoria.md);
 - [Padrões e Utilidades](docs/tutoriais/padroes-utils.md)
 
