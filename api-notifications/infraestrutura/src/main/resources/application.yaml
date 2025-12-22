@@ -156,6 +156,16 @@ management:
 
 
   # --------------------------------------------------
+  # Config de Eureka Server
+  # --------------------------------------------------
+eureka:
+  client:
+    service-url:
+      defaultZone: ${SPRING_CLOUD_EUREKA_SERVER_URI:http://localhost:8761/eureka/} # Endereço do Eureka Server
+  # --------------------------------------------------
+
+
+  # --------------------------------------------------
   # Config de logging
   # --------------------------------------------------
 logging:
