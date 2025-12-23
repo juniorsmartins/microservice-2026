@@ -1,0 +1,53 @@
+server:
+  port: ${SERVER_PORT:8765}
+
+spring:
+  application:
+    name: gatewayserver
+
+
+  # --------------------------------------------------
+  # Config de Gateway
+  # --------------------------------------------------
+  cloud:
+    gateway:
+      server:
+        webflux:
+          discovery:
+            locator:
+              enabled: true # Habilita o Service Discovery para o Gateway. Isso cria rotas automáticas via Eureka
+              lower-case-service-id: true # Converte IDs de serviço para minúsculas nas rotas
+  # --------------------------------------------------
+
+
+  # --------------------------------------------------
+  # Config de actuator
+  # --------------------------------------------------
+management:
+  endpoints:
+    web:
+      base-path: /actuator # Define o path base dos endpoints do actuator (padrão /actuator)
+      exposure:
+        include: refresh,health,info,metrics,configprops # Expõe endpoints para monitoramento
+  endpoint:
+    health:
+      show-details: always # Mostra detalhes completos de saúde
+    configprops:
+      show-values: always # Mostra valores das propriedades de configuração
+  # --------------------------------------------------
+
+
+  # --------------------------------------------------
+  # Config de Eureka Server Client
+  # --------------------------------------------------
+eureka:
+  client:
+    register-with-eureka: true # True = Diz: "Registre-se no servidor eureka". False = "Não se registre no servidor eureka".
+    fetch-registry: true # True = Diz: "Busque a lista de serviços registrados no servidor eureka". False = "Não busque a lista de serviços registrados no servidor eureka".
+    service-url:
+      defaultZone: ${SPRING_CLOUD_EUREKA_SERVER_URI:http://localhost:8761/eureka/} # Endereço do Eureka Server
+    healthcheck: # Habilita healthcheck. O servidor Eureka periodicamente checa se o cliente está saudável. Se não estiver, o servidor marca como DOWN. Útil para load balancers.
+      enabled: true
+  # --------------------------------------------------
+
+
