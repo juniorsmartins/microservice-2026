@@ -14,9 +14,10 @@ e colaboração Orientada a Eventos.
 3.  [API - Notifications](#api---notifications)
 4.  [Config Server](#config-server)
 5.  [Eureka Server](#eureka-server)
-6.  [Tutoriais](#tutoriais)
-7.  [Como rodar a aplicação](#como-rodar-a-aplicacao) 
-8.  [Coleções de teste para Postman](#colecoes-de-teste-para-postman)
+6.  [Gateway](#gateway)
+7.  [Tutoriais](#tutoriais)
+8.  [Como rodar a aplicação](#como-rodar-a-aplicacao) 
+9.  [Coleções de teste para Postman](#colecoes-de-teste-para-postman)
 
 ## Arquitetura 
 
@@ -82,6 +83,7 @@ Diagrama Entidade Relacionamento - DER
 
 - Java (versão 25);
 - Gradle (versão 9.1.0);
+- Spring Boot (versão 4.0.0);
 - Spring Boot Actuator (monitoramento);
 - Spring Cloud Config Server (versão 2025.1.0);
 - Docker (dockerfile e docker compose);
@@ -92,8 +94,18 @@ Diagrama Entidade Relacionamento - DER
 
 - Java (versão 25);
 - Gradle (versão 9.1.0);
+- Spring Boot (versão 4.0.0);
 - Spring Boot Actuator (monitoramento);
 - Spring Cloud Netflix Eureka Server (versão 2025.1.0);
+- Docker (dockerfile e docker compose);
+
+## Gateway
+
+### Tecnologias Gateway
+
+- Java (versão 25);
+- Gradle (versão 9.1.0);
+- Spring Boot (versão 4.0.0);
 - Docker (dockerfile e docker compose);
 
 ## Tutoriais
@@ -105,6 +117,7 @@ Diagrama Entidade Relacionamento - DER
 - [Spring Mail](docs/tutoriais/spring-mail.md); 
 - [Config Server](docs/tutoriais/config-server.md);
 - [Eureka Server](docs/tutoriais/eureka-server.md);
+- [Gateway](docs/tutoriais/gateway.md);
 - [Auditoria](docs/tutoriais/auditoria.md);
 - [Padrões e Utilidades](docs/tutoriais/padroes-utils.md)
 

@@ -197,7 +197,7 @@ management:
 
 
   # --------------------------------------------------
-  # Config de Eureka Server
+  # Config de Eureka Server Client
   # --------------------------------------------------
 eureka:
   client:

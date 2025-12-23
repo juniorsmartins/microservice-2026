@@ -220,10 +220,10 @@ services:
       resources:
         limits:
           cpus: '0.5'
-          memory: 256M
+          memory: 512M
     environment:
-      JAVA_TOOL_OPTIONS: "--enable-native-access=ALL-UNNAMED" # Elimina alguns warnnings
       SERVER_PORT: 8888
+      JAVA_TOOL_OPTIONS: "--enable-native-access=ALL-UNNAMED" # Elimina alguns warnnings
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:8888/actuator/health" ]
       interval: 10s
@@ -250,10 +250,10 @@ services:
       resources:
         limits:
           cpus: '0.5'
-          memory: 256M
+          memory: 512M
     environment:
-      JAVA_TOOL_OPTIONS: "--enable-native-access=ALL-UNNAMED" # Elimina alguns warnnings
       SERVER_PORT: 8761
+      JAVA_TOOL_OPTIONS: "--enable-native-access=ALL-UNNAMED" # Elimina alguns warnnings
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:8761/actuator/health" ]
       interval: 10s
@@ -264,6 +264,42 @@ services:
       - communication
     depends_on:
       configserver:
+        condition: service_healthy
+
+  gatewayserver:
+    image: juniorsmartins/gatewayserver:v0.0.1
+    container_name: gatewayserver
+    hostname: gatewayserver
+    build:
+      context: ../gatewayserver
+      dockerfile: Dockerfile
+      args:
+        APP_NAME: "gatewayserver"
+        APP_VERSION: "v0.0.1"
+        APP_DESCRIPTION: "Servidor Gateway para roteamento de requisições."
+    ports:
+      - "8765:8765"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+    environment:
+      SERVER_PORT: 8765
+      SPRING_CLOUD_EUREKA_SERVER_URI: http://eurekaserver:8761/eureka/
+      JAVA_TOOL_OPTIONS: "--enable-native-access=ALL-UNNAMED" # Elimina alguns warnnings
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8765/actuator/health" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: on-failure
+    networks:
+      - communication
+    depends_on:
+      configserver:
+        condition: service_healthy
+      eurekaserver:
         condition: service_healthy
 
   api-users:
