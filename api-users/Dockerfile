@@ -12,11 +12,8 @@ FROM ${IMAGE_BUILD} AS builder
 COPY . .
 
 # Roda os testes e depois gera o bootJar do módulo interface-adapters
-RUN /gradlew :interface-adapters:test && \ ./gradlew :interface-adapters:bootJar --no-daemon --stacktrace
-#RUN ./gradlew :interface-adapters:clean :interface-adapters:test :interface-adapters:bootJar --no-daemon --stacktrace
-## Constrói o projeto com o Gradle (com ou sem teste)
-# RUN ./gradlew clean build --no-daemon --stacktrace
-# RUN ./gradlew clean build -x test --no-daemon --stacktrace
+RUN /gradlew :interface-adapters:test
+RUN /gradlew :interface-adapters:bootJar --no-daemon --stacktrace
 
 
 # ================================

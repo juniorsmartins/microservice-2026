@@ -243,7 +243,7 @@
       <recent name="backend.communication.aplicacao.mappers" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.All in api-users.interface-adapters.test">
+  <component name="RunManager" selected="Gradle.Tests in 'api-users.interface-adapters.test'">
     <configuration name="Tests in 'api-users.interface-adapters.test'" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -354,8 +354,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.All in api-users.interface-adapters.test" />
         <item itemvalue="Gradle.Tests in 'api-users.interface-adapters.test'" />
+        <item itemvalue="JUnit.All in api-users.interface-adapters.test" />
         <item itemvalue="Gradle.api-users [:interface-adapters:generateAvroJava]" />
         <item itemvalue="Gradle.api-users [:interface-adapters:clean]" />
         <item itemvalue="Gradle.api-users [:interface-adapters:build]" />
