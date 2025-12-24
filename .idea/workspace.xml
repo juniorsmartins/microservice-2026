@@ -5,14 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a1ea8202-910b-4a63-8ece-9f6a9a5ee2c0" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-notifications/infraestrutura/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/api-notifications/infraestrutura/src/main/resources/application.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/interface-adapters/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/interface-adapters/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker/docker-compose.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eurekaserver/src/test/java/backend/communication/eurekaserver/EurekaserverApplicationTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-notifications/infraestrutura/src/main/java/backend/communication/infraestrutura/controllers/NotificationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-notifications/infraestrutura/src/main/java/backend/communication/infraestrutura/controllers/NotificationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/interface-adapters/src/main/java/backend/finance/adapters/controllers/CustomerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/interface-adapters/src/main/java/backend/finance/adapters/controllers/CustomerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/tutoriais/gateway.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/tutoriais/gateway.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gatewayserver/src/main/java/backend/communication/gatewayserver/config/GatewayConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/gatewayserver/src/main/java/backend/communication/gatewayserver/config/GatewayConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gatewayserver/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/gatewayserver/src/main/resources/application.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -378,7 +376,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-30f59d01ecdd-cffe25b9f5b3-intellij.indexing.shared.core-IU-253.28294.334" />
+        <option value="bundled-jdk-30f59d01ecdd-26cb7f24e5b0-intellij.indexing.shared.core-IU-253.29346.138" />
       </set>
     </attachedChunks>
   </component>
