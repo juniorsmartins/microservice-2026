@@ -18,7 +18,10 @@
 - https://www.baeldung.com/spring-cloud-global-exception-handling 
 
 
+- https://www.youtube.com/watch?v=-XZgwcs6YEU 
 - https://www.youtube.com/watch?v=ju7NTqJxKRs 
+- https://www.youtube.com/watch?v=aJXVuNW8Fcc 
+
 
 ### Introdução: 
 ```
@@ -44,7 +47,7 @@ Servidor
 3. Testar via Postman ou Curl: 
    - a. Endereço <gateway><nome-aplicação><endpoint-aplicação> (localhost:8765/API-USERS/v1/customers);
    - b. Configurar application para usar minúscula no nome da aplicação (localhost:8765/api-users/v1/customers);
-4. Pode ou não criar classe de configuração personalizada de rotas;
+4. Pode ou não criar classe com Bean de configuração programática de rotas;
 
 
 ### Implementação: 

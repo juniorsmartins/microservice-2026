@@ -12,9 +12,15 @@ public class GatewayConfig {
     public RouteLocator gatewayRoutes(RouteLocatorBuilder builder) {
 
         return builder.routes() // O RouteLocatorBuilderele cria rotas e permite adicionar predicados e filtros às rotas, possibilitando o roteamento com base em determinadas condições, bem como a alteração da requisição/resposta conforme necessário.
-                .route(p -> p
-                        .path("/get")
-                        .uri("http://httpbin.org:80"))
+
+                .route("api-users", p -> p // Define uma rota com o ID "api-users".
+                        .path("/api-users/**") // Define o predicado de caminho para a rota. O padrão "/api-users/**" indica que qualquer solicitação que comece com "/api-users/" será roteada por esta rota.
+                        .uri("lb://api-users")) // Define o URI de destino para a rota. "lb://" indica que o Gateway deve usar o balanceamento de carga para rotear as solicitações para o serviço registrado com o nome "api-users".
+
+                .route("api-notifications", p -> p
+                        .path("/api-notifications/**")
+                        .uri("lb://api-notifications"))
+
                 .build();
     }
 }
