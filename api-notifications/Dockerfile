@@ -11,11 +11,9 @@ FROM ${IMAGE_BUILD} AS builder
 # Copia o projeto (incluindo settings.gradle e submódulos)
 COPY . .
 
-# Gera apenas o bootJar do módulo interface-adapters
-RUN ./gradlew :infraestrutura:bootJar --no-daemon --stacktrace
-## Constrói o projeto com o Gradle (com ou sem teste)
-# RUN ./gradlew clean build --no-daemon --stacktrace
-# RUN ./gradlew clean build -x test --no-daemon --stacktrace
+# Roda testes e depois gera o bootJar do módulo infraestrutura
+RUN /gradlew :infraestrutura:test
+RUN /gradlew :infraestrutura:bootJar --no-daemon --stacktrace
 
 
 # ================================

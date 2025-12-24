@@ -23,7 +23,7 @@ import static org.hamcrest.Matchers.equalTo;
 @Tag("Integration")
 class CustomerControllerDisableIntegrationTest extends KafkaAvroIntegrationTest {
 
-    private static final String URI_CUSTOMER = "/api-users/v1/customers";
+    private static final String URI_CUSTOMER = "/v1/customers";
 
     private static final String EMAIL_TESTE = "teste@email.com";
 

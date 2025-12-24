@@ -18,6 +18,15 @@
       <module name="api-investment.main" target="25" />
       <module name="api-investment.test" target="25" />
       <module name="api-investments" target="25" />
+      <module name="api-notifications.aplicacao" target="25" />
+      <module name="api-notifications.aplicacao.main" target="25" />
+      <module name="api-notifications.aplicacao.test" target="25" />
+      <module name="api-notifications.dominio" target="25" />
+      <module name="api-notifications.dominio.main" target="25" />
+      <module name="api-notifications.dominio.test" target="25" />
+      <module name="api-notifications.infraestrutura" target="25" />
+      <module name="api-notifications.infraestrutura.main" target="25" />
+      <module name="api-notifications.infraestrutura.test" target="25" />
       <module name="api-notifications.main" target="25" />
       <module name="api-notifications.test" target="25" />
       <module name="api-report" target="25" />
@@ -27,11 +36,29 @@
       <module name="api-user" target="25" />
       <module name="api-user.main" target="25" />
       <module name="api-user.test" target="25" />
+      <module name="api-users.application-business-rules" target="25" />
+      <module name="api-users.application-business-rules.main" target="25" />
+      <module name="api-users.application-business-rules.test" target="25" />
+      <module name="api-users.enterprise-business-rules" target="25" />
+      <module name="api-users.enterprise-business-rules.main" target="25" />
+      <module name="api-users.enterprise-business-rules.test" target="25" />
       <module name="api-users.frameworks-drivers" target="25" />
       <module name="api-users.frameworks-drivers.main" target="25" />
       <module name="api-users.frameworks-drivers.test" target="25" />
+      <module name="api-users.interface-adapters" target="25" />
+      <module name="api-users.interface-adapters.main" target="25" />
+      <module name="api-users.interface-adapters.test" target="25" />
       <module name="api-users.main" target="25" />
       <module name="api-users.test" target="25" />
+      <module name="configserver" target="25" />
+      <module name="configserver.main" target="25" />
+      <module name="configserver.test" target="25" />
+      <module name="eurekaserver" target="25" />
+      <module name="eurekaserver.main" target="25" />
+      <module name="eurekaserver.test" target="25" />
+      <module name="gatewayserver" target="25" />
+      <module name="gatewayserver.main" target="25" />
+      <module name="gatewayserver.test" target="25" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
