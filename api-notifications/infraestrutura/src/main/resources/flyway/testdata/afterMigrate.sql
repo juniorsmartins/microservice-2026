@@ -6,6 +6,6 @@ INSERT INTO notifications(
 ) VALUES (
 'a1b2c3d4-e5f6-7890-1234-567890abcdef',
 'cliente.exemplo@gmail.com',
-'Sua fatura de dezembro no valor de R$ 150,00 está disponível para pagamento.',
+'Cadastro criado com sucesso.',
   'CUSTOMER_CREATED'
 );

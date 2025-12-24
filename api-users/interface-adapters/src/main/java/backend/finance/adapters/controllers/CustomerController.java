@@ -24,7 +24,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class CustomerController {
 
-    protected static final String URI_CUSTOMERS = "/v1/customers";
+    protected static final String URI_CUSTOMERS = "/api-users/v1/customers";
 
     private final CustomerCreateInputPort customerCreateInputPort;
 

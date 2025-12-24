@@ -15,7 +15,7 @@ spring:
         webflux:
           discovery:
             locator:
-              enabled: true # Habilita o Service Discovery para o Gateway. Isso cria rotas automáticas via Eureka
+              enabled: false # Habilita ou não o Service Discovery para o Gateway. Isso cria rotas automáticas via Eureka
               lower-case-service-id: true # Converte IDs de serviço para minúsculas nas rotas
   # --------------------------------------------------
 
