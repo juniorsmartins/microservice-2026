@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class NotificationController {
 
-    protected static final String URI_NOTIFICATIONS = "/api-notifications/v1/notifications";
+    protected static final String URI_NOTIFICATIONS = "/v1/notifications";
 
     private final NotificationPagePort notificationPagePort;
 

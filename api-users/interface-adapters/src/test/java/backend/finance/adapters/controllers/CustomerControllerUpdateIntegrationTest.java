@@ -27,7 +27,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @Tag("Integration")
 class CustomerControllerUpdateIntegrationTest extends KafkaAvroIntegrationTest {
 
-    private static final String URI_CUSTOMER = "/api-users/v1/customers";
+    private static final String URI_CUSTOMER = "/v1/customers";
 
     private static final String EMAIL_TESTE = "teste@email.com";
 

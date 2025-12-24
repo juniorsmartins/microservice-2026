@@ -45,8 +45,8 @@ Servidor
    - c. Configurar propriedade do Actuator (opcional);
    - d. Configurar propriedade do Eureka Client;
 3. Testar via Postman ou Curl: 
-   - a. Endereço <gateway><nome-aplicação><endpoint-aplicação> (localhost:8765/API-USERS/v1/customers);
-   - b. Configurar application para usar minúscula no nome da aplicação (localhost:8765/api-users/v1/customers);
+   - a. Endereço <gateway><endpoint-aplicação> (localhost:8765/v1/customers);
+   - b. Configurar application para usar minúscula no nome da aplicação (localhost:8765/v1/customers);
 4. Opcional - Pode ou não criar classe com Bean de configuração programática de rotas;
 5. Opcional - Pode ou não criar um filtro global (GlobalFilter) para registrar logs de requisições.
 

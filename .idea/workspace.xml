@@ -5,8 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a1ea8202-910b-4a63-8ece-9f6a9a5ee2c0" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-notifications/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/api-notifications/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-notifications/infraestrutura/src/main/java/backend/communication/infraestrutura/controllers/NotificationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-notifications/infraestrutura/src/main/java/backend/communication/infraestrutura/controllers/NotificationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/interface-adapters/src/main/java/backend/finance/adapters/controllers/CustomerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/interface-adapters/src/main/java/backend/finance/adapters/controllers/CustomerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/interface-adapters/src/test/java/backend/finance/adapters/controllers/CustomerControllerCreateIntegrationTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/interface-adapters/src/test/java/backend/finance/adapters/controllers/CustomerControllerCreateIntegrationTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/interface-adapters/src/test/java/backend/finance/adapters/controllers/CustomerControllerDisableIntegrationTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/interface-adapters/src/test/java/backend/finance/adapters/controllers/CustomerControllerDisableIntegrationTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/interface-adapters/src/test/java/backend/finance/adapters/controllers/CustomerControllerFindIntegrationTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/interface-adapters/src/test/java/backend/finance/adapters/controllers/CustomerControllerFindIntegrationTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-users/interface-adapters/src/test/java/backend/finance/adapters/controllers/CustomerControllerUpdateIntegrationTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/interface-adapters/src/test/java/backend/finance/adapters/controllers/CustomerControllerUpdateIntegrationTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/tutoriais/gateway.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/tutoriais/gateway.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gatewayserver/src/main/java/backend/communication/gatewayserver/config/GatewayConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/gatewayserver/src/main/java/backend/communication/gatewayserver/config/GatewayConfig.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -152,6 +159,7 @@
     "Gradle.api-notifications [:infraestrutura:clean].executor": "Run",
     "Gradle.api-notifications [:infraestrutura:generateAvroJava].executor": "Run",
     "Gradle.api-notifications [clean].executor": "Run",
+    "Gradle.api-notifications [generateAvroJava].executor": "Run",
     "Gradle.api-user [:backend.finance.api_user.ApiUserApplication.main()].executor": "Run",
     "Gradle.api-user [build].executor": "Run",
     "Gradle.api-user [clean].executor": "Run",
@@ -233,7 +241,7 @@
       <recent name="backend.communication.aplicacao.mappers" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.Tests in 'api-users.interface-adapters.test'">
+  <component name="RunManager" selected="Gradle.api-notifications [generateAvroJava]">
     <configuration name="Tests in 'api-users.interface-adapters.test'" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -259,10 +267,10 @@
       <GradleCoverageDisabled>false</GradleCoverageDisabled>
       <method v="2" />
     </configuration>
-    <configuration name="api-users [:interface-adapters:build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="api-notifications [generateAvroJava]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/api-users" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/api-notifications" />
         <option name="externalSystemIdString" value="GRADLE" />
         <option name="scriptParameters" />
         <option name="taskDescriptions">
@@ -270,32 +278,7 @@
         </option>
         <option name="taskNames">
           <list>
-            <option value=":interface-adapters:build" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <ExternalSystemDebugDisabled>false</ExternalSystemDebugDisabled>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>false</RunAsTest>
-      <GradleProfilingDisabled>false</GradleProfilingDisabled>
-      <GradleCoverageDisabled>false</GradleCoverageDisabled>
-      <method v="2" />
-    </configuration>
-    <configuration name="api-users [:interface-adapters:clean]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/api-users" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value=":interface-adapters:clean" />
+            <option value="generateAvroJava" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -334,6 +317,31 @@
       <GradleCoverageDisabled>false</GradleCoverageDisabled>
       <method v="2" />
     </configuration>
+    <configuration name="api-users [generateAvroJava]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/api-users" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="generateAvroJava" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <ExternalSystemDebugDisabled>false</ExternalSystemDebugDisabled>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <GradleProfilingDisabled>false</GradleProfilingDisabled>
+      <GradleCoverageDisabled>false</GradleCoverageDisabled>
+      <method v="2" />
+    </configuration>
     <configuration name="All in api-users.interface-adapters.test" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="api-users.interface-adapters.test" />
       <option name="PACKAGE_NAME" value="" />
@@ -344,11 +352,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.api-notifications [generateAvroJava]" />
+        <item itemvalue="Gradle.api-users [generateAvroJava]" />
         <item itemvalue="Gradle.Tests in 'api-users.interface-adapters.test'" />
         <item itemvalue="JUnit.All in api-users.interface-adapters.test" />
         <item itemvalue="Gradle.api-users [:interface-adapters:generateAvroJava]" />
-        <item itemvalue="Gradle.api-users [:interface-adapters:clean]" />
-        <item itemvalue="Gradle.api-users [:interface-adapters:build]" />
       </list>
     </recent_temporary>
   </component>
