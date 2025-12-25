@@ -11,13 +11,9 @@
 - https://www.baeldung.com/spring-cloud-gateway 
 - https://www.baeldung.com/spring-cloud-gateway-routing-predicate-factories 
 - https://www.baeldung.com/spring-cloud-gateway-webfilter-factories 
-- 
-
 - https://www.baeldung.com/spring-cloud-gateaway-configure-cors-policy 
 - https://www.baeldung.com/spring-cloud-gateway-integrate-openapi 
 - https://www.baeldung.com/spring-cloud-global-exception-handling 
-
-
 - https://www.youtube.com/watch?v=-XZgwcs6YEU 
 - https://www.youtube.com/watch?v=ju7NTqJxKRs 
 - https://www.youtube.com/watch?v=aJXVuNW8Fcc 
@@ -49,7 +45,6 @@ Servidor
    - b. Configurar application para usar minúscula no nome da aplicação (localhost:8765/v1/customers);
 4. Opcional - Pode ou não criar classe com Bean de configuração programática de rotas;
 5. Opcional - Pode ou não criar um filtro global (GlobalFilter) para registrar logs de requisições.
-
 
 ### Implementação: 
 
