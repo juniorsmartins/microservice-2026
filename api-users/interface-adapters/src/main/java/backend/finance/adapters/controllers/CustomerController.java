@@ -9,16 +9,20 @@ import backend.finance.application.ports.input.CustomerDisableInputPort;
 import backend.finance.application.ports.input.CustomerQueryInputPort;
 import backend.finance.application.ports.input.CustomerUpdateInputPort;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.resilience.annotation.Retryable;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.Random;
 import java.util.UUID;
 
+@Slf4j
 @RestController
 @RequestMapping(path = {CustomerController.URI_CUSTOMERS})
 @RequiredArgsConstructor
@@ -35,6 +39,8 @@ public class CustomerController {
     private final CustomerQueryInputPort customerQueryInputPort;
 
     private final CustomerPagePort customerPagePort;
+
+    private Random random = new Random();
 
     @PostMapping
     public ResponseEntity<CustomerResponse> create(@RequestBody CustomerRequest request) {
@@ -77,8 +83,18 @@ public class CustomerController {
     }
 
     @GetMapping
+    @Retryable(
+            maxRetries = 3, // Número máximo de tentativas de repetição em caso de falha.
+            delay = 1000, // milliseconds. Primeiro tempo de espera antes de tentar novamente.
+            multiplier = 2 // Fator pelo qual o tempo de espera é multiplicado a cada tentativa subsequente.
+    )
     public ResponseEntity<Page<CustomerAllResponse>> pageAll(
             @PageableDefault(sort = "createdDate", direction = Sort.Direction.DESC, page = 0, size = 5) Pageable paginacao) {
+
+        if (random.nextDouble() < 0.5) {
+            log.info("\n\n Simulando falha temporária ao buscar clientes... \n");
+            throw new RuntimeException("Erro temporário ao buscar clientes. Tentando novamente...");
+        }
 
         var responsePage = customerPagePort.pageAll(paginacao);
 
