@@ -46,7 +46,6 @@ Servidor
 4. Opcional - Pode ou não criar classe com Bean de configuração programática de rotas;
 5. Opcional - Pode ou não criar um filtro global (GlobalFilter) para registrar logs de requisições.
 
-
 ### Implementação: 
 
 Servidor

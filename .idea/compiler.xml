@@ -3,13 +3,6 @@
   <component name="CompilerConfiguration">
     <annotationProcessing>
       <profile default="true" name="Default" enabled="true" />
-      <profile name="Gradle Imported" enabled="true">
-        <outputRelativeToContentRoot value="true" />
-        <processorPath useClasspath="false">
-          <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.projectlombok/lombok/1.18.42/8365263844ebb62398e0dc33057ba10ba472d3b8/lombok-1.18.42.jar" />
-        </processorPath>
-        <module name="api-notifications.infraestrutura.main" />
-      </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="api-account.main" target="25" />
@@ -50,6 +43,9 @@
       <module name="api-users.interface-adapters.test" target="25" />
       <module name="api-users.main" target="25" />
       <module name="api-users.test" target="25" />
+      <module name="backend.finance.api-users.application-business-rules.test" target="25" />
+      <module name="backend.finance.api-users.enterprise-business-rules.test" target="25" />
+      <module name="backend.finance.api-users.interface-adapters.test" target="25" />
       <module name="configserver" target="25" />
       <module name="configserver.main" target="25" />
       <module name="configserver.test" target="25" />
@@ -93,6 +89,7 @@
       <module name="api-users.interface-adapters" options="-parameters" />
       <module name="api-users.interface-adapters.main" options="-parameters" />
       <module name="api-users.interface-adapters.test" options="-parameters" />
+      <module name="backend.finance.api-users.interface-adapters.test" options="-parameters" />
       <module name="configserver" options="-parameters" />
       <module name="configserver.main" options="-parameters" />
       <module name="configserver.test" options="-parameters" />
