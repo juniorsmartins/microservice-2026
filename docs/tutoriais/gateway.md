@@ -151,11 +151,11 @@ public class GatewayConfig {
         return builder.routes() 
 
                 .route("api-users", p -> p 
-                        .path("**/v1/customers**") 
+                        .path("/v1/customers/**") 
                         .uri("lb://api-users")) 
 
                 .route("api-notifications", p -> p
-                        .path("**/v1/notifications**")
+                        .path("/v1/notifications/**")
                         .uri("lb://api-notifications"))
 
                 .build();

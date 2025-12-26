@@ -4,6 +4,10 @@ import backend.finance.adapters.gateways.CustomerPagePort;
 import backend.finance.application.dtos.request.CustomerRequest;
 import backend.finance.application.dtos.response.CustomerAllResponse;
 import backend.finance.application.dtos.response.CustomerResponse;
+import backend.finance.application.exceptions.http404.CustomerNotFoundCustomException;
+import backend.finance.application.exceptions.http404.RoleNotFoundCustomException;
+import backend.finance.application.exceptions.http409.EmailConflictRulesCustomException;
+import backend.finance.application.exceptions.http409.UsernameConflictRulesCustomException;
 import backend.finance.application.ports.input.CustomerCreateInputPort;
 import backend.finance.application.ports.input.CustomerDisableInputPort;
 import backend.finance.application.ports.input.CustomerQueryInputPort;
@@ -19,7 +23,6 @@ import org.springframework.resilience.annotation.Retryable;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
-import java.util.Random;
 import java.util.UUID;
 
 @Slf4j
@@ -40,8 +43,6 @@ public class CustomerController {
 
     private final CustomerPagePort customerPagePort;
 
-    private Random random = new Random();
-
     @PostMapping
     public ResponseEntity<CustomerResponse> create(@RequestBody CustomerRequest request) {
 
@@ -53,6 +54,14 @@ public class CustomerController {
     }
 
     @PutMapping(path = "/{id}")
+    @Retryable(
+            excludes = {CustomerNotFoundCustomException.class, EmailConflictRulesCustomException.class,
+                    UsernameConflictRulesCustomException.class, RoleNotFoundCustomException.class},
+            maxRetries = 2,
+            jitter = 10,
+            delay = 1000,
+            multiplier = 2
+    )
     public ResponseEntity<CustomerResponse> update(@PathVariable(name = "id") final UUID id, @RequestBody CustomerRequest request) {
 
         var updated = customerUpdateInputPort.update(id, request);
@@ -73,6 +82,13 @@ public class CustomerController {
     }
 
     @GetMapping(path = "/{id}")
+    @Retryable(
+            excludes = {CustomerNotFoundCustomException.class},
+            maxRetries = 4, // Número máximo de tentativas de repetição em caso de falha.
+            jitter = 10, // Variação aleatória adicionada ao tempo de espera para evitar picos de carga. Fator de "desfocagem" (blur) para evitar a sincronização de rede. Se usar valor 10 (significa geralmente interpretado como +/- 10% de variação)
+            delay = 1000, // Primeiro tempo de espera antes de tentar novamente (milliseconds).
+            multiplier = 2 // Fator pelo qual o tempo de espera é multiplicado a cada tentativa subsequente. Um multiplicador para o atraso da próxima tentativa de repetição, aplicado ao atraso anterior (a partir de delay()) e também ao jitter() aplicável a cada tentativa.
+    )
     public ResponseEntity<CustomerResponse> findById(@PathVariable(name = "id") final UUID id) {
 
         var response = customerQueryInputPort.findActiveById(id);
@@ -84,17 +100,13 @@ public class CustomerController {
 
     @GetMapping
     @Retryable(
-            maxRetries = 3, // Número máximo de tentativas de repetição em caso de falha.
-            delay = 1000, // milliseconds. Primeiro tempo de espera antes de tentar novamente.
-            multiplier = 2 // Fator pelo qual o tempo de espera é multiplicado a cada tentativa subsequente.
+            maxRetries = 4, // Número máximo de tentativas de repetição em caso de falha.
+            jitter = 10, // Variação aleatória adicionada ao tempo de espera para evitar picos de carga. Fator de "desfocagem" (blur) para evitar a sincronização de rede. Se usar valor 10 (significa geralmente interpretado como +/- 10% de variação)
+            delay = 1000, // Primeiro tempo de espera antes de tentar novamente (milliseconds).
+            multiplier = 2 // Fator pelo qual o tempo de espera é multiplicado a cada tentativa subsequente. Um multiplicador para o atraso da próxima tentativa de repetição, aplicado ao atraso anterior (a partir de delay()) e também ao jitter() aplicável a cada tentativa.
     )
     public ResponseEntity<Page<CustomerAllResponse>> pageAll(
             @PageableDefault(sort = "createdDate", direction = Sort.Direction.DESC, page = 0, size = 5) Pageable paginacao) {
-
-        if (random.nextDouble() < 0.5) {
-            log.info("\n\n Simulando falha temporária ao buscar clientes... \n");
-            throw new RuntimeException("Erro temporário ao buscar clientes. Tentando novamente...");
-        }
 
         var responsePage = customerPagePort.pageAll(paginacao);
 

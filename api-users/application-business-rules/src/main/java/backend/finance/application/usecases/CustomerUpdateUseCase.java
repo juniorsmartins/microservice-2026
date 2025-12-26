@@ -65,18 +65,3 @@ public class CustomerUpdateUseCase implements CustomerUpdateInputPort {
         return customerMapper.toResponse(customerDtoSaved);
     }
 }
-
-//var dtoSaved = customerQueryOutputPort.findByIdAndActiveTrue(customerId)
-//        .orElseThrow(() -> new CustomerNotFoundCustomException(customerId));
-//
-//        customerValidation.checkDuplicateEmail(customerId, request.email());
-//        userValidation.checkDuplicateUsername(customerId, request.user().username());
-//
-//var roleDto = roleValidation.getOrCreateRole(request.user().role());
-//var permissao = Permissao.create(roleDto.id(), roleDto.name());
-//var usuario = Usuario.create(dtoSaved.user().id(), request.user().username(), request.user().password(), permissao, dtoSaved.user().active());
-//var customer = Customer.create(dtoSaved.id(), request.name(), request.email(), usuario, dtoSaved.active());
-//
-//var customerDto = customerMapper.toDto(customer);
-//var customerSaved = customerSaveOutputPort.save(customerDto);
-//        return customerMapper.toResponse(customerSaved);
