@@ -118,6 +118,7 @@ Diagrama Entidade Relacionamento - DER
 - [Config Server](docs/tutoriais/config-server.md);
 - [Eureka Server](docs/tutoriais/eureka-server.md);
 - [Gateway](docs/tutoriais/gateway.md);
+- [Resiliência](docs/tutoriais/resiliencia.md);
 - [Auditoria](docs/tutoriais/auditoria.md);
 - [Padrões e Utilidades](docs/tutoriais/padroes-utils.md)
 
