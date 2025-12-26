@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Random;
-
 @Slf4j
 @RestController
 @RequestMapping(path = {NotificationController.URI_NOTIFICATIONS})
@@ -35,12 +33,6 @@ public class NotificationController {
     )
     public ResponseEntity<Page<NotificationResponse>> pageAll(
             @PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC, page = 0, size = 5) Pageable paginacao) {
-
-        Random random = new Random();
-        if (random.nextDouble() < 0.5) {
-            log.info("\n\n Find - Simulando falha temporária ao buscar clientes... \n");
-            throw new RuntimeException("Erro temporário ao buscar clientes. Tentando novamente...");
-        }
 
         var responsePage = notificationPagePort.pageAll(paginacao);
 
