@@ -142,3 +142,40 @@ spring:
         elideSetAutoCommits: true 
         maintainTimeStats: false
 ```
+
+## API Versioning
+
+* Fontes:
+- (Dan Vega) - https://www.youtube.com/watch?v=qjo2tYf01xo&list=PLZV0a2jwt22v874ngZcWw3umP2yfsV9sK&index=12 
+- https://www.danvega.dev/blog/spring-boot-4-api-versioning 
+- https://github.com/danvega/api-users/blob/master/src/main/java/dev/danvega/users/user/UserController.java 
+- https://docs.spring.io/spring-framework/reference/web/webmvc-versioning.html 
+- https://docs.spring.io/spring-framework/reference/web/webmvc/mvc-config/api-version.html 
+- https://docs.spring.io/spring-framework/reference/web/webmvc/mvc-controller/ann-requestmapping.html#mvc-ann-requestmapping-version 
+- https://docs.spring.io/spring-framework/reference/web/webmvc-functional.html#api-version 
+- https://docs.spring.io/spring-framework/reference/web/webflux-versioning.html#webflux-versioning-strategy 
+- 
+
+* Introdução:
+
+O Spring MVC oferece suporte ao versionamento de APIs.  
+
+Quatro estratégias de versionamento:
+1. Por cabeçalho (request header);
+2. Por parâmetro de consulta (query parameter);
+3. Por parâmetro de tipo de mídia (content negotiation - accept header);
+4. Por caminho da URL (path-segment - abordagem mais Restful).
+
+Duas estratégias de configuração:
+1. Por WebMvcConfigurer;
+2. Por propriedades no application.yml ou application.properties.
+
+* Passo-a-passo: 
+
+* Configuração:
+
+```
+
+```
+
+
