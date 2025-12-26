@@ -23,7 +23,6 @@ import org.springframework.resilience.annotation.Retryable;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
-import java.util.Random;
 import java.util.UUID;
 
 @Slf4j
@@ -43,8 +42,6 @@ public class CustomerController {
     private final CustomerQueryInputPort customerQueryInputPort;
 
     private final CustomerPagePort customerPagePort;
-
-    private Random random = new Random();
 
     @PostMapping
     public ResponseEntity<CustomerResponse> create(@RequestBody CustomerRequest request) {
@@ -94,11 +91,6 @@ public class CustomerController {
     )
     public ResponseEntity<CustomerResponse> findById(@PathVariable(name = "id") final UUID id) {
 
-        if (random.nextDouble() < 0.5) {
-            log.info("\n\n Find - Simulando falha temporária ao buscar clientes... \n");
-            throw new RuntimeException("Erro temporário ao buscar clientes. Tentando novamente...");
-        }
-
         var response = customerQueryInputPort.findActiveById(id);
 
         return ResponseEntity
@@ -115,11 +107,6 @@ public class CustomerController {
     )
     public ResponseEntity<Page<CustomerAllResponse>> pageAll(
             @PageableDefault(sort = "createdDate", direction = Sort.Direction.DESC, page = 0, size = 5) Pageable paginacao) {
-
-        if (random.nextDouble() < 0.5) {
-            log.info("\n\n Simulando falha temporária ao buscar clientes... \n");
-            throw new RuntimeException("Erro temporário ao buscar clientes. Tentando novamente...");
-        }
 
         var responsePage = customerPagePort.pageAll(paginacao);
 

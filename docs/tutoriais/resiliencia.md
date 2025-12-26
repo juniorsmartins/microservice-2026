@@ -77,6 +77,15 @@ declará-las @EnableResilientMethods na @Configurationclasse correspondente.
 
 ```
 
+Usei o seguinte para testar a resiliência dos métodos:
+```
+Random random = new Random();
+if (random.nextDouble() < 0.5) {
+    log.info("\n\n Find - Simulando falha temporária ao buscar clientes... \n");
+    throw new RuntimeException("Erro temporário ao buscar clientes. Tentando novamente...");
+}
+```
+
 ## 2. Configuração
 
 ### Passo-a-passo
