@@ -52,13 +52,13 @@ dependencies {
     testImplementation group: 'io.confluent', name: 'kafka-schema-registry', version: '8.0.0' // Necessário para mockar schema registry nos testes
     implementation group: 'org.apache.avro', name: 'avro', version: '1.12.0' // Utilizada para trabalhar com esquemas Avro e serializar/desserializar mensagens.
 
-    compileOnly 'org.projectlombok:lombok' // Para reduzir código boilerplate (getters, setters, construtores, etc.)
-    annotationProcessor 'org.projectlombok:lombok'
-
     implementation 'org.springframework.boot:spring-boot-starter-actuator' // Para monitoramento e gerenciamento da aplicação
     testImplementation 'org.springframework.boot:spring-boot-starter-actuator-test' // Dependências de teste para Actuator
     implementation 'org.springframework.cloud:spring-cloud-starter-config' // Para configuração centralizada com Spring Cloud Config
     implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client' // Para registro e descoberta de serviços com Eureka
+
+    compileOnly 'org.projectlombok:lombok' // Para reduzir código boilerplate (getters, setters, construtores, etc.)
+    annotationProcessor 'org.projectlombok:lombok'
 
     testImplementation group: 'io.rest-assured', name: 'rest-assured', version: '6.0.0' // versão 6 compatível com Spring Boot 4
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'

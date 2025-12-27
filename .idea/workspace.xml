@@ -5,10 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a1ea8202-910b-4a63-8ece-9f6a9a5ee2c0" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-notifications/infraestrutura/src/main/java/backend/communication/infraestrutura/ApiNotificationsApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-notifications/infraestrutura/src/main/java/backend/communication/infraestrutura/ApiNotificationsApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-notifications/infraestrutura/src/main/java/backend/communication/infraestrutura/controllers/NotificationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-notifications/infraestrutura/src/main/java/backend/communication/infraestrutura/controllers/NotificationController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/interface-adapters/src/main/java/backend/finance/adapters/controllers/CustomerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/interface-adapters/src/main/java/backend/finance/adapters/controllers/CustomerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-news/infrastructure/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/api-news/infrastructure/src/main/resources/application.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,6 +34,9 @@
       <ProjectState />
     </projectState>
     <projectState path="$PROJECT_DIR$/api-investments">
+      <ProjectState />
+    </projectState>
+    <projectState path="$PROJECT_DIR$/api-news">
       <ProjectState />
     </projectState>
     <projectState path="$PROJECT_DIR$/api-notifications">
@@ -99,10 +101,10 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Enum" />
-        <option value="Record" />
         <option value="JUnit5 Test Class" />
         <option value="Interface" />
         <option value="Class" />
+        <option value="Record" />
       </list>
     </option>
   </component>
@@ -147,6 +149,7 @@
     &quot;Gradle.Tests in 'api-users.enterprise-business-rules.test'.executor&quot;: &quot;Run&quot;,
     &quot;Gradle.Tests in 'api-users.interface-adapters.test'.executor&quot;: &quot;Run&quot;,
     &quot;Gradle.Tests in 'api-users.test'.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.api-news [:infrastructure:backend.core.api_news.ApiNewsApplication.main()].executor&quot;: &quot;Run&quot;,
     &quot;Gradle.api-notifications [:aplicacao:clean].executor&quot;: &quot;Run&quot;,
     &quot;Gradle.api-notifications [:dominio:clean].executor&quot;: &quot;Run&quot;,
     &quot;Gradle.api-notifications [:infraestrutura:backend.communication.ApiNotificationsApplication.main()].executor&quot;: &quot;Run&quot;,
@@ -187,10 +190,10 @@
     &quot;Spring Boot.ApiNotificationsApplication.executor&quot;: &quot;Run&quot;,
     &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit5&quot;,
     &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;feature/spring-cloud-v2&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;feature/spring-version-v1&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/juniormartins/Codigo/microservice-2026&quot;,
-    &quot;onboarding.tips.debug.path&quot;: &quot;/home/juniormartins/Codigo/microservice-2026/api-notifications/infraestrutura/src/main/java/backend/communication/Main.java&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/juniormartins/Codigo/microservice-2026/api-news&quot;,
+    &quot;onboarding.tips.debug.path&quot;: &quot;/home/juniormartins/Codigo/microservice-2026/api-news/infrastructure/src/main/java/backend/core/Main.java&quot;,
     &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
@@ -199,23 +202,24 @@
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/api-news" />
+      <recent name="$PROJECT_DIR$/api-news/src/test/resources" />
       <recent name="$PROJECT_DIR$/gatewayserver" />
       <recent name="$PROJECT_DIR$/docs/diagramas" />
       <recent name="$PROJECT_DIR$/docs/tutoriais/imagens" />
-      <recent name="$PROJECT_DIR$/eurekaserver" />
-      <recent name="$PROJECT_DIR$/configserver/src/main/resources/config" />
     </key>
     <key name="CreateTestDialog.Recents.Supers">
       <recent name="" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/api-news/infrastructure" />
+      <recent name="$PROJECT_DIR$/api-news/infrastructure/src/test/resources" />
+      <recent name="$PROJECT_DIR$/api-news/infrastructure/src/main" />
+      <recent name="$PROJECT_DIR$/api-news/infrastructure/src/main/resources" />
       <recent name="$PROJECT_DIR$/docs/diagramas" />
-      <recent name="$PROJECT_DIR$/api-notifications/infraestrutura/src/main/resources/flyway/migration" />
-      <recent name="$PROJECT_DIR$/api-notifications/infraestrutura/src/main/resources" />
-      <recent name="$PROJECT_DIR$/api-users/interface-adapters/src/test/java/backend/finance/adapters/usecases" />
-      <recent name="$PROJECT_DIR$/api-users/interface-adapters/src/test/java/backend/finance/adapters/utils" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="backend.core.api_news" />
       <recent name="backend.communication.aplicacao.dtos" />
       <recent name="backend.communication.aplicacao" />
       <recent name="backend.finance.adapters" />
@@ -229,14 +233,27 @@
       <recent name="backend.finance.application.validation" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="backend.core.api_news.dtos.responses" />
       <recent name="backend.finance.application.dtos.response" />
       <recent name="backend.communication.aplicacao.dtos.response" />
       <recent name="backend.communication.infraestrutura.configs" />
       <recent name="backend.communication.infraestrutura.presenters" />
-      <recent name="backend.communication.aplicacao.mappers" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.Tests in 'api-users.interface-adapters.test'">
+  <component name="RunManager" selected="Application.ApiNewsApplication">
+    <configuration name="ApiNewsApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="backend.core.api_news.ApiNewsApplication" />
+      <module name="api-news.infrastructure.main" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="backend.core.api_news.ports.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Tests in 'api-users.interface-adapters.test'" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -287,31 +304,6 @@
       <GradleCoverageDisabled>false</GradleCoverageDisabled>
       <method v="2" />
     </configuration>
-    <configuration name="api-users [:interface-adapters:generateAvroJava]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/api-users" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value=":interface-adapters:generateAvroJava" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <ExternalSystemDebugDisabled>false</ExternalSystemDebugDisabled>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>false</RunAsTest>
-      <GradleProfilingDisabled>false</GradleProfilingDisabled>
-      <GradleCoverageDisabled>false</GradleCoverageDisabled>
-      <method v="2" />
-    </configuration>
     <configuration name="api-users [generateAvroJava]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -347,11 +339,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.ApiNewsApplication" />
         <item itemvalue="Gradle.Tests in 'api-users.interface-adapters.test'" />
         <item itemvalue="Gradle.api-notifications [generateAvroJava]" />
         <item itemvalue="Gradle.api-users [generateAvroJava]" />
         <item itemvalue="JUnit.All in api-users.interface-adapters.test" />
-        <item itemvalue="Gradle.api-users [:interface-adapters:generateAvroJava]" />
       </list>
     </recent_temporary>
   </component>
