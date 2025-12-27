@@ -8,7 +8,7 @@
         <processorPath useClasspath="false">
           <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.projectlombok/lombok/1.18.42/8365263844ebb62398e0dc33057ba10ba472d3b8/lombok-1.18.42.jar" />
         </processorPath>
-        <module name="api-news.main" />
+        <module name="api-users.interface-adapters.main" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -18,6 +18,8 @@
       <module name="api-investment.main" target="25" />
       <module name="api-investment.test" target="25" />
       <module name="api-investments" target="25" />
+      <module name="api-news.main" target="25" />
+      <module name="api-news.test" target="25" />
       <module name="api-notifications.main" target="25" />
       <module name="api-notifications.test" target="25" />
       <module name="api-report" target="25" />
@@ -49,7 +51,9 @@
       <module name="api-investments" options="-parameters" />
       <module name="api-investments.main" options="-parameters" />
       <module name="api-investments.test" options="-parameters" />
-      <module name="api-news" options="-parameters" />
+      <module name="api-news.infrastructure" options="-parameters" />
+      <module name="api-news.infrastructure.main" options="-parameters" />
+      <module name="api-news.infrastructure.test" options="-parameters" />
       <module name="api-news.main" options="-parameters" />
       <module name="api-news.test" options="-parameters" />
       <module name="api-notifications.infraestrutura" options="-parameters" />

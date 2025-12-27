@@ -6,14 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="a1ea8202-910b-4a63-8ece-9f6a9a5ee2c0" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/interface-adapters/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/interface-adapters/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/interface-adapters/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/interface-adapters/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-users/interface-adapters/src/test/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/api-users/interface-adapters/src/test/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker/docker-compose.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/tutoriais/multimodulo.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/tutoriais/multimodulo.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-news/infrastructure/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/api-news/infrastructure/src/main/resources/application.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -107,10 +101,10 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Enum" />
-        <option value="Record" />
         <option value="JUnit5 Test Class" />
         <option value="Interface" />
         <option value="Class" />
+        <option value="Record" />
       </list>
     </option>
   </component>
@@ -141,71 +135,71 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Gradle.Build api-notifications.executor": "Run",
-    "Gradle.CustomerControllerIntegrationTest.executor": "Run",
-    "Gradle.CustomerCreateUseCaseTest.executor": "Run",
-    "Gradle.CustomerTest.executor": "Run",
-    "Gradle.CustomerValidationImplTest.executor": "Run",
-    "Gradle.Download Sources.executor": "Run",
-    "Gradle.Tests in 'api-notifications.infraestrutura.test'.executor": "Run",
-    "Gradle.Tests in 'api-user.test'.executor": "Run",
-    "Gradle.Tests in 'api-users.application-business-rules.test'.executor": "Run",
-    "Gradle.Tests in 'api-users.enterprise-business-rules.test'.executor": "Run",
-    "Gradle.Tests in 'api-users.interface-adapters.test'.executor": "Run",
-    "Gradle.Tests in 'api-users.test'.executor": "Run",
-    "Gradle.api-news [:infrastructure:backend.core.api_news.ApiNewsApplication.main()].executor": "Run",
-    "Gradle.api-notifications [:aplicacao:clean].executor": "Run",
-    "Gradle.api-notifications [:dominio:clean].executor": "Run",
-    "Gradle.api-notifications [:infraestrutura:backend.communication.ApiNotificationsApplication.main()].executor": "Run",
-    "Gradle.api-notifications [:infraestrutura:build].executor": "Run",
-    "Gradle.api-notifications [:infraestrutura:clean].executor": "Run",
-    "Gradle.api-notifications [:infraestrutura:generateAvroJava].executor": "Run",
-    "Gradle.api-notifications [clean].executor": "Run",
-    "Gradle.api-notifications [generateAvroJava].executor": "Run",
-    "Gradle.api-user [:backend.finance.api_user.ApiUserApplication.main()].executor": "Run",
-    "Gradle.api-user [build].executor": "Run",
-    "Gradle.api-user [clean].executor": "Run",
-    "Gradle.api-user [diff].executor": "Run",
-    "Gradle.api-user [generateAvroJava].executor": "Run",
-    "Gradle.api-users [:application-business-rules:clean].executor": "Run",
-    "Gradle.api-users [:enterprise-business-rules:clean].executor": "Run",
-    "Gradle.api-users [:interface-adapters:buildDependents].executor": "Run",
-    "Gradle.api-users [:interface-adapters:build].executor": "Run",
-    "Gradle.api-users [:interface-adapters:clean].executor": "Run",
-    "Gradle.api-users [:interface-adapters:generateAvroJava].executor": "Run",
-    "Gradle.api-users [build].executor": "Run",
-    "Gradle.api-users [clean].executor": "Run",
-    "Gradle.api-users [generateAvroJava].executor": "Run",
-    "Gradle.api-users [testClasses].executor": "Run",
-    "Gradle.api-users:application-business-rules [build].executor": "Run",
-    "Gradle.api-users:application-business-rules [clean].executor": "Run",
-    "Gradle.api-users:enterprise-business-rules [build].executor": "Run",
-    "Gradle.api-users:enterprise-business-rules [clean].executor": "Run",
-    "Gradle.api-users:interface-adapters [build].executor": "Run",
-    "Gradle.api-users:interface-adapters [clean].executor": "Run",
-    "Gradle.api-users:interface-adapters [generateAvroJava].executor": "Run",
-    "JUnit.All in api-notifications.aplicacao.test.executor": "Run",
-    "JUnit.All in api-notifications.infraestrutura.test.executor": "Run",
-    "JUnit.All in api-users.interface-adapters.test.executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "Spring Boot.ApiNotificationsApplication.executor": "Run",
-    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
-    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
-    "git-widget-placeholder": "feature/spring-version-v1",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/home/juniormartins/Codigo/microservice-2026/api-news",
-    "onboarding.tips.debug.path": "/home/juniormartins/Codigo/microservice-2026/api-news/infrastructure/src/main/java/backend/core/Main.java",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.editor.code.editing"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Gradle.Build api-notifications.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.CustomerControllerIntegrationTest.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.CustomerCreateUseCaseTest.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.CustomerTest.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.CustomerValidationImplTest.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Download Sources.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Tests in 'api-notifications.infraestrutura.test'.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Tests in 'api-user.test'.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Tests in 'api-users.application-business-rules.test'.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Tests in 'api-users.enterprise-business-rules.test'.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Tests in 'api-users.interface-adapters.test'.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Tests in 'api-users.test'.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.api-news [:infrastructure:backend.core.api_news.ApiNewsApplication.main()].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.api-notifications [:aplicacao:clean].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.api-notifications [:dominio:clean].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.api-notifications [:infraestrutura:backend.communication.ApiNotificationsApplication.main()].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.api-notifications [:infraestrutura:build].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.api-notifications [:infraestrutura:clean].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.api-notifications [:infraestrutura:generateAvroJava].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.api-notifications [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.api-notifications [generateAvroJava].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.api-user [:backend.finance.api_user.ApiUserApplication.main()].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.api-user [build].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.api-user [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.api-user [diff].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.api-user [generateAvroJava].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.api-users [:application-business-rules:clean].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.api-users [:enterprise-business-rules:clean].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.api-users [:interface-adapters:buildDependents].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.api-users [:interface-adapters:build].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.api-users [:interface-adapters:clean].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.api-users [:interface-adapters:generateAvroJava].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.api-users [build].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.api-users [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.api-users [generateAvroJava].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.api-users [testClasses].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.api-users:application-business-rules [build].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.api-users:application-business-rules [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.api-users:enterprise-business-rules [build].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.api-users:enterprise-business-rules [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.api-users:interface-adapters [build].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.api-users:interface-adapters [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.api-users:interface-adapters [generateAvroJava].executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.All in api-notifications.aplicacao.test.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.All in api-notifications.infraestrutura.test.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.All in api-users.interface-adapters.test.executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;Spring Boot.ApiNotificationsApplication.executor&quot;: &quot;Run&quot;,
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit5&quot;,
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;feature/spring-version-v1&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/juniormartins/Codigo/microservice-2026/api-news&quot;,
+    &quot;onboarding.tips.debug.path&quot;: &quot;/home/juniormartins/Codigo/microservice-2026/api-news/infrastructure/src/main/java/backend/core/Main.java&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.editor.code.editing&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/api-news" />
@@ -225,6 +219,7 @@
       <recent name="$PROJECT_DIR$/docs/diagramas" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="backend.core.api_news" />
       <recent name="backend.communication.aplicacao.dtos" />
       <recent name="backend.communication.aplicacao" />
       <recent name="backend.finance.adapters" />
@@ -238,11 +233,11 @@
       <recent name="backend.finance.application.validation" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="backend.core.api_news.dtos.responses" />
       <recent name="backend.finance.application.dtos.response" />
       <recent name="backend.communication.aplicacao.dtos.response" />
       <recent name="backend.communication.infraestrutura.configs" />
       <recent name="backend.communication.infraestrutura.presenters" />
-      <recent name="backend.communication.aplicacao.mappers" />
     </key>
   </component>
   <component name="RunManager" selected="Application.ApiNewsApplication">
@@ -251,7 +246,7 @@
       <module name="api-news.infrastructure.main" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="backend.core.api_news.*" />
+          <option name="PATTERN" value="backend.core.api_news.ports.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
