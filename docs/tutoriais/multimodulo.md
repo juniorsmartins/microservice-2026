@@ -29,7 +29,8 @@ include('application-business-rules')
 include('interface-adapters')
 ```
 
-3. Optei por apagar o gradle.build da raiz. Cada módulo terá um build.gradle (são três);
+3. Optei por apagar o gradle.build da raiz. Cada módulo terá um build.gradle (são 
+três);
 
 build.gradle do enterprise-business-rules:
 ```
@@ -173,10 +174,12 @@ jar {
 }
 ```
 
-4. Coloca classe main e application.yml (também o de teste) no módulo mais externo, que possui dependências de Spring;
+4. Coloca classe main e application.yml (também o de teste) no módulo mais externo, 
+que possui dependências de Spring; Apagar os demais.
 
 
-5. Adiciona detalhes sobre build (compilação) no gradle.build do módulo mais externo;
+5. Adiciona detalhes sobre build (compilação) no gradle.build do módulo mais 
+externo;
 
 ```
 bootJar {
@@ -188,7 +191,8 @@ jar {
 }
 ```
  
-6. Alterações no Dockerfile. Mudanças no RUN e no COPY --from=builder, que usa o nome definido no build.gradle (api-users.jar);
+6. Alterações no Dockerfile. Mudanças no RUN e no COPY --from=builder, que usa o 
+nome definido no build.gradle (api-users.jar);
 
 ```
 ARG IMAGE_BUILD="amazoncorretto:25-alpine3.22-jdk"

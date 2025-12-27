@@ -1,7 +1,7 @@
 # PROJETO: currículo vivo
 
-O projeto utiliza Arquitetura de Microsserviços, com comunicação Assíncrona Não Bloqueante 
-e colaboração Orientada a Eventos. 
+O projeto utiliza Arquitetura de Microsserviços, com comunicação Assíncrona Não 
+Bloqueante e colaboração Orientada a Eventos. 
 
 ## Autoria
 
@@ -29,10 +29,12 @@ Arquitetura Orientada a Eventos
 
 ## API - Users
 
+Microsserviços responsável por gerenciar os dados dos usuários do sistema.
+
 ### Tecnologias Users
 
 - Java (versão 25);
-- Gradle (versão 9.1.0);
+- Gradle (versão 9.2.1);
 - Spring Boot (versão 4.0.0);
 - Spring Data WebMVC;
 - Spring Data JPA;
@@ -58,10 +60,13 @@ Diagrama Entidade Relacionamento - DER
 
 ## API - Notifications
 
+Microsserviço responsável por notificar o cliente sobre suas ações. Essa 
+notificação é realizada por meio do email (correio eletrônico). 
+
 ### Tecnologias Notifications 
 
 - Java (versão 25);
-- Gradle (versão 9.1.0);
+- Gradle (versão 9.2.1);
 - Spring Boot (versão 4.0.0);
 - Spring Data WebMVC;
 - Spring Data JPA;
@@ -79,10 +84,12 @@ Diagrama Entidade Relacionamento - DER
 
 ## Config Server
 
+Microsserviço responsável por centralizar as configurações dos microsserviços.
+
 ### Tecnologias ConfigServer
 
 - Java (versão 25);
-- Gradle (versão 9.1.0);
+- Gradle (versão 9.2.1);
 - Spring Boot (versão 4.0.0);
 - Spring Boot Actuator (monitoramento);
 - Spring Cloud Config Server (versão 2025.1.0);
@@ -90,10 +97,12 @@ Diagrama Entidade Relacionamento - DER
 
 ## Eureka Server
 
+Microsserviço responsável pelo registro e descoberta dos microsserviços.
+
 ### Tecnologias EurekaServer
 
 - Java (versão 25);
-- Gradle (versão 9.1.0);
+- Gradle (versão 9.2.1);
 - Spring Boot (versão 4.0.0);
 - Spring Boot Actuator (monitoramento);
 - Spring Cloud Netflix Eureka Server (versão 2025.1.0);
@@ -101,10 +110,12 @@ Diagrama Entidade Relacionamento - DER
 
 ## Gateway
 
+Microsserviço responsável por rotear as requisições para os microsserviços.
+
 ### Tecnologias Gateway
 
 - Java (versão 25);
-- Gradle (versão 9.1.0);
+- Gradle (versão 9.2.1);
 - Spring Boot (versão 4.0.0);
 - Docker (dockerfile e docker compose);
 
@@ -118,6 +129,7 @@ Diagrama Entidade Relacionamento - DER
 - [Config Server](docs/tutoriais/config-server.md);
 - [Eureka Server](docs/tutoriais/eureka-server.md);
 - [Gateway](docs/tutoriais/gateway.md);
+- [Resiliência](docs/tutoriais/resiliencia.md);
 - [Auditoria](docs/tutoriais/auditoria.md);
 - [Padrões e Utilidades](docs/tutoriais/padroes-utils.md)
 

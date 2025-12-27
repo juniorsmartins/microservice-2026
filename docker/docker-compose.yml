@@ -429,3 +429,39 @@ services:
       - db-notifications:/var/lib/mysql
     networks:
       - communication
+
+  api-news:
+    image: juniorsmartins/api-news:v0.0.1
+    container_name: api-news
+    hostname: api-news
+    build:
+      context: ../api-news
+      dockerfile: Dockerfile
+      args:
+        APP_NAME: "api-news"
+        APP_VERSION: "v0.0.1"
+        APP_DESCRIPTION: "Microsserviço para registro de notícias."
+    ports:
+      - "9000:9000"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+    environment:
+      SERVER_PORT: 9000
+      SPRING_CLOUD_CONFIG_SERVER_URI: http://configserver:8888
+      SPRING_CLOUD_EUREKA_SERVER_URI: http://eurekaserver:8761/eureka/
+      SPRING_PROFILES_ACTIVE: dev
+      JAVA_TOOL_OPTIONS: "--enable-native-access=ALL-UNNAMED" # Elimina alguns warnnings
+    restart: on-failure
+    networks:
+      - communication
+    depends_on:
+      configserver:
+        condition: service_healthy
+      eurekaserver:
+        condition: service_healthy
+
+
+
