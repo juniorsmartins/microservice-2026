@@ -20,6 +20,7 @@ spring:
           search-paths: # Caminhos de busca para arquivos de configuração
             - 'users*'
             - 'notifications*'
+            - 'news*'
             - 'eurekaserver*'
 
 

@@ -12,18 +12,18 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping(path = {"/"})
+@RequestMapping(path = {"/api/"})
 @RequiredArgsConstructor
 public class NewsController {
 
-    @GetMapping(value = "{version}/news", version = "1.0")
+    @GetMapping(value = "/{version}/news", version = "1.0")
     public List<NewsResponseV1> findAll() {
         log.info("\n\n version 1.0 \n\n");
         return List.of(new NewsResponseV1("Esporte", "Cowboys vencem Lions",
                 "Um touchdown e um extra point para mais", "xpto"));
     }
 
-    @GetMapping(value = "{version}/news", version = "2.0")
+    @GetMapping(value = "/{version}/news", version = "2.0")
     public List<NewsResponseV2> findAllV2() {
         log.info("\n\n version 2.0 \n\n");
         return List.of(new NewsResponseV2("Esporte", "Cowboys vencem Lions",

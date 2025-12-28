@@ -21,6 +21,10 @@ public class GatewayConfig {
                         .path("/v1/notifications/**")
                         .uri("lb://api-notifications"))
 
+                .route("api-news", p -> p
+                        .path("/api/{version}/news/**")
+                        .uri("lb://api-news"))
+
                 .build();
     }
 }
