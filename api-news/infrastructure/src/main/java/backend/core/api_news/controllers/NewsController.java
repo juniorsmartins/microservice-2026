@@ -8,6 +8,7 @@ import backend.core.api_news.ports.input.NewsCreateInputPort;
 import backend.core.api_news.presenters.NewsMapperPort;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.jspecify.annotations.NullMarked;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,6 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Slf4j
+@NullMarked
 @RestController
 @RequestMapping(path = {"/api/"})
 @RequiredArgsConstructor
