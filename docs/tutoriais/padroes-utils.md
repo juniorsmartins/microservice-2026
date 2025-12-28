@@ -153,8 +153,7 @@ spring:
 - https://docs.spring.io/spring-framework/reference/web/webmvc/mvc-config/api-version.html 
 - https://docs.spring.io/spring-framework/reference/web/webmvc/mvc-controller/ann-requestmapping.html#mvc-ann-requestmapping-version 
 - https://docs.spring.io/spring-framework/reference/web/webmvc-functional.html#api-version 
-- https://docs.spring.io/spring-framework/reference/web/webflux-versioning.html#webflux-versioning-strategy 
-- 
+- https://docs.spring.io/spring-framework/reference/web/webflux-versioning.html#webflux-versioning-strategy
 
 * Introdução:
 
@@ -274,11 +273,71 @@ public class ModernWebConfig {
 }
 ```
 
-## JSpecify contra nulos com Spring Boot 4
+## Null-safety - JSpecify contra nulos com Spring Boot 4
 
 * Fontes:
-- https://jspecify.dev/docs/spec/
+- https://jspecify.dev/docs/spec/ 
+- https://www.danvega.dev/blog/spring-boot-4-null-safety 
+- https://www.youtube.com/watch?v=QlGnaRoujL8 
+- https://docs.spring.io/spring-framework/reference/core/null-safety.html#null-safety-applications
+
+* Introdução:
+
+A partir do Spring Framework 7, o código-fonte do Spring Framework utiliza 
+anotações JSpecify para expor APIs seguras contra valores nulos e verificar a 
+consistência dessas declarações de nulidade com o NullAway como parte do processo 
+de compilação.
+
+O Spring Boot 4 muda o jogo com a adoção do JSpecify, substituindo as antigas 
+anotações JSR-305. Isso não é apenas uma troca de biblioteca — é uma mudança 
+fundamental em como lidamos com a segurança contra nulos em aplicações Spring.
+
+O Spring Boot 4 introduz um conceito simples, porém poderoso: não nulo por padrão. 
+Em vez de assumir que tudo pode ser nulo (e adicionar verificações defensivas de 
+nulo em todos os lugares), você marca explicitamente as exceções — as coisas que 
+podem ser nulas.
 
 * Passo-a-passo:
 
+1. Criar arquivo package-info.java (para cada pacote onde quer usar;
+2. Adicionar a anotação @NullMarked (em todas as classes onde quer usar - não aceitará nulo por padrão);
+3. Opcional - Pode usar a anotação @Nullable onde quiser aceitar nulo.
+
 * Configuração:
+
+1. Criar arquivo package-info.java (para cada pacote onde quer usar;
+```
+@NullMarked
+package backend.core.api_news.controllers;
+
+import org.jspecify.annotations.NullMarked;
+```
+
+2. Adicionar a anotação @NullMarked (em todas as classes onde quer usar);
+```
+@Slf4j
+@NullMarked
+@RestController
+@RequestMapping(path = {"/api/"})
+@RequiredArgsConstructor
+public class NewsController {
+
+    private final NewsCreateInputPort newsCreateInputPort;
+
+    private final NewsMapperPort newsMapperPort;
+
+    @PostMapping(value = "/{version}/news", version = "1.0")
+    public ResponseEntity<NewsCreateResponseV1> createV1(@RequestBody NewsCreateRequestV1 requestV1) {
+
+        var response = Optional.of(requestV1)
+                .map(newsMapperPort::toNewsCreateDto)
+                .map(newsCreateInputPort::create)
+                .map(newsMapperPort::toNewsCreateResponseV1)
+                .orElseThrow();
+
+        return ResponseEntity
+                .created(URI.create("/1.0/news/" + response.id()))
+                .body(response);
+    }
+}
+```
