@@ -1,6 +1,6 @@
-package backend.core.api_news.dtos.responses;
+package backend.core.api_news.dtos.requests;
 
-public record NewsResponseV2(
+public record NewsCreateRequestV1(
 
         String hat,
         String title,
