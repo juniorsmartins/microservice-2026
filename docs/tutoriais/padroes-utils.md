@@ -172,10 +172,113 @@ Duas estratégias de configuração:
 
 * Passo-a-passo: 
 
+1. Criar os endpoints com versionamento;
+2. Configurar application.yml (estratégia escolhida);
+3. Configurar no Gateway.
+
 * Configuração:
 
+1. Criar os endpoints com versionamento;
+```
+@RestController
+@RequestMapping(path = {"/api/"})
+@RequiredArgsConstructor
+public class NewsController {
+
+    @GetMapping(value = "/{version}/news", version = "1.0")
+    public List<NewsResponseV1> findAll() {
+
+        return List.of(new NewsResponseV1("Esporte", "Cowboys vencem Lions",
+                "Um touchdown e um extra point para mais", "xpto"));
+    }
+
+    @GetMapping(value = "/{version}/news", version = "2.0")
+    public List<NewsResponseV2> findAllV2() {
+
+        return List.of(new NewsResponseV2("Esporte", "Cowboys vencem Lions",
+                "Um touchdown e um extra point para mais", "xpto", "Gov"));
+    }
+}
 ```
 
+2. Configurar application.yml (estratégia escolhida);
+```
+spring:
+  application:
+    name: api-news
+  mvc:
+    apiversion:
+      supported: 1.0,2.0
+      default: 1.0
+      use:
+        path-segment: 1
 ```
 
+3. Configurar no Gateway.
+```
+@Configuration
+public class GatewayConfig {
 
+    @Bean
+    public RouteLocator gatewayRoutes(RouteLocatorBuilder builder) {
+
+        return builder.routes() 
+                .route("api-news", p -> p
+                        .path("/api/{version}/news/**")
+                        .uri("lb://api-news"))
+                .build();
+    }
+}
+```
+
+## Bean Registration - Registro dinâmico de beans com Spring Framework 7 
+
+* Fontes:
+- https://docs.spring.io/spring-framework/reference/core/beans/java/programmatic-bean-registration.html#page-title 
+- https://www.danvega.dev/blog/programmatic-bean-registration 
+- https://github.com/danvega/sb4/tree/master/features/bean-registration 
+- https://www.youtube.com/watch?v=yh760wTFL_4 
+
+* Introdução:
+
+A partir do Spring Framework 7, é fornecido suporte de primeira classe para o 
+registro programático de beans por meio da BeanRegistrar, uma interface que pode 
+ser implementada para registrar beans programaticamente de forma flexível e 
+eficiente.
+
+* Passo-a-passo:
+
+1. Criar classe para registrar os beans com BeanRegistrar;
+2. Importar o registro na classe de configuração.
+
+* Configuração:
+
+1. Criar classe para registrar os beans com BeanRegistrar;
+```
+public class UseCaseRegistrar implements BeanRegistrar {
+
+    @Override
+    public void register(BeanRegistry registry, Environment env) {
+
+        registry.registerBean("newsCreateUseCase", NewsCreateUseCase.class,
+                spec -> spec.description("Serviço de criar News."));
+    }
+}
+```
+
+2. Importar o registro na classe de configuração.
+```
+@Configuration
+@Import(UseCaseRegistrar.class)
+public class ModernWebConfig {
+}
+```
+
+## JSpecify contra nulos com Spring Boot 4
+
+* Fontes:
+- https://jspecify.dev/docs/spec/
+
+* Passo-a-passo:
+
+* Configuração:

@@ -1,7 +1,10 @@
-package backend.core.api_news.dtos.responses;
+package backend.core.api_news.dtos;
 
-public record NewsResponseV2(
+import java.util.UUID;
 
+public record NewsCreateDto(
+
+        UUID id,
         String hat,
         String title,
         String thinLine,
