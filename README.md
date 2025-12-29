@@ -10,14 +10,14 @@ Bloqueante e colaboração Orientada a Eventos.
 ## Índice
 
 1. Arquitetura 
-2.  [API - Users](#api---users)
-3.  [API - Notifications](#api---notifications)
-4.  [Config Server](#config-server)
-5.  [Eureka Server](#eureka-server)
-6.  [Gateway](#gateway)
-7.  [Tutoriais](#tutoriais)
-8.  [Como rodar a aplicação](#como-rodar-a-aplicacao) 
-9.  [Coleções de teste para Postman](#colecoes-de-teste-para-postman)
+2.  [API-Users](docs/README-api-users.md)
+3.  [API-Notifications](docs/README-api-notifications.md)
+4.  [API-News](docs/README-api-news.md)
+5.  [Config Server](#config-server)
+6.  [Eureka Server](#eureka-server)
+7.  [Gateway](#gateway)
+8.  [Tutoriais](#tutoriais)
+9.  [Como rodar a aplicação](#como-rodar-a-aplicacao) 
 
 ## Arquitetura 
 
@@ -27,60 +27,6 @@ Arquitetura de Microsserviços
 Arquitetura Orientada a Eventos
 ![Arquitetura Orientada a Eventos](docs/diagramas/ArquiteturaEventos-v1.jpg)
 
-## API - Users
-
-Microsserviços responsável por gerenciar os dados dos usuários do sistema.
-
-### Tecnologias Users
-
-- Java (versão 25);
-- Gradle (versão 9.2.1);
-- Spring Boot (versão 4.0.0);
-- Spring Data WebMVC;
-- Spring Data JPA;
-- Spring Data Envers (auditoria - versão 4.0.1);
-- Spring Boot Actuator (monitoramento);
-- Spring Cloud Config Client (versão 2025.1.0);
-- Spring Cloud Netflix Eureka Client (versão 2025.1.0);
-- Liquibase (migration em SQL);
-- Apache Kafka, Schema Registry e Apache Avro (mensageria);
-- RestAssured, JUnit e Mockito (testes);
-- PostgreSQL (versão 17 - banco de dados relacional);
-- H2 Database (banco de dados em memória para testes);
-- Docker (dockerfile e docker compose);
-- Lombok.
-
-### Diagramas Users
-
-Arquitetura Limpa multi-modulo 
-![Arquitetura Limpa multi-modulo](docs/diagramas/api-users/ARQ-USERS-v2.png)
-
-Diagrama Entidade Relacionamento - DER 
-![Diagrama Entidade Relacionamento](docs/diagramas/api-users/DER-api-users.png)
-
-## API - Notifications
-
-Microsserviço responsável por notificar o cliente sobre suas ações. Essa 
-notificação é realizada por meio do email (correio eletrônico). 
-
-### Tecnologias Notifications 
-
-- Java (versão 25);
-- Gradle (versão 9.2.1);
-- Spring Boot (versão 4.0.0);
-- Spring Data WebMVC;
-- Spring Data JPA;
-- Spring Boot Actuator (monitoramento);
-- Spring Cloud Config Client (versão 2025.1.0);
-- Spring Cloud Netflix Eureka Client (versão 2025.1.0);
-- Spring Mail;
-- Flyway (migration em SQL);
-- Apache Kafka, Schema Registry e Apache Avro (mensageria);
-- RestAssured, JUnit e Mockito (testes);
-- MariaDB (banco de dados relacional);
-- H2 Database (banco de dados em memória para testes);
-- Docker (dockerfile e docker compose);
-- Lombok.
 
 ## Config Server
 
@@ -95,6 +41,7 @@ Microsserviço responsável por centralizar as configurações dos microsserviç
 - Spring Cloud Config Server (versão 2025.1.0);
 - Docker (dockerfile e docker compose);
 
+
 ## Eureka Server
 
 Microsserviço responsável pelo registro e descoberta dos microsserviços.
@@ -108,6 +55,7 @@ Microsserviço responsável pelo registro e descoberta dos microsserviços.
 - Spring Cloud Netflix Eureka Server (versão 2025.1.0);
 - Docker (dockerfile e docker compose);
 
+
 ## Gateway
 
 Microsserviço responsável por rotear as requisições para os microsserviços.
@@ -118,6 +66,7 @@ Microsserviço responsável por rotear as requisições para os microsserviços.
 - Gradle (versão 9.2.1);
 - Spring Boot (versão 4.0.0);
 - Docker (dockerfile e docker compose);
+
 
 ## Tutoriais
 
@@ -132,4 +81,8 @@ Microsserviço responsável por rotear as requisições para os microsserviços.
 - [Resiliência](docs/tutoriais/resiliencia.md);
 - [Auditoria](docs/tutoriais/auditoria.md);
 - [Padrões e Utilidades](docs/tutoriais/padroes-utils.md)
+
+
+## Como rodar a aplicação
+
 
