@@ -6,6 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="a1ea8202-910b-4a63-8ece-9f6a9a5ee2c0" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -100,9 +101,9 @@
       <list>
         <option value="Enum" />
         <option value="JUnit5 Test Class" />
+        <option value="Record" />
         <option value="Interface" />
         <option value="Class" />
-        <option value="Record" />
       </list>
     </option>
   </component>
@@ -231,11 +232,11 @@
       <recent name="backend.finance.application.validation" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="backend.core.api_news.dtos.requests" />
       <recent name="backend.core.api_news.dtos.responses" />
       <recent name="backend.finance.application.dtos.response" />
       <recent name="backend.communication.aplicacao.dtos.response" />
       <recent name="backend.communication.infraestrutura.configs" />
-      <recent name="backend.communication.infraestrutura.presenters" />
     </key>
   </component>
   <component name="RunManager" selected="Application.ApiNewsApplication">
