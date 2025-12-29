@@ -22,7 +22,7 @@ Bloqueante e colaboração Orientada a Eventos.
 ## Arquitetura 
 
 Arquitetura de Microsserviços
-![Arquitetura de Microsserviços](docs/diagramas/Microservice-v1.jpg)
+![Arquitetura de Microsserviços](docs/diagramas/Microservice-v2.jpg)
 
 Arquitetura Orientada a Eventos
 ![Arquitetura Orientada a Eventos](docs/diagramas/ArquiteturaEventos-v1.jpg)
