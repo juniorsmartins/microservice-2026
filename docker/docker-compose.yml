@@ -3,6 +3,8 @@ volumes:
     name: db-users
   db-notifications:
     name: db-notifications
+  db-news:
+    name: db-news
   kafka1-data:
     name: kafka1-data
   kafka2-data:
@@ -453,15 +455,45 @@ services:
       SPRING_CLOUD_CONFIG_SERVER_URI: http://configserver:8888
       SPRING_CLOUD_EUREKA_SERVER_URI: http://eurekaserver:8761/eureka/
       SPRING_PROFILES_ACTIVE: dev
+      DB_HOST: database-news
+      DB_PORT: 3306
+      DB_NAME: db-news
       JAVA_TOOL_OPTIONS: "--enable-native-access=ALL-UNNAMED" # Elimina alguns warnnings
     restart: on-failure
     networks:
       - communication
     depends_on:
+      database-news:
+        condition: service_healthy
       configserver:
         condition: service_healthy
       eurekaserver:
         condition: service_healthy
 
-
+  database-news:
+    image: mysql:lts-oraclelinux9
+    container_name: database-news
+    hostname: database-news
+    ports:
+      - "3307:3306"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 256M
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root123
+      MYSQL_DATABASE: db-news
+      MYSQL_USER: mysql123
+      MYSQL_PASSWORD: mysql123
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p", "root123" ]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - db-news:/var/lib/mysql
+    networks:
+      - communication
 

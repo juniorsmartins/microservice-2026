@@ -1,8 +1,8 @@
-package backend.core.api_news.dtos.responses;
+package backend.core.api_news.dtos;
 
 import java.util.UUID;
 
-public record NewsResponseV2(
+public record NewsDto(
 
         UUID id,
         String hat,

@@ -154,6 +154,7 @@ spring:
 - https://docs.spring.io/spring-framework/reference/web/webmvc/mvc-controller/ann-requestmapping.html#mvc-ann-requestmapping-version 
 - https://docs.spring.io/spring-framework/reference/web/webmvc-functional.html#api-version 
 - https://docs.spring.io/spring-framework/reference/web/webflux-versioning.html#webflux-versioning-strategy
+- https://www.baeldung.com/spring-boot-4-spring-framework-7
 
 * Introdução:
 
@@ -237,6 +238,9 @@ public class GatewayConfig {
 - https://www.danvega.dev/blog/programmatic-bean-registration 
 - https://github.com/danvega/sb4/tree/master/features/bean-registration 
 - https://www.youtube.com/watch?v=yh760wTFL_4 
+- https://www.baeldung.com/spring-beanregistrar-registration 
+- https://www.baeldung.com/spring-beans-dynamic-registration-properties 
+- https://www.baeldung.com/spring-boot-4-spring-framework-7 
 
 * Introdução:
 
@@ -280,6 +284,7 @@ public class ModernWebConfig {
 - https://www.danvega.dev/blog/spring-boot-4-null-safety 
 - https://www.youtube.com/watch?v=QlGnaRoujL8 
 - https://docs.spring.io/spring-framework/reference/core/null-safety.html#null-safety-applications
+- https://www.baeldung.com/spring-boot-4-spring-framework-7 
 
 * Introdução:
 

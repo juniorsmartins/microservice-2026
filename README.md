@@ -22,7 +22,7 @@ Bloqueante e colaboração Orientada a Eventos.
 ## Arquitetura 
 
 Arquitetura de Microsserviços
-![Arquitetura de Microsserviços](docs/diagramas/Microservice-v2.jpg)
+![Arquitetura de Microsserviços](docs/diagramas/Microservice-v3.jpg)
 
 Arquitetura Orientada a Eventos
 ![Arquitetura Orientada a Eventos](docs/diagramas/ArquiteturaEventos-v1.jpg)
@@ -80,7 +80,8 @@ Microsserviço responsável por rotear as requisições para os microsserviços.
 - [Gateway](docs/tutoriais/gateway.md);
 - [Resiliência](docs/tutoriais/resiliencia.md);
 - [Auditoria](docs/tutoriais/auditoria.md);
-- [Padrões e Utilidades](docs/tutoriais/padroes-utils.md)
+- [Padrões e Utilidades](docs/tutoriais/padroes-utils.md);
+- [Spring Data AOT](docs/tutoriais/spring-data-aot.md)
 
 
 ## Como rodar a aplicação

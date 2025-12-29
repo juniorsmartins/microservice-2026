@@ -19,6 +19,88 @@ spring:
 
 
   # --------------------------------------------------
+  # Config de Datasource e Pool de Conexões (MySQL)
+  # --------------------------------------------------
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:db-news}?createDatabaseIfNotExist=true&serverTimezone=UTC&useSSL=false&allowPublicKeyRetrieval=true
+    username: ${DB_USERNAME:mysql123}
+    password: ${DB_PASSWORD:mysql123}
+
+    hikari:
+      # Se true, cada operação SQL é automaticamente commitada ao fim da execução se não houver transação explícita. true é adequado em cenários simples. Em aplicações com transações claras via Spring, normalmente fica false, pois o controle é feito pelo gerenciador transacional.
+      autoCommit: false
+      # Nome do pool (útil em logs / monitoramento)
+      pool-name: ${spring.application.name}-hikariPool
+      # Quantidade mínima de conexões ociosas mantidas no pool
+      minimum-idle: 10
+      # Quantidade máxima de conexões simultâneas
+      maximum-pool-size: 25
+      # Define tempo limite de ociosidade para conexões excedentes. Serão removidas após esse tempo.
+      idle-timeout: 600000
+      # Tempo máximo de vida de uma conexão antes de ser reciclada
+      max-lifetime: 1800000
+      # Tempo máximo esperando uma conexão antes de erro. Se todas as conexões estiverem em uso e outra requisição chegar, ela espera até 3s. Se passar disso → SQLTransientConnectionException.
+      connection-timeout: 3000
+      # Timeout de validação de conexão. Evita travamento ao testar conexões ruins.
+      validation-timeout: 5000
+      # Valida conexão antes de emprestar (para DB instável). Excelente para ambientes com queda ou timeout no DB
+      connection-test-query: SELECT 1
+      # Os pings periódicos mantêm as conexões ativas e impedem que sejam fechadas pelo banco de dados.
+      keepalive-time: 300000
+      # Queries internas (validação) rodam separadas da aplicação. Evita interferência em monitoramentos e transações. Recomendado.
+      isolate-internal-queries: true
+      # Essas configs aumentam performance usando prepared statements, diminuindo roundtrips e reuso de conexões:
+      data-source-properties:
+        cachePrepStmts: true # Ativa cache de Prepared Statements. Reutiliza queries → aumenta performance.
+        prepStmtCacheSize: 250 # Tamanho do cache de statements. Quanto maior, mais reuso (consome memória).
+        prepStmtCacheSqlLimit: 2048 # Tamanho máximo da query cacheável. Permite cache de queries grandes.
+        useServerPrepStmts: true # Usa prepared statements do servidor, não só em memória. Menos parsing no servidor → ganho real em produção.
+        useLocalSessionState: true # Evita roundtrips para verificar estados de sessão. Ganho de performance reduzindo I/O.
+        rewriteBatchedStatements: true # Junta statements em batch para enviar em um único pacote. Acelera inserts/lotes (muito eficiente).
+        cacheResultSetMetadata: true # Cache de metadados dos ResultSets. Menos comunicação e parsing → aumenta performance.
+        cacheServerConfiguration: true # Armazena configurações do servidor localmente. Reduz consultas no handshake e ao longo da execução.
+        elideSetAutoCommits: true # Evita chamadas repetidas de setAutoCommit(...). Útil se usa transações com frequência.
+        maintainTimeStats: false # Não coleta estatísticas internas de tempo. Reduz overhead, aumenta performance.
+  # --------------------------------------------------
+
+
+  # --------------------------------------------------
+  # Config de JPA
+  # --------------------------------------------------
+  jpa: # Configura o JPA/Hibernate.
+    database: MYSQL
+    hibernate:
+      ddl-auto: create-drop # Define a estrategia de criacao do schema do banco de dados. Pode ser 'none', 'validate', 'update', 'create', 'create-drop'.
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl # Define a estrategia de nomeacao fisica (padrao). Usar CamelCase no Java e snake_case no banco.
+    defer-datasource-initialization: false # True adia a execucao do import.sql ate que o schema JPA esteja inicializado. Usar false com Liquibase.
+    properties:
+#      org:
+#        hibernate: # Configuracoes avancadas do Hibernate.
+#          envers:
+#            audit_table_name: revision_info # Nome da tabela de revisoes do Envers (padrão REVINFO).
+#            audit_table_suffix: _audit # Sufixo para tabelas de auditoria do Envers (padrão _aud).
+#            revision_field_name: revision_id # Nome do campo de revisão.
+#            revision_type_field_name: revision_type # Nome do campo de tipo de revisão.
+      hibernate:
+        format_sql: true # Formata o SQL gerado para melhor legibilidade.
+        use_sql_comments: true # Adiciona comentarios ao SQL gerado.
+        dialect: org.hibernate.dialect.MySQLDialect
+        connection: # Define o nivel de isolamento de transacao.
+          isolation: 2 # Nivel 2 de isolamento recomendado para a maioria dos casos. - 1 = READ_UNCOMMITTED, 2 = READ_COMMITTED, 4 = REPEATABLE_READ, 8 = SERIALIZABLE
+        cache:
+          use_second_level_cache: false # Habilita cache de segundo nivel. False desabilitado para garantir dados sempre atualizados.
+          use_query_cache: false # Habilita cache de consultas. False desabilitado para garantir dados sempre atualizados.
+        type:
+          enumType:
+            type: pgsql_enum # Define o mapeamento de enums para PostgreSQL. Usar 'pgsql_enum' para suporte nativo a enums do PostgreSQL.
+    open-in-view: false #  Define se o Hibernate deve manter a sessao aberta durante a renderizacao da view. O false e recomendado para evitar problemas de performance e lazy loading.
+    show-sql: true # Habilita a exibicao do SQL gerado no console.
+  # --------------------------------------------------
+
+
+  # --------------------------------------------------
   # Config de Config Server Client
   # --------------------------------------------------
   config:
@@ -37,7 +119,21 @@ spring:
 
 
   # --------------------------------------------------
-  # Config de actuator
+  # Config de Eureka Client
+  # --------------------------------------------------
+eureka:
+  client:
+    register-with-eureka: true # True = Diz: "Registre-se no servidor eureka". False = "Não se registre no servidor eureka".
+    fetch-registry: false # True = Diz: "Busque a lista de serviços registrados no servidor eureka". False = "Não busque a lista de serviços registrados no servidor eureka".
+    service-url:
+      defaultZone: ${SPRING_CLOUD_EUREKA_SERVER_URI:http://localhost:8761/eureka/} # Endereço do Eureka Server
+    healthcheck: # Habilita healthcheck. O servidor Eureka periodicamente checa se o cliente está saudável. Se não estiver, o servidor marca como DOWN. Útil para load balancers.
+      enabled: true
+  # --------------------------------------------------
+
+
+  # --------------------------------------------------
+  # Config de Actuator
   # --------------------------------------------------
 management:
   endpoints:
@@ -53,16 +149,4 @@ management:
   # --------------------------------------------------
 
 
-  # --------------------------------------------------
-  # Config de Eureka Client
-  # --------------------------------------------------
-eureka:
-  client:
-    register-with-eureka: true # True = Diz: "Registre-se no servidor eureka". False = "Não se registre no servidor eureka".
-    fetch-registry: false # True = Diz: "Busque a lista de serviços registrados no servidor eureka". False = "Não busque a lista de serviços registrados no servidor eureka".
-    service-url:
-      defaultZone: ${SPRING_CLOUD_EUREKA_SERVER_URI:http://localhost:8761/eureka/} # Endereço do Eureka Server
-    healthcheck: # Habilita healthcheck. O servidor Eureka periodicamente checa se o cliente está saudável. Se não estiver, o servidor marca como DOWN. Útil para load balancers.
-      enabled: true
-  # --------------------------------------------------
 

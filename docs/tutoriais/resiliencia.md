@@ -16,7 +16,7 @@
 - https://resilience4j.readme.io/docs/getting-started-3 
 - 
 - https://www.baeldung.com/resilience4j 
-- 
+- https://www.baeldung.com/spring-boot-4-spring-framework-7 
 - 
 - 
 
