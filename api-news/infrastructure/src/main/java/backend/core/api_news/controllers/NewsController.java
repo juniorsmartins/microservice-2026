@@ -5,6 +5,7 @@ import backend.core.api_news.dtos.responses.NewsCreateResponseV1;
 import backend.core.api_news.dtos.responses.NewsResponseV1;
 import backend.core.api_news.dtos.responses.NewsResponseV2;
 import backend.core.api_news.ports.input.NewsCreateInputPort;
+import backend.core.api_news.gateways.NewsQueryPort;
 import backend.core.api_news.presenters.NewsMapperPort;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,6 +26,8 @@ public class NewsController {
 
     private final NewsCreateInputPort newsCreateInputPort;
 
+    private final NewsQueryPort newsQueryPort;
+
     private final NewsMapperPort newsMapperPort;
 
     @GetMapping(value = "/{version}/news", version = "1.0")
@@ -37,8 +40,17 @@ public class NewsController {
     @GetMapping(value = "/{version}/news", version = "2.0")
     public List<NewsResponseV2> findAllV2() {
 
-        return List.of(new NewsResponseV2("Esporte", "Cowboys vencem Lions",
+        return List.of(new NewsResponseV2(null, "Esporte", "Cowboys vencem Lions",
                 "Um touchdown e um extra point para mais", "xpto", "Gov"));
+    }
+
+    @GetMapping(value = "/{version}/news", version = "2.0")
+    public List<NewsResponseV2> findByTitleLike(@PathVariable(name = "title") String title) {
+
+        return newsQueryPort.findByTitleLike(title)
+                .stream()
+                .map(newsMapperPort::toNewsResponseV2)
+                .toList();
     }
 
     @PostMapping(value = "/{version}/news", version = "1.0")
