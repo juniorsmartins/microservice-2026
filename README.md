@@ -86,4 +86,7 @@ Microsserviço responsável por rotear as requisições para os microsserviços.
 
 ## Como rodar a aplicação
 
+1. Abra o terminal da IDE;
+2. Rode o comando: cd docker;
+3. Rode o comando: docker compose up --build.
 

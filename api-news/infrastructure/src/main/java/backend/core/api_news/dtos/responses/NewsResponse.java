@@ -2,7 +2,7 @@ package backend.core.api_news.dtos.responses;
 
 import java.util.UUID;
 
-public record NewsCreateResponseV1(
+public record NewsResponse(
 
         UUID id,
         String hat,

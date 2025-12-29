@@ -24,6 +24,7 @@ public final class NewsEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
+    // TODO - definir tamanhos das strings nas colunas abaixo
     @Column(name = "hat", nullable = false)
     private String hat;
 

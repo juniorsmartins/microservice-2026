@@ -1,12 +1,11 @@
 package backend.core.api_news.controllers;
 
-import backend.core.api_news.dtos.requests.NewsCreateRequestV1;
-import backend.core.api_news.dtos.responses.NewsCreateResponseV1;
-import backend.core.api_news.dtos.responses.NewsResponseV1;
-import backend.core.api_news.dtos.responses.NewsResponseV2;
+import backend.core.api_news.dtos.requests.NewsCreateRequest;
+import backend.core.api_news.dtos.responses.NewsCreateResponse;
+import backend.core.api_news.dtos.responses.NewsResponse;
 import backend.core.api_news.ports.input.NewsCreateInputPort;
 import backend.core.api_news.gateways.NewsQueryPort;
-import backend.core.api_news.presenters.NewsMapperPort;
+import backend.core.api_news.presenters.NewsPresenterPort;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jspecify.annotations.NullMarked;
@@ -28,42 +27,28 @@ public class NewsController {
 
     private final NewsQueryPort newsQueryPort;
 
-    private final NewsMapperPort newsMapperPort;
-
-    @GetMapping(value = "/{version}/news", version = "1.0")
-    public List<NewsResponseV1> findAll() {
-
-        return List.of(new NewsResponseV1("Esporte", "Cowboys vencem Lions",
-                "Um touchdown e um extra point para mais", "xpto"));
-    }
-
-    @GetMapping(value = "/{version}/news", version = "2.0")
-    public List<NewsResponseV2> findAllV2() {
-
-        return List.of(new NewsResponseV2(null, "Esporte", "Cowboys vencem Lions",
-                "Um touchdown e um extra point para mais", "xpto", "Gov"));
-    }
-
-    @GetMapping(value = "/{version}/news", version = "2.0")
-    public List<NewsResponseV2> findByTitleLike(@PathVariable(name = "title") String title) {
-
-        return newsQueryPort.findByTitleLike(title)
-                .stream()
-                .map(newsMapperPort::toNewsResponseV2)
-                .toList();
-    }
+    private final NewsPresenterPort newsPresenterPort;
 
     @PostMapping(value = "/{version}/news", version = "1.0")
-    public ResponseEntity<NewsCreateResponseV1> createV1(@RequestBody NewsCreateRequestV1 requestV1) {
+    public ResponseEntity<NewsCreateResponse> create(@RequestBody NewsCreateRequest requestV1) {
 
         var response = Optional.of(requestV1)
-                .map(newsMapperPort::toNewsCreateDto)
+                .map(newsPresenterPort::toNewsDto)
                 .map(newsCreateInputPort::create)
-                .map(newsMapperPort::toNewsCreateResponseV1)
+                .map(newsPresenterPort::toNewsCreateResponse)
                 .orElseThrow();
 
         return ResponseEntity
                 .created(URI.create("/api/1.0/news/" + response.id()))
                 .body(response);
+    }
+
+    @GetMapping(value = "/{version}/news", version = "1.0")
+    public List<NewsResponse> findByTitleLike(@RequestParam(name = "title") String title) {
+
+        return newsQueryPort.findByTitleLike(title)
+                .stream()
+                .map(newsPresenterPort::toNewsResponse)
+                .toList();
     }
 }
