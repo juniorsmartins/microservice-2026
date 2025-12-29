@@ -11,8 +11,9 @@ Microsserviço responsável pelo gerenciamento das notícias.
 - Spring Boot Actuator (monitoramento);
 - Spring Cloud Config Client (versão 2025.1.0);
 - Spring Cloud Netflix Eureka Client (versão 2025.1.0);
-
-
+- API Versioning;
+- Null-safety (JSpecify);
+- Bean Registration (Spring Framework 7);
 
 ## Diagramas
 
