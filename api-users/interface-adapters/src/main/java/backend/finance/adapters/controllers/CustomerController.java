@@ -14,6 +14,7 @@ import backend.finance.application.ports.input.CustomerQueryInputPort;
 import backend.finance.application.ports.input.CustomerUpdateInputPort;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.jspecify.annotations.NullMarked;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -26,6 +27,7 @@ import java.net.URI;
 import java.util.UUID;
 
 @Slf4j
+@NullMarked
 @RestController
 @RequestMapping(path = {CustomerController.URI_CUSTOMERS})
 @RequiredArgsConstructor
