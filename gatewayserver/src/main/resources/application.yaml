@@ -21,7 +21,7 @@ spring:
 
 
   # --------------------------------------------------
-  # Config de actuator
+  # Config de Actuator
   # --------------------------------------------------
 management:
   endpoints:
