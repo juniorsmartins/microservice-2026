@@ -81,9 +81,13 @@ Microsserviço responsável por rotear as requisições para os microsserviços.
 - [Resiliência](docs/tutoriais/resiliencia.md);
 - [Auditoria](docs/tutoriais/auditoria.md);
 - [Padrões e Utilidades](docs/tutoriais/padroes-utils.md);
-- [Spring Data AOT](docs/tutoriais/spring-data-aot.md)
+- [Spring Data AOT](docs/tutoriais/NOT-spring-data-aot.md)
 
 
 ## Como rodar a aplicação
 
+1. Clone o projeto e abra na IDE;
+2. Abra o terminal da IDE;
+3. Rode o comando: cd docker;
+4. Rode o comando: docker compose up --build.
 

@@ -464,7 +464,7 @@ services:
       - communication
     depends_on:
       database-news:
-        condition: service_healthy
+        condition: service_started
       configserver:
         condition: service_healthy
       eurekaserver:
@@ -487,11 +487,6 @@ services:
       MYSQL_DATABASE: db-news
       MYSQL_USER: mysql123
       MYSQL_PASSWORD: mysql123
-    healthcheck:
-      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p", "root123" ]
-      interval: 5s
-      timeout: 5s
-      retries: 10
     volumes:
       - db-news:/var/lib/mysql
     networks:

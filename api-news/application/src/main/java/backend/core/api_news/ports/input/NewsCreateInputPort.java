@@ -1,8 +1,8 @@
 package backend.core.api_news.ports.input;
 
-import backend.core.api_news.dtos.NewsCreateDto;
+import backend.core.api_news.dtos.NewsDto;
 
 public interface NewsCreateInputPort {
 
-    NewsCreateDto create(NewsCreateDto dto);
+    NewsDto create(NewsDto dto);
 }
