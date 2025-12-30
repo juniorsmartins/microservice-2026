@@ -3,9 +3,11 @@ package backend.finance.adapters.configs;
 import backend.finance.application.mappers.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 
 @Configuration
-public class MapperConfig {
+@Import(RegisterBeanRegistrar.class) // Maioria dos beans registrados pelo BeanRegistrar
+public class ModernWebConfig {
 
     @Bean
     public CustomerMapper customerMapper(UserMapper userMapper) {

@@ -14,6 +14,7 @@ import backend.finance.application.ports.input.CustomerQueryInputPort;
 import backend.finance.application.ports.input.CustomerUpdateInputPort;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.jspecify.annotations.NullMarked;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -26,12 +27,11 @@ import java.net.URI;
 import java.util.UUID;
 
 @Slf4j
+@NullMarked
 @RestController
-@RequestMapping(path = {CustomerController.URI_CUSTOMERS})
+@RequestMapping(path = {"/api/"})
 @RequiredArgsConstructor
 public class CustomerController {
-
-    protected static final String URI_CUSTOMERS = "/v1/customers";
 
     private final CustomerCreateInputPort customerCreateInputPort;
 
@@ -43,17 +43,17 @@ public class CustomerController {
 
     private final CustomerPagePort customerPagePort;
 
-    @PostMapping
+    @PostMapping(value = "/{version}/customers", version = "1.0")
     public ResponseEntity<CustomerResponse> create(@RequestBody CustomerRequest request) {
 
         var created = customerCreateInputPort.create(request);
 
         return ResponseEntity
-                .created(URI.create(URI_CUSTOMERS + "/" + created.id()))
+                .created(URI.create("/api/1.0/customers/" + created.id()))
                 .body(created);
     }
 
-    @PutMapping(path = "/{id}")
+    @PutMapping(value = "/{version}/customers/{id}", version = "1.0")
     @Retryable(
             excludes = {CustomerNotFoundCustomException.class, EmailConflictRulesCustomException.class,
                     UsernameConflictRulesCustomException.class, RoleNotFoundCustomException.class},
@@ -71,7 +71,7 @@ public class CustomerController {
                 .body(updated);
     }
 
-    @DeleteMapping(path = "/{id}")
+    @DeleteMapping(value = "/{version}/customers/{id}", version = "1.0")
     public ResponseEntity<Void> disableById(@PathVariable(name = "id") final UUID id) {
 
         customerDisableInputPort.disableById(id);
@@ -81,7 +81,7 @@ public class CustomerController {
                 .build();
     }
 
-    @GetMapping(path = "/{id}")
+    @GetMapping(value = "/{version}/customers/{id}", version = "1.0")
     @Retryable(
             excludes = {CustomerNotFoundCustomException.class},
             maxRetries = 4, // Número máximo de tentativas de repetição em caso de falha.
@@ -98,7 +98,7 @@ public class CustomerController {
                 .body(response);
     }
 
-    @GetMapping
+    @GetMapping(value = "/{version}/customers", version = "1.0")
     @Retryable(
             maxRetries = 4, // Número máximo de tentativas de repetição em caso de falha.
             jitter = 10, // Variação aleatória adicionada ao tempo de espera para evitar picos de carga. Fator de "desfocagem" (blur) para evitar a sincronização de rede. Se usar valor 10 (significa geralmente interpretado como +/- 10% de variação)

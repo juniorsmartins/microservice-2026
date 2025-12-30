@@ -12,6 +12,7 @@
 - https://www.danvega.dev/blog/spring-data-aot-repositories 
 - https://github.com/danvega/spring-data-aot 
 - https://www.youtube.com/watch?v=s_kmDbitE8s 
+- https://blog.jetbrains.com/idea/2025/11/spring-data-aot/#gradle 
 
 
 ### Introdução: 

@@ -1,12 +1,13 @@
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '4.0.0'
+    id 'org.springframework.boot' version '4.0.1'
     id 'io.spring.dependency-management' version '1.1.7'
     id "com.github.davidmc24.gradle.plugin.avro" version "1.9.1"
 }
 
 group = 'backend.finance'
 version = '0.0.1-SNAPSHOT'
+description = 'Microsserviços responsável por gerenciar os dados dos usuários do sistema.'
 
 java {
     toolchain {
@@ -70,15 +71,15 @@ dependencyManagement {
     }
 }
 
+tasks.named('test') {
+    useJUnitPlatform()
+}
+
 avro {
     createSetters = true // Gera métodos setters nos POJOs gerados a partir do Avro.
     fieldVisibility = "PRIVATE" // Define que os campos das classes geradas serão privados.
     outputCharacterEncoding = "UTF-8"
     enableDecimalLogicalType = true // suporte correto a BigDecimal (tipo logical decimal do Avro)
-}
-
-test {
-    useJUnitPlatform()
 }
 
 bootJar {
