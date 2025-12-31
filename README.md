@@ -17,7 +17,7 @@ Bloqueante e colaboração Orientada a Eventos.
 6.  [Eureka Server](#eureka-server)
 7.  [Gateway](#gateway)
 8.  [Tutoriais](#tutoriais)
-9.  [Como rodar a aplicação](#como-rodar-a-aplicacao) 
+9.  [FAQ - Principais dúvidas](#faq---principais-dúvidas) 
 
 ## Arquitetura 
 
@@ -84,10 +84,21 @@ Microsserviço responsável por rotear as requisições para os microsserviços.
 - [Spring Data AOT](docs/tutoriais/NOT-spring-data-aot.md)
 
 
-## Como rodar a aplicação
+## FAQ - Principais dúvidas
 
-1. Clone o projeto e abra na IDE;
-2. Abra o terminal da IDE;
-3. Rode o comando: cd docker;
-4. Rode o comando: docker compose up --build.
+1. Como rodar a aplicação?
+```
+1. Abra o terminal do seu notebook com o comando: Ctrl + Alt + t;
+2. No terminal, rode o comando: git clone git@github.com:juniorsmartins/microservice-2026.git 
+3. Abra sua IDE e abre o projeto clonado;
+4. Abra o terminal da IDE;
+5. Rode o comando: cd docker
+6. Rode o comando: docker compose up --build 
+7. Pronto! Sua aplicação subirá em alguns segundos.
+```
+
+2. Como acessar a documentação viva por Spring Doc?
+```
+1. Depois de rodar a aplicação (pergunta 1 do FAQ), acesse a URL: 
+```
 

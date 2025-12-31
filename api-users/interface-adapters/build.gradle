@@ -58,6 +58,8 @@ dependencies {
     implementation 'org.springframework.cloud:spring-cloud-starter-config' // Para configuração centralizada com Spring Cloud Config
     implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client' // Para registro e descoberta de serviços com Eureka
 
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:3.0.0'
+
     compileOnly 'org.projectlombok:lombok' // Para reduzir código boilerplate (getters, setters, construtores, etc.)
     annotationProcessor 'org.projectlombok:lombok'
 

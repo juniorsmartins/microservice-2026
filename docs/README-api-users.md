@@ -11,6 +11,7 @@ Microsserviços responsável por gerenciar os dados dos usuários do sistema.
 - Spring Boot Actuator (monitoramento);
 - Spring Cloud Config Client (versão 2025.1.0);
 - Spring Cloud Netflix Eureka Client (versão 2025.1.0);
+- Spring Doc OpenApi (versão 3.0.0);
 - Spring Data Envers (auditoria - versão 4.0.1);
 - Spring Data JPA;
 - Liquibase (migration em SQL);
