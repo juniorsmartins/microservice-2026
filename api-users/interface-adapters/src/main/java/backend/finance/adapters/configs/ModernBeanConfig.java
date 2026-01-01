@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Import;
 
 @Configuration
 @Import(RegisterBeanRegistrar.class) // Maioria dos beans registrados pelo BeanRegistrar
-public class ModernWebConfig {
+public class ModernBeanConfig {
 
     @Bean
     public CustomerMapper customerMapper(UserMapper userMapper) {

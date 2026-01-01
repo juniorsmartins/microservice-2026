@@ -1,21 +1,23 @@
-package backend.finance.adapters.configs;
+package backend.core.api_news.configs;
 
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 
 @Configuration
-public class OpenApiConfig {
+@Import(RegisterBeanRegistrar.class)
+public class WebConfig {
 
     @Bean
     public OpenAPI openApi() {
         return new OpenAPI()
                 .components(new Components())
                 .info(new io.swagger.v3.oas.models.info.Info()
-                        .title("Microsserviço API-Users")
+                        .title("Microsserviço API-News")
                         .version("1.0")
-                        .description("Microsserviço de gerenciamento de clientes.")
+                        .description("Microsserviço de gerenciamento de notícias.")
                         .contact(new io.swagger.v3.oas.models.info.Contact()
                                 .name("Junior Martins")
                                 .url("https://www.linkedin.com/in/juniorsmartins/")

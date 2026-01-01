@@ -9,12 +9,12 @@ spring:
   # --------------------------------------------------
   # Config de API Versioning
   # --------------------------------------------------
-  mvc:
-    apiversion:
-      supported: 1.0,2.0
-      default: 1.0
-      use:
-        path-segment: 1
+#  mvc:
+#    apiversion:
+#      supported: 1.0,2.0
+#      default: 1.0
+#      use:
+#        path-segment: 1
   # --------------------------------------------------
 
 
@@ -148,5 +148,17 @@ management:
       show-values: always # Mostra valores das propriedades de configuração
   # --------------------------------------------------
 
+
+  # --------------------------------------------------
+  # Config de SpringDoc/OpenAPI
+  # --------------------------------------------------
+springdoc:
+  api-docs:
+    enabled: true
+    path: /api-docs
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui.html
+  # --------------------------------------------------
 
 

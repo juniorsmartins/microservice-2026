@@ -5,6 +5,8 @@
 ### Fontes:
 - https://springdoc.org/#Introduction 
 - https://github.com/springdoc/springdoc-openapi 
+- https://www.baeldung.com/spring-rest-openapi-documentation 
+- https://javadoc.io/doc/io.swagger.core.v3/swagger-annotations/latest/index.html 
 - (Udemy) - https://www.udemy.com/course/microservices-do-0-a-gcp-com-spring-boot-kubernetes-e-docker/learn/lecture/51023705#overview 
 - (Algaworks) - https://app.algaworks.com/aulas/4389/conhecendo-o-springdoc 
 
@@ -30,7 +32,8 @@ usando anotações do swagger-api.
     c. Spring Doc Security.
 2. Criar classe de configuração (OpenApiConfig);
 3. Adicionar anotações nos Controllers, DTOs e etc;
-4. Acessar urls do swagger: localhost:9050/v3/docs (Json) e localhost:9050/swagger-ui/index.html ;
+4. Configurar no application.yml;
+5. Acessar urls do swagger: localhost:9050/api-docs (Json) e localhost:9050/swagger-ui.html ;
 
 5. Opcional - Configurar personalizações no application.yml;
 3. Opcional - Adicionar "openapi" e "swagger-ui" nas configurações de exposição de endpoints do Actuator no application.yml;

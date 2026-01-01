@@ -82,6 +82,7 @@ Microsserviço responsável por rotear as requisições para os microsserviços.
 - [Auditoria](docs/tutoriais/auditoria.md);
 - [Padrões e Utilidades](docs/tutoriais/padroes-utils.md);
 - [Spring Data AOT](docs/tutoriais/NOT-spring-data-aot.md)
+- [API Versioning](docs/tutoriais/api-versioning.md);
 
 
 ## FAQ - Principais dúvidas
