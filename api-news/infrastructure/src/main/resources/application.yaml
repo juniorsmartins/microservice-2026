@@ -7,18 +7,6 @@ spring:
 
 
   # --------------------------------------------------
-  # Config de API Versioning
-  # --------------------------------------------------
-#  mvc:
-#    apiversion:
-#      supported: 1.0,2.0
-#      default: 1.0
-#      use:
-#        path-segment: 1
-  # --------------------------------------------------
-
-
-  # --------------------------------------------------
   # Config de Datasource e Pool de Conexões (MySQL)
   # --------------------------------------------------
   datasource:
@@ -119,20 +107,6 @@ spring:
 
 
   # --------------------------------------------------
-  # Config de Eureka Client
-  # --------------------------------------------------
-eureka:
-  client:
-    register-with-eureka: true # True = Diz: "Registre-se no servidor eureka". False = "Não se registre no servidor eureka".
-    fetch-registry: false # True = Diz: "Busque a lista de serviços registrados no servidor eureka". False = "Não busque a lista de serviços registrados no servidor eureka".
-    service-url:
-      defaultZone: ${SPRING_CLOUD_EUREKA_SERVER_URI:http://localhost:8761/eureka/} # Endereço do Eureka Server
-    healthcheck: # Habilita healthcheck. O servidor Eureka periodicamente checa se o cliente está saudável. Se não estiver, o servidor marca como DOWN. Útil para load balancers.
-      enabled: true
-  # --------------------------------------------------
-
-
-  # --------------------------------------------------
   # Config de Actuator
   # --------------------------------------------------
 management:
@@ -150,15 +124,29 @@ management:
 
 
   # --------------------------------------------------
+  # Config de Eureka Client
+  # --------------------------------------------------
+eureka:
+  client:
+    register-with-eureka: true # True = Diz: "Registre-se no servidor eureka". False = "Não se registre no servidor eureka".
+    fetch-registry: false # True = Diz: "Busque a lista de serviços registrados no servidor eureka". False = "Não busque a lista de serviços registrados no servidor eureka".
+    service-url:
+      defaultZone: ${SPRING_CLOUD_EUREKA_SERVER_URI:http://localhost:8761/eureka/} # Endereço do Eureka Server
+    healthcheck: # Habilita healthcheck. O servidor Eureka periodicamente checa se o cliente está saudável. Se não estiver, o servidor marca como DOWN. Útil para load balancers.
+      enabled: true
+  # --------------------------------------------------
+
+
+  # --------------------------------------------------
   # Config de SpringDoc/OpenAPI
   # --------------------------------------------------
 springdoc:
   api-docs:
     enabled: true
-    path: /api-docs
+    path: /v3/api-docs
   swagger-ui:
     enabled: true
-    path: /swagger-ui.html
+    path: /swagger-ui/index.html
   # --------------------------------------------------
 
 

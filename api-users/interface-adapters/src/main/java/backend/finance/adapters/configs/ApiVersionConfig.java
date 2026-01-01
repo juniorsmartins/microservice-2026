@@ -1,4 +1,4 @@
-package backend.core.api_news.configs;
+package backend.finance.adapters.configs;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;

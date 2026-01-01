@@ -1,12 +1,30 @@
 package backend.finance.adapters.configs;
 
+import backend.finance.application.mappers.*;
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 
 @Configuration
-public class OpenApiConfig {
+@Import(RegisterBeanRegistrar.class) // Maioria dos beans registrados pelo BeanRegistrar
+public class WebConfig {
+
+    @Bean
+    public CustomerMapper customerMapper(UserMapper userMapper) {
+        return new CustomerMapperImpl(userMapper);
+    }
+
+    @Bean
+    public UserMapper userMapper(RoleMapper roleMapper) {
+        return new UserMapperImpl(roleMapper);
+    }
+
+    @Bean
+    public RoleMapper roleMapper() {
+        return new RoleMapperImpl();
+    }
 
     @Bean
     public OpenAPI openApi() {
