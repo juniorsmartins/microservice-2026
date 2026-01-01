@@ -143,10 +143,10 @@ eureka:
 springdoc:
   api-docs:
     enabled: true
-    path: /v3/api-docs
+    path: /v3/api-docs-news
   swagger-ui:
     enabled: true
-    path: /swagger-ui/index.html
+    path: /swagger-ui-news/index.html
   # --------------------------------------------------
 
 

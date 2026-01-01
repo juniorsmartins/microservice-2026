@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Import;
 public class WebConfig {
 
     @Bean
-    public OpenAPI openApi() {
+    public OpenAPI openApi() { // OpenAPI - Swagger
         return new OpenAPI()
                 .components(new Components())
                 .info(new io.swagger.v3.oas.models.info.Info()

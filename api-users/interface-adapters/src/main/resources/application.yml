@@ -180,7 +180,7 @@ spring:
 
 
   # --------------------------------------------------
-  # Config de actuator
+  # Config de Actuator
   # --------------------------------------------------
 management:
   endpoints:
@@ -216,10 +216,10 @@ eureka:
 springdoc:
   api-docs:
     enabled: true
-    path: /v3/api-docs
+    path: /v3/api-docs-users
   swagger-ui:
     enabled: true
-    path: /swagger-ui/index.html
+    path: /swagger-ui-users/index.html
   # --------------------------------------------------
 
 
