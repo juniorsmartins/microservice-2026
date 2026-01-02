@@ -1,38 +1,83 @@
-package backend.finance.adapters.controllers;
+# TUTORIAL
 
-import backend.finance.adapters.gateways.CustomerPagePort;
-import backend.finance.application.dtos.request.CustomerRequest;
-import backend.finance.application.dtos.response.CustomerAllResponse;
-import backend.finance.application.dtos.response.CustomerResponse;
-import backend.finance.application.exceptions.http404.CustomerNotFoundCustomException;
-import backend.finance.application.exceptions.http404.RoleNotFoundCustomException;
-import backend.finance.application.exceptions.http409.EmailConflictRulesCustomException;
-import backend.finance.application.exceptions.http409.UsernameConflictRulesCustomException;
-import backend.finance.application.ports.input.CustomerCreateInputPort;
-import backend.finance.application.ports.input.CustomerDisableInputPort;
-import backend.finance.application.ports.input.CustomerQueryInputPort;
-import backend.finance.application.ports.input.CustomerUpdateInputPort;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.tags.Tag;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.jspecify.annotations.NullMarked;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
-import org.springframework.http.ProblemDetail;
-import org.springframework.http.ResponseEntity;
-import org.springframework.resilience.annotation.Retryable;
-import org.springframework.web.bind.annotation.*;
+## 1. Teoria
 
-import java.net.URI;
-import java.util.UUID;
+### Fontes:
+- https://springdoc.org/#Introduction 
+- https://github.com/springdoc/springdoc-openapi 
+- https://www.baeldung.com/spring-rest-openapi-documentation 
+- https://javadoc.io/doc/io.swagger.core.v3/swagger-annotations/latest/index.html 
+- (Udemy) - https://www.udemy.com/course/microservices-do-0-a-gcp-com-spring-boot-kubernetes-e-docker/learn/lecture/51023705#overview 
+- (Algaworks) - https://app.algaworks.com/aulas/4389/conhecendo-o-springdoc 
+- https://stackoverflow.com/questions/75732794/spring-boot-3-and-swagger-ui-java-lang-nosuchmethoderror-io-swagger-v3-oas-ann 
 
+### Introdução: 
+
+Spring Doc
+```
+Esta biblioteca Java ajuda a automatizar a geração de documentação de API em 
+projetos Spring Boot. Ela funciona examinando a aplicação em tempo de execução 
+para inferir a semântica da API com base nas configurações do Spring, na estrutura 
+de classes e em diversas anotações. Gera automaticamente documentação de APIs nos 
+formatos JSON/YAML e HTML. Essa documentação pode ser complementada com comentários 
+usando anotações do swagger-api.
+```
+
+## 2. Configuração
+
+### Passo-a-passo
+
+1. Adicionar dependências no build.gradle;
+    a. Spring Doc (duas dependências - a segunda para evitar conflitos com Confluent);
+    b. Spring Doc Hateoas (se estiver usando Spring Hateoas);
+    c. Spring Doc Security.
+2. Criar bean de configuração (openApi);
+3. Adicionar anotações de Swagger nos Controllers, DTOs e etc;
+4. Opcional - Configurar endpoints customizados no application.yml;
+5. Acessar urls do swagger: 
+   a. http://localhost:9050/v3/api-docs-users  
+   b. http://localhost:9050/swagger-ui-users/swagger-ui/index.html
+
+### Implementação: 
+
+1. Adicionar dependência no build.gradle;
+```
+implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:3.0.0'
+implementation 'io.swagger.core.v3:swagger-annotations-jakarta:2.2.41'
+```
+
+2. Criar bean de configuração (openApi);
+```
+@Configuration
+@Import(RegisterBeanRegistrar.class)
+public class WebConfig {
+
+    @Bean
+    public OpenAPI openApi() {
+        return new OpenAPI()
+                .components(new Components())
+                .info(new io.swagger.v3.oas.models.info.Info()
+                        .title("Microsserviço API-Users")
+                        .version("1.0")
+                        .description("Microsserviço de gerenciamento de clientes.")
+                        .contact(new io.swagger.v3.oas.models.info.Contact()
+                                .name("Junior Martins")
+                                .url("https://www.linkedin.com/in/juniorsmartins/")
+                        )
+                        .license(new io.swagger.v3.oas.models.info.License()
+                                .name("Copyright (c) 2025 Junior Martins. All Rights Reserved.")
+                        )
+                )
+                .externalDocs(new io.swagger.v3.oas.models.ExternalDocumentation()
+                        .description("Documentação das APIs do Microsserviços.")
+                        .url("https://github.com/juniorsmartins/microservice-2026/blob/master/README.md")
+                );
+    }
+}
+```
+
+3. Adicionar anotações de Swagger nos Controllers, DTOs e etc;
+```
 @Tag(name = "CustomerController", description = "Controlador do recurso Cliente.")
 @Slf4j
 @NullMarked
@@ -213,3 +258,15 @@ public class CustomerController {
                 .body(responsePage);
     }
 }
+```
+
+4. Opcional - Configurar endpoints customizados no application.yml;
+```
+springdoc:
+  api-docs:
+    enabled: true
+    path: /v3/api-docs-users
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui-users/index.html
+```
