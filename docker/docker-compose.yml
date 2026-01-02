@@ -221,7 +221,7 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.5'
+          cpus: '1.0'
           memory: 512M
     environment:
       SERVER_PORT: 8888
@@ -251,7 +251,7 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.5'
+          cpus: '1.0'
           memory: 512M
     environment:
       SERVER_PORT: 8761
@@ -284,7 +284,7 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.5'
+          cpus: '1.0'
           memory: 512M
     environment:
       SERVER_PORT: 8765
@@ -321,7 +321,7 @@ services:
       resources:
         limits:
           cpus: '0.5'
-          memory: 256M
+          memory: 512M
     environment:
       SERVER_PORT: 9050
       SPRING_CLOUD_CONFIG_SERVER_URI: http://configserver:8888

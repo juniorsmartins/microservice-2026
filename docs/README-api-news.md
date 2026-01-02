@@ -11,9 +11,13 @@ Microsserviço responsável pelo gerenciamento das notícias.
 - Spring Boot Actuator (monitoramento);
 - Spring Cloud Config Client (versão 2025.1.0);
 - Spring Cloud Netflix Eureka Client (versão 2025.1.0);
+- Spring Doc OpenApi (versão 3.0.0);
 - API Versioning;
 - Null-safety (JSpecify);
 - Bean Registration (Spring Framework 7);
+- MySQL (versão 8.4.7 - banco de dados relacional);
+- Docker (dockerfile e docker compose);
+- Lombok.
 
 ## Diagramas
 

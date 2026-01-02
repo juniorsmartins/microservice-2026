@@ -17,7 +17,7 @@ notificação é realizada por meio do email (correio eletrônico).
 - Flyway (migration em SQL);
 - Apache Kafka, Schema Registry e Apache Avro (mensageria);
 - RestAssured, JUnit e Mockito (testes);
-- MariaDB (banco de dados relacional);
+- MariaDB (versão 12.1.2 - banco de dados relacional);
 - H2 Database (banco de dados em memória para testes);
 - Docker (dockerfile e docker compose);
 - Lombok.
