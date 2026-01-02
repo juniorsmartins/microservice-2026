@@ -27,7 +27,7 @@ spring:
               predicates:
                 - Path=/api/{version}/news/**
 
-            # ── NOVAS rotas exclusivas para documentação SpringDoc ───────────────────────
+            # ── Rotas exclusivas para documentação SpringDoc ───────────────────────
             - id: api-users-docs
               uri: lb://api-users
               predicates:
