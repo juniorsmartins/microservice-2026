@@ -13,10 +13,35 @@ spring:
     gateway:
       server:
         webflux:
-          discovery:
-            locator:
-              enabled: false # Habilita ou não o Service Discovery para o Gateway. Isso cria rotas automáticas via Eureka
-              lower-case-service-id: true # Converte IDs de serviço para minúsculas nas rotas
+          routes:
+            - id: api-users
+              uri: lb://api-users
+              predicates:
+                - Path=/api/{version}/customers/**
+            - id: api-notifications
+              uri: lb://api-notifications
+              predicates:
+                - Path=/api/{version}/notifications/**
+            - id: api-news
+              uri: lb://api-news
+              predicates:
+                - Path=/api/{version}/news/**
+
+            # ── Rotas exclusivas para documentação SpringDoc ───────────────────────
+            - id: api-users-docs
+              uri: lb://api-users
+              predicates:
+                - Path=/api-users/v3/api-docs
+
+            - id: api-news-docs
+              uri: lb://api-news
+              predicates:
+                - Path=/api-news/v3/api-docs
+
+            - id: api-notifications-docs
+              uri: lb://api-notifications
+              predicates:
+                - Path=/api-notifications/v3/api-docs
   # --------------------------------------------------
 
 
@@ -51,3 +76,18 @@ eureka:
   # --------------------------------------------------
 
 
+  # --------------------------------------------------
+  # Config de SpringDoc/OpenAPI
+  # --------------------------------------------------
+springdoc:
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui/index.html
+    urls:
+      - name: api-users
+        url: /api-users/v3/api-docs
+      - name: api-notifications
+        url: /api-notifications/v3/api-docs
+      - name: api-news
+        url: /api-news/v3/api-docs
+  # --------------------------------------------------

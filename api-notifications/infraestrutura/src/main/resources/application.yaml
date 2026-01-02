@@ -170,6 +170,18 @@ eureka:
 
 
   # --------------------------------------------------
+  # Config de SpringDoc/OpenAPI
+  # --------------------------------------------------
+springdoc:
+  api-docs:
+    enabled: true
+    path: /api-notifications/v3/api-docs
+  swagger-ui:
+    url: /api-notifications/v3/api-docs
+  # --------------------------------------------------
+
+
+  # --------------------------------------------------
   # Config de logging
   # --------------------------------------------------
 logging:
