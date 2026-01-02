@@ -30,8 +30,8 @@ monitoramento/métricas e resiliência.
 
 ### Passo-a-passo
 
-Servidor
-1. Criar um projeto com dependências: 
+Servidor (estratégia 1 - via classe GatewayConfig)
+1. Adicionar dependências no gradle.build:
    - a. Spring Cloud Gateway (WebFlux ou WebMVC);
    - b. Spring Boot Actuator (opcional);
    - c. Spring Cloud Netflix Eureka Client.
@@ -40,23 +40,35 @@ Servidor
    - b. Configurar propriedade de Gateway;
    - c. Configurar propriedade do Actuator (opcional);
    - d. Configurar propriedade do Eureka Client;
-3. Testar via Postman ou Curl: 
-   - a. Endereço <gateway><endpoint-aplicação> (localhost:8765/v1/customers);
-   - b. Configurar application para usar minúscula no nome da aplicação (localhost:8765/v1/customers);
-4. Opcional - Pode ou não criar classe com Bean de configuração programática de rotas;
-5. Opcional - Pode ou não criar um filtro global (GlobalFilter) para registrar logs de requisições.
+3. Criar classe de configuração programática de rotas (GatewayConfig);
+4. Opcional - Pode ou não criar um filtro global (GlobalFilter) para registrar logs de requisições.
+5. Testar via Postman ou Curl: 
+   - a. Endereço <gateway><endpoint-aplicação> (localhost:8765/api/v1/customers ou localhost:8765/api/1.0/customers);
+
+Servidor (estratégia 2 - via propriedades do application.yml)
+1. Adicionar dependências no gradle.build:
+   - a. Spring Cloud Gateway (WebFlux ou WebMVC);
+   - b. Spring Boot Actuator (opcional);
+   - c. Spring Cloud Netflix Eureka Client.
+2. Configurar o application.yml:
+   - a. Configurar porta do servidor e nome da aplicação;
+   - b. Configurar propriedade de Gateway;
+   - c. Configurar propriedade do Actuator (opcional);
+   - d. Configurar propriedade do Eureka Client;
+3. Opcional - Pode ou não criar um filtro global (GlobalFilter) para registrar logs de requisições.
 
 ### Implementação: 
 
-Servidor
-1. Criar um projeto com dependências:
+Servidor (estratégia 1 - via classe GatewayConfig)
+
+1. Adicionar dependências no gradle.build:
    - a. Spring Cloud Gateway (WebFlux ou WebMVC);
    - b. Spring Boot Actuator (opcional);
    - c. Spring Cloud Netflix Eureka Client.
 ```
 plugins {
 	id 'java'
-	id 'org.springframework.boot' version '4.0.0'
+	id 'org.springframework.boot' version '4.0.1'
 	id 'io.spring.dependency-management' version '1.1.7'
 }
 
@@ -140,7 +152,7 @@ eureka:
     healthcheck: 
       enabled: true
 ```
-4. Opcional - Pode ou não criar classe com Bean de configuração programática de rotas;
+3. Criar classe de configuração programática de rotas (GatewayConfig);
 ```
 @Configuration
 public class GatewayConfig {
@@ -148,21 +160,25 @@ public class GatewayConfig {
     @Bean
     public RouteLocator gatewayRoutes(RouteLocatorBuilder builder) {
 
-        return builder.routes() 
+        return builder.routes() // O RouteLocatorBuilderele cria rotas e permite adicionar predicados e filtros às rotas, possibilitando o roteamento com base em determinadas condições, bem como a alteração da requisição/resposta conforme necessário.
 
-                .route("api-users", p -> p 
-                        .path("/v1/customers/**") 
-                        .uri("lb://api-users")) 
+                .route("api-users", p -> p // Define uma rota com o ID "api-users".
+                        .path("/api/{version}/customers/**") // Define o predicado de caminho para a rota. O padrão "/api-users/**" indica que qualquer solicitação que comece com "/api-users/" será roteada por esta rota.
+                        .uri("lb://api-users")) // Define o URI de destino para a rota. "lb://" indica que o Gateway deve usar o balanceamento de carga para rotear as solicitações para o serviço registrado com o nome "api-users".
 
                 .route("api-notifications", p -> p
-                        .path("/v1/notifications/**")
+                        .path("/api/{version}/notifications/**")
                         .uri("lb://api-notifications"))
+
+                .route("api-news", p -> p
+                        .path("/api/{version}/news/**")
+                        .uri("lb://api-news"))
 
                 .build();
     }
 }
 ```
-5. Opcional - Pode ou não criar um filtro global (GlobalFilter) para registrar logs de requisições.
+4. Opcional - Pode ou não criar um filtro global (GlobalFilter) para registrar logs de requisições.
 ```
 @Component
 public class LoggingFilter implements GlobalFilter {
@@ -180,5 +196,36 @@ public class LoggingFilter implements GlobalFilter {
         return chain.filter(exchange);
     }
 }
+```
+
+Servidor (estratégia 2 - via propriedades do application.yml)
+2. Configurar o application.yml:
+   - a. Configurar porta do servidor e nome da aplicação;
+   - b. Configurar propriedade de Gateway;
+```
+server:
+  port: ${SERVER_PORT:8765}
+
+spring:
+  application:
+    name: gatewayserver
+
+  cloud:
+    gateway:
+      server:
+        webflux:
+          routes:
+            - id: api-users
+              uri: lb://api-users
+              predicates:
+                - Path=/api/{version}/customers/**
+            - id: api-notifications
+              uri: lb://api-notifications
+              predicates:
+                - Path=/api/{version}/notifications/**
+            - id: api-news
+              uri: lb://api-news
+              predicates:
+                - Path=/api/{version}/news/**
 ```
 

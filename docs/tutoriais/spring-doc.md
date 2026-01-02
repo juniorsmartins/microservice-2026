@@ -27,16 +27,33 @@ usando anotações do swagger-api.
 
 ### Passo-a-passo
 
+Microsserviço
+
 1. Adicionar dependências no build.gradle;
     a. Spring Doc (duas dependências - a segunda para evitar conflitos com Confluent);
     b. Spring Doc Hateoas (se estiver usando Spring Hateoas);
     c. Spring Doc Security.
 2. Criar bean de configuração (openApi);
 3. Adicionar anotações de Swagger nos Controllers, DTOs e etc;
-4. Opcional - Configurar endpoints customizados no application.yml;
-5. Acessar urls do swagger: 
-   a. http://localhost:9050/v3/api-docs-users  
-   b. http://localhost:9050/swagger-ui-users/swagger-ui/index.html
+
+Gateway Server
+
+1. Adicionar dependência de SpringDoc no gradle.build do GatewayServer;
+2. Criar classe de configuração (OpenApiConfig);
+3. Adicionar configurações do SpringDoc no application.yml;
+4. Ir nos microsserviços para adicionar propriedade no application.yml (permitir mostrar via Gateway).
+
+Acessar Swagger para testar funcionamento:
+- Via APIs:
+  - http://localhost:9050/api-users/v3/api-docs 
+  - http://localhost:9050/swagger-ui/index.html 
+  - http://localhost:9000/api-news/v3/api-docs 
+  - http://localhost:9000/swagger-ui/index.html 
+- Via Gateway:
+  - http://localhost:8765/api-users/v3/api-docs 
+  - http://localhost:8765/api-news/v3/api-docs 
+  - http://localhost:8765/swagger-ui/index.html
+
 
 ### Implementação: 
 
