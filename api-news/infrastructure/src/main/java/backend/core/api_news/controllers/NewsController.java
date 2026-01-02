@@ -72,6 +72,17 @@ public class NewsController {
     @GetMapping(value = "/{version}/news", version = "1.0")
     public List<NewsResponse> findByTitleLike(@RequestParam(name = "title") String title) {
 
+        log.info("\n\n 1.0 \n\n");
+        return newsQueryPort.findByTitleLike(title)
+                .stream()
+                .map(newsPresenterPort::toNewsResponse)
+                .toList();
+    }
+
+    @GetMapping(value = "/{version}/news", version = "2.0")
+    public List<NewsResponse> findByTitleLikeV2(@RequestParam(name = "title") String title) {
+
+        log.info("\n\n 2.0 \n\n");
         return newsQueryPort.findByTitleLike(title)
                 .stream()
                 .map(newsPresenterPort::toNewsResponse)

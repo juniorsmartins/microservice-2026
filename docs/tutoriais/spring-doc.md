@@ -27,20 +27,41 @@ usando anotações do swagger-api.
 
 ### Passo-a-passo
 
+Microsserviço
+
 1. Adicionar dependências no build.gradle;
     a. Spring Doc (duas dependências - a segunda para evitar conflitos com Confluent);
     b. Spring Doc Hateoas (se estiver usando Spring Hateoas);
     c. Spring Doc Security.
 2. Criar bean de configuração (openApi);
 3. Adicionar anotações de Swagger nos Controllers, DTOs e etc;
-4. Opcional - Configurar endpoints customizados no application.yml;
-5. Acessar urls do swagger: 
-   a. http://localhost:9050/v3/api-docs-users  
-   b. http://localhost:9050/swagger-ui-users/swagger-ui/index.html
+
+Gateway Server
+
+1. Adicionar dependência de SpringDoc no gradle.build do GatewayServer;
+2. Adicionar configurações do SpringDoc no application.yml (rotas e etc);
+3. Ir nos microsserviços para adicionar propriedade no application.yml para mostrar no Gateway.
+
+Acessar Swagger para testar funcionamento:
+- Via APIs:
+  - http://localhost:9050/api-users/v3/api-docs 
+  - http://localhost:9050/swagger-ui/index.html 
+  - http://localhost:9000/api-news/v3/api-docs 
+  - http://localhost:9000/swagger-ui/index.html 
+- Via Gateway:
+  - http://localhost:8765/api-users/v3/api-docs 
+  - http://localhost:8765/api-news/v3/api-docs 
+  - http://localhost:8765/swagger-ui/index.html
+
 
 ### Implementação: 
 
-1. Adicionar dependência no build.gradle;
+Microsserviço
+
+1. Adicionar dependências no build.gradle;
+   a. Spring Doc (duas dependências - a segunda para evitar conflitos com Confluent);
+   b. Spring Doc Hateoas (se estiver usando Spring Hateoas);
+   c. Spring Doc Security.
 ```
 implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:3.0.0'
 implementation 'io.swagger.core.v3:swagger-annotations-jakarta:2.2.41'
@@ -260,13 +281,73 @@ public class CustomerController {
 }
 ```
 
-4. Opcional - Configurar endpoints customizados no application.yml;
+Gateway Server
+
+1. Adicionar dependência de SpringDoc no gradle.build do GatewayServer;
+```
+implementation 'org.springdoc:springdoc-openapi-starter-webflux-ui:3.0.0'
+```
+
+2. Adicionar configurações do SpringDoc no application.yml (rotas e etc);
+```
+spring:
+  application:
+    name: gatewayserver
+
+  cloud:
+    gateway:
+      server:
+        webflux:
+          routes:
+            - id: api-users
+              uri: lb://api-users
+              predicates:
+                - Path=/api/{version}/customers/**
+            - id: api-notifications
+              uri: lb://api-notifications
+              predicates:
+                - Path=/api/{version}/notifications/**
+            - id: api-news
+              uri: lb://api-news
+              predicates:
+                - Path=/api/{version}/news/**
+
+            # ── Rotas exclusivas para documentação SpringDoc ───────────────────────
+            - id: api-users-docs
+              uri: lb://api-users
+              predicates:
+                - Path=/api-users/v3/api-docs
+
+            - id: api-news-docs
+              uri: lb://api-news
+              predicates:
+                - Path=/api-news/v3/api-docs
+
+            - id: api-notifications-docs
+              uri: lb://api-notifications
+              predicates:
+                - Path=/api-notifications/v3/api-docs
+
+springdoc:
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui/index.html
+    urls:
+      - name: api-users
+        url: /api-users/v3/api-docs
+      - name: api-notifications
+        url: /api-notifications/v3/api-docs
+      - name: api-news
+        url: /api-news/v3/api-docs
+```
+
+3. Ir nos microsserviços para adicionar propriedade no application.yml para mostrar no Gateway.
 ```
 springdoc:
   api-docs:
     enabled: true
-    path: /v3/api-docs-users
+    path: /api-users/v3/api-docs
   swagger-ui:
-    enabled: true
-    path: /swagger-ui-users/index.html
+    url: /api-users/v3/api-docs
 ```
+
