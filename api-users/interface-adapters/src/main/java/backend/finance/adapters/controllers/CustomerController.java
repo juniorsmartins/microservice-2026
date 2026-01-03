@@ -209,6 +209,25 @@ public class CustomerController {
     public ResponseEntity<Page<CustomerAllResponse>> pageAll(
             @PageableDefault(sort = "createdDate", direction = Sort.Direction.DESC, page = 0, size = 5) final Pageable paginacao) {
 
+        log.info("\n\n 1.0 \n\n");
+        var responsePage = customerPagePort.pageAll(paginacao);
+
+        return ResponseEntity
+                .ok()
+                .body(responsePage);
+    }
+
+    @GetMapping(value = "/{version}/customers", version = "2.0")
+    @Retryable(
+            maxRetries = 4, // Número máximo de tentativas de repetição em caso de falha.
+            jitter = 10, // Variação aleatória adicionada ao tempo de espera para evitar picos de carga. Fator de "desfocagem" (blur) para evitar a sincronização de rede. Se usar valor 10 (significa geralmente interpretado como +/- 10% de variação)
+            delay = 1000, // Primeiro tempo de espera antes de tentar novamente (milliseconds).
+            multiplier = 2 // Fator pelo qual o tempo de espera é multiplicado a cada tentativa subsequente. Um multiplicador para o atraso da próxima tentativa de repetição, aplicado ao atraso anterior (a partir de delay()) e também ao jitter() aplicável a cada tentativa.
+    )
+    public ResponseEntity<Page<CustomerAllResponse>> pageAllV2(
+            @PageableDefault(sort = "createdDate", direction = Sort.Direction.DESC, page = 0, size = 5) final Pageable paginacao) {
+
+        log.info("\n\n 2.0 \n\n");
         var responsePage = customerPagePort.pageAll(paginacao);
 
         return ResponseEntity

@@ -24,11 +24,9 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = "NotificationController", description = "Controlador do recurso Notificação.")
 @Slf4j
 @RestController
-@RequestMapping(path = {NotificationController.URI_NOTIFICATIONS})
+@RequestMapping(path = {"/api"})
 @RequiredArgsConstructor
 public class NotificationController {
-
-    protected static final String URI_NOTIFICATIONS = "/v1/notifications";
 
     private final NotificationPagePort notificationPagePort;
 
@@ -47,7 +45,7 @@ public class NotificationController {
                     )
             }
     )
-    @GetMapping
+    @GetMapping(value = "/{version}/notifications", version = "1.0")
     @Retryable(
             maxRetries = 2,
             jitter = 10,
@@ -57,6 +55,25 @@ public class NotificationController {
     public ResponseEntity<Page<NotificationResponse>> pageAll(
             @PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC, page = 0, size = 5) Pageable paginacao) {
 
+        log.info("\n\n 1.0 \n\n");
+        var responsePage = notificationPagePort.pageAll(paginacao);
+
+        return ResponseEntity
+                .ok()
+                .body(responsePage);
+    }
+
+    @GetMapping(value = "/{version}/notifications", version = "2.0")
+    @Retryable(
+            maxRetries = 2,
+            jitter = 10,
+            delay = 1000,
+            multiplier = 2
+    )
+    public ResponseEntity<Page<NotificationResponse>> pageAllV2(
+            @PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC, page = 0, size = 5) Pageable paginacao) {
+
+        log.info("\n\n 2.0 \n\n");
         var responsePage = notificationPagePort.pageAll(paginacao);
 
         return ResponseEntity
