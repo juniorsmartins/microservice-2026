@@ -16,4 +16,5 @@ public record NotificationResponse(
         String reason,
 
         OffsetDateTime createdAt
-) { }
+) {
+}

@@ -14,6 +14,7 @@ import backend.finance.application.ports.input.CustomerQueryInputPort;
 import backend.finance.application.ports.input.CustomerUpdateInputPort;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -186,7 +187,9 @@ public class CustomerController {
     @Operation(summary = "Paginar todos", description = "Recurso para buscar todos os clientes paginados.",
             responses = {
                     @ApiResponse(responseCode = "200", description = "OK - requisição bem sucedida e com retorno.",
-                            content = {@Content(mediaType = "application/json", schema = @Schema(implementation = CustomerResponse.class))}
+                            content = {@Content(mediaType = "application/json", array = @ArraySchema(minItems = 0,
+                                    schema = @Schema(implementation = CustomerResponse.class)))
+                            }
                     ),
                     @ApiResponse(responseCode = "400", description = "Bad Request - requisição mal formulada.",
                             content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ProblemDetail.class))}
