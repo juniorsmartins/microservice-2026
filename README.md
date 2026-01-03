@@ -103,6 +103,12 @@ Microsserviço responsável por rotear as requisições para os microsserviços.
 
 2. Como acessar a documentação viva por Spring Doc?
 ```
-1. Depois de rodar a aplicação (pergunta 1 do FAQ), acesse a URL: 
+1. Depois de rodar a aplicação (pergunta 1 do FAQ), verifique se os serviços estão 
+ativos pelo DiscoveryServer (Eureka): http://localhost:8761/ 
+
+2. Os serviços estando devidamente ativos no discovery, acesse a url da documentação 
+via GatewayServer: http://localhost:8765/swagger-ui/index.html
+
+3. Você pode alternar a documentação de todas as APIs em "Select a definition" (canto superior direito da tela).
 ```
 
