@@ -6,7 +6,7 @@ Microsserviços para fornecer ferramentas de pesquisa, estatística, investigaç
 
 - Fase 1: construção da base do microsserviços: ConfigServer, EurekaServer, GatewayServer e primeiras APIs Rest (api-users e api-news);
 - Fase 2: implementação de Security, IA, CI/CD e Observabilidade;
-- Fase 3: criação das APIs de negócio, com toda a pirâmide de testes;
+- Fase 3: construção das APIs de negócio, com toda a pirâmide de testes;
 - Fase 4: Kubernetes e Cloud;
 - Fase 5: construção do front-end com Angular;
 - Fase 6: 
