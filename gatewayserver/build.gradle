@@ -6,7 +6,7 @@ plugins {
 
 group = 'backend.communication'
 version = '0.0.1-SNAPSHOT'
-description = 'Gateway Server - porta de entrada de requisições.'
+description = 'Microsserviço responsável por rotear as requisições para os microsserviços.'
 
 java {
 	toolchain {

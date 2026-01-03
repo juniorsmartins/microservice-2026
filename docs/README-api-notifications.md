@@ -1,6 +1,6 @@
 # API-Notifications
 
-Microsserviço responsável por notificar o cliente sobre suas ações. Essa
+Microsserviço responsável por notificar o cliente sobre seu comportamento. Essa
 notificação é realizada por meio do email (correio eletrônico).
 
 ## Tecnologias
@@ -12,6 +12,7 @@ notificação é realizada por meio do email (correio eletrônico).
 - Spring Boot Actuator (monitoramento);
 - Spring Cloud Config Client (versão 2025.1.0);
 - Spring Cloud Netflix Eureka Client (versão 2025.1.0);
+- Spring Doc OpenApi (versão 3.0.0);
 - Spring Data JPA;
 - Spring Mail;
 - Flyway (migration em SQL);

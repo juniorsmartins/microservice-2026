@@ -64,8 +64,11 @@ Microsserviço responsável por rotear as requisições para os microsserviços.
 
 - Java (versão 25);
 - Gradle (versão 9.2.1);
-- Spring Boot (versão 4.0.0);
-- Docker (dockerfile e docker compose);
+- Spring Boot (versão 4.0.1);
+- Spring Boot Actuator (monitoramento);
+- Spring Cloud Netflix Eureka Client (versão 2025.1.0);
+- Spring Doc OpenApi (versão 3.0.0);
+- Docker (dockerfile e docker compose).
 
 
 ## Tutoriais
