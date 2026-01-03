@@ -6,10 +6,12 @@ import io.swagger.v3.oas.models.OpenAPI;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 @Import(RegisterBeanRegistrar.class) // Maioria dos beans registrados pelo BeanRegistrar
-public class WebConfig {
+public class WebConfig implements WebMvcConfigurer {
 
     @Bean
     public CustomerMapper customerMapper(UserMapper userMapper) {
@@ -46,5 +48,16 @@ public class WebConfig {
                         .description("Documentação das APIs do Microsserviços.")
                         .url("https://github.com/juniorsmartins/microservice-2026/blob/master/README.md")
                 );
+    }
+
+    @Override
+    public void addCorsMappings(CorsRegistry corsRegistry) {
+
+        corsRegistry.addMapping("/**")
+                .allowedOriginPatterns("*")// o ideal é colocar os endpoints específicos que poderão enviar requisições. O asterisco libera tudo.
+                .allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")
+                .allowedHeaders("*")
+                .allowCredentials(true)
+                .maxAge(3600);
     }
 }

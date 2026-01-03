@@ -90,7 +90,12 @@ Microsserviço responsável por rotear as requisições para os microsserviços.
 
 ## FAQ - Principais dúvidas
 
-1. Como rodar a aplicação?
+1. Quais dependências preciso ter no meu computador para rodar esta aplicação?
+```
+1. Docker (version 29.1.1);
+```
+
+2. Como rodar a aplicação?
 ```
 1. Abra o terminal do seu notebook com o comando: Ctrl + Alt + t;
 2. No terminal, rode o comando: git clone git@github.com:juniorsmartins/microservice-2026.git 
@@ -101,14 +106,30 @@ Microsserviço responsável por rotear as requisições para os microsserviços.
 7. Pronto! Sua aplicação subirá em alguns segundos.
 ```
 
-2. Como acessar a documentação viva por Spring Doc?
+3. Como acessar a documentação viva por Spring Doc?
 ```
 1. Depois de rodar a aplicação (pergunta 1 do FAQ), verifique se os serviços estão 
-ativos pelo DiscoveryServer (Eureka): http://localhost:8761/ 
+ativos no EurekaServer: http://localhost:8761/ 
 
-2. Os serviços estando devidamente ativos no discovery, acesse a url da documentação 
-via GatewayServer: http://localhost:8765/swagger-ui/index.html
+2. Com os serviços ativos, acesse a url da documentação via GatewayServer: http://localhost:8765/swagger-ui/index.html
 
 3. Você pode alternar a documentação de todas as APIs em "Select a definition" (canto superior direito da tela).
 ```
+
+4. Como testar o microsserviços manualmente? 
+
+Estratégia 1
+```
+1. Depois de rodar a aplicação (pergunta 1 do FAQ), acesse a documentação via GatewayServer: http://localhost:8765/swagger-ui/index.html
+2. Você pode testar pela própria documentação.
+```
+
+Estratégia 2 (link da coleção do postman - ainda não disponibilizei !!!??? )
+```
+1. Pode baixar um arquivo de coleções do Postman. Possui requisições prontas para testar;
+2. Importar esse arquivo de coleções no seu Postman;
+3. Testar.
+```
+
+
 

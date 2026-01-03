@@ -35,13 +35,15 @@ Microsserviço
     c. Spring Doc Security.
 2. Criar bean de configuração (openApi);
 3. Adicionar anotações de Swagger nos Controllers, DTOs e etc;
+4. Adicionar bean de Cors no microsserviço para permitir testes manuais via GatewayServer.
 
 Gateway Server
 
 1. Adicionar dependência de SpringDoc no gradle.build do GatewayServer;
 2. Adicionar configurações do SpringDoc no application.yml (rotas e etc);
-3. Ir nos microsserviços para adicionar propriedade no application.yml para mostrar no Gateway.
+3. Ir nos microsserviços para adicionar propriedade no application.yml para mostrar no Gateway;
    a. Adicionei versão v3 para o Spring Doc não ser barrado pelo API Versioning.
+4. Adicionar bean de Cors no Gateway para permitir testes manuais via GatewayServer.
 
 Acessar Swagger para testar funcionamento:
 - Via APIs:
@@ -73,8 +75,8 @@ implementation 'io.swagger.core.v3:swagger-annotations-jakarta:2.2.41'
 2. Criar bean de configuração (openApi);
 ```
 @Configuration
-@Import(RegisterBeanRegistrar.class)
-public class WebConfig {
+@Import(RegisterBeanRegistrar.class) 
+public class WebConfig implements WebMvcConfigurer {
 
     @Bean
     public OpenAPI openApi() {
@@ -286,6 +288,45 @@ public class CustomerController {
 }
 ```
 
+4. Adicionar bean de Cors para permitir testes manuais via GatewayServer;
+````
+@Configuration
+@Import(RegisterBeanRegistrar.class) 
+public class WebConfig implements WebMvcConfigurer {
+
+    @Bean
+    public OpenAPI openApi() {
+        return new OpenAPI()
+                .components(new Components())
+                .info(new io.swagger.v3.oas.models.info.Info()
+                        .title("Microsserviço API-Users")
+                        .version("1.0")
+                        .description("Microsserviço de gerenciamento de clientes.")
+                        .contact(new io.swagger.v3.oas.models.info.Contact()
+                                .name("Junior Martins")
+                                .url("https://www.linkedin.com/in/juniorsmartins/")
+                        )
+                        .license(new io.swagger.v3.oas.models.info.License()
+                                .name("Copyright (c) 2025 Junior Martins. All Rights Reserved.")
+                        )
+                )
+                .externalDocs(new io.swagger.v3.oas.models.ExternalDocumentation()
+                        .description("Documentação das APIs do Microsserviços.")
+                        .url("https://github.com/juniorsmartins/microservice-2026/blob/master/README.md")
+                );
+    }
+
+    @Override
+    public void addCorsMappings(CorsRegistry corsRegistry) {
+
+        corsRegistry.addMapping("/**")
+                .allowedOrigins("*") // o ideal é colocar os endpoints específicos que poderão enviar requisições. O asterisco libera tudo.
+                .allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")
+                .maxAge(3600);
+    }
+}
+````
+
 Gateway Server
 
 1. Adicionar dependência de SpringDoc no gradle.build do GatewayServer;
@@ -351,10 +392,11 @@ springdoc:
 springdoc:
   api-docs:
     enabled: true
-    path: /api-news/v3/api-docs
+    path: /api-users/v3/api-docs
   swagger-ui:
     enebled: true
     path: /swagger-ui/v3/index.html
-    url: /api-news/v3/api-docs
+    url: /api-users/v3/api-docs
+  override-server-url: true
 ```
 
