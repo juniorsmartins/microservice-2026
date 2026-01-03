@@ -1,6 +1,6 @@
 # PROJETO: currículo vivo
 
-O objetivo deste microsserviços será fornecer ferramentas de pesquisa, investigação e publicação para jornalistas. 
+Microsserviços para fornecer ferramentas de pesquisa, estatística, investigação e publicação de material jornalístico. 
 
 ## Status de andamento (fase 1)
 
