@@ -11,10 +11,9 @@ public class ApiVersionConfig implements WebMvcConfigurer {
     @Override
     public void configureApiVersioning(ApiVersionConfigurer configurer) {
         configurer
-//                .usePathSegment(1) // Adicionar um resolvedor para extrair a versão de um segmento de caminho.
+                .usePathSegment(1) // Adicionar um resolvedor para extrair a versão de um segmento de caminho.
                 .useMediaTypeParameter(MediaType.APPLICATION_JSON, "version")
-                .addSupportedVersions("1.0", "2.0") // Adicionar à lista de versões suportadas para verificação antes de gerar um erro InvalidApiVersionExceptionpara versões desconhecidas.
-                .setDefaultVersion("1.0") // Configure uma versão padrão para atribuir às solicitações que não especificarem uma.
-                .setVersionRequired(false); // Permite ou não caminhos sem versão
+                .addSupportedVersions("1.0", "2.0", "3.0") // Adicionar à lista de versões suportadas para verificação antes de gerar um erro InvalidApiVersionExceptionpara versões desconhecidas.
+                .setDefaultVersion("1.0"); // Configure uma versão padrão para atribuir às solicitações que não especificarem uma.
     }
 }
