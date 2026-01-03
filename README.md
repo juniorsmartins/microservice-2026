@@ -1,7 +1,15 @@
 # PROJETO: currículo vivo
 
-O projeto utiliza Arquitetura de Microsserviços, com comunicação Assíncrona Não 
-Bloqueante e colaboração Orientada a Eventos. 
+O objetivo deste microsserviços será fornecer ferramentas de pesquisa, investigação e publicação para jornalistas. 
+
+## Status de andamento (fase 1)
+
+- Fase 1: construção da base do microsserviços: ConfigServer, EurekaServer, GatewayServer e primeiras APIs Rest (api-users e api-news);
+- Fase 2: implementação de Security, IA, CI/CD e Observabilidade;
+- Fase 3: criação das APIs de negócio, com toda a pirâmide de testes;
+- Fase 4: Kubernetes e Cloud;
+- Fase 5: construção do front-end com Angular;
+- Fase 6: 
 
 ## Autoria
 
@@ -92,7 +100,8 @@ Microsserviço responsável por rotear as requisições para os microsserviços.
 
 1. Quais dependências preciso ter no meu computador para rodar esta aplicação?
 ```
-1. Docker (version 29.1.1);
+1. Docker;
+2, Docker Compose.
 ```
 
 2. Como rodar a aplicação?
