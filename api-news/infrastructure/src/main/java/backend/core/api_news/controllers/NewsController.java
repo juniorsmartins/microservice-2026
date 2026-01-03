@@ -40,7 +40,7 @@ public class NewsController {
     @Operation(summary = "Cadastrar", description = "Recurso para criar novas notícias.",
             responses = {
                     @ApiResponse(responseCode = "201", description = "Created - recurso cadastrado com sucesso.",
-                            content = {@Content(mediaType = "application/json", schema = @Schema(implementation = NewsResponse.class))}
+                            content = {@Content(mediaType = "application/json", schema = @Schema(implementation = NewsCreateResponse.class))}
                     ),
                     @ApiResponse(responseCode = "400", description = "Bad Request - requisição mal formulada.",
                             content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ProblemDetail.class))}

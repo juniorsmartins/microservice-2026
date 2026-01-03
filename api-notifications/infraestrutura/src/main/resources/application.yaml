@@ -177,6 +177,8 @@ springdoc:
     enabled: true
     path: /api-notifications/v3/api-docs
   swagger-ui:
+    enebled: true
+    path: /swagger-ui/v3/index.html
     url: /api-notifications/v3/api-docs
   # --------------------------------------------------
 

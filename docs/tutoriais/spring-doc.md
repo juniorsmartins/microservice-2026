@@ -41,13 +41,16 @@ Gateway Server
 1. Adicionar dependência de SpringDoc no gradle.build do GatewayServer;
 2. Adicionar configurações do SpringDoc no application.yml (rotas e etc);
 3. Ir nos microsserviços para adicionar propriedade no application.yml para mostrar no Gateway.
+   a. Adicionei versão v3 para o Spring Doc não ser barrado pelo API Versioning.
 
 Acessar Swagger para testar funcionamento:
 - Via APIs:
   - http://localhost:9050/api-users/v3/api-docs 
-  - http://localhost:9050/swagger-ui/index.html 
+  - http://localhost:9050/swagger-ui/v3/index.html 
   - http://localhost:9000/api-news/v3/api-docs 
-  - http://localhost:9000/swagger-ui/index.html 
+  - http://localhost:9000/swagger-ui/v3/index.html
+  - http://localhost:9060/api-notifications/v3/api-docs
+  - http://localhost:9060/swagger-ui/v3/index.html
 - Via Gateway:
   - http://localhost:8765/api-users/v3/api-docs 
   - http://localhost:8765/api-news/v3/api-docs 
@@ -252,7 +255,9 @@ public class CustomerController {
     @Operation(summary = "Paginar todos", description = "Recurso para buscar todos os clientes paginados.",
             responses = {
                     @ApiResponse(responseCode = "200", description = "OK - requisição bem sucedida e com retorno.",
-                            content = {@Content(mediaType = "application/json", schema = @Schema(implementation = CustomerResponse.class))}
+                            content = {@Content(mediaType = "application/json", array = @ArraySchema(minItems = 0,
+                                    schema = @Schema(implementation = CustomerResponse.class)))
+                            }
                     ),
                     @ApiResponse(responseCode = "400", description = "Bad Request - requisição mal formulada.",
                             content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ProblemDetail.class))}
@@ -346,8 +351,10 @@ springdoc:
 springdoc:
   api-docs:
     enabled: true
-    path: /api-users/v3/api-docs
+    path: /api-news/v3/api-docs
   swagger-ui:
-    url: /api-users/v3/api-docs
+    enebled: true
+    path: /swagger-ui/v3/index.html
+    url: /api-news/v3/api-docs
 ```
 

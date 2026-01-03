@@ -6,7 +6,7 @@ plugins {
 
 group = 'backend.core'
 version = '0.0.1-SNAPSHOT'
-description = 'Microsserviço para registro de notícias.'
+description = 'Microsserviço responsável pelo gerenciamento das notícias.'
 
 java {
 	toolchain {

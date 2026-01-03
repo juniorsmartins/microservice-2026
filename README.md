@@ -64,8 +64,11 @@ Microsserviço responsável por rotear as requisições para os microsserviços.
 
 - Java (versão 25);
 - Gradle (versão 9.2.1);
-- Spring Boot (versão 4.0.0);
-- Docker (dockerfile e docker compose);
+- Spring Boot (versão 4.0.1);
+- Spring Boot Actuator (monitoramento);
+- Spring Cloud Netflix Eureka Client (versão 2025.1.0);
+- Spring Doc OpenApi (versão 3.0.0);
+- Docker (dockerfile e docker compose).
 
 
 ## Tutoriais
@@ -100,6 +103,12 @@ Microsserviço responsável por rotear as requisições para os microsserviços.
 
 2. Como acessar a documentação viva por Spring Doc?
 ```
-1. Depois de rodar a aplicação (pergunta 1 do FAQ), acesse a URL: 
+1. Depois de rodar a aplicação (pergunta 1 do FAQ), verifique se os serviços estão 
+ativos pelo DiscoveryServer (Eureka): http://localhost:8761/ 
+
+2. Os serviços estando devidamente ativos no discovery, acesse a url da documentação 
+via GatewayServer: http://localhost:8765/swagger-ui/index.html
+
+3. Você pode alternar a documentação de todas as APIs em "Select a definition" (canto superior direito da tela).
 ```
 

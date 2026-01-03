@@ -34,16 +34,24 @@ Duas estratégias de configuração:
 
 A. Estratégia "Por caminho da URL" com "Por propriedades no application.yml"
 1. Criar os endpoints com versionamento;
-2. Configurar application.yml (estratégia escolhida);
-3. Configurar no Gateway.
+2. Configurar application.yml (estratégia 1 escolhida);
+3. Configurar rotas no application do GatewayServer;
+4. Criar uma classe ApiVersionParser para flexibilizar o uso de versão com "v" ou "V";
 
 B. Estratégia "Por caminho da URL" com "Por WebMvcConfigurer"
 1. Criar os endpoints com versionamento;
-2. Criar classe ApiVersionConfig, que implementa WebMvcConfigurer; 
-3. Configurar no Gateway;
-4. Opcional - Dá para criar uma classe ApiVersionParser para flexibilizar o uso de versão com "v";
+2. Criar classe ApiVersionConfig, que implementa WebMvcConfigurer (estratégia 2 escolhida); 
+3. Configurar rotas no application do GatewayServer;
+4. Criar uma classe ApiVersionParser para flexibilizar o uso de versão com "v" ou "V";
+
+IMPORTANTE: incluir versão "3.0" na configuração para que o versionamento não bloqueie o endpoints de Json 
+do Spring Doc (/api-news/v3/api-docs). Foi a estratégia mais simples para não gerar conflito entre a 
+API Versioning e o Spring Doc. Sem incluir a versão "3.0", com classe ApiVersionParser, não seria possível 
+ter ambos em funcionamento.
 
 ### Implementação: 
+
+A. Estratégia "Por caminho da URL" com "Por propriedades no application.yml"
 
 A.1. Criar os endpoints com versionamento;
 ```
@@ -75,101 +83,54 @@ spring:
     name: api-news
   mvc:
     apiversion:
-      supported: 1.0,2.0
+      supported: 1.0,2.0,3.0
       default: 1.0
       use:
         path-segment: 1
 ```
 
-A.3. Configurar no Gateway.
+A.3. Configurar rotas no application do GatewayServer;
 ```
-@Configuration
-public class GatewayConfig {
+spring:
+  application:
+    name: gatewayserver
 
-    @Bean
-    public RouteLocator gatewayRoutes(RouteLocatorBuilder builder) {
+  cloud:
+    gateway:
+      server:
+        webflux:
+          routes:
+            - id: api-users
+              uri: lb://api-users
+              predicates:
+                - Path=/api/{version}/customers/**
+            - id: api-notifications
+              uri: lb://api-notifications
+              predicates:
+                - Path=/api/{version}/notifications/**
+            - id: api-news
+              uri: lb://api-news
+              predicates:
+                - Path=/api/{version}/news/**
 
-        return builder.routes() 
-                .route("api-news", p -> p
-                        .path("/api/{version}/news/**")
-                        .uri("lb://api-news"))
-                .build();
-    }
-}
-```
+            # ── Rotas exclusivas para documentação SpringDoc ───────────────────────
+            - id: api-users-docs
+              uri: lb://api-users
+              predicates:
+                - Path=/api-users/v3/api-docs
 
-B.1. Criar os endpoints com versionamento;
-```
-@Slf4j
-@RestController
-@RequestMapping(path = {"/api/"})
-@RequiredArgsConstructor
-public class NewsController {
+            - id: api-news-docs
+              uri: lb://api-news
+              predicates:
+                - Path=/api-news/v3/api-docs
 
-    private final NewsCreateInputPort newsCreateInputPort;
-
-    private final NewsQueryPort newsQueryPort;
-
-    private final NewsPresenterPort newsPresenterPort;
-
-    @PostMapping(value = "/{version}/news", version = "1.0")
-    public ResponseEntity<NewsCreateResponse> create(@RequestBody NewsCreateRequest request) {
-
-        var response = Optional.of(request)
-                .map(newsPresenterPort::toNewsDto)
-                .map(newsCreateInputPort::create)
-                .map(newsPresenterPort::toNewsCreateResponse)
-                .orElseThrow();
-
-        return ResponseEntity
-                .created(URI.create("/api/1.0/news/" + response.id()))
-                .body(response);
-    }
-
-    @GetMapping(value = "/{version}/news", version = "1.0")
-    public List<NewsResponse> findByTitleLike(@RequestParam(name = "title") String title) {
-
-        return newsQueryPort.findByTitleLike(title)
-                .stream()
-                .map(newsPresenterPort::toNewsResponse)
-                .toList();
-    }
-}
+            - id: api-notifications-docs
+              uri: lb://api-notifications
+              predicates:
+                - Path=/api-notifications/v3/api-docs
 ```
 
-B.2. Criar classe ApiVersionConfig, que implementa WebMvcConfigurer;
-```
-@Configuration
-public class ApiVersionConfig implements WebMvcConfigurer {
-
-    @Override
-    public void configureApiVersioning(ApiVersionConfigurer configurer) {
-        configurer.usePathSegment(1) 
-                .useMediaTypeParameter(MediaType.APPLICATION_JSON, "version")
-                .addSupportedVersions("1.0", "2.0") 
-                .setDefaultVersion("1.0"); 
-    }
-}
-```
-
-B.3. Configurar no Gateway.
-```
-@Configuration
-public class GatewayConfig {
-
-    @Bean
-    public RouteLocator gatewayRoutes(RouteLocatorBuilder builder) {
-
-        return builder.routes() 
-                .route("api-news", p -> p
-                        .path("/api/{version}/news/**")
-                        .uri("lb://api-news"))
-                .build();
-    }
-}
-```
-
-B.4. Opcional - Dá para criar uma classe ApiVersionParser para flexibilizar o uso de versão com "v";
+A.4. Criar uma classe ApiVersionParser para flexibilizar o uso de versão com "v" ou "V";
 ```
 public class ApiVersionParser implements org.springframework.web.accept.ApiVersionParser {
 
@@ -190,3 +151,21 @@ public class ApiVersionParser implements org.springframework.web.accept.ApiVersi
     }
 }
 ```
+
+B. Estratégia "Por caminho da URL" com "Por WebMvcConfigurer"
+
+B.2. Criar classe ApiVersionConfig, que implementa WebMvcConfigurer;
+```
+@Configuration
+public class ApiVersionConfig implements WebMvcConfigurer {
+
+    @Override
+    public void configureApiVersioning(ApiVersionConfigurer configurer) {
+        configurer.usePathSegment(1) 
+                .useMediaTypeParameter(MediaType.APPLICATION_JSON, "version")
+                .addSupportedVersions("1.0", "2.0", "3.0") 
+                .setDefaultVersion("1.0"); 
+    }
+}
+```
+
