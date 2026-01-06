@@ -12,6 +12,8 @@ FROM ${IMAGE_BUILD} AS builder
 COPY . .
 
 # Roda testes e depois gera o bootJar do módulo infraestrutura
+RUN /gradlew :dominio:test
+RUN /gradlew :aplicacao:test
 RUN /gradlew :infraestrutura:test
 RUN /gradlew :infraestrutura:bootJar --no-daemon --stacktrace
 

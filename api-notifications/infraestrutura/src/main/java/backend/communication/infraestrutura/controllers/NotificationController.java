@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@Tag(name = "NotificationController", description = "Controlador do recurso Notificação.")
+@Tag(name = "Notification", description = "Controlador do recurso Notificação.")
 @Slf4j
 @RestController
 @RequestMapping(path = {"/api"})
