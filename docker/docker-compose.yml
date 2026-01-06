@@ -145,31 +145,31 @@ services:
     networks:
       - communication
 
-  kafka-ui: # interface gráfica para administração da mensageria
-    image: provectuslabs/kafka-ui:latest
-    container_name: kafka-ui
-    ports:
-      - "8080:8080"
-    deploy:
-      resources:
-        limits:
-          cpus: '0.2'
-          memory: 128M
-    restart: always
-    environment:
-      DYNAMIC_CONFIG_ENABLED: true
-      KAFKA_CLUSTERS_0_NAME: wizard_cluster
-      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka-1:9092,kafka-2:9092,kafka-3:9092 # Configura a UI para se conectar aos brokers Kafka usando os endereços internos da rede Docker.
-      KAFKA_CLUSTERS_0_PROPERTIES_SECURITY_PROTOCOL: PLAINTEXT
-    depends_on:
-      kafka-1:
-        condition: service_started
-      kafka-2:
-        condition: service_started
-      kafka-3:
-        condition: service_started
-    networks:
-      - communication
+#  kafka-ui: # interface gráfica para administração da mensageria
+#    image: provectuslabs/kafka-ui:latest
+#    container_name: kafka-ui
+#    ports:
+#      - "8080:8080"
+#    deploy:
+#      resources:
+#        limits:
+#          cpus: '0.2'
+#          memory: 128M
+#    restart: always
+#    environment:
+#      DYNAMIC_CONFIG_ENABLED: true
+#      KAFKA_CLUSTERS_0_NAME: wizard_cluster
+#      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka-1:9092,kafka-2:9092,kafka-3:9092 # Configura a UI para se conectar aos brokers Kafka usando os endereços internos da rede Docker.
+#      KAFKA_CLUSTERS_0_PROPERTIES_SECURITY_PROTOCOL: PLAINTEXT
+#    depends_on:
+#      kafka-1:
+#        condition: service_started
+#      kafka-2:
+#        condition: service_started
+#      kafka-3:
+#        condition: service_started
+#    networks:
+#      - communication
 
   schema-registry: # gerenciamento de schemas Avro. O Schema Registry armazena schemas no tópico _schemas. Cada schema tem um id numérico (ex: 1, 2) e é associado a um subject (ex: events.customer-created-v1-value).
     image: confluentinc/cp-schema-registry:8.1.0

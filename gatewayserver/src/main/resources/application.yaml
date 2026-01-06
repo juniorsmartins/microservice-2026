@@ -18,10 +18,12 @@ spring:
               uri: lb://api-users
               predicates:
                 - Path=/api/{version}/customers/**
+
             - id: api-notifications
               uri: lb://api-notifications
               predicates:
                 - Path=/api/{version}/notifications/**
+
             - id: api-news
               uri: lb://api-news
               predicates:
@@ -81,8 +83,6 @@ eureka:
   # --------------------------------------------------
 springdoc:
   swagger-ui:
-    enabled: true
-    path: /swagger-ui/index.html
     urls:
       - name: api-users
         url: /api-users/v3/api-docs
@@ -91,3 +91,11 @@ springdoc:
       - name: api-news
         url: /api-news/v3/api-docs
   # --------------------------------------------------
+
+
+logging:
+  level:
+    org.springframework.web.cors: DEBUG
+    org.springframework.cloud.gateway: DEBUG
+
+

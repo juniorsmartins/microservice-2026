@@ -3,8 +3,8 @@ package backend.core.api_news.controllers;
 import backend.core.api_news.dtos.requests.NewsCreateRequest;
 import backend.core.api_news.dtos.responses.NewsCreateResponse;
 import backend.core.api_news.dtos.responses.NewsResponse;
-import backend.core.api_news.ports.input.NewsCreateInputPort;
 import backend.core.api_news.gateways.NewsQueryPort;
+import backend.core.api_news.ports.input.NewsCreateInputPort;
 import backend.core.api_news.presenters.NewsPresenterPort;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -23,7 +23,7 @@ import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
-@Tag(name = "NewsController", description = "Controlador do recurso Notícias.")
+@Tag(name = "News", description = "Controlador do recurso Notícias.")
 @Slf4j
 @NullMarked
 @RestController

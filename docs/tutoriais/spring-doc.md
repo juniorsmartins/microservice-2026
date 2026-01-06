@@ -10,6 +10,9 @@
 - (Udemy) - https://www.udemy.com/course/microservices-do-0-a-gcp-com-spring-boot-kubernetes-e-docker/learn/lecture/51023705#overview 
 - (Algaworks) - https://app.algaworks.com/aulas/4389/conhecendo-o-springdoc 
 - https://stackoverflow.com/questions/75732794/spring-boot-3-and-swagger-ui-java-lang-nosuchmethoderror-io-swagger-v3-oas-ann 
+- https://www.baeldung.com/spring-cors 
+- https://docs.spring.io/spring-cloud-gateway/reference/spring-cloud-gateway-server-webflux/cors-configuration.html 
+- https://www.baeldung.com/spring-webflux-cors 
 
 ### Introdução: 
 
@@ -56,6 +59,7 @@ Acessar Swagger para testar funcionamento:
 - Via Gateway:
   - http://localhost:8765/api-users/v3/api-docs 
   - http://localhost:8765/api-news/v3/api-docs 
+  - http://localhost:8765/api-notifications/v3/api-docs
   - http://localhost:8765/swagger-ui/index.html
 
 

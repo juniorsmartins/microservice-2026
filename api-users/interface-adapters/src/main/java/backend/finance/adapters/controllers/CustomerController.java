@@ -34,7 +34,7 @@ import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 import java.util.UUID;
 
-@Tag(name = "CustomerController", description = "Controlador do recurso Cliente.")
+@Tag(name = "Customer", description = "Controlador do recurso Cliente.")
 @Slf4j
 @NullMarked
 @RestController
