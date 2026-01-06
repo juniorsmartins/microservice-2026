@@ -1,9 +1,11 @@
 package backend.core.api_news.dtos.responses;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.util.UUID;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @Schema(name = "NewsCreateResponse", description = "Objeto para transporte de dados de saída em requisições.")
 public record NewsCreateResponse(
 

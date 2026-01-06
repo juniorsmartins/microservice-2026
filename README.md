@@ -26,9 +26,9 @@
 ## Índice
 
 1. Arquitetura 
-2.  [API-Users](docs/README-api-users.md)
-3.  [API-Notifications](docs/README-api-notifications.md)
-4.  [API-News](docs/README-api-news.md)
+2.  [API-Users - clique aqui](docs/README-api-users.md)
+3.  [API-Notifications - clique aqui](docs/README-api-notifications.md)
+4.  [API-News - clique aqui](docs/README-api-news.md)
 5.  [Config Server](#config-server)
 6.  [Eureka Server](#eureka-server)
 7.  [Gateway](#gateway)
