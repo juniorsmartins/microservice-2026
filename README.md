@@ -1,23 +1,7 @@
 # PROJETO: currículo vivo
 
 - Objetivo: microsserviços com ferramentas de pesquisa, estatística, investigação e publicação de material jornalístico. 
-- Delimitação do problema: 
-- Justificativa para a escolha do tema:
 
-- Descrição geral do sistema:
-- Regras de negócio:
-- Endpoints:
-- Requisitos do sistema (funcionais e não funcionais):
-- Métricas
-
-## Status de andamento (fase 1)
-
-- Fase 1: construção da base do microsserviços: ConfigServer, EurekaServer, GatewayServer e primeiras APIs Rest (api-users e api-news);
-- Fase 2: implementação de Security, IA, CI/CD e Observabilidade;
-- Fase 3: construção das APIs de negócio, com toda a pirâmide de testes;
-- Fase 4: construção do front-end com Angular;
-- Fase 5: Kubernetes e Cloud;
-- Fase 6: 
 
 ## Autoria
 
@@ -106,7 +90,7 @@ Microsserviço responsável por rotear as requisições para os microsserviços.
 
 ## FAQ - Principais dúvidas
 
-1. Quais dependências preciso ter no meu computador para rodar esta aplicação?
+1. Meu computador precisa ter quais dependências para rodar a aplicação?
 ```
 1. Docker;
 2, Docker Compose.
@@ -125,25 +109,29 @@ Microsserviço responsável por rotear as requisições para os microsserviços.
 
 3. Como acessar a documentação viva por Spring Doc?
 ```
-1. Depois de rodar a aplicação (pergunta 1 do FAQ), verifique se os serviços estão 
-ativos no EurekaServer: http://localhost:8761/ 
-
-2. Com os serviços ativos, acesse a url da documentação via GatewayServer: http://localhost:8765/swagger-ui/index.html
-
-3. Você pode alternar a documentação de todas as APIs em "Select a definition" (canto superior direito da tela).
+1. Depois de rodar a aplicação, verifique se os serviços estão ativos no EurekaServer: http://localhost:8761/ 
+2. Há duas estratégias para acessar a dccumentação: 
+    a. Acesse a url de documentação de cada API: 
+        a1. http://localhost:9050/swagger-ui/v3/index.html 
+        a2. http://localhost:9000/swagger-ui/v3/index.html 
+        a3. http://localhost:9060/swagger-ui/v3/index.html
+    b. Acesse a url da documentação via GatewayServer: http://localhost:8765/swagger-ui/index.html
+        - Pelo GatewayServer, a documentação de todas as APIs pdde ser escolhida em "Select a definition" (canto superior direito da tela).
 ```
 
 4. Como testar o microsserviços manualmente? 
 
 Estratégia 1
 ```
-1. Depois de rodar a aplicação (pergunta 1 do FAQ), acesse a documentação via GatewayServer: http://localhost:8765/swagger-ui/index.html
-2. Você pode testar pela própria documentação.
+1. Acesse a documentação de cada API e faça testes por meio dela:
+    a. http://localhost:9050/swagger-ui/v3/index.html 
+    b. http://localhost:9000/swagger-ui/v3/index.html 
+    c. http://localhost:9060/swagger-ui/v3/index.html
 ```
 
 Estratégia 2 (link da coleção do postman - ainda não disponibilizei !!!??? )
 ```
-1. Pode baixar um arquivo de coleções do Postman. Possui requisições prontas para testar;
+1. Pode baixar um arquivo de coleções do Postman. Ele possui requisições prontas para testar;
 2. Importar esse arquivo de coleções no seu Postman;
 3. Testar.
 ```
