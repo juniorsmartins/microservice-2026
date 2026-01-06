@@ -1,4 +1,4 @@
-package backend.communication.aplicacao.dtos.response;
+package backend.communication.infraestrutura.dtos.responses;
 
 import java.time.OffsetDateTime;
 import java.util.UUID;

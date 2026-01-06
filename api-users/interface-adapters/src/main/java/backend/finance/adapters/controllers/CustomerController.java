@@ -1,5 +1,6 @@
 package backend.finance.adapters.controllers;
 
+import backend.finance.adapters.anotations.PageableParameter;
 import backend.finance.adapters.gateways.CustomerPagePort;
 import backend.finance.application.dtos.request.CustomerRequest;
 import backend.finance.application.dtos.response.CustomerAllResponse;
@@ -206,7 +207,9 @@ public class CustomerController {
             delay = 1000, // Primeiro tempo de espera antes de tentar novamente (milliseconds).
             multiplier = 2 // Fator pelo qual o tempo de espera é multiplicado a cada tentativa subsequente. Um multiplicador para o atraso da próxima tentativa de repetição, aplicado ao atraso anterior (a partir de delay()) e também ao jitter() aplicável a cada tentativa.
     )
+    @PageableParameter
     public ResponseEntity<Page<CustomerAllResponse>> pageAll(
+            @Parameter(hidden = true)
             @PageableDefault(sort = "createdDate", direction = Sort.Direction.DESC, page = 0, size = 5) final Pageable paginacao) {
 
         log.info("\n\n 1.0 \n\n");
@@ -224,7 +227,9 @@ public class CustomerController {
             delay = 1000, // Primeiro tempo de espera antes de tentar novamente (milliseconds).
             multiplier = 2 // Fator pelo qual o tempo de espera é multiplicado a cada tentativa subsequente. Um multiplicador para o atraso da próxima tentativa de repetição, aplicado ao atraso anterior (a partir de delay()) e também ao jitter() aplicável a cada tentativa.
     )
+    @PageableParameter
     public ResponseEntity<Page<CustomerAllResponse>> pageAllV2(
+            @Parameter(hidden = true)
             @PageableDefault(sort = "createdDate", direction = Sort.Direction.DESC, page = 0, size = 5) final Pageable paginacao) {
 
         log.info("\n\n 2.0 \n\n");
