@@ -1,8 +1,8 @@
 package backend.communication.infraestrutura.gateways;
 
 import backend.communication.aplicacao.dtos.NotificationDto;
-import backend.communication.aplicacao.dtos.response.NotificationResponse;
 import backend.communication.aplicacao.ports.output.NotificationFindOutputPort;
+import backend.communication.infraestrutura.dtos.responses.NotificationResponse;
 import backend.communication.infraestrutura.presenters.NotificationPresenter;
 import backend.communication.infraestrutura.repositories.NotificationRepository;
 import jakarta.transaction.Transactional;

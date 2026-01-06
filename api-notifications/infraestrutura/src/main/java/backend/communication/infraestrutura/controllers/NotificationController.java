@@ -1,8 +1,10 @@
 package backend.communication.infraestrutura.controllers;
 
-import backend.communication.aplicacao.dtos.response.NotificationResponse;
+import backend.communication.infraestrutura.anotations.PageableParameter;
+import backend.communication.infraestrutura.dtos.responses.NotificationResponse;
 import backend.communication.infraestrutura.gateways.NotificationPagePort;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -52,7 +54,9 @@ public class NotificationController {
             delay = 1000,
             multiplier = 2
     )
+    @PageableParameter
     public ResponseEntity<Page<NotificationResponse>> pageAll(
+            @Parameter(hidden = true)
             @PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC, page = 0, size = 5) Pageable paginacao) {
 
         log.info("\n\n 1.0 \n\n");
@@ -70,7 +74,9 @@ public class NotificationController {
             delay = 1000,
             multiplier = 2
     )
+    @PageableParameter
     public ResponseEntity<Page<NotificationResponse>> pageAllV2(
+            @Parameter(hidden = true)
             @PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC, page = 0, size = 5) Pageable paginacao) {
 
         log.info("\n\n 2.0 \n\n");
