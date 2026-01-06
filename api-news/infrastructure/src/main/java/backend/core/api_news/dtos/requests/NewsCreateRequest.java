@@ -14,7 +14,7 @@ public record NewsCreateRequest(
         @Schema(name = "Linha fina", description = "Frase complementar ao título, posicionada logo abaixo e mais aprofundada.", example = "O Quarterback do Arsenal, Kudiba marcou 60% dos pontos com pases para o WideReceiver, Tommy.")
         String thinLine,
 
-        @Schema(name = "texto", description = "O corpo da matéria onde a história é contada.")
+        @Schema(name = "texto", description = "O corpo da matéria onde a história é contada.", example = "Testo longo dissertando sobre o tema proposto no título.")
         String text,
 
         @Schema(name = "fonte", description = "Pessoa, instituição, documento ou dado que confirma os fatos e é a origem da informação.", example = "IBGE")
