@@ -55,7 +55,7 @@ public class NewsController {
     )
     @PostMapping(value = "/{version}/news", version = "1.0")
     public ResponseEntity<NewsCreateResponse> create(
-            @Parameter(name = "NewsCreateRequest", description = "Estrutura de transporte de entrada de dados.", required = true)
+            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Estrutura de transporte para entrada de dados.", required = true)
             @RequestBody NewsCreateRequest request) {
 
         var response = Optional.of(request)

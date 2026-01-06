@@ -70,7 +70,7 @@ public class CustomerController {
     )
     @PostMapping(value = "/{version}/customers", version = "1.0")
     public ResponseEntity<CustomerResponse> create(
-            @Parameter(name = "CustomerRequest", description = "Estrutura de transporte de entrada de dados.", required = true)
+            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Estrutura de transporte para entrada de dados.", required = true)
             @RequestBody CustomerRequest request) {
 
         var created = customerCreateInputPort.create(request);
@@ -111,7 +111,7 @@ public class CustomerController {
     public ResponseEntity<CustomerResponse> update(
             @Parameter(name = "id", description = "Identificador único do recurso.", example = "034eb74c-69ee-4bd4-a064-5c4cc5e9e748", required = true)
             @PathVariable(name = "id") final UUID id,
-            @Parameter(name = "CustomerRequest", description = "Estrutura de transporte de entrada de dados.", required = true)
+            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Estrutura de transporte para entrada de dados.", required = true)
             @RequestBody CustomerRequest request) {
 
         var updated = customerUpdateInputPort.update(id, request);
