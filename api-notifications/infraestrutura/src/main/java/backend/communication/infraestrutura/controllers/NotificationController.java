@@ -23,6 +23,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
 @Tag(name = "Notification", description = "Controlador do recurso Notificação.")
 @Slf4j
 @RestController
@@ -31,6 +34,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class NotificationController {
 
     private final NotificationPagePort notificationPagePort;
+
+    @GetMapping(value = "/{version}/notifications/hostcheck", version = "1.0")
+    public String checkHost() throws UnknownHostException {
+        return InetAddress.getLocalHost().getHostName() + " - " + InetAddress.getLocalHost().getHostAddress();
+    }
 
     @Operation(summary = "Paginar todos", description = "Recurso para buscar todas as notificações paginadas.",
             responses = {

@@ -38,7 +38,7 @@ Microsserviço
     c. Spring Doc Security.
 2. Criar bean de configuração (openApi);
 3. Adicionar anotações de Swagger nos Controllers, DTOs e etc;
-4. Adicionar bean de Cors no microsserviço para permitir testes manuais via GatewayServer.
+4. Criar anotação @PageableParameter para documentar paginação;
 
 Gateway Server
 
@@ -46,7 +46,6 @@ Gateway Server
 2. Adicionar configurações do SpringDoc no application.yml (rotas e etc);
 3. Ir nos microsserviços para adicionar propriedade no application.yml para mostrar no Gateway;
    a. Adicionei versão v3 para o Spring Doc não ser barrado pelo API Versioning.
-4. Adicionar bean de Cors no Gateway para permitir testes manuais via GatewayServer.
 
 Acessar Swagger para testar funcionamento:
 - Via APIs:
@@ -108,7 +107,7 @@ public class WebConfig implements WebMvcConfigurer {
 
 3. Adicionar anotações de Swagger nos Controllers, DTOs e etc;
 ```
-@Tag(name = "CustomerController", description = "Controlador do recurso Cliente.")
+@Tag(name = "Customer", description = "Controlador do recurso Cliente.")
 @Slf4j
 @NullMarked
 @RestController
@@ -144,7 +143,7 @@ public class CustomerController {
     )
     @PostMapping(value = "/{version}/customers", version = "1.0")
     public ResponseEntity<CustomerResponse> create(
-            @Parameter(name = "CustomerRequest", description = "Estrutura de transporte de entrada de dados.", required = true)
+            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Estrutura de transporte para entrada de dados.", required = true)
             @RequestBody CustomerRequest request) {
 
         var created = customerCreateInputPort.create(request);
@@ -185,7 +184,7 @@ public class CustomerController {
     public ResponseEntity<CustomerResponse> update(
             @Parameter(name = "id", description = "Identificador único do recurso.", example = "034eb74c-69ee-4bd4-a064-5c4cc5e9e748", required = true)
             @PathVariable(name = "id") final UUID id,
-            @Parameter(name = "CustomerRequest", description = "Estrutura de transporte de entrada de dados.", required = true)
+            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Estrutura de transporte para entrada de dados.", required = true)
             @RequestBody CustomerRequest request) {
 
         var updated = customerUpdateInputPort.update(id, request);
@@ -280,7 +279,28 @@ public class CustomerController {
             delay = 1000, // Primeiro tempo de espera antes de tentar novamente (milliseconds).
             multiplier = 2 // Fator pelo qual o tempo de espera é multiplicado a cada tentativa subsequente. Um multiplicador para o atraso da próxima tentativa de repetição, aplicado ao atraso anterior (a partir de delay()) e também ao jitter() aplicável a cada tentativa.
     )
+    @PageableParameter
     public ResponseEntity<Page<CustomerAllResponse>> pageAll(
+            @Parameter(hidden = true)
+            @PageableDefault(sort = "createdDate", direction = Sort.Direction.DESC, page = 0, size = 5) final Pageable paginacao) {
+
+        var responsePage = customerPagePort.pageAll(paginacao);
+
+        return ResponseEntity
+                .ok()
+                .body(responsePage);
+    }
+
+    @GetMapping(value = "/{version}/customers", version = "2.0")
+    @Retryable(
+            maxRetries = 4, // Número máximo de tentativas de repetição em caso de falha.
+            jitter = 10, // Variação aleatória adicionada ao tempo de espera para evitar picos de carga. Fator de "desfocagem" (blur) para evitar a sincronização de rede. Se usar valor 10 (significa geralmente interpretado como +/- 10% de variação)
+            delay = 1000, // Primeiro tempo de espera antes de tentar novamente (milliseconds).
+            multiplier = 2 // Fator pelo qual o tempo de espera é multiplicado a cada tentativa subsequente. Um multiplicador para o atraso da próxima tentativa de repetição, aplicado ao atraso anterior (a partir de delay()) e também ao jitter() aplicável a cada tentativa.
+    )
+    @PageableParameter
+    public ResponseEntity<Page<CustomerAllResponse>> pageAllV2(
+            @Parameter(hidden = true)
             @PageableDefault(sort = "createdDate", direction = Sort.Direction.DESC, page = 0, size = 5) final Pageable paginacao) {
 
         var responsePage = customerPagePort.pageAll(paginacao);
@@ -292,42 +312,22 @@ public class CustomerController {
 }
 ```
 
-4. Adicionar bean de Cors para permitir testes manuais via GatewayServer;
+4. Criar anotação @PageableParameter para documentar paginação;
 ````
-@Configuration
-@Import(RegisterBeanRegistrar.class) 
-public class WebConfig implements WebMvcConfigurer {
-
-    @Bean
-    public OpenAPI openApi() {
-        return new OpenAPI()
-                .components(new Components())
-                .info(new io.swagger.v3.oas.models.info.Info()
-                        .title("Microsserviço API-Users")
-                        .version("1.0")
-                        .description("Microsserviço de gerenciamento de clientes.")
-                        .contact(new io.swagger.v3.oas.models.info.Contact()
-                                .name("Junior Martins")
-                                .url("https://www.linkedin.com/in/juniorsmartins/")
-                        )
-                        .license(new io.swagger.v3.oas.models.info.License()
-                                .name("Copyright (c) 2025 Junior Martins. All Rights Reserved.")
-                        )
-                )
-                .externalDocs(new io.swagger.v3.oas.models.ExternalDocumentation()
-                        .description("Documentação das APIs do Microsserviços.")
-                        .url("https://github.com/juniorsmartins/microservice-2026/blob/master/README.md")
-                );
-    }
-
-    @Override
-    public void addCorsMappings(CorsRegistry corsRegistry) {
-
-        corsRegistry.addMapping("/**")
-                .allowedOrigins("*") // o ideal é colocar os endpoints específicos que poderão enviar requisições. O asterisco libera tudo.
-                .allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")
-                .maxAge(3600);
-    }
+@Target(value = {ElementType.METHOD, ElementType.ANNOTATION_TYPE})
+@Retention(RetentionPolicy.RUNTIME)
+@Parameter(
+        in = ParameterIn.QUERY, name = "page", description = "Número da página inicial (0..N)",
+        schema = @Schema(type = "integer", defaultValue = "0")
+)
+@Parameter(
+        in = ParameterIn.QUERY, name = "size", description = "Quantidade de elementos por página.",
+        schema = @Schema(type = "integer", defaultValue = "5")
+)
+@Parameter(
+        in = ParameterIn.QUERY, name = "sort", description = "Critério de ordenação de página. Exemplos: createdDate,desc ou createdDate,asc."
+)
+public @interface PageableParameter {
 }
 ````
 
@@ -344,7 +344,7 @@ spring:
   application:
     name: gatewayserver
 
-  cloud:
+    cloud:
     gateway:
       server:
         webflux:
@@ -353,10 +353,12 @@ spring:
               uri: lb://api-users
               predicates:
                 - Path=/api/{version}/customers/**
+
             - id: api-notifications
               uri: lb://api-notifications
               predicates:
                 - Path=/api/{version}/notifications/**
+
             - id: api-news
               uri: lb://api-news
               predicates:
@@ -380,8 +382,6 @@ spring:
 
 springdoc:
   swagger-ui:
-    enabled: true
-    path: /swagger-ui/index.html
     urls:
       - name: api-users
         url: /api-users/v3/api-docs
@@ -401,6 +401,5 @@ springdoc:
     enebled: true
     path: /swagger-ui/v3/index.html
     url: /api-users/v3/api-docs
-  override-server-url: true
 ```
 

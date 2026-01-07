@@ -32,7 +32,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.resilience.annotation.Retryable;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.InetAddress;
 import java.net.URI;
+import java.net.UnknownHostException;
 import java.util.UUID;
 
 @Tag(name = "Customer", description = "Controlador do recurso Cliente.")
@@ -52,6 +54,11 @@ public class CustomerController {
     private final CustomerQueryInputPort customerQueryInputPort;
 
     private final CustomerPagePort customerPagePort;
+
+    @GetMapping(value = "/{version}/customers/hostcheck", version = "1.0")
+    public String checkHost() throws UnknownHostException {
+        return InetAddress.getLocalHost().getHostName() + " - " + InetAddress.getLocalHost().getHostAddress();
+    }
 
     @Operation(summary = "Cadastrar", description = "Recurso para criar novos clientes.",
             responses = {
