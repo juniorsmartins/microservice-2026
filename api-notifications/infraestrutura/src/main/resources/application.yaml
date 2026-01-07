@@ -5,28 +5,16 @@ spring:
   application:
     name: api-notifications
 
-  config:
-    import: optional:configserver:${SPRING_CLOUD_CONFIG_SERVER_URI:http://localhost:8888}
-  cloud:
-    config:
-      profile: ${SPRING_PROFILES_ACTIVE:prod}
-      fail-fast: true
-      refresh:
-        enable: true
-      retry:
-        initial-interval: 3000
-        max-interval: 9000
-        max-attempts: 3
 
+  # --------------------------------------------------
+  # Config de Datasource e Pool de Conexões (MariaDb)
+  # --------------------------------------------------
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
     url: jdbc:mariadb://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:db-notifications}?createDatabaseIfNotExist=true&serverTimezone=UTC
     username: ${MARIADB_USER:mariadb}
     password: ${MARIADB_PASSWORD:mariadb}
 
-    # --------------------------------------------------
-    # Config de Pool de Conexões
-    # --------------------------------------------------
     hikari:
       autoCommit: false
       pool-name: ${spring.application.name}-hikariPool
@@ -50,8 +38,12 @@ spring:
         cacheServerConfiguration: true
         elideSetAutoCommits: true
         maintainTimeStats: false
-    # --------------------------------------------------
+  # --------------------------------------------------
 
+
+  # --------------------------------------------------
+  # Config de JPA
+  # --------------------------------------------------
   jpa:
     hibernate:
       ddl-auto: none
@@ -67,7 +59,12 @@ spring:
           use_query_cache: false
     open-in-view: false
     show-sql: true
+  # --------------------------------------------------
 
+
+  # --------------------------------------------------
+  # Config de Flyway
+  # --------------------------------------------------
   flyway:
     # --- Controle de Execução (Obrigatório) ---
     enabled: true # Liga o Flyway no Spring Boot
@@ -90,7 +87,12 @@ spring:
     table: flyway_schema_history # padrão já é esse, mas deixar explícito.
     schemas: db-notifications # Defina explicitamente o schema/banco. Importante quando há múltiplos databases.
     encoding: UTF-8 # Encoding dos arquivos SQL
+  # --------------------------------------------------
 
+
+  # --------------------------------------------------
+  # Config de Kafka
+  # --------------------------------------------------
   kafka:
     bootstrap-servers: kafka-1:9092,kafka-2:9092,kafka-3:9092
     schema.registry.url: http://schema-registry:8081
@@ -124,7 +126,12 @@ spring:
       events:
         customer-created: events.customer-created-v1
       min.insync.replicas: 2
+  # --------------------------------------------------
 
+
+  # --------------------------------------------------
+  # Config Spring Email
+  # --------------------------------------------------
   mail:
     host: smtp.gmail.com
     port: 587
@@ -136,6 +143,25 @@ spring:
           auth: true
           starttls:
             enable: true
+  # --------------------------------------------------
+
+
+  # --------------------------------------------------
+  # Config de Config Server Client
+  # --------------------------------------------------
+  config:
+    import: optional:configserver:${SPRING_CLOUD_CONFIG_SERVER_URI:http://localhost:8888}
+  cloud:
+    config:
+      profile: ${SPRING_PROFILES_ACTIVE:prod}
+      fail-fast: true
+      refresh:
+        enable: true
+      retry:
+        initial-interval: 3000
+        max-interval: 9000
+        max-attempts: 3
+  # --------------------------------------------------
 
 
   # --------------------------------------------------

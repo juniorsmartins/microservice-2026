@@ -332,6 +332,8 @@ services:
       DB_HOST: database-users
       DB_NAME: db-users
       DB_PORT: 5432
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
       JAVA_TOOL_OPTIONS: "--enable-native-access=ALL-UNNAMED" # Elimina alguns warnnings
     restart: on-failure
     networks:
@@ -396,6 +398,8 @@ services:
       DB_HOST: database-notifications
       DB_PORT: 3306
       DB_NAME: db-notifications
+      MARIADB_USER: mariadb
+      MARIADB_PASSWORD: mariadb
       JAVA_TOOL_OPTIONS: "--enable-native-access=ALL-UNNAMED"
     restart: on-failure
     networks:
@@ -458,6 +462,8 @@ services:
       DB_HOST: database-news
       DB_PORT: 3306
       DB_NAME: db-news
+      MYSQL_USER: mysql123
+      MYSQL_PASSWORD: mysql123
       JAVA_TOOL_OPTIONS: "--enable-native-access=ALL-UNNAMED" # Elimina alguns warnnings
     restart: on-failure
     networks:
