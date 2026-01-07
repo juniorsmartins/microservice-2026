@@ -237,7 +237,9 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
-    restart: on-failure
+      start_period: 40s
+      start_interval: 5s
+    restart: unless-stopped
     networks:
       - communication
 
@@ -273,7 +275,7 @@ services:
       retries: 5
       start_period: 40s
       start_interval: 5s
-    restart: on-failure
+    restart: unless-stopped
     networks:
       - communication
     depends_on:
@@ -304,14 +306,16 @@ services:
     environment:
       TZ: utc
       SERVER_PORT: 8765
-      SPRING_CLOUD_EUREKA_SERVER_URI: http://eurekaserver:8761/eureka/
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8761/eureka/
       JAVA_TOOL_OPTIONS: "--enable-native-access=ALL-UNNAMED" # Elimina alguns warnnings
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:8765/actuator/health" ]
       interval: 10s
       timeout: 5s
       retries: 5
-    restart: on-failure
+      start_period: 40s
+      start_interval: 5s
+    restart: unless-stopped
     networks:
       - communication
     depends_on:
@@ -342,7 +346,7 @@ services:
       TZ: utc
       SERVER_PORT: 9050
       SPRING_CLOUD_CONFIG_SERVER_URI: http://configserver:8888
-      SPRING_CLOUD_EUREKA_SERVER_URI: http://eurekaserver:8761/eureka/
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8761/eureka/
       SPRING_PROFILES_ACTIVE: dev
       SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka-1:9092,kafka-2:9092,kafka-3:9092
       SPRING_KAFKA_PROPERTIES_SCHEMA_REGISTRY_URL: http://schema-registry:8081
@@ -352,7 +356,7 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       JAVA_TOOL_OPTIONS: "--enable-native-access=ALL-UNNAMED" # Elimina alguns warnnings
-    restart: on-failure
+    restart: unless-stopped
     networks:
       - communication
     depends_on:
@@ -376,7 +380,7 @@ services:
         limits:
           cpus: '0.5'
           memory: 256M
-    restart: always
+    restart: unless-stopped
     environment:
       TZ: utc
       POSTGRES_DB: db-users
@@ -410,7 +414,7 @@ services:
       TZ: utc
       SERVER_PORT: 9060
       SPRING_CLOUD_CONFIG_SERVER_URI: http://configserver:8888
-      SPRING_CLOUD_EUREKA_SERVER_URI: http://eurekaserver:8761/eureka/
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8761/eureka/
       SPRING_PROFILES_ACTIVE: dev
       SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka-1:9092,kafka-2:9092,kafka-3:9092
       SPRING_KAFKA_PROPERTIES_SCHEMA_REGISTRY_URL: http://schema-registry:8081
@@ -420,7 +424,7 @@ services:
       MARIADB_USER: mariadb
       MARIADB_PASSWORD: mariadb
       JAVA_TOOL_OPTIONS: "--enable-native-access=ALL-UNNAMED"
-    restart: on-failure
+    restart: unless-stopped
     networks:
       - communication
     depends_on:
@@ -444,7 +448,7 @@ services:
         limits:
           cpus: '0.5'
           memory: 256M
-    restart: always
+    restart: unless-stopped
     environment:
       TZ: utc
       MARIADB_ROOT_PASSWORD: root123
@@ -478,7 +482,7 @@ services:
       TZ: utc
       SERVER_PORT: 9000
       SPRING_CLOUD_CONFIG_SERVER_URI: http://configserver:8888
-      SPRING_CLOUD_EUREKA_SERVER_URI: http://eurekaserver:8761/eureka/
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8761/eureka/
       SPRING_PROFILES_ACTIVE: dev
       DB_HOST: database-news
       DB_PORT: 3306
@@ -486,7 +490,7 @@ services:
       MYSQL_USER: mysql123
       MYSQL_PASSWORD: mysql123
       JAVA_TOOL_OPTIONS: "--enable-native-access=ALL-UNNAMED" # Elimina alguns warnnings
-    restart: on-failure
+    restart: unless-stopped
     networks:
       - communication
     depends_on:
@@ -508,7 +512,7 @@ services:
         limits:
           cpus: '0.5'
           memory: 256M
-    restart: always
+    restart: unless-stopped
     environment:
       TZ: utc
       MYSQL_ROOT_PASSWORD: root123
