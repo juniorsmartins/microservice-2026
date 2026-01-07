@@ -1,3 +1,5 @@
+name: microservice-2026
+
 volumes:
   db-users:
     name: db-users
@@ -223,7 +225,11 @@ services:
         limits:
           cpus: '1.0'
           memory: 512M
+        reservations:
+          cpus: '0.25'
+          memory: 128M
     environment:
+      TZ: utc
       SERVER_PORT: 8888
       JAVA_TOOL_OPTIONS: "--enable-native-access=ALL-UNNAMED" # Elimina alguns warnnings
     healthcheck:
@@ -251,9 +257,13 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '1.0'
+          cpus: '1.00'
           memory: 512M
+        reservations:
+          cpus: '0.25'
+          memory: 128M
     environment:
+      TZ: utc
       SERVER_PORT: 8761
       JAVA_TOOL_OPTIONS: "--enable-native-access=ALL-UNNAMED" # Elimina alguns warnnings
     healthcheck:
@@ -261,6 +271,8 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+      start_period: 40s
+      start_interval: 5s
     restart: on-failure
     networks:
       - communication
@@ -286,7 +298,11 @@ services:
         limits:
           cpus: '1.0'
           memory: 512M
+        reservations:
+          cpus: '0.25'
+          memory: 128M
     environment:
+      TZ: utc
       SERVER_PORT: 8765
       SPRING_CLOUD_EUREKA_SERVER_URI: http://eurekaserver:8761/eureka/
       JAVA_TOOL_OPTIONS: "--enable-native-access=ALL-UNNAMED" # Elimina alguns warnnings
@@ -323,6 +339,7 @@ services:
           cpus: '0.5'
           memory: 512M
     environment:
+      TZ: utc
       SERVER_PORT: 9050
       SPRING_CLOUD_CONFIG_SERVER_URI: http://configserver:8888
       SPRING_CLOUD_EUREKA_SERVER_URI: http://eurekaserver:8761/eureka/
@@ -361,6 +378,7 @@ services:
           memory: 256M
     restart: always
     environment:
+      TZ: utc
       POSTGRES_DB: db-users
 #      POSTGRES_MULTIPLE_DATABASES: db_user, db_outro1, db_outro2
       POSTGRES_USER: postgres
@@ -389,6 +407,7 @@ services:
           cpus: '0.5'
           memory: 256M
     environment:
+      TZ: utc
       SERVER_PORT: 9060
       SPRING_CLOUD_CONFIG_SERVER_URI: http://configserver:8888
       SPRING_CLOUD_EUREKA_SERVER_URI: http://eurekaserver:8761/eureka/
@@ -427,6 +446,7 @@ services:
           memory: 256M
     restart: always
     environment:
+      TZ: utc
       MARIADB_ROOT_PASSWORD: root123
       MARIADB_DATABASE: db-notifications
       MARIADB_USER: mariadb
@@ -455,6 +475,7 @@ services:
           cpus: '0.5'
           memory: 512M
     environment:
+      TZ: utc
       SERVER_PORT: 9000
       SPRING_CLOUD_CONFIG_SERVER_URI: http://configserver:8888
       SPRING_CLOUD_EUREKA_SERVER_URI: http://eurekaserver:8761/eureka/
@@ -489,6 +510,7 @@ services:
           memory: 256M
     restart: always
     environment:
+      TZ: utc
       MYSQL_ROOT_PASSWORD: root123
       MYSQL_DATABASE: db-news
       MYSQL_USER: mysql123

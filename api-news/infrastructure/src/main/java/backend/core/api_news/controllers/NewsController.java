@@ -19,7 +19,9 @@ import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.InetAddress;
 import java.net.URI;
+import java.net.UnknownHostException;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,6 +38,11 @@ public class NewsController {
     private final NewsQueryPort newsQueryPort;
 
     private final NewsPresenterPort newsPresenterPort;
+
+    @GetMapping(value = "/{version}/news/hostcheck", version = "1.0")
+    public String checkHost() throws UnknownHostException {
+        return InetAddress.getLocalHost().getHostName() + " - " + InetAddress.getLocalHost().getHostAddress();
+    }
 
     @Operation(summary = "Cadastrar", description = "Recurso para criar novas notícias.",
             responses = {
