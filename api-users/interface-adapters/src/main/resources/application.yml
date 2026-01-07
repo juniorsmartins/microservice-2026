@@ -12,8 +12,8 @@ spring:
   datasource: # Configura o datasource do banco de dados.
     driver-class-name: org.postgresql.Driver # Especifica o driver JDBC (neste caso, para Postgres).
     url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:db-users}?serverTimezone=UTC # Define a URL de conexao ao banco.
-    username: ${DB_USERNAME:postgres}
-    password: ${DB_PASSWORD:postgres}
+    username: ${POSTGRES_USER:postgres}
+    password: ${POSTGRES_PASSWORD:postgres}
 
     hikari:
       # Se true, cada operação SQL é automaticamente commitada ao fim da execução se não houver transação explícita. true é adequado em cenários simples. Em aplicações com transações claras via Spring, normalmente fica false, pois o controle é feito pelo gerenciador transacional.
@@ -204,7 +204,7 @@ eureka:
     register-with-eureka: true # True = Diz: "Registre-se no servidor eureka". False = "Não se registre no servidor eureka".
     fetch-registry: false # True = Diz: "Busque a lista de serviços registrados no servidor eureka". False = "Não busque a lista de serviços registrados no servidor eureka".
     service-url:
-      defaultZone: ${SPRING_CLOUD_EUREKA_SERVER_URI:http://localhost:8761/eureka/} # Endereço do Eureka Server
+      defaultZone: ${EUREKA_CLIENT_SERVICEURL_DEFAULTZONE:http://localhost:8761/eureka/} # Endereço do Eureka Server
     healthcheck: # Habilita healthcheck. O servidor Eureka periodicamente checa se o cliente está saudável. Se não estiver, o servidor marca como DOWN. Útil para load balancers.
       enabled: true
   # --------------------------------------------------
