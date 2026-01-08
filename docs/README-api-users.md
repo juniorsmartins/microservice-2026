@@ -1,6 +1,6 @@
-# API-Users
+# TÍTULO: API-Users
 
-Microsserviços responsável por gerenciar os dados dos usuários do sistema.
+Descrição: Microsserviços responsável por gerenciar os dados dos usuários do sistema.
 
 ## Tecnologias 
 
@@ -22,7 +22,7 @@ Microsserviços responsável por gerenciar os dados dos usuários do sistema.
 - RestAssured, JUnit e Mockito (testes);
 - PostgreSQL (versão 17 - banco de dados relacional);
 - H2 Database (banco de dados em memória para testes);
-- Docker (dockerfile e docker compose);
+- Docker e Docker Compose;
 - Lombok.
 
 ## Diagramas
@@ -32,4 +32,7 @@ Arquitetura Limpa multi-modulo
 
 Diagrama Entidade Relacionamento - DER
 ![Diagrama Entidade Relacionamento](diagramas/api-users/DER-api-users.png)
+
+## Endpoints
+
 
