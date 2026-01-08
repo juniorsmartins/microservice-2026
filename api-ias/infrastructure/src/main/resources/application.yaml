@@ -1,3 +1,9 @@
+server:
+  port: ${SERVER_PORT:9010}
+
 spring:
   application:
     name: api-ias
+
+
+

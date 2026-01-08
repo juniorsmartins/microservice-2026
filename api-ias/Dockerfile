@@ -43,10 +43,10 @@ LABEL aplication=${APP_NAME} \
 RUN apk add --no-cache curl
 
 # Copia APENAS o JAR gerado do módulo interface-adapters
-COPY --from=builder infrastructure/build/libs/api-news.jar app.jar
+COPY --from=builder infrastructure/build/libs/api-ias.jar app.jar
 # Copiava o JAR quando ele estava no build da raiz.
 # COPY --from=builder /build/libs/*.jar app.jar
 
 # Comandos
-ENTRYPOINT ["java", "--enable-preview","-jar","app.jar"]
+ENTRYPOINT ["java","-jar","app.jar"]
 

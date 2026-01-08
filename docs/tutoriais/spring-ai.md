@@ -3,9 +3,13 @@
 ## 1. Teoria
 
 ### Fontes:
+- https://spring.io/blog/2025/12/11/spring-ai-2-0-0-M1-available-now 
+- 
+-
 - https://docs.spring.io/spring-ai/reference/getting-started.html 
 - https://github.com/spring-projects/spring-ai
 - https://spring.io/blog/2024/11/19/why-spring-ai
+
 - 
 - 
 - https://github.com/spring-ai-community/awesome-spring-ai 
@@ -35,6 +39,12 @@ Pré-requisitos do Spring AI 2.0.0-M1:
 
 
 ### Passo-a-passo
+
+1. Adicionar dependência
+2. 
+
+
+
 
 
 ### Implementação: 
