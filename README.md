@@ -30,7 +30,7 @@ Arquitetura Orientada a Eventos
 
 ## Config Server
 
-Microsserviço responsável por centralizar as configurações dos microsserviços.
+Descrição: Microsserviço responsável por centralizar as configurações dos microsserviços.
 
 ### Tecnologias ConfigServer
 
@@ -44,7 +44,7 @@ Microsserviço responsável por centralizar as configurações dos microsserviç
 
 ## Eureka Server
 
-Microsserviço responsável pelo registro e descoberta dos microsserviços.
+Descrição: Microsserviço responsável pelo registro e descoberta dos microsserviços.
 
 ### Tecnologias EurekaServer
 
@@ -58,7 +58,7 @@ Microsserviço responsável pelo registro e descoberta dos microsserviços.
 
 ## Gateway
 
-Microsserviço responsável por rotear as requisições para os microsserviços.
+Descrição: Microsserviço responsável por rotear as requisições para os microsserviços.
 
 ### Tecnologias Gateway
 
@@ -84,7 +84,7 @@ Microsserviço responsável por rotear as requisições para os microsserviços.
 - [Resiliência](docs/tutoriais/resiliencia.md);
 - [Auditoria](docs/tutoriais/auditoria.md);
 - [Padrões e Utilidades](docs/tutoriais/padroes-utils.md);
-- [Spring Data AOT](docs/tutoriais/NOT-spring-data-aot.md)
+- [Spring Doc](docs/tutoriais/spring-doc.md);
 - [API Versioning](docs/tutoriais/api-versioning.md);
 
 

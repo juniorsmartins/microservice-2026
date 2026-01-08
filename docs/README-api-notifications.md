@@ -1,7 +1,6 @@
-# API-Notifications
+# TÍTULO: API-Notifications
 
-Microsserviço responsável por notificar o cliente sobre seu comportamento. Essa
-notificação é realizada por meio do email (correio eletrônico).
+Descrição: Microsserviço responsável por enviar notificações ao cliente. Por enquanto, essa notificação será por email.
 
 ## Tecnologias
 
@@ -20,9 +19,12 @@ notificação é realizada por meio do email (correio eletrônico).
 - RestAssured, JUnit e Mockito (testes);
 - MariaDB (versão 12.1.2 - banco de dados relacional);
 - H2 Database (banco de dados em memória para testes);
-- Docker (dockerfile e docker compose);
+- Docker e Docker Compose;
 - Lombok.
 
 ## Diagramas
+
+
+## Endpoints
 
 

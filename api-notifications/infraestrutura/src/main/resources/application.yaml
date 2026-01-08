@@ -147,7 +147,7 @@ spring:
 
 
   # --------------------------------------------------
-  # Config de Config Server Client
+  # Config de Config Client
   # --------------------------------------------------
   config:
     import: optional:configserver:${SPRING_CLOUD_CONFIG_SERVER_URI:http://localhost:8888}
@@ -165,7 +165,7 @@ spring:
 
 
   # --------------------------------------------------
-  # Config de actuator
+  # Config de Actuator
   # --------------------------------------------------
 management:
   endpoints:
@@ -182,7 +182,7 @@ management:
 
 
   # --------------------------------------------------
-  # Config de Eureka Server Client
+  # Config de Eureka Client
   # --------------------------------------------------
 eureka:
   client:

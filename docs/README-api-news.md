@@ -1,6 +1,6 @@
-# API-News
+# TÍTULO: API-News
 
-Microsserviço responsável pelo gerenciamento das notícias.
+Descrição: Microsserviço responsável pelo gerenciamento das notícias.
 
 ## Tecnologias
 
@@ -16,8 +16,12 @@ Microsserviço responsável pelo gerenciamento das notícias.
 - Null-safety (JSpecify);
 - Bean Registration (Spring Framework 7);
 - MySQL (versão 8.4.7 - banco de dados relacional);
-- Docker (dockerfile e docker compose);
+- Docker e Docker Compose;
 - Lombok.
 
 ## Diagramas
+
+
+## Endpoints
+
 
