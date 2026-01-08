@@ -6,14 +6,17 @@ Descrição: Microsserviço responsável por enviar notificações ao cliente. P
 
 - Java (versão 25);
 - Gradle (versão 9.2.1);
-- Spring Boot (versão 4.0.0);
+- Spring Boot (versão 4.0.1);
 - Spring Data WebMVC;
 - Spring Boot Actuator (monitoramento);
 - Spring Cloud Config Client (versão 2025.1.0);
 - Spring Cloud Netflix Eureka Client (versão 2025.1.0);
 - Spring Doc OpenApi (versão 3.0.0);
 - Spring Data JPA;
-- Spring Mail;
+- API Versioning;
+- Null-safety (JSpecify);
+- Bean Registration (Spring Framework 7);
+- Java Mail Sender;
 - Flyway (migration em SQL);
 - Apache Kafka, Schema Registry e Apache Avro (mensageria);
 - RestAssured, JUnit e Mockito (testes);

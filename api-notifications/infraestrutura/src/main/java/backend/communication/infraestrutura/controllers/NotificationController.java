@@ -12,6 +12,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.jspecify.annotations.NullMarked;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -28,6 +29,7 @@ import java.net.UnknownHostException;
 
 @Tag(name = "Notification", description = "Controlador do recurso Notificação.")
 @Slf4j
+@NullMarked
 @RestController
 @RequestMapping(path = {"/api"})
 @RequiredArgsConstructor
