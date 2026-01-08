@@ -26,7 +26,7 @@ FROM ${IMAGE_RUN} AS runner
 # Metadados
 # Variáveis de tempo de construção (com valor default - opcional)
 ARG APP_NAME="microsserviços"
-ARG APP_VERSION="v0.0.1"
+ARG APP_VERSION="v0.0.2"
 ARG APP_DESCRIPTION="Microsserviços em Java (25Lts) e Spring Boot (4.0.0)."
 ARG DEVELOPER="juniormartins"
 ARG MAINTAINER="juniormartins"

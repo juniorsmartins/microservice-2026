@@ -1,13 +1,30 @@
-TUTORIAL
+# TUTORIAL
 
-Fontes:
+## 1. Teoria
+
+### Fontes:
 - https://docs.gradle.org/current/userguide/multi_project_builds.html
 - https://docs.gradle.org/current/userguide/how_to_convert_single_build_to_multi_build.html
 
+### Introdução:
+
 A API-USERS será o exemplo prático desse tutorial.
 
+## 2. Configuração
 
-PASSO-A-PASSO 
+### Passo-a-passo
+
+1. Criar módulos na IDEA (new -> module);
+2. Declara os módulos no settings.gradle, que está na raíz, com include();
+3. Optei por apagar o gradle.build da raiz. Cada módulo terá um build.gradle (são três);
+4. Coloca classe main e application.yml (também o de teste) no módulo mais externo, que possui dependências de 
+Spring; Apagar os demais.
+5. Adiciona detalhes sobre build (compilação) no gradle.build do módulo mais externo;
+6. Alterações no Dockerfile. Mudanças no RUN e no COPY --from=builder, que usa o nome definido no build.gradle 
+api-users.jar);
+7. Comandos gradle para ver se deu certo.
+
+### Implementação:
 
 1. Criar módulos na IDEA (new -> module);
 

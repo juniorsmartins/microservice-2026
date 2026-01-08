@@ -524,3 +524,35 @@ services:
     networks:
       - communication
 
+  api-ias:
+    image: juniorsmartins/api-ias:v0.0.2
+    container_name: api-ias
+    hostname: api-ias
+    build:
+      context: ../api-ias
+      dockerfile: Dockerfile
+      args:
+        APP_NAME: "api-ias"
+        APP_VERSION: "v0.0.2"
+        APP_DESCRIPTION: "Microsserviço responsável por fornecer inteligência artificial."
+    ports:
+      - "9010:9010"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+    environment:
+      TZ: utc
+      SERVER_PORT: 9010
+#      JAVA_TOOL_OPTIONS: "--enable-native-access=ALL-UNNAMED" # Elimina alguns warnnings
+    restart: unless-stopped
+    networks:
+      - communication
+    depends_on:
+      configserver:
+        condition: service_healthy
+      eurekaserver:
+        condition: service_healthy
+
+
