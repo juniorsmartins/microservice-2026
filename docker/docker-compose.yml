@@ -208,7 +208,7 @@ services:
       - communication
 
   configserver:
-    image: juniorsmartins/configserver:v0.0.1
+    image: juniorsmartins/configserver:v0.0.2
     container_name: configserver
     hostname: configserver
     build:
@@ -216,7 +216,7 @@ services:
       dockerfile: Dockerfile
       args:
         APP_NAME: "configserver"
-        APP_VERSION: "v0.0.1"
+        APP_VERSION: "v0.0.2"
         APP_DESCRIPTION: "Servidor de Configuração Centralizada."
     ports:
       - "8888:8888"
@@ -237,14 +237,12 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
-      start_period: 40s
-      start_interval: 5s
     restart: unless-stopped
     networks:
       - communication
 
   eurekaserver:
-    image: juniorsmartins/eurekaserver:v0.0.1
+    image: juniorsmartins/eurekaserver:v0.0.2
     container_name: eurekaserver
     hostname: eurekaserver
     build:
@@ -252,7 +250,7 @@ services:
       dockerfile: Dockerfile
       args:
         APP_NAME: "eurekaserver"
-        APP_VERSION: "v0.0.1"
+        APP_VERSION: "v0.0.2"
         APP_DESCRIPTION: "Servidor de Registro e Descoberta de serviços."
     ports:
       - "8761:8761"
@@ -285,7 +283,7 @@ services:
         condition: service_healthy
 
   gatewayserver:
-    image: juniorsmartins/gatewayserver:v0.0.1
+    image: juniorsmartins/gatewayserver:v0.0.2
     container_name: gatewayserver
     hostname: gatewayserver
     build:
@@ -293,7 +291,7 @@ services:
       dockerfile: Dockerfile
       args:
         APP_NAME: "gatewayserver"
-        APP_VERSION: "v0.0.1"
+        APP_VERSION: "v0.0.2"
         APP_DESCRIPTION: "Servidor Gateway para roteamento de requisições."
     ports:
       - "8765:8765"
@@ -308,9 +306,7 @@ services:
     environment:
       TZ: utc
       SERVER_PORT: 8765
-      SPRING_CLOUD_CONFIG_SERVER_URI: http://configserver:8888
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8761/eureka/
-      SPRING_PROFILES_ACTIVE: dev
       JAVA_TOOL_OPTIONS: "--enable-native-access=ALL-UNNAMED" # Elimina alguns warnnings
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:8765/actuator/health" ]
@@ -329,7 +325,7 @@ services:
         condition: service_healthy
 
   api-users:
-    image: juniorsmartins/api-users:v0.0.1
+    image: juniorsmartins/api-users:v0.0.2
     container_name: api-users
     hostname: api-users
     build:
@@ -337,7 +333,7 @@ services:
       dockerfile: Dockerfile
       args:
         APP_NAME: "api-users"
-        APP_VERSION: "v0.0.1"
+        APP_VERSION: "v0.0.2"
         APP_DESCRIPTION: "API de Usuários para segurança de sistema financeiro."
     ports:
       - "9050:9050"
@@ -397,7 +393,7 @@ services:
       - communication
 
   api-notifications:
-    image: juniorsmartins/api-notifications:v0.0.1
+    image: juniorsmartins/api-notifications:v0.0.2
     container_name: api-notifications
     hostname: api-notifications
     build:
@@ -405,7 +401,7 @@ services:
       dockerfile: Dockerfile
       args:
         APP_NAME: "api-notifications"
-        APP_VERSION: "v0.0.1"
+        APP_VERSION: "v0.0.2"
         APP_DESCRIPTION: "API para notificações de cliente via email."
     ports:
       - "9060:9060"
@@ -465,7 +461,7 @@ services:
       - communication
 
   api-news:
-    image: juniorsmartins/api-news:v0.0.1
+    image: juniorsmartins/api-news:v0.0.2
     container_name: api-news
     hostname: api-news
     build:
@@ -473,7 +469,7 @@ services:
       dockerfile: Dockerfile
       args:
         APP_NAME: "api-news"
-        APP_VERSION: "v0.0.1"
+        APP_VERSION: "v0.0.2"
         APP_DESCRIPTION: "Microsserviço para registro de notícias."
     ports:
       - "9000:9000"
