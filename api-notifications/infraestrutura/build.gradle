@@ -8,7 +8,7 @@ plugins {
 
 group = 'backend.communication'
 version = '0.0.1-SNAPSHOT'
-description = 'Microsserviço responsável por notificar cliente sobre seu comportamento.'
+description = 'Microsserviço responsável por enviar notificações ao cliente.'
 
 java {
     toolchain {

@@ -7,6 +7,9 @@ spring:
   profiles:
     active: git # Ativa o perfil 'git' para usar repositório Git como fonte de configuração
 
+  # --------------------------------------------------
+  # Config de Config Server
+  # --------------------------------------------------
   cloud:
     config:
       server:
@@ -23,6 +26,6 @@ spring:
             - 'news*'
             - 'eurekaserver*'
             - 'gatewayserver*'
-
+  # --------------------------------------------------
 
 

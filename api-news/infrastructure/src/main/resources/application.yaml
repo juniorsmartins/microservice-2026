@@ -89,7 +89,7 @@ spring:
 
 
   # --------------------------------------------------
-  # Config de Config Server Client
+  # Config de Config Client
   # --------------------------------------------------
   config:
     import: optional:configserver:${SPRING_CLOUD_CONFIG_SERVER_URI:http://localhost:8888} # Importa configurações do Config Server. Remover o optional:prefixo fará com que o Cliente de Configuração falhe se não conseguir se conectar ao Servidor de Configuração.
