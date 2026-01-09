@@ -6,4 +6,67 @@ spring:
     name: api-ias
 
 
+  # --------------------------------------------------
+  # Config de Config Client
+  # --------------------------------------------------
+  config:
+    import: optional:configserver:${SPRING_CLOUD_CONFIG_SERVER_URI:http://localhost:8888} # Importa configurações do Config Server. Remover o optional:prefixo fará com que o Cliente de Configuração falhe se não conseguir se conectar ao Servidor de Configuração.
+  cloud:
+    config:
+      profile: ${SPRING_PROFILES_ACTIVE:prod} # Define o perfil ativo (padrão 'dev' se não especificado)
+      fail-fast: true # Se true, falha rápido se o Config Server não estiver disponível
+      refresh:
+        enable: true # Habilita refresh dinâmico das configurações via /actuator/refresh
+      retry: # Este bloco de configuração define os parâmetros de retentativa, ou seja, como o cliente deve tentar novamente se a comunicação com o servidor de configuração falhar.
+        initial-interval: 3000 # Especifica o intervalo inicial entre as tentativas de retentativa. Neste exemplo, está definido como 3000 milissegundos (ou 3 segundos). Isso significa que o cliente esperará 3 segundos antes de tentar a primeira retentativa após uma falha na comunicação.
+        max-interval: 9000 # Define o intervalo máximo entre as tentativas de retentativa. Aqui, está definido como 9000 milissegundos (ou 9 segundos). Isso significa que o intervalo entre as tentativas aumentará progressivamente até atingir esse valor, se a retentativa for necessária várias vezes.
+        max-attempts: 1 # Especifica o número máximo de tentativas de retentativa que o cliente fará antes de desistir. Neste caso, está definido como 3. Isso significa que o cliente tentará novamente a comunicação com o servidor de configuração no máximo três vezes antes de desistir.
+  # --------------------------------------------------
+
+
+  # --------------------------------------------------
+  # Config de Actuator
+  # --------------------------------------------------
+management:
+  endpoints:
+    web:
+      base-path: /actuator # Define o path base dos endpoints do actuator (padrão /actuator)
+      exposure:
+        include: refresh,health,info,metrics,configprops # Expõe endpoints para monitoramento
+  endpoint:
+    health:
+      show-details: always # Mostra detalhes completos de saúde
+    configprops:
+      show-values: always # Mostra valores das propriedades de configuração
+  # --------------------------------------------------
+
+
+  # --------------------------------------------------
+  # Config de Eureka Client
+  # --------------------------------------------------
+eureka:
+  client:
+    register-with-eureka: true # True = Diz: "Registre-se no servidor eureka". False = "Não se registre no servidor eureka".
+    fetch-registry: false # True = Diz: "Busque a lista de serviços registrados no servidor eureka". False = "Não busque a lista de serviços registrados no servidor eureka".
+    service-url:
+      defaultZone: ${EUREKA_CLIENT_SERVICEURL_DEFAULTZONE:http://localhost:8761/eureka/} # Endereço do Eureka Server
+    healthcheck: # Habilita healthcheck. O servidor Eureka periodicamente checa se o cliente está saudável. Se não estiver, o servidor marca como DOWN. Útil para load balancers.
+      enabled: true
+  # --------------------------------------------------
+
+
+  # --------------------------------------------------
+  # Config de SpringDoc/OpenAPI
+  # --------------------------------------------------
+springdoc:
+  api-docs:
+    enabled: true
+    path: /api-ias/v3/api-docs
+  swagger-ui:
+    enebled: true
+    path: /swagger-ui/v3/index.html
+    url: /api-ias/v3/api-docs
+  # --------------------------------------------------
+
+
 

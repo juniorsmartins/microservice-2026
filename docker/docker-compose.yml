@@ -544,7 +544,10 @@ services:
           memory: 512M
     environment:
       TZ: utc
-      SERVER_PORT: 9010
+      SERVER_PORT: 0
+      SPRING_CLOUD_CONFIG_SERVER_URI: http://configserver:8888
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8761/eureka/
+      SPRING_PROFILES_ACTIVE: dev
 #      JAVA_TOOL_OPTIONS: "--enable-native-access=ALL-UNNAMED" # Elimina alguns warnnings
     restart: unless-stopped
     networks:
