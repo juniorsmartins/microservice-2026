@@ -31,7 +31,6 @@ usando anotações do swagger-api.
 ### Passo-a-passo
 
 Microsserviço
-
 1. Adicionar dependências no build.gradle;
     a. Spring Doc (duas dependências - a segunda para evitar conflitos com Confluent);
     b. Spring Doc Hateoas (se estiver usando Spring Hateoas);
@@ -41,7 +40,6 @@ Microsserviço
 4. Criar anotação @PageableParameter para documentar paginação;
 
 Gateway Server
-
 1. Adicionar dependência de SpringDoc no gradle.build do GatewayServer;
 2. Adicionar configurações do SpringDoc no application.yml (rotas e etc);
 3. Ir nos microsserviços para adicionar propriedade no application.yml para mostrar no Gateway;
@@ -55,10 +53,13 @@ Acessar Swagger para testar funcionamento:
   - http://localhost:9000/swagger-ui/v3/index.html
   - http://localhost:9060/api-notifications/v3/api-docs
   - http://localhost:9060/swagger-ui/v3/index.html
+  - http://localhost:9010/api-ias/v3/api-docs
+  - http://localhost:9010/swagger-ui/v3/index.html
 - Via Gateway:
   - http://localhost:8765/api-users/v3/api-docs 
   - http://localhost:8765/api-news/v3/api-docs 
   - http://localhost:8765/api-notifications/v3/api-docs
+  - http://localhost:8765/api-ias/v3/api-docs
   - http://localhost:8765/swagger-ui/index.html
 
 

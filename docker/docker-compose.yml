@@ -423,7 +423,6 @@ services:
       DB_NAME: db-notifications
       MARIADB_USER: mariadb
       MARIADB_PASSWORD: mariadb
-      JAVA_TOOL_OPTIONS: "--enable-native-access=ALL-UNNAMED"
     restart: unless-stopped
     networks:
       - communication
@@ -489,7 +488,6 @@ services:
       DB_NAME: db-news
       MYSQL_USER: mysql123
       MYSQL_PASSWORD: mysql123
-      JAVA_TOOL_OPTIONS: "--enable-native-access=ALL-UNNAMED" # Elimina alguns warnnings
     restart: unless-stopped
     networks:
       - communication
@@ -545,7 +543,9 @@ services:
     environment:
       TZ: utc
       SERVER_PORT: 9010
-#      JAVA_TOOL_OPTIONS: "--enable-native-access=ALL-UNNAMED" # Elimina alguns warnnings
+      SPRING_CLOUD_CONFIG_SERVER_URI: http://configserver:8888
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8761/eureka/
+      SPRING_PROFILES_ACTIVE: dev
     restart: unless-stopped
     networks:
       - communication

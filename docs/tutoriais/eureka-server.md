@@ -99,9 +99,11 @@ eureka:
     register-with-eureka: true 
     fetch-registry: false 
     service-url:
-      defaultZone: ${SPRING_CLOUD_EUREKA_SERVER_URI:http://localhost:8761/eureka/} 
-    healthcheck:
+      defaultZone: ${EUREKA_CLIENT_SERVICEURL_DEFAULTZONE:http://localhost:8761/eureka/} 
+    healthcheck: 
       enabled: true
+  instance:
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
 ```
 Teste
 ```
