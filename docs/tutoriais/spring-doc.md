@@ -53,10 +53,13 @@ Acessar Swagger para testar funcionamento:
   - http://localhost:9000/swagger-ui/v3/index.html
   - http://localhost:9060/api-notifications/v3/api-docs
   - http://localhost:9060/swagger-ui/v3/index.html
+  - http://localhost:9010/api-ias/v3/api-docs
+  - http://localhost:9010/swagger-ui/v3/index.html
 - Via Gateway:
   - http://localhost:8765/api-users/v3/api-docs 
   - http://localhost:8765/api-news/v3/api-docs 
   - http://localhost:8765/api-notifications/v3/api-docs
+  - http://localhost:8765/api-ias/v3/api-docs
   - http://localhost:8765/swagger-ui/index.html
 
 

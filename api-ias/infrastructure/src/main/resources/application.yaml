@@ -52,6 +52,8 @@ eureka:
       defaultZone: ${EUREKA_CLIENT_SERVICEURL_DEFAULTZONE:http://localhost:8761/eureka/} # Endereço do Eureka Server
     healthcheck: # Habilita healthcheck. O servidor Eureka periodicamente checa se o cliente está saudável. Se não estiver, o servidor marca como DOWN. Útil para load balancers.
       enabled: true
+  instance:
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
   # --------------------------------------------------
 
 
