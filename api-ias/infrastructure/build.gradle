@@ -42,6 +42,8 @@ dependencies {
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:3.0.0'
     implementation 'io.swagger.core.v3:swagger-annotations-jakarta:2.2.41'
 
+    implementation 'org.springframework.cloud:spring-cloud-starter-bus-amqp'
+
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
 

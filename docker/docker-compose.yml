@@ -217,7 +217,7 @@ services:
       args:
         APP_NAME: "configserver"
         APP_VERSION: "v0.0.2"
-        APP_DESCRIPTION: "Servidor de Configuração Centralizada."
+        APP_DESCRIPTION: "Microsserviço responsável por centralizar as configurações dos microsserviços."
     ports:
       - "8888:8888"
     deploy:
@@ -232,14 +232,24 @@ services:
       TZ: utc
       SERVER_PORT: 8888
       JAVA_TOOL_OPTIONS: "--enable-native-access=ALL-UNNAMED" # Elimina alguns warnnings
+      SPRING_RABBITMQ_HOST: "rabbit"
+      RABBIT_HOST: rabbit
+      RABBIT_PORT: 5672
+      RABBIT_USER: guest
+      RABBIT_PASS: guest
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:8888/actuator/health" ]
       interval: 10s
       timeout: 5s
-      retries: 5
+      retries: 20
+      start_period: 180s  # 3 minutos — dá tempo para Git clone + Kafka + Bus
+      start_interval: 5s
     restart: unless-stopped
     networks:
       - communication
+    depends_on:
+      rabbit:
+        condition: service_healthy
 
   eurekaserver:
     image: juniorsmartins/eurekaserver:v0.0.2
@@ -268,6 +278,11 @@ services:
       SPRING_CLOUD_CONFIG_SERVER_URI: http://configserver:8888
       SPRING_PROFILES_ACTIVE: dev
       JAVA_TOOL_OPTIONS: "--enable-native-access=ALL-UNNAMED" # Elimina alguns warnnings
+      SPRING_RABBITMQ_HOST: "rabbit"
+      RABBIT_HOST: rabbit
+      RABBIT_PORT: 5672
+      RABBIT_USER: guest
+      RABBIT_PASS: guest
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:8761/actuator/health" ]
       interval: 10s
@@ -356,6 +371,11 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       JAVA_TOOL_OPTIONS: "--enable-native-access=ALL-UNNAMED" # Elimina alguns warnnings
+      SPRING_RABBITMQ_HOST: "rabbit"
+      RABBIT_HOST: rabbit
+      RABBIT_PORT: 5672
+      RABBIT_USER: guest
+      RABBIT_PASS: guest
     restart: unless-stopped
     networks:
       - communication
@@ -423,6 +443,11 @@ services:
       DB_NAME: db-notifications
       MARIADB_USER: mariadb
       MARIADB_PASSWORD: mariadb
+      SPRING_RABBITMQ_HOST: "rabbit"
+      RABBIT_HOST: rabbit
+      RABBIT_PORT: 5672
+      RABBIT_USER: guest
+      RABBIT_PASS: guest
     restart: unless-stopped
     networks:
       - communication
@@ -488,12 +513,19 @@ services:
       DB_NAME: db-news
       MYSQL_USER: mysql123
       MYSQL_PASSWORD: mysql123
+      SPRING_RABBITMQ_HOST: "rabbit"
+      RABBIT_HOST: rabbit
+      RABBIT_PORT: 5672
+      RABBIT_USER: guest
+      RABBIT_PASS: guest
     restart: unless-stopped
     networks:
       - communication
     depends_on:
       database-news:
         condition: service_started
+      schema-registry:
+        condition: service_healthy
       configserver:
         condition: service_healthy
       eurekaserver:
@@ -546,13 +578,39 @@ services:
       SPRING_CLOUD_CONFIG_SERVER_URI: http://configserver:8888
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8761/eureka/
       SPRING_PROFILES_ACTIVE: dev
+      SPRING_RABBITMQ_HOST: "rabbit"
+      RABBIT_HOST: rabbit
+      RABBIT_PORT: 5672
+      RABBIT_USER: guest
+      RABBIT_PASS: guest
     restart: unless-stopped
     networks:
       - communication
     depends_on:
+      schema-registry:
+        condition: service_healthy
       configserver:
         condition: service_healthy
       eurekaserver:
         condition: service_healthy
 
-
+  rabbit:
+    image: rabbitmq:3.12-management
+    container_name: rabbit
+    hostname: rabbit
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    healthcheck:
+      test: rabbitmq-diagnostics check_port_connectivity
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 5s
+    environment:
+      TZ: utc
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    restart: unless-stopped
+    networks:
+      - communication

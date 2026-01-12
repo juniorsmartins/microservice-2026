@@ -17,7 +17,7 @@
 - https://www.youtube.com/watch?v=yNnLICy2zk4 
 - https://www.youtube.com/watch?v=AiGCx0raQfs 
 - https://www.youtube.com/watch?v=20KlqncKmw8 
-
+- https://docs.spring.io/spring-cloud-config/reference/server.html 
 
 ### Introdução: 
 
@@ -75,6 +75,13 @@ Servidor
   - a. Apontar repositório Git para buscar arquivos de configuração;
   - b. Configurar endpoints do Actuator no application.yml padrão;
 
+IMPORTANTE: prestar atenção nos nomes dos diretórios e dos arquivos de configuração no repositório Git do ConfigServer. 
+Criei os diretórios com o nome da api, por exemplo, diretório api-users, e os arquivos como apenas dev.yml e prod.yml, 
+sem o prefixo do nome da aplicação. Então funcionou assim: api-users/dev.yml. Antes disso, tive problema quando tentei 
+criar assim: api-users/api-users-dev.yml. Acho que deu problema pelo diretório repetir o prefixo do nome do arquivo.
+
+Testar
+1. http://localhost:9000/api//v1/customers/prod
 
 ### Implementação: 
 
@@ -238,8 +245,13 @@ spring:
           clone-on-start: true 
           force-pull: true 
           search-paths: 
-            - 'api-users*'
-            - 'api-notifications*'
+            - ''
+            - 'api-ias'
+            - 'api-news'
+            - 'api-notifications'
+            - 'api-users'
+            - 'eurekaserver'
+            - 'configserver'
 ```
 
 
