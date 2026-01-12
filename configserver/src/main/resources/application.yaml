@@ -9,8 +9,8 @@ spring:
   # --------------------------------------------------
   # Config de Config Server
   # --------------------------------------------------
-#  profiles:
-#    active: git # Ativa o perfil 'git' para usar repositório Git como fonte de configuração
+  profiles:
+    active: git # Ativa o perfil 'git' para usar repositório Git como fonte de configuração
   cloud:
     config:
       server:
@@ -20,12 +20,14 @@ spring:
           deleteUntrackedBranches: true # Remove branches não rastreados
           clone-on-start: true # Faz o ConfigServer clonar o repositório Git logo na inicialização da aplicação.
           force-pull: true # Sempre força um "git pull --force" ao atualizar o repositório. Garante que o clone local fique exatamente igual ao remoto.
+#          search-paths: '{application}'
           search-paths: # Define subpastas dentro do repositório Git onde o ConfigServer vai procurar os arquivos de configuração. Permite organizar o repositório em pastas por microsserviço, mantendo tudo limpo.
+            - 'eurekaserver'
             - 'api-ias'
             - 'api-news'
             - 'api-notifications'
             - 'api-users'
-            - 'eurekaserver'
+
 
     bus:
       trace:
@@ -69,7 +71,8 @@ management:
 #logging:
 #  level:
 #    org.springframework.cloud.config.server: DEBUG
-#    org.eclipse.jgit: DEBUG  # Para ver Git clone/pull
+#    org.springframework.cloud.config.server.environment: TRACE
+#    org.eclipse.jgit: DEBUG
   # --------------------------------------------------
 
 
