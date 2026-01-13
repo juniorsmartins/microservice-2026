@@ -123,6 +123,7 @@ spring:
     import: optional:configserver:${SPRING_CLOUD_CONFIG_SERVER_URI:http://localhost:8888}
   cloud:
     config:
+      name: ${spring.application.name}
       profile: ${SPRING_PROFILES_ACTIVE:prod}
       fail-fast: true
       timeout: 30

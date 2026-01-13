@@ -13,23 +13,17 @@ spring:
     active: git # Ativa o perfil 'git' para usar repositório Git como fonte de configuração
   cloud:
     config:
+      name: ${spring.application.name}
       server:
         git: # Configurações do repositório Git
           uri: https://github.com/juniorsmartins/microservice-2026-config-server
           default-label: master # Branch padrão do repositório Git
-          deleteUntrackedBranches: true # Remove branches não rastreados
+          timeout: 5 # Tempo limite para operações Git em segundos
           clone-on-start: true # Faz o ConfigServer clonar o repositório Git logo na inicialização da aplicação.
           force-pull: true # Sempre força um "git pull --force" ao atualizar o repositório. Garante que o clone local fique exatamente igual ao remoto.
-#          search-paths: '{application}'
-          search-paths: # Define subpastas dentro do repositório Git onde o ConfigServer vai procurar os arquivos de configuração. Permite organizar o repositório em pastas por microsserviço, mantendo tudo limpo.
-            - 'eurekaserver'
-            - 'api-ias'
-            - 'api-news'
-            - 'api-notifications'
-            - 'api-users'
-
 
     bus:
+      enabled: true
       trace:
         enabled: true
       env:
@@ -62,6 +56,9 @@ management:
       show-details: always # Mostra detalhes completos de saúde
     configprops:
       show-values: always # Mostra valores das propriedades de configuração
+#  health:
+#    rabbit:
+#      enabled: true
   # --------------------------------------------------
 
 
