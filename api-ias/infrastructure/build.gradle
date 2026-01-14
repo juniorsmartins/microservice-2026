@@ -31,19 +31,25 @@ ext {
 dependencies {
     implementation project(':application')
 
+    // Principais dependências
     implementation 'org.springframework.boot:spring-boot-starter-webmvc'
     testImplementation 'org.springframework.boot:spring-boot-starter-webmvc-test'
 
+    // Comunicação Interprocessos
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     testImplementation 'org.springframework.boot:spring-boot-starter-actuator-test'
     implementation 'org.springframework.cloud:spring-cloud-starter-config'
     implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+    implementation 'org.springframework.cloud:spring-cloud-starter-bus-amqp'
 
+    // Documentação
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:3.0.0'
     implementation 'io.swagger.core.v3:swagger-annotations-jakarta:2.2.41'
 
-    implementation 'org.springframework.cloud:spring-cloud-starter-bus-amqp'
+    // Inteligência Artificial
 
+
+    // Ferramentas de desenvolvimento
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
 

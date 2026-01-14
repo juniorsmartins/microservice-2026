@@ -1,6 +1,6 @@
 # TÍTULO: API-News
 
-Descrição: Microsserviço responsável pelo gerenciamento das notícias.
+Descrição: Microsserviço responsável por fornecer inteligência artificial.
 
 ## Tecnologias
 
@@ -13,12 +13,9 @@ Descrição: Microsserviço responsável pelo gerenciamento das notícias.
 - Spring Cloud Netflix Eureka Client (versão 2025.1.0);
 - Spring Cloud Bus AMQP (versão 2025.1.0);
 - Spring Doc OpenApi (versão 3.0.0);
-- Spring Data JPA;
-- Bean Validation;
 - API Versioning;
 - Null-safety (JSpecify);
 - Bean Registration (Spring Framework 7);
-- MySQL (versão 8.4.7 - banco de dados relacional);
 - Docker e Docker Compose;
 - Lombok.
 
@@ -26,5 +23,10 @@ Descrição: Microsserviço responsável pelo gerenciamento das notícias.
 
 
 ## Endpoints
+
+
+
+
+
 
 
