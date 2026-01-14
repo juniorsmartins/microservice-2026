@@ -5,40 +5,8 @@ spring:
   application:
     name: eurekaserver
 
-
-  # --------------------------------------------------
-  # Config de Config Client
-  # --------------------------------------------------
-  config:
-    import: optional:configserver:${SPRING_CLOUD_CONFIG_SERVER_URI:http://localhost:8888}
-  cloud:
-    config:
-      profile: ${SPRING_PROFILES_ACTIVE:prod}
-      fail-fast: true
-      refresh:
-        enable: true
-      retry:
-        initial-interval: 3000
-        max-interval: 9000
-        max-attempts: 1
-  # --------------------------------------------------
-
-
-  # --------------------------------------------------
-  # Config de actuator
-  # --------------------------------------------------
-management:
-  endpoints:
-    web:
-      base-path: /actuator # Define o path base dos endpoints do actuator (padrão /actuator)
-      exposure:
-        include: refresh,health,info,metrics,configprops # Expõe endpoints para monitoramento
-  endpoint:
-    health:
-      show-details: always # Mostra detalhes completos de saúde
-    configprops:
-      show-values: always # Mostra valores das propriedades de configuração
-  # --------------------------------------------------
+  profiles:
+    active: default
 
 
   # --------------------------------------------------
@@ -52,6 +20,24 @@ eureka:
 
 
   # --------------------------------------------------
+  # Config de actuator
+  # --------------------------------------------------
+management:
+  endpoints:
+    web:
+      base-path: /actuator # Define o path base dos endpoints do actuator (padrão /actuator)
+      exposure:
+#        include: refresh,health,info,metrics,configprops,busenv,busrefresh,busshutdown # Expõe endpoints para monitoramento
+        include: "*"
+  endpoint:
+    health:
+      show-details: always # Mostra detalhes completos de saúde
+    configprops:
+      show-values: always # Mostra valores das propriedades de configuração
+  # --------------------------------------------------
+
+
+  # --------------------------------------------------
   # Config de logging
   # --------------------------------------------------
 logging:
@@ -59,3 +45,5 @@ logging:
     com.netflix.eureka: OFF
     com.netflix.discovery: OFF
   # --------------------------------------------------
+
+

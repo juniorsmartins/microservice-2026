@@ -4,29 +4,78 @@ server:
 spring:
   application:
     name: configserver
+
   profiles:
     active: git # Ativa o perfil 'git' para usar repositório Git como fonte de configuração
 
   # --------------------------------------------------
   # Config de Config Server
   # --------------------------------------------------
+  config:
+    name: ${spring.application.name}
   cloud:
     config:
+      enabled: false # Desabilita o cliente de configuração para o próprio Config Server.
       server:
         git: # Configurações do repositório Git
-          uri: https://github.com/juniorsmartins/microservice-2026-config-server
+          uri: https://github.com/juniorsmartins/microservice-2026-config-server.git
+          skipSslValidation: true # Ignora validação SSL (útil para repositórios com certificados autoassinados)
           default-label: master # Branch padrão do repositório Git
-          deleteUntrackedBranches: true # Remove branches não rastreados
-          timeout: 5 # Tempo limite para conexões Git em segundos
-          clone-on-start: true # Clona o repositório ao iniciar o servidor
-          force-pull: true # Força a atualização do repositório a cada solicitação
-          search-paths: # Caminhos de busca para arquivos de configuração
-            - 'users*'
-            - 'notifications*'
-            - 'news*'
-            - 'ias'
-            - 'eurekaserver*'
-            - 'gatewayserver*'
+          deleteUntrackedBranches: true # Remove branches não rastreados localmente.
+          timeout: 5 # Tempo limite para operações Git em segundos
+          clone-on-start: true # Faz o ConfigServer clonar o repositório Git logo na inicialização da aplicação.
+          force-pull: true # Sempre força um "git pull --force" ao atualizar o repositório. Garante que o clone local fique exatamente igual ao remoto.
+          ignore-application: true
+        bootstrap: false # Desabilita o comportamento bootstrap (padrão é true). Usado para evitar carregamento duplo de configurações.
+
+    bus:
+      enabled: true
+      trace:
+        enabled: true
+      env:
+        enabled: true
+  # --------------------------------------------------
+
+
+  # --------------------------------------------------
+  # Config de RabbitMQ para Spring Cloud Bus
+  # --------------------------------------------------
+  rabbitmq:
+    host: ${RABBIT_HOST:localhost}
+    port: ${RABBIT_PORT:5672}
+    username: ${RABBIT_USER:"guest"}
+    password: ${RABBIT_PASS:"guest"}
+  # --------------------------------------------------
+
+
+  # --------------------------------------------------
+  # Config de actuator
+  # --------------------------------------------------
+management:
+  endpoints:
+    web:
+      base-path: /actuator # Define o path base dos endpoints do actuator (padrão /actuator)
+      exposure:
+        include: refresh,health,info,metrics,configprops,busenv,busrefresh,busshutdown # Expõe endpoints para monitoramento
+  endpoint:
+    health:
+      show-details: always # Mostra detalhes completos de saúde
+    configprops:
+      show-values: always # Mostra valores das propriedades de configuração
+#  health:
+#    rabbit:
+#      enabled: true
+  # --------------------------------------------------
+
+
+  # --------------------------------------------------
+  # Config de logging
+  # --------------------------------------------------
+#logging:
+#  level:
+#    org.springframework.cloud.config.server: DEBUG
+#    org.springframework.cloud.config.server.environment: TRACE
+#    org.eclipse.jgit: DEBUG
   # --------------------------------------------------
 
 

@@ -1,6 +1,7 @@
 package backend.finance.adapters.controllers;
 
 import backend.finance.adapters.anotations.PageableParameter;
+import backend.finance.adapters.dtos.ContactInfoDto;
 import backend.finance.adapters.gateways.CustomerPagePort;
 import backend.finance.application.dtos.request.CustomerRequest;
 import backend.finance.application.dtos.response.CustomerAllResponse;
@@ -55,9 +56,16 @@ public class CustomerController {
 
     private final CustomerPagePort customerPagePort;
 
+    private final ContactInfoDto contactInfoDto;
+
     @GetMapping(value = "/{version}/customers/hostcheck", version = "1.0")
     public String checkHost() throws UnknownHostException {
         return InetAddress.getLocalHost().getHostName() + " - " + InetAddress.getLocalHost().getHostAddress();
+    }
+
+    @GetMapping(value = "/{version}/customers/contact-info", version = "1.0")
+    public String contactInfo() {
+        return contactInfoDto.toString();
     }
 
     @Operation(summary = "Cadastrar", description = "Recurso para criar novos clientes.",

@@ -116,6 +116,7 @@ Descrição: Microsserviço responsável por rotear as requisições para os mic
         a1. http://localhost:9050/swagger-ui/v3/index.html 
         a2. http://localhost:9000/swagger-ui/v3/index.html 
         a3. http://localhost:9060/swagger-ui/v3/index.html
+        a4. http://localhost:9010/swagger-ui/v3/index.html
     b. Acesse a url da documentação via GatewayServer: http://localhost:8765/swagger-ui/index.html
         - Pelo GatewayServer, a documentação de todas as APIs pdde ser escolhida em "Select a definition" (canto superior direito da tela).
 ```
@@ -128,6 +129,7 @@ Estratégia 1
     a. http://localhost:9050/swagger-ui/v3/index.html 
     b. http://localhost:9000/swagger-ui/v3/index.html 
     c. http://localhost:9060/swagger-ui/v3/index.html
+    d. http://localhost:9010/swagger-ui/v3/index.html
 ```
 
 Estratégia 2 (link da coleção do postman - ainda não disponibilizei !!!??? )

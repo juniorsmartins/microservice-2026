@@ -1,5 +1,6 @@
 package backend.core.api_news.controllers;
 
+import backend.core.api_news.dtos.ContactInfoDto;
 import backend.core.api_news.dtos.requests.NewsCreateRequest;
 import backend.core.api_news.dtos.responses.NewsCreateResponse;
 import backend.core.api_news.dtos.responses.NewsResponse;
@@ -39,9 +40,16 @@ public class NewsController {
 
     private final NewsPresenterPort newsPresenterPort;
 
+    private final ContactInfoDto contactInfoDto;
+
     @GetMapping(value = "/{version}/news/hostcheck", version = "1.0")
     public String checkHost() throws UnknownHostException {
         return InetAddress.getLocalHost().getHostName() + " - " + InetAddress.getLocalHost().getHostAddress();
+    }
+
+    @GetMapping(value = "/{version}/news/contact-info", version = "1.0")
+    public String contactInfo() {
+        return contactInfoDto.toString();
     }
 
     @Operation(summary = "Cadastrar", description = "Recurso para criar novas notícias.",
