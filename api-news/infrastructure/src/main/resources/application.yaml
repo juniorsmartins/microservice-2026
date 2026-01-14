@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: apinews
+    name: api-news
 
   profiles:
     active: default
@@ -95,7 +95,7 @@ spring:
   # --------------------------------------------------
   config:
     name: ${spring.application.name}
-    import: configserver:${SPRING_CLOUD_CONFIG_SERVER_URI:http://localhost:8888} # Importa configurações do Config Server. Remover o optional:prefixo fará com que o Cliente de Configuração falhe se não conseguir se conectar ao Servidor de Configuração.
+    import: optional:configserver:${SPRING_CLOUD_CONFIG_SERVER_URI:http://localhost:8888} # Importa configurações do Config Server. Remover o optional:prefixo fará com que o Cliente de Configuração falhe se não conseguir se conectar ao Servidor de Configuração.
   cloud:
     config:
       name: ${spring.application.name}

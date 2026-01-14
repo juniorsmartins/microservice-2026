@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: apinotifications
+    name: api-notifications
 
   profiles:
     active: default
@@ -114,7 +114,7 @@ spring:
   # --------------------------------------------------
   config:
     name: ${spring.application.name}
-    import: configserver:${SPRING_CLOUD_CONFIG_SERVER_URI:http://localhost:8888}
+    import: optional:configserver:${SPRING_CLOUD_CONFIG_SERVER_URI:http://localhost:8888}
   cloud:
     config:
       name: ${spring.application.name}
