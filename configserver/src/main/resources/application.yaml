@@ -5,22 +5,28 @@ spring:
   application:
     name: configserver
 
+  profiles:
+    active: git # Ativa o perfil 'git' para usar repositório Git como fonte de configuração
 
   # --------------------------------------------------
   # Config de Config Server
   # --------------------------------------------------
-  profiles:
-    active: git # Ativa o perfil 'git' para usar repositório Git como fonte de configuração
+  config:
+    name: ${spring.application.name}
   cloud:
     config:
-      name: ${spring.application.name}
+      enabled: false # Desabilita o cliente de configuração para o próprio Config Server.
       server:
         git: # Configurações do repositório Git
-          uri: https://github.com/juniorsmartins/microservice-2026-config-server
+          uri: https://github.com/juniorsmartins/microservice-2026-config-server.git
+          skipSslValidation: true # Ignora validação SSL (útil para repositórios com certificados autoassinados)
           default-label: master # Branch padrão do repositório Git
+          deleteUntrackedBranches: true # Remove branches não rastreados localmente.
           timeout: 5 # Tempo limite para operações Git em segundos
           clone-on-start: true # Faz o ConfigServer clonar o repositório Git logo na inicialização da aplicação.
           force-pull: true # Sempre força um "git pull --force" ao atualizar o repositório. Garante que o clone local fique exatamente igual ao remoto.
+          ignore-application: true
+        bootstrap: false # Desabilita o comportamento bootstrap (padrão é true). Usado para evitar carregamento duplo de configurações.
 
     bus:
       enabled: true

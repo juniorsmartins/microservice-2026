@@ -1,19 +1,12 @@
 server:
   port: ${SERVER_PORT:9060}
 
-notifications:
-  message: "Microsserviços Notifications - Default"
-  contact-detail:
-    name: "Winston Churchil - Developer"
-    email: "ias@email.com"
-  on-call-suport:
-    - (453) 392-4829
-    - (236) 203-0384
-
 spring:
   application:
-    name: api-notifications
+    name: apinotifications
 
+  profiles:
+    active: default
 
   # --------------------------------------------------
   # Config de Datasource e Pool de Conexões (MariaDb)
@@ -120,20 +113,21 @@ spring:
   # Config de Config Client
   # --------------------------------------------------
   config:
-    import: optional:configserver:${SPRING_CLOUD_CONFIG_SERVER_URI:http://localhost:8888}
+    name: ${spring.application.name}
+    import: configserver:${SPRING_CLOUD_CONFIG_SERVER_URI:http://localhost:8888}
   cloud:
     config:
       name: ${spring.application.name}
       profile: ${SPRING_PROFILES_ACTIVE:prod}
       fail-fast: true
-      timeout: 30
+      timeout: 120
       refresh:
         enable: true
       retry:
-        initial-interval: 3000
-        max-interval: 9000
-        max-attempts: 3
-        multiplier: 1.5
+        initial-interval: 2500
+        max-interval: 6000
+        max-attempts: 2
+        multiplier: 1.1
     bus:
       enabled: true
       refresh:
@@ -248,4 +242,17 @@ logging:
     com.zaxxer.hikari: DEBUG
     com.zaxxer.hikari.pool.HikariPool: TRACE
   # --------------------------------------------------
+
+
+build:
+  version: "1.0"
+informacoes:
+  message: "Microsserviços Notifications - Default"
+  contact-detail:
+    name: "Winston Churchil - Developer"
+    email: "ias@email.com"
+  on-call-suport:
+    - (453) 392-4829
+    - (236) 203-0384
+
 

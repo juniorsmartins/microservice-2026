@@ -38,14 +38,22 @@ O Spring Cloud Bus fornece três endpoints via Actuator:
 
 ### Passo-a-passo
 
-EurekaServer:
+ConfigServer:
 1. Adicionar dependências no build.gradle:
    - a. Spring Cloud Bus com Kafka ou com RabbitMQ;
+   - a. Spring Cloud Config Monitor;
    - b. Spring Boot Actuator.
 2. Configurar application.yml:
   - a. Configuração do Bus;
   - b. Configuração do Actuator (busenv, busrefresh e busshutdown).
   - c. Configuração da mensageria.
+3. Configuração de Webhook no GitHub (repositório de configurações):
+  - a. Acesse o repositório de configurações no GitHub;
+  - b. Vá em "Settings" > "Webhooks" > "Add webhook";
+  - c. No campo "Payload URL", insira a URL do endpoint /monitor do Config Server (exemplo: http://localhost:8888/monitor);
+  - d. No campo "Content type", selecione "application/json";
+  - e. Em "Which events would you like to trigger this webhook?", selecione "Just the push event.";
+  - f. Clique em "Add webhook" para salvar.
 
 Cliente:
 1. Adicionar dependências no build.gradle:

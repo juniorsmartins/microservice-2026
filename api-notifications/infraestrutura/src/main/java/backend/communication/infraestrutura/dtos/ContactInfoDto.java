@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 @Component
-@ConfigurationProperties(prefix = "notifications")
+@ConfigurationProperties(prefix = "informacoes")
 @ToString
 @Getter
 @Setter

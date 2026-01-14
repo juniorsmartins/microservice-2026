@@ -1,19 +1,12 @@
 server:
   port: ${SERVER_PORT:9050}
 
-users:
-  message: "Microsserviços Users - Default"
-  contact-detail:
-    name: "Winston Churchil - Developer"
-    email: "ias@email.com"
-  on-call-suport:
-    - (453) 392-4829
-    - (236) 203-0384
-
 spring:
   application:
-    name: api-users
+    name: apiusers
 
+  profiles:
+    active: default
 
   # --------------------------------------------------
   # Config de Datasource e Pool de Conexões (PostgreSQL)
@@ -110,26 +103,27 @@ spring:
   # Config de Config Client
   # --------------------------------------------------
   config:
-    import: optional:configserver:${SPRING_CLOUD_CONFIG_SERVER_URI:http://localhost:8888} # Importa configurações do Config Server. Remover o optional:prefixo fará com que o Cliente de Configuração falhe se não conseguir se conectar ao Servidor de Configuração.
+    name: ${spring.application.name}
+    import: configserver:${SPRING_CLOUD_CONFIG_SERVER_URI:http://localhost:8888} # Importa configurações do Config Server. Remover o optional:prefixo fará com que o Cliente de Configuração falhe se não conseguir se conectar ao Servidor de Configuração.
   cloud:
     config:
       name: ${spring.application.name}
       profile: ${SPRING_PROFILES_ACTIVE:prod} # Define o perfil ativo (padrão 'dev' se não especificado)
       fail-fast: true # Se true, falha rápido se o Config Server não estiver disponível
-      timeout: 30
+      timeout: 120
       refresh:
         enable: true # Habilita refresh dinâmico das configurações via /actuator/refresh
       retry: # Este bloco de configuração define os parâmetros de retentativa, ou seja, como o cliente deve tentar novamente se a comunicação com o servidor de configuração falhar.
-        initial-interval: 3000 # Especifica o intervalo inicial entre as tentativas de retentativa. Neste exemplo, está definido como 3000 milissegundos (ou 3 segundos). Isso significa que o cliente esperará 3 segundos antes de tentar a primeira retentativa após uma falha na comunicação.
-        max-interval: 9000 # Define o intervalo máximo entre as tentativas de retentativa. Aqui, está definido como 9000 milissegundos (ou 9 segundos). Isso significa que o intervalo entre as tentativas aumentará progressivamente até atingir esse valor, se a retentativa for necessária várias vezes.
-        max-attempts: 3 # Especifica o número máximo de tentativas de retentativa que o cliente fará antes de desistir. Neste caso, está definido como 3. Isso significa que o cliente tentará novamente a comunicação com o servidor de configuração no máximo três vezes antes de desistir.
-        multiplier: 1.5
-    bus:
-      enabled: true
-      refresh:
-        enabled: true
-      env:
-        enabled: true
+        initial-interval: 2500 # Especifica o intervalo inicial entre as tentativas de retentativa. Neste exemplo, está definido como 3000 milissegundos (ou 3 segundos). Isso significa que o cliente esperará 3 segundos antes de tentar a primeira retentativa após uma falha na comunicação.
+        max-interval: 6000 # Define o intervalo máximo entre as tentativas de retentativa. Aqui, está definido como 9000 milissegundos (ou 9 segundos). Isso significa que o intervalo entre as tentativas aumentará progressivamente até atingir esse valor, se a retentativa for necessária várias vezes.
+        max-attempts: 2 # Especifica o número máximo de tentativas de retentativa que o cliente fará antes de desistir. Neste caso, está definido como 3. Isso significa que o cliente tentará novamente a comunicação com o servidor de configuração no máximo três vezes antes de desistir.
+        multiplier: 1.1
+    bus: # Configurações do Spring Cloud Bus
+      enabled: true # Habilita o Spring Cloud Bus para comunicação entre serviços. Isso permite que os serviços se comuniquem e compartilhem informações de configuração dinamicamente.
+      refresh: # Configurações específicas para o recurso de refresh do Spring Cloud Bus.
+        enabled: true # Habilita o recurso de refresh dinâmico via Spring Cloud Bus. Isso permite que as mudanças de configuração sejam propagadas automaticamente para os serviços conectados ao bus.
+      env: # Configurações específicas para o ambiente do Spring Cloud Bus.
+        enabled: true # Habilita o recurso de ambiente do Spring Cloud Bus. Isso permite que as mudanças de variáveis de ambiente sejam propagadas automaticamente para os serviços conectados ao bus.
   # --------------------------------------------------
 
 
@@ -263,5 +257,17 @@ logging:
     com.zaxxer.hikari: DEBUG
     com.zaxxer.hikari.pool.HikariPool: TRACE
   # --------------------------------------------------
+
+
+build:
+  version: "1.0"
+informacoes:
+  message: "Microsserviços Users - Default"
+  contact-detail:
+    name: "Winston Churchil - Developer"
+    email: "ias@email.com"
+  on-call-suport:
+    - (453) 392-4829
+    - (236) 203-0384
 
 

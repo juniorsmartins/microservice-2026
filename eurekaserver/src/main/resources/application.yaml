@@ -5,77 +5,8 @@ spring:
   application:
     name: eurekaserver
 
-
-  # --------------------------------------------------
-  # Config de Config Client
-  # --------------------------------------------------
-  config:
-    import: optional:configserver:${SPRING_CLOUD_CONFIG_SERVER_URI:http://localhost:8888}
-  cloud:
-    config:
-      name: ${spring.application.name}
-      profile: ${SPRING_PROFILES_ACTIVE:prod}
-      fail-fast: true
-      timeout: 30
-      refresh:
-        enable: true
-      retry:
-        initial-interval: 2000
-        max-interval: 6000
-        max-attempts: 2
-        multiplier: 1.5
-    bus:
-      enabled: true
-      refresh:
-        enabled: true
-      env:
-        enabled: true
-  # --------------------------------------------------
-
-
-  # --------------------------------------------------
-  # Config de RabbitMQ para Spring Cloud Bus
-  # --------------------------------------------------
-  rabbitmq:
-    host: ${RABBIT_HOST:localhost}
-    port: ${RABBIT_PORT:5672}
-    username: ${RABBIT_USER:"guest"}
-    password: ${RABBIT_PASS:"guest"}
-  # --------------------------------------------------
-
-
-  # --------------------------------------------------
-  # Config de Kafka
-  # --------------------------------------------------
-#  kafka:
-#    bootstrap-servers: kafka-1:9092,kafka-2:9092,kafka-3:9092
-#    consumer:
-#      group-id: ${spring.application.name}-v1
-#      auto-offset-reset: earliest
-#      producer:
-#        key-serializer: org.apache.kafka.common.serialization.StringSerializer
-#        value-serializer: org.apache.kafka.common.serialization.StringSerializer
-#      consumer:
-#        key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-#        value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-  # --------------------------------------------------
-
-
-  # --------------------------------------------------
-  # Config de actuator
-  # --------------------------------------------------
-management:
-  endpoints:
-    web:
-      base-path: /actuator # Define o path base dos endpoints do actuator (padrão /actuator)
-      exposure:
-        include: refresh,health,info,metrics,configprops,busenv,busrefresh,busshutdown # Expõe endpoints para monitoramento
-  endpoint:
-    health:
-      show-details: always # Mostra detalhes completos de saúde
-    configprops:
-      show-values: always # Mostra valores das propriedades de configuração
-  # --------------------------------------------------
+  profiles:
+    active: default
 
 
   # --------------------------------------------------
@@ -89,6 +20,24 @@ eureka:
 
 
   # --------------------------------------------------
+  # Config de actuator
+  # --------------------------------------------------
+management:
+  endpoints:
+    web:
+      base-path: /actuator # Define o path base dos endpoints do actuator (padrão /actuator)
+      exposure:
+#        include: refresh,health,info,metrics,configprops,busenv,busrefresh,busshutdown # Expõe endpoints para monitoramento
+        include: "*"
+  endpoint:
+    health:
+      show-details: always # Mostra detalhes completos de saúde
+    configprops:
+      show-values: always # Mostra valores das propriedades de configuração
+  # --------------------------------------------------
+
+
+  # --------------------------------------------------
   # Config de logging
   # --------------------------------------------------
 logging:
@@ -96,3 +45,5 @@ logging:
     com.netflix.eureka: OFF
     com.netflix.discovery: OFF
   # --------------------------------------------------
+
+

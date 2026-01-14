@@ -12,7 +12,7 @@ import java.util.Map;
 
 @RefreshScope
 @Component
-@ConfigurationProperties(prefix = "ias")
+@ConfigurationProperties(prefix = "informacoes")
 @ToString
 @Getter
 @Setter
