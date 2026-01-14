@@ -6,7 +6,7 @@ plugins {
 
 group = 'backend.communication'
 version = '0.0.1-SNAPSHOT'
-description = 'Servidor de Configuração Centralizada.'
+description = 'Microsserviço responsável por centralizar as configurações dos microsserviços.'
 
 java {
 	toolchain {
@@ -23,9 +23,12 @@ ext {
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 	implementation 'org.springframework.cloud:spring-cloud-config-server'
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 	testImplementation 'org.springframework.boot:spring-boot-starter-actuator-test'
+
+	implementation 'org.springframework.cloud:spring-cloud-starter-bus-amqp'
+
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 

@@ -1,6 +1,7 @@
 package backend.communication.infraestrutura.controllers;
 
 import backend.communication.infraestrutura.anotations.PageableParameter;
+import backend.communication.infraestrutura.dtos.ContactInfoDto;
 import backend.communication.infraestrutura.dtos.responses.NotificationResponse;
 import backend.communication.infraestrutura.gateways.NotificationPagePort;
 import io.swagger.v3.oas.annotations.Operation;
@@ -37,9 +38,16 @@ public class NotificationController {
 
     private final NotificationPagePort notificationPagePort;
 
+    private final ContactInfoDto contactInfoDto;
+
     @GetMapping(value = "/{version}/notifications/hostcheck", version = "1.0")
     public String checkHost() throws UnknownHostException {
         return InetAddress.getLocalHost().getHostName() + " - " + InetAddress.getLocalHost().getHostAddress();
+    }
+
+    @GetMapping(value = "/{version}/notifications/contact-info", version = "1.0")
+    public String contactInfo() {
+        return contactInfoDto.toString();
     }
 
     @Operation(summary = "Paginar todos", description = "Recurso para buscar todas as notificações paginadas.",

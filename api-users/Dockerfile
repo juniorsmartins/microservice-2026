@@ -48,5 +48,5 @@ COPY --from=builder interface-adapters/build/libs/api-users.jar app.jar
 # COPY --from=builder /build/libs/*.jar app.jar
 
 # Comandos
-ENTRYPOINT ["java", "--enable-preview","-jar","app.jar"]
+ENTRYPOINT ["java","-jar","app.jar"]
 

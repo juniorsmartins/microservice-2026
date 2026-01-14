@@ -29,6 +29,11 @@ spring:
               predicates:
                 - Path=/api/{version}/news/**
 
+            - id: api-ias
+              uri: lb://api-ias
+              predicates:
+                - Path=/api/{version}/ias/**
+
             # ── Rotas exclusivas para documentação SpringDoc ───────────────────────
             - id: api-users-docs
               uri: lb://api-users
@@ -44,6 +49,11 @@ spring:
               uri: lb://api-notifications
               predicates:
                 - Path=/api-notifications/v3/api-docs
+
+            - id: api-ias-docs
+              uri: lb://api-ias
+              predicates:
+                - Path=/api-ias/v3/api-docs
   # --------------------------------------------------
 
 
@@ -90,6 +100,8 @@ springdoc:
         url: /api-notifications/v3/api-docs
       - name: api-news
         url: /api-news/v3/api-docs
+      - name: api-ias
+        url: /api-ias/v3/api-docs
   # --------------------------------------------------
 
 
