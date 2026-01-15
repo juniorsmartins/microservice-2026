@@ -31,26 +31,37 @@ ext {
 dependencies {
 	implementation project(':application')
 
+	// Principais dependências
 	implementation 'org.springframework.boot:spring-boot-starter-webmvc'
 	testImplementation 'org.springframework.boot:spring-boot-starter-webmvc-test'
 
+	// JPA e Banco de Dados
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	testImplementation 'org.springframework.boot:spring-boot-starter-data-jpa-test'
 	runtimeOnly 'com.mysql:mysql-connector-j'
 
+	// Validação de Dados
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	testImplementation 'org.springframework.boot:spring-boot-starter-validation-test'
 
+	// Comunicação Interprocessos
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 	testImplementation 'org.springframework.boot:spring-boot-starter-actuator-test'
 	implementation 'org.springframework.cloud:spring-cloud-starter-config'
 	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+	implementation 'org.springframework.cloud:spring-cloud-starter-bus-amqp'
 
+	// Documentação
 	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:3.0.0'
 	implementation 'io.swagger.core.v3:swagger-annotations-jakarta:2.2.41'
 
-	implementation 'org.springframework.cloud:spring-cloud-starter-bus-amqp'
+	// Redis - Armazenamento e Cache.
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+	testImplementation 'org.springframework.boot:spring-boot-starter-data-redis-test'
+	implementation 'org.springframework.boot:spring-boot-starter-cache'
+	testImplementation 'org.springframework.boot:spring-boot-starter-cache-test'
 
+	// Ferramentas de desenvolvimento
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 

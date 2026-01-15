@@ -16,6 +16,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jspecify.annotations.NullMarked;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -85,6 +86,7 @@ public class NewsController {
     }
 
     @GetMapping(value = "/{version}/news", version = "1.0")
+    @Cacheable(value = "newsByTitle", key = "#title", unless = "#result == null || #result.isEmpty()")
     public List<NewsResponse> findByTitleLike(@RequestParam(name = "title") String title) {
 
         log.info("\n\n 1.0 \n\n");

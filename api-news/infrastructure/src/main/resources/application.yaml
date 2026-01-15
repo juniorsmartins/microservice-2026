@@ -130,6 +130,19 @@ spring:
 
 
   # --------------------------------------------------
+  # Config de Redis
+  # --------------------------------------------------
+  data:
+    redis:
+      host: ${REDIS_HOST:redis}
+      port: ${REDIS_PORT:6379}
+
+  cache:
+    type: redis
+  # --------------------------------------------------
+
+
+  # --------------------------------------------------
   # Config de Actuator
   # --------------------------------------------------
 management:
@@ -173,6 +186,18 @@ springdoc:
     enebled: true
     path: /swagger-ui/v3/index.html
     url: /api-news/v3/api-docs
+  # --------------------------------------------------
+
+
+  # --------------------------------------------------
+  # Config de logging
+  # --------------------------------------------------
+logging:
+  level:
+    org.springframework.cloud.config: DEBUG
+    org.springframework.cloud.config.client: TRACE
+    org.springframework.cache: DEBUG
+    org.springframework.data.redis.cache: DEBUG
   # --------------------------------------------------
 
 
