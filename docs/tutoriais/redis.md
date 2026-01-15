@@ -111,7 +111,10 @@ spring:
       host: ${REDIS_HOST:redis}
       port: ${REDIS_PORT:6379}
   cache:
-    type: redis
+    type: redis 
+    redis:
+      time-to-live: 600000 
+      cache-null-values: false 
     
 logging:
   level:
