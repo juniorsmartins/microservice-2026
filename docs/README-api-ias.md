@@ -16,6 +16,7 @@ Descrição: Microsserviço responsável por fornecer inteligência artificial.
 - API Versioning;
 - Null-safety (JSpecify);
 - Bean Registration (Spring Framework 7);
+- Redis (versão 8.4.7 - banco de dados NoSQL em memória);
 - Docker e Docker Compose;
 - Lombok.
 

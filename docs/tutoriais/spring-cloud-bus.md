@@ -59,6 +59,14 @@ spring:
 ```
 Como esses arquivos já possuem o profile no nome do arquivo (ex: api-users-dev.yml), eles não podem ter isso dentro do arquivo.
 
+Comando para verificar se os arquivos de configuração do repositório foram clonados para dentro do container do ConfigServer:
+```
+docker exec -it configserver sh
+find / -name *.yml 2>/dev/null
+cat /tmp/config-repo-3419904327144995445/api-users/dev.yml
+```
+
+
 ### Implementação: 
 
 ConfigServer:
