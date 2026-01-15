@@ -5,6 +5,12 @@
 ### Fontes:
 - https://redis.io/pt/solucoes/casos-de-uso/cache/ 
 - https://redis.io/docs/latest/develop/get-started/ 
+- https://devdocs.io/redis/ 
+- https://www.baeldung.com/spring-data-redis-tutorial 
+- https://www.baeldung.com/spring-boot-redis-cache 
+- https://spring.io/projects/spring-data-redis
+- https://www.baeldung.com/spring-cache-tutorial 
+- https://docs.spring.io/spring-data/redis/reference/redis.html 
 - 
 
 ### Introdução: 
@@ -53,6 +59,20 @@ Estratégias para invalidação de cache:
 
 ### Passo-a-passo
 
+1. Adicionar dependências no build.gradle:
+    a. Spring Data Redis (spring-boot-starter-data-redis);
+    b. Spring Boot Starter Cache (spring-boot-starter-cache);
+    c. Não esquecer das respectivas dependências de teste.
+2. Configurar o application.yml:
+    a. Configuração do Redis (host, port, password, etc);
+    b. Configuração do Cache (estratégia de cache, TTL, etc);
+    c. Configuração de Logging (nível de log para Redis).
+3. Habilitar o cache na aplicação principal com @EnableCaching.
+4. Implementar a lógica de cache nos serviços:
+    a. Usar anotações como @Cacheable, @CachePut e @CacheEvict para gerenciar o cache.
+5. Criar o docker-compose.yml:
+    a. Serviço do Redis (imagem oficial do Redis);
+    b. Serviço do Redis-UI (opcional, para visualização dos dados no Redis
 
 ### Implementação: 
 

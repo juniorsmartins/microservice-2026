@@ -13,6 +13,8 @@ volumes:
     name: kafka2-data
   kafka3-data:
     name: kafka3-data
+  redis-data:
+    name: redis-data
 
 networks:
   communication:
@@ -364,12 +366,12 @@ services:
       DB_PORT: 5432
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-      JAVA_TOOL_OPTIONS: "--enable-native-access=ALL-UNNAMED" # Elimina alguns warnnings
       SPRING_RABBITMQ_HOST: "rabbit"
       RABBIT_HOST: rabbit
       RABBIT_PORT: 5672
       RABBIT_USER: guest
       RABBIT_PASS: guest
+      JAVA_TOOL_OPTIONS: "--enable-native-access=ALL-UNNAMED" # Elimina alguns warnnings
     restart: unless-stopped
     networks:
       - communication
@@ -577,6 +579,10 @@ services:
       RABBIT_PORT: 5672
       RABBIT_USER: guest
       RABBIT_PASS: guest
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      OPENAI_API_KEY: your-api-key-here
+      JAVA_TOOL_OPTIONS: "--enable-native-access=ALL-UNNAMED" # Elimina alguns warnnings
     restart: unless-stopped
     networks:
       - communication
@@ -586,6 +592,8 @@ services:
       configserver:
         condition: service_healthy
       eurekaserver:
+        condition: service_healthy
+      redis:
         condition: service_healthy
 
   rabbit:
@@ -608,3 +616,51 @@ services:
     restart: unless-stopped
     networks:
       - communication
+
+  redis:
+    image: redis:8.4.0
+    container_name: redis
+    hostname: redis
+    ports:
+      - "6379:6379"
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 1024M
+    restart: unless-stopped
+    environment:
+      TZ: utc
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+    volumes:
+      - redis-data:/data
+    command: ["redis-server", "--appendonly", "yes"]
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+#      test: ["CMD-SHELL", "redis-cli ping | grep PONG"]
+#      test: ["CMD", "redis-cli", "-a", "${REDIS_PASSWORD}", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - communication
+
+  redis-insight:
+    image: redis/redisinsight:latest
+    container_name: redis-insight
+    hostname: redis-insight
+    ports:
+      - "5540:5540"
+    restart: unless-stopped
+    depends_on:
+      redis:
+        condition: service_healthy
+
+
+
+
+
+
+
+
