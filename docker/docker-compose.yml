@@ -234,12 +234,12 @@ services:
       TZ: utc
       SERVER_PORT: 8888
       SPRING_CLOUD_CONFIG_ENABLED: false
-      JAVA_TOOL_OPTIONS: "--enable-native-access=ALL-UNNAMED" # Elimina alguns warnnings
       SPRING_RABBITMQ_HOST: "rabbit"
       RABBIT_HOST: rabbit
       RABBIT_PORT: 5672
       RABBIT_USER: guest
       RABBIT_PASS: guest
+      JAVA_TOOL_OPTIONS: "--enable-native-access=ALL-UNNAMED" # Elimina alguns warnnings
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:8888/actuator/health" ]
       interval: 10s
@@ -638,8 +638,6 @@ services:
     command: ["redis-server", "--appendonly", "yes"]
     healthcheck:
       test: [ "CMD", "redis-cli", "ping" ]
-#      test: ["CMD-SHELL", "redis-cli ping | grep PONG"]
-#      test: ["CMD", "redis-cli", "-a", "${REDIS_PASSWORD}", "ping"]
       interval: 10s
       timeout: 5s
       retries: 5
