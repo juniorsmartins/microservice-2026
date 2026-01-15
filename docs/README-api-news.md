@@ -13,7 +13,9 @@ Descrição: Microsserviço responsável pelo gerenciamento das notícias.
 - Spring Cloud Netflix Eureka Client (versão 2025.1.0);
 - Spring Cloud Bus AMQP (versão 2025.1.0);
 - Spring Doc OpenApi (versão 3.0.0);
-- Spring Data JPA;
+- Spring Boot Data JPA;
+- Spring Boot Data Redis; 
+- Spring Boot Cache;
 - Bean Validation;
 - API Versioning;
 - Null-safety (JSpecify);
