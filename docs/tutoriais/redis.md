@@ -135,10 +135,27 @@ public class ApiNewsApplication {
 ```
 
 4. Implementar a lógica de cache nos serviços:
-Método no Controller usando @Cacheable
+Métodos no Controller (@Cacheable para Get e @CachePut para Post e Put - Adicionar @CacheEvict para Delete):
 ```
+    @PostMapping(value = "/{version}/news", version = "1.0")
+    @CachePut(value = "createNews", key = "#result.id()") // Atualiza o cache após a criação de uma nova notícia. A chave do cache é o ID da notícia criada.
+    public ResponseEntity<NewsCreateResponse> create(
+            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Estrutura de transporte para entrada de dados.", required = true)
+            @RequestBody NewsCreateRequest request) {
+
+        var response = Optional.of(request)
+                .map(newsPresenterPort::toNewsDto)
+                .map(newsCreateInputPort::create)
+                .map(newsPresenterPort::toNewsCreateResponse)
+                .orElseThrow();
+
+        return ResponseEntity
+                .created(URI.create("/api/1.0/news/" + response.id()))
+                .body(response);
+    }
+
     @GetMapping(value = "/{version}/news", version = "1.0")
-    @Cacheable(value = "newsByTitle", key = "#title", unless = "#result == null || #result.isEmpty()")
+    @Cacheable(value = "newsByTitle", key = "#title", unless = "#result == null || #result.isEmpty()") // Cache com base no título. Não armazena resultados nulos ou vazios.
     public List<NewsResponse> findByTitleLike(@RequestParam(name = "title") String title) {
 
         log.info("\n\n 1.0 \n\n");

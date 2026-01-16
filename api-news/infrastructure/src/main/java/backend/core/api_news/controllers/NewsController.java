@@ -1,14 +1,14 @@
 package backend.core.api_news.controllers;
 
 import backend.core.api_news.dtos.ContactInfoDto;
-import backend.core.api_news.dtos.requests.NewsCreateRequest;
+import backend.core.api_news.dtos.requests.NewsRequest;
 import backend.core.api_news.dtos.responses.NewsCreateResponse;
 import backend.core.api_news.dtos.responses.NewsResponse;
 import backend.core.api_news.gateways.NewsQueryPort;
 import backend.core.api_news.ports.input.NewsCreateInputPort;
+import backend.core.api_news.ports.input.NewsDeleteByIdInputPort;
 import backend.core.api_news.presenters.NewsPresenterPort;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -17,6 +17,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jspecify.annotations.NullMarked;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,6 +30,7 @@ import java.net.URI;
 import java.net.UnknownHostException;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Tag(name = "News", description = "Controlador do recurso Notícias.")
 @Slf4j
@@ -42,6 +47,8 @@ public class NewsController {
     private final NewsPresenterPort newsPresenterPort;
 
     private final ContactInfoDto contactInfoDto;
+
+    private final NewsDeleteByIdInputPort newsDeleteByIdInputPort;
 
     @GetMapping(value = "/{version}/news/hostcheck", version = "1.0")
     public String checkHost() throws UnknownHostException {
@@ -70,9 +77,10 @@ public class NewsController {
             }
     )
     @PostMapping(value = "/{version}/news", version = "1.0")
+//    @CachePut(value = "createNews", key = "#result.body().id()") // Atualiza o cache após a criação de uma nova notícia. A chave do cache é o ID da notícia criada.
     public ResponseEntity<NewsCreateResponse> create(
             @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Estrutura de transporte para entrada de dados.", required = true)
-            @RequestBody NewsCreateRequest request) {
+            @RequestBody NewsRequest request) {
 
         var response = Optional.of(request)
                 .map(newsPresenterPort::toNewsDto)
@@ -85,8 +93,45 @@ public class NewsController {
                 .body(response);
     }
 
+    @PutMapping(value = "/{version}/news/{id}", version = "1.0")
+    public ResponseEntity<NewsResponse> update(
+            @PathVariable(name = "id") final UUID id,
+            @RequestBody NewsRequest request) {
+
+        return ResponseEntity
+                .ok()
+                .build();
+    }
+
+    @GetMapping(value = "/{version}/news/{id}", version = "1.0")
+    public ResponseEntity<NewsResponse> findById(@PathVariable(name = "id") final UUID id) {
+
+        return ResponseEntity
+                .ok()
+                .build();
+    }
+
+    public ResponseEntity<Page<NewsResponse>> pageAll(
+            @PageableDefault(sort = "title", direction = Sort.Direction.DESC, page = 0, size = 5) final Pageable paginacao) {
+
+        return ResponseEntity
+                .ok()
+                .build();
+    }
+
+    @DeleteMapping(value = "/{version}/news/{id}", version = "1.0")
+    public ResponseEntity<Void> deleteById(@PathVariable(name = "id") final UUID id) {
+
+        newsDeleteByIdInputPort.deleteById(id);
+
+        return ResponseEntity
+                .noContent()
+                .build();
+    }
+
     @GetMapping(value = "/{version}/news", version = "1.0")
     @Cacheable(value = "newsByTitle", key = "#title", unless = "#result == null || #result.isEmpty()")
+    // Cache com base no título. Não armazena resultados nulos ou vazios.
     public List<NewsResponse> findByTitleLike(@RequestParam(name = "title") String title) {
 
         log.info("\n\n 1.0 \n\n");
@@ -106,3 +151,4 @@ public class NewsController {
                 .toList();
     }
 }
+
