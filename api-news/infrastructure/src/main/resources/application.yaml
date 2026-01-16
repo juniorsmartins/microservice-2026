@@ -138,7 +138,10 @@ spring:
       port: ${REDIS_PORT:6379}
 
   cache:
-    type: redis
+    type: redis # Define o tipo de cache como Redis. Diz ao Spring Boot: "Use o Redis como provedor de cache padrão da aplicação."
+    redis:
+      time-to-live: 600000 # Tempo de vida dos caches em milissegundos
+      cache-null-values: false # Não cacheia valores nulos
   # --------------------------------------------------
 
 

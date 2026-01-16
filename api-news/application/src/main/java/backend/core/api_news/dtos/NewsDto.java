@@ -9,6 +9,7 @@ public record NewsDto(
         String title,
         String thinLine,
         String text,
+        String author,
         String font
 ) {
 }

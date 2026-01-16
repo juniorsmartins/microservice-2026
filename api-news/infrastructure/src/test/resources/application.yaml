@@ -4,6 +4,45 @@ spring:
 
 
   # --------------------------------------------------
+  # Config de Datasource (MySQL)
+  # --------------------------------------------------
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:db-news}?createDatabaseIfNotExist=true&serverTimezone=UTC&useSSL=false&allowPublicKeyRetrieval=true
+    username: ${MYSQL_USER:mysql123}
+    password: ${MYSQL_PASSWORD:mysql123}
+  # --------------------------------------------------
+
+
+  # --------------------------------------------------
+  # Config de JPA
+  # --------------------------------------------------
+  jpa: # Configura o JPA/Hibernate.
+    database: MYSQL
+    hibernate:
+      ddl-auto: create-drop # Define a estrategia de criacao do schema do banco de dados. Pode ser 'none', 'validate', 'update', 'create', 'create-drop'.
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl # Define a estrategia de nomeacao fisica (padrao). Usar CamelCase no Java e snake_case no banco.
+    defer-datasource-initialization: false # True adia a execucao do import.sql ate que o schema JPA esteja inicializado. Usar false com Liquibase.
+    properties:
+      hibernate:
+        format_sql: true # Formata o SQL gerado para melhor legibilidade.
+        use_sql_comments: true # Adiciona comentarios ao SQL gerado.
+        dialect: org.hibernate.dialect.MySQLDialect
+        connection: # Define o nivel de isolamento de transacao.
+          isolation: 2 # Nivel 2 de isolamento recomendado para a maioria dos casos. - 1 = READ_UNCOMMITTED, 2 = READ_COMMITTED, 4 = REPEATABLE_READ, 8 = SERIALIZABLE
+        cache:
+          use_second_level_cache: false # Habilita cache de segundo nivel. False desabilitado para garantir dados sempre atualizados.
+          use_query_cache: false # Habilita cache de consultas. False desabilitado para garantir dados sempre atualizados.
+        type:
+          enumType:
+            type: pgsql_enum # Define o mapeamento de enums para PostgreSQL. Usar 'pgsql_enum' para suporte nativo a enums do PostgreSQL.
+    open-in-view: false #  Define se o Hibernate deve manter a sessao aberta durante a renderizacao da view. O false e recomendado para evitar problemas de performance e lazy loading.
+    show-sql: true # Habilita a exibicao do SQL gerado no console.
+  # --------------------------------------------------
+
+
+  # --------------------------------------------------
   # Config de Config Server Client
   # --------------------------------------------------
   config:
@@ -13,6 +52,30 @@ spring:
       enabled: false
     discovery:
       enabled: false
+    bus:
+      enabled: false
+      refresh:
+        enabled: false
+      env:
+        enabled: false
+  # --------------------------------------------------
+
+
+  # --------------------------------------------------
+  # Config de RabbitMQ para Spring Cloud Bus
+  # --------------------------------------------------
+  rabbitmq:
+    enabled: false
+  # --------------------------------------------------
+
+
+  # --------------------------------------------------
+  # Config de Redis
+  # --------------------------------------------------
+  cache:
+    type: caffeine
+    caffeine:
+      spec: maximumSize=1000,expireAfterAccess=60s
   # --------------------------------------------------
 
 
@@ -22,14 +85,9 @@ spring:
 management:
   endpoints:
     web:
-      base-path: /actuator # Define o path base dos endpoints do actuator (padrão /actuator)
+      base-path: /actuator
       exposure:
-        include: refresh,health,info,metrics,configprops # Expõe endpoints para monitoramento
-  endpoint:
-    health:
-      show-details: always # Mostra detalhes completos de saúde
-    configprops:
-      show-values: always # Mostra valores das propriedades de configuração
+        include: "*" #
   # --------------------------------------------------
 
 
@@ -38,11 +96,23 @@ management:
   # --------------------------------------------------
 eureka:
   client:
-    register-with-eureka: true # True = Diz: "Registre-se no servidor eureka". False = "Não se registre no servidor eureka".
-    fetch-registry: false # True = Diz: "Busque a lista de serviços registrados no servidor eureka". False = "Não busque a lista de serviços registrados no servidor eureka".
+    enabled: false
+    register-with-eureka: false
+    fetch-registry: false
     service-url:
-      defaultZone: ${SPRING_CLOUD_EUREKA_SERVER_URI:http://localhost:8761/eureka/} # Endereço do Eureka Server
-    healthcheck: # Habilita healthcheck. O servidor Eureka periodicamente checa se o cliente está saudável. Se não estiver, o servidor marca como DOWN. Útil para load balancers.
-      enabled: true
+      defaultZone: ${SPRING_CLOUD_EUREKA_SERVER_URI:http://localhost:8761/eureka/}
+    healthcheck:
+      enabled: false
   # --------------------------------------------------
 
+
+build:
+  version: "1.0"
+informacoes:
+  message: "Microsserviços News - Test"
+  contact-detail:
+    name: "Winston Churchil - Developer"
+    email: "ias@email.com"
+  on-call-suport:
+    - (453) 392-4829
+    - (236) 203-0384
