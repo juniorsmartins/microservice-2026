@@ -16,5 +16,7 @@ public interface NewsPresenterPort {
 
     NewsResponse toNewsResponse(NewsEntity entity);
 
+    NewsResponse toNewsResponse(NewsDto dto);
+
     NewsEntity toEntity(NewsDto dto);
 }

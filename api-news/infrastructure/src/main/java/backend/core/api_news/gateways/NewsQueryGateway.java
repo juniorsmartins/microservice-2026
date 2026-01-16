@@ -23,13 +23,13 @@ public class NewsQueryGateway implements NewsQueryPort, NewsFindByIdOutputPort {
 
     @Transactional(readOnly = true)
     @Override
-    public List<NewsEntity> findByTitleLike(String title) {
+    public List<NewsEntity> findByTitleLike(final String title) {
         return newsRepository.findByTitleLike(title);
     }
 
     @Transactional(readOnly = true)
     @Override
-    public Optional<NewsDto> findById(UUID id) {
+    public Optional<NewsDto> findById(final UUID id) {
         return newsRepository.findById(id)
                 .map(newsPresenterPort::toNewsDto);
     }

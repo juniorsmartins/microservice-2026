@@ -31,6 +31,11 @@ public class NewsPresenter implements NewsPresenterPort {
     }
 
     @Override
+    public NewsResponse toNewsResponse(NewsDto dto) {
+        return new NewsResponse(dto.id(), dto.hat(), dto.title(), dto.thinLine(), dto.text(), dto.author(), dto.font());
+    }
+
+    @Override
     public NewsEntity toEntity(NewsDto dto) {
         return new NewsEntity(dto.id(), dto.hat(), dto.title(), dto.thinLine(), dto.text(), dto.author(), dto.font());
     }

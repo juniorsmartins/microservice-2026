@@ -7,6 +7,7 @@ import backend.core.api_news.dtos.responses.NewsResponse;
 import backend.core.api_news.gateways.NewsQueryPort;
 import backend.core.api_news.ports.input.NewsCreateInputPort;
 import backend.core.api_news.ports.input.NewsDeleteByIdInputPort;
+import backend.core.api_news.ports.input.NewsFindByIdInputPort;
 import backend.core.api_news.presenters.NewsPresenterPort;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -49,6 +50,8 @@ public class NewsController {
     private final ContactInfoDto contactInfoDto;
 
     private final NewsDeleteByIdInputPort newsDeleteByIdInputPort;
+
+    private final NewsFindByIdInputPort newsFindByIdInputPort;
 
     @GetMapping(value = "/{version}/news/hostcheck", version = "1.0")
     public String checkHost() throws UnknownHostException {
@@ -106,17 +109,12 @@ public class NewsController {
     @GetMapping(value = "/{version}/news/{id}", version = "1.0")
     public ResponseEntity<NewsResponse> findById(@PathVariable(name = "id") final UUID id) {
 
-        return ResponseEntity
-                .ok()
-                .build();
-    }
-
-    public ResponseEntity<Page<NewsResponse>> pageAll(
-            @PageableDefault(sort = "title", direction = Sort.Direction.DESC, page = 0, size = 5) final Pageable paginacao) {
+        var newsDto = newsFindByIdInputPort.findById(id);
+        var response = newsPresenterPort.toNewsResponse(newsDto);
 
         return ResponseEntity
                 .ok()
-                .build();
+                .body(response);
     }
 
     @DeleteMapping(value = "/{version}/news/{id}", version = "1.0")

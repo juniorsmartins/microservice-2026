@@ -5,9 +5,11 @@ import backend.core.api_news.dtos.ContactInfoDto;
 import backend.core.api_news.dtos.NewsDto;
 import backend.core.api_news.dtos.requests.NewsRequest;
 import backend.core.api_news.dtos.responses.NewsCreateResponse;
+import backend.core.api_news.dtos.responses.NewsResponse;
 import backend.core.api_news.gateways.NewsQueryPort;
 import backend.core.api_news.ports.input.NewsCreateInputPort;
 import backend.core.api_news.ports.input.NewsDeleteByIdInputPort;
+import backend.core.api_news.ports.input.NewsFindByIdInputPort;
 import backend.core.api_news.presenters.NewsPresenterPort;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -46,6 +48,9 @@ class NewsControllerMockMvcTest {
 
     @MockitoBean
     NewsDeleteByIdInputPort newsDeleteByIdInputPort;
+
+    @MockitoBean
+    NewsFindByIdInputPort newsFindByIdInputPort;
 
     RestTestClient restTestClient;
 
@@ -107,6 +112,37 @@ class NewsControllerMockMvcTest {
     @DisplayName("FindByIdValid")
     class FindByIdValid {
 
+        @Test
+        void dadaRequisicaoValida_quandoBuscarNoticiaPorId_entaoRetornarHttp200AndDadosValidos() {
+            var newsId = UUID.randomUUID();
+
+            var newsDto = new NewsDto(newsId, "Tênis", "Djokovic vence mais uma",
+                    "Próximo desafio será contra Nadal", "Texto da matéria", "Tom Wolfe",
+                    "Tênis Global");
+
+            var newsResponse = new NewsResponse(newsId, "Tênis", "Djokovic vence mais uma",
+                    "Próximo desafio será contra Nadal", "Texto da matéria", "Tom Wolfe",
+                    "Tênis Global");
+
+            Mockito.when(newsFindByIdInputPort.findById(newsId)).thenReturn(newsDto);
+            Mockito.when(newsPresenterPort.toNewsResponse(newsDto)).thenReturn(newsResponse);
+
+            restTestClient.get()
+                    .uri("/api/v1.0/news/{id}", newsId)
+                    .exchange()
+                    .expectStatus().isOk()
+                    .expectBody()
+                    .jsonPath("$.id").isEqualTo(newsId.toString())
+                    .jsonPath("$.hat").isEqualTo("Tênis")
+                    .jsonPath("$.title").isEqualTo("Djokovic vence mais uma")
+                    .jsonPath("$.thinLine").isEqualTo("Próximo desafio será contra Nadal")
+                    .jsonPath("$.text").isEqualTo("Texto da matéria")
+                    .jsonPath("$.author").isEqualTo("Tom Wolfe")
+                    .jsonPath("$.font").isEqualTo("Tênis Global");
+
+            Mockito.verify(newsFindByIdInputPort).findById(newsId);
+            Mockito.verify(newsPresenterPort).toNewsResponse(newsDto);
+        }
     }
 
     @Nested
