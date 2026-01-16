@@ -8,6 +8,7 @@ import backend.core.api_news.gateways.NewsQueryPort;
 import backend.core.api_news.ports.input.NewsCreateInputPort;
 import backend.core.api_news.ports.input.NewsDeleteByIdInputPort;
 import backend.core.api_news.ports.input.NewsFindByIdInputPort;
+import backend.core.api_news.ports.input.NewsUpdateInputPort;
 import backend.core.api_news.presenters.NewsPresenterPort;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -52,6 +53,8 @@ public class NewsController {
     private final NewsDeleteByIdInputPort newsDeleteByIdInputPort;
 
     private final NewsFindByIdInputPort newsFindByIdInputPort;
+
+    private final NewsUpdateInputPort newsUpdateInputPort;
 
     @GetMapping(value = "/{version}/news/hostcheck", version = "1.0")
     public String checkHost() throws UnknownHostException {
@@ -101,9 +104,13 @@ public class NewsController {
             @PathVariable(name = "id") final UUID id,
             @RequestBody NewsRequest request) {
 
+        var newsDto = newsPresenterPort.toNewsDto(id, request);
+        var newsUpdate = newsUpdateInputPort.update(newsDto);
+        var response = newsPresenterPort.toNewsResponse(newsUpdate);
+
         return ResponseEntity
                 .ok()
-                .build();
+                .body(response);
     }
 
     @GetMapping(value = "/{version}/news/{id}", version = "1.0")

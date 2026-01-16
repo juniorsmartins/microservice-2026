@@ -10,13 +10,13 @@ import backend.core.api_news.gateways.NewsQueryPort;
 import backend.core.api_news.ports.input.NewsCreateInputPort;
 import backend.core.api_news.ports.input.NewsDeleteByIdInputPort;
 import backend.core.api_news.ports.input.NewsFindByIdInputPort;
+import backend.core.api_news.ports.input.NewsUpdateInputPort;
 import backend.core.api_news.presenters.NewsPresenterPort;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.mockito.verification.VerificationMode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
 import org.springframework.context.annotation.Import;
@@ -51,6 +51,9 @@ class NewsControllerMockMvcTest {
 
     @MockitoBean
     NewsFindByIdInputPort newsFindByIdInputPort;
+
+    @MockitoBean
+    NewsUpdateInputPort newsUpdateInputPort;
 
     RestTestClient restTestClient;
 
@@ -106,6 +109,45 @@ class NewsControllerMockMvcTest {
     @DisplayName("UpdateValid")
     class UpdateValid {
 
+        @Test
+        void dadaRequisicaoValida_quandoAtualizarNoticia_entaoRetornarHttp200AndDadosValidos() {
+            var newsId = UUID.randomUUID();
+
+            var newsRequest = new NewsRequest("Tênis", "Djokovic vence mais uma",
+                    "Próximo desafio será contra Nadal", "Texto da matéria",
+                    "Tom Wolfe", "Tênis Global");
+
+            var newsDto = new NewsDto(newsId, "Tênis", "Djokovic vence mais uma",
+                    "Próximo desafio será contra Nadal", "Texto da matéria", "Tom Wolfe",
+                    "Tênis Global");
+
+            var newsResponse = new NewsResponse(newsId, "Tênis", "Djokovic vence mais uma",
+                    "Próximo desafio será contra Nadal", "Texto da matéria", "Tom Wolfe",
+                    "Tênis Global");
+
+            Mockito.when(newsPresenterPort.toNewsDto(newsId, newsRequest)).thenReturn(newsDto);
+            Mockito.when(newsUpdateInputPort.update(newsDto)).thenReturn(newsDto);
+            Mockito.when(newsPresenterPort.toNewsResponse(newsDto)).thenReturn(newsResponse);
+
+            restTestClient.put()
+                    .uri("/api/v1.0/news/{id}", newsId)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .body(newsRequest)
+                    .exchange()
+                    .expectStatus().isOk()
+                    .expectBody()
+                    .jsonPath("$.id").isEqualTo(newsId.toString())
+                    .jsonPath("$.hat").isEqualTo("Tênis")
+                    .jsonPath("$.title").isEqualTo("Djokovic vence mais uma")
+                    .jsonPath("$.thinLine").isEqualTo("Próximo desafio será contra Nadal")
+                    .jsonPath("$.text").isEqualTo("Texto da matéria")
+                    .jsonPath("$.author").isEqualTo("Tom Wolfe")
+                    .jsonPath("$.font").isEqualTo("Tênis Global");
+
+            Mockito.verify(newsPresenterPort).toNewsDto(newsId, newsRequest);
+            Mockito.verify(newsUpdateInputPort).update(newsDto);
+            Mockito.verify(newsPresenterPort).toNewsResponse(newsDto);
+        }
     }
 
     @Nested
