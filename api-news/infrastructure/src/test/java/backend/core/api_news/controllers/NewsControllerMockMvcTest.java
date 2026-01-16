@@ -14,6 +14,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.mockito.verification.VerificationMode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
 import org.springframework.context.annotation.Import;
@@ -89,6 +90,41 @@ class NewsControllerMockMvcTest {
                     .jsonPath("$.text").isEqualTo("Texto da matéria")
                     .jsonPath("$.author").isEqualTo("Tom Wolfe")
                     .jsonPath("$.font").isEqualTo("Tênis Global");
+
+            Mockito.verify(newsPresenterPort).toNewsDto(newsRequest);
+            Mockito.verify(newsCreateInputPort).create(newsDto);
+            Mockito.verify(newsPresenterPort).toNewsCreateResponse(newsDto);
+        }
+    }
+
+    @Nested
+    @DisplayName("UpdateValid")
+    class UpdateValid {
+
+    }
+
+    @Nested
+    @DisplayName("FindByIdValid")
+    class FindByIdValid {
+
+    }
+
+    @Nested
+    @DisplayName("DeleteByIdValid")
+    class DeleteByIdValid {
+
+        @Test
+        void dadaRequisicaoValida_quandoDeletarNoticia_entaoRetornarHttp204() {
+            var newsId = UUID.randomUUID();
+
+            Mockito.doNothing().when(newsDeleteByIdInputPort).deleteById(newsId);
+
+            restTestClient.delete()
+                    .uri("/api/v1.0/news/{id}", newsId)
+                    .exchange()
+                    .expectStatus().isNoContent();
+
+            Mockito.verify(newsDeleteByIdInputPort).deleteById(newsId);
         }
     }
 }
