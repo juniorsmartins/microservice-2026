@@ -11,24 +11,28 @@
 - https://spring.io/projects/spring-data-redis
 - https://www.baeldung.com/spring-cache-tutorial 
 - https://docs.spring.io/spring-data/redis/reference/redis.html 
+- https://www.youtube.com/watch?v=YcI9b-lgi7w 
 - https://www.youtube.com/watch?v=j65P_-yOX8g 
+- https://github.com/margato/redis-spring-tutorial 
+- https://medium.com/simform-engineering/spring-boot-caching-with-redis-1a36f719309f 
 
 ### Introdução: 
 ```
-O armazenamento em cache melhora o tempo de resposta do aplicativo porque mantém cópias dos dados usados com mais 
+O armazenamento em cache melhora o tempo de resposta do aplicativo por manter cópias dos dados usados com mais 
 frequência em um armazenamento efêmero, mas muito rápido. Se quiser atingir esses objetivos, recomendamos soluções 
 de cache na memória, que mantêm o conjunto de trabalho em DRAM rápida, em vez de discos giratórios lentos, 
 mostrando-se extremamente eficazes. O armazenamento em cache é comumente utilizado para melhorar a latência do 
 aplicativo, mas um cache altamente disponível e resiliente também pode ajudar a dimensionar os aplicativos. Ao 
 transferir responsabilidades da lógica do aplicativo principal para a camada de cache, liberamos recursos de 
-computação para processar mais solicitações de entrada. Continue lendo para conhecer alguns estudos de caso.
+computação para processar mais solicitações de entrada. 
 
-Redis (REmote DIctionary Server) é um banco de dados em memória que pode ser usado como banco de dados, cache e 
-agente de mensagens. Ele suporta várias estruturas de dados, como strings, hashes, listas, conjuntos e conjuntos 
+Redis (REmote DIctionary Server) é um banco de dados NoSQL em memória que pode ser usado como banco de dados, cache 
+e agente de mensagens. Ele suporta várias estruturas de dados, como strings, hashes, listas, conjuntos e conjuntos 
 classificados. O Redis é conhecido por seu alto desempenho, escalabilidade e flexibilidade, tornando-o uma escolha 
 popular para aplicativos que exigem acesso rápido a dados.
 
 Estratégias: 
+
 1) Pre-caching data (A API consulta o Redis já no startup/inicialização para carregar dados em memória);
 2) On-demand caching (A API consulta o Redis quando necessário para carregar dados em memória);
     2.1) Read strategy - Cache Aside (Numa requisição, a API consulta o Redis antes de consultar o banco de dados); 
@@ -47,11 +51,13 @@ Estratégias:
     armazenamento de dados, especialmente em casos de falhas do sistema ou reinicializações inesperadas.
 
 Estratégias para invalidação de cache:
+
 1) Time-to-Live (TTL): definir um tempo de vida para cada entrada no cache. Após esse período, a entrada é automaticamente removida do cache.
 2) Least Recently Used (LRU): remover as entradas menos recentemente usadas quando o cache atingir sua capacidade máxima.
 3) Manual: o aplicativo pode explicitamente invalidar ou remover entradas do cache quando os dados subjacentes forem atualizados.
 
 Padrao de chaves: 
+
 <objeto>:<identificador>:<atributo>
 Exemplo: user:12345:profile
 ```
@@ -76,6 +82,16 @@ Exemplo: user:12345:profile
 5. Criar o docker-compose.yml:
     a. Serviço do Redis (imagem oficial do Redis);
     b. Serviço do Redis-UI (opcional, para visualização dos dados no Redis.
+6. Opcional - Configuração programática do RedisCacheManager (caso precise de uma configuração mais avançada):
+    a. Criar uma classe de configuração que define o RedisCacheManager com políticas de expiração personalizadas.
+
+Comandos para verificar o container do Redis:
+```
+docker exec -it redis sh 
+redis-cli
+keys *
+get <chave>
+```
 
 ### Implementação: 
 
@@ -95,7 +111,10 @@ spring:
       host: ${REDIS_HOST:redis}
       port: ${REDIS_PORT:6379}
   cache:
-    type: redis
+    type: redis 
+    redis:
+      time-to-live: 600000 
+      cache-null-values: false 
     
 logging:
   level:
@@ -116,10 +135,27 @@ public class ApiNewsApplication {
 ```
 
 4. Implementar a lógica de cache nos serviços:
-Método no Controller usando @Cacheable
+Métodos no Controller (@Cacheable para Get e @CachePut para Post e Put - Adicionar @CacheEvict para Delete):
 ```
+    @PostMapping(value = "/{version}/news", version = "1.0")
+    @CachePut(value = "createNews", key = "#result.id()") // Atualiza o cache após a criação de uma nova notícia. A chave do cache é o ID da notícia criada.
+    public ResponseEntity<NewsCreateResponse> create(
+            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Estrutura de transporte para entrada de dados.", required = true)
+            @RequestBody NewsCreateRequest request) {
+
+        var response = Optional.of(request)
+                .map(newsPresenterPort::toNewsDto)
+                .map(newsCreateInputPort::create)
+                .map(newsPresenterPort::toNewsCreateResponse)
+                .orElseThrow();
+
+        return ResponseEntity
+                .created(URI.create("/api/1.0/news/" + response.id()))
+                .body(response);
+    }
+
     @GetMapping(value = "/{version}/news", version = "1.0")
-    @Cacheable(value = "newsByTitle", key = "#title", unless = "#result == null || #result.isEmpty()")
+    @Cacheable(value = "newsByTitle", key = "#title", unless = "#result == null || #result.isEmpty()") // Cache com base no título. Não armazena resultados nulos ou vazios.
     public List<NewsResponse> findByTitleLike(@RequestParam(name = "title") String title) {
 
         log.info("\n\n 1.0 \n\n");

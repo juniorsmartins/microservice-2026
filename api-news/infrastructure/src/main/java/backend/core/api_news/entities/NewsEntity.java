@@ -37,6 +37,9 @@ public final class NewsEntity implements Serializable {
     @Column(name = "text", nullable = false)
     private String text;
 
+    @Column(name = "autor", nullable = false)
+    private String author;
+
     @Column(name = "font", nullable = false)
     private String font;
 }
