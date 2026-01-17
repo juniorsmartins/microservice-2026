@@ -20,6 +20,8 @@ Descrição: Microsserviço responsável pelo gerenciamento das notícias.
 - API Versioning;
 - Null-safety (JSpecify);
 - Bean Registration (Spring Framework 7);
+- RestTestClient, JUnit e Mockito (testes);
+- Testcontainers (testes com containers Docker);
 - MySQL (versão 8.4.7 - banco de dados relacional);
 - Docker e Docker Compose;
 - Lombok.
