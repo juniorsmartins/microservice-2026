@@ -13,11 +13,12 @@
 2.  [API-Users - clique aqui](docs/README-api-users.md)
 3.  [API-Notifications - clique aqui](docs/README-api-notifications.md)
 4.  [API-News - clique aqui](docs/README-api-news.md)
-5.  [Config Server](#config-server)
-6.  [Eureka Server](#eureka-server)
-7.  [Gateway](#gateway)
-8.  [Tutoriais](#tutoriais)
-9.  [FAQ - Principais dúvidas](#faq---principais-dúvidas) 
+5.  [API-IAs - clique aqui](docs/README-api-ias.md)
+6.  [Config Server](#config-server)
+7.  [Eureka Server](#eureka-server)
+8.  [Gateway](#gateway)
+9.  [Tutoriais](#tutoriais)
+10.  [FAQ - Principais dúvidas](#faq---principais-dúvidas) 
 
 ## Arquitetura 
 
