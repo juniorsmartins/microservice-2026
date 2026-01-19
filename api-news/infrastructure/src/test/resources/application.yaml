@@ -4,41 +4,30 @@ spring:
 
 
   # --------------------------------------------------
-  # Config de Datasource (MySQL)
+  # Config de Datasource (H2 em memoria para testes)
   # --------------------------------------------------
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:db-news}?createDatabaseIfNotExist=true&serverTimezone=UTC&useSSL=false&allowPublicKeyRetrieval=true
-    username: ${MYSQL_USER:mysql123}
-    password: ${MYSQL_PASSWORD:mysql123}
+  datasource: # Configura o datasource do banco de dados.
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE # Define a URL de conexão ao banco.
+    username: sa
+    password:
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
   # --------------------------------------------------
 
 
   # --------------------------------------------------
   # Config de JPA
   # --------------------------------------------------
-  jpa: # Configura o JPA/Hibernate.
-    database: MYSQL
+  jpa:
+    database: H2
+    database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
-      ddl-auto: create-drop # Define a estrategia de criacao do schema do banco de dados. Pode ser 'none', 'validate', 'update', 'create', 'create-drop'.
-      naming:
-        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl # Define a estrategia de nomeacao fisica (padrao). Usar CamelCase no Java e snake_case no banco.
-    defer-datasource-initialization: false # True adia a execucao do import.sql ate que o schema JPA esteja inicializado. Usar false com Liquibase.
-    properties:
-      hibernate:
-        format_sql: true # Formata o SQL gerado para melhor legibilidade.
-        use_sql_comments: true # Adiciona comentarios ao SQL gerado.
-        dialect: org.hibernate.dialect.MySQLDialect
-        connection: # Define o nivel de isolamento de transacao.
-          isolation: 2 # Nivel 2 de isolamento recomendado para a maioria dos casos. - 1 = READ_UNCOMMITTED, 2 = READ_COMMITTED, 4 = REPEATABLE_READ, 8 = SERIALIZABLE
-        cache:
-          use_second_level_cache: false # Habilita cache de segundo nivel. False desabilitado para garantir dados sempre atualizados.
-          use_query_cache: false # Habilita cache de consultas. False desabilitado para garantir dados sempre atualizados.
-        type:
-          enumType:
-            type: pgsql_enum # Define o mapeamento de enums para PostgreSQL. Usar 'pgsql_enum' para suporte nativo a enums do PostgreSQL.
-    open-in-view: false #  Define se o Hibernate deve manter a sessao aberta durante a renderizacao da view. O false e recomendado para evitar problemas de performance e lazy loading.
-    show-sql: true # Habilita a exibicao do SQL gerado no console.
+      ddl-auto: create-drop
+    defer-datasource-initialization: true
+    show-sql: true
   # --------------------------------------------------
 
 
@@ -66,16 +55,6 @@ spring:
   # --------------------------------------------------
   rabbitmq:
     enabled: false
-  # --------------------------------------------------
-
-
-  # --------------------------------------------------
-  # Config de Redis
-  # --------------------------------------------------
-  cache:
-    type: caffeine
-    caffeine:
-      spec: maximumSize=1000,expireAfterAccess=60s
   # --------------------------------------------------
 
 

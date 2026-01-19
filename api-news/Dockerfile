@@ -11,10 +11,12 @@ FROM ${IMAGE_BUILD} AS builder
 # Copia o projeto (incluindo settings.gradle e submódulos)
 COPY . .
 
-# Roda testes e depois gera o bootJar do módulo infraestrutura
+# Roda testes
 RUN /gradlew :business:test
 RUN /gradlew :application:test
 RUN /gradlew :infrastructure:test
+
+# Gera o bootJar do módulo infraestrutura.
 RUN /gradlew :infrastructure:bootJar --no-daemon --stacktrace
 
 

@@ -7,16 +7,11 @@ import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.DynamicPropertyRegistry;
-import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.web.servlet.client.RestTestClient;
 import org.springframework.web.context.WebApplicationContext;
-import org.testcontainers.junit.jupiter.Container;
-import org.testcontainers.junit.jupiter.Testcontainers;
-import org.testcontainers.mysql.MySQLContainer;
 
+@Tag("integration")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@Testcontainers // Ativa Testcontainers no JUnit
 class NewsControllerIntegrationTest {
 
     @Autowired
@@ -26,20 +21,6 @@ class NewsControllerIntegrationTest {
     NewsRepository newsRepository;
 
     RestTestClient restTestClient;
-
-    @Container // Define o contêiner MySQL gerenciado pelo Testcontainers
-    static MySQLContainer mysql = new MySQLContainer("mysql:lts-oraclelinux9")
-            .withDatabaseName("db-news")
-            .withUsername("mysql123")
-            .withPassword("mysql123")
-            .withEnv("MYSQL_SERVER_TIMEZONE", "UTC");
-
-    @DynamicPropertySource // Configura propriedades dinâmicas para o Spring Boot usar o contêiner MySQL
-    static void mysqlProperties(DynamicPropertyRegistry dynamicPropertyRegistry) {
-        dynamicPropertyRegistry.add("spring.datasource.url", mysql::getJdbcUrl);
-        dynamicPropertyRegistry.add("spring.datasource.username", mysql::getUsername);
-        dynamicPropertyRegistry.add("spring.datasource.password", mysql::getPassword);
-    }
 
     @BeforeEach
     void setUp() {

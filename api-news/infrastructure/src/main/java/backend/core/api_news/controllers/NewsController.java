@@ -15,9 +15,12 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jspecify.annotations.NullMarked;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -37,6 +40,7 @@ import java.util.UUID;
 @Tag(name = "News", description = "Controlador do recurso Notícias.")
 @Slf4j
 @NullMarked
+//@CacheConfig(cacheNames = "news")
 @RestController
 @RequestMapping(path = {"/api/"})
 @RequiredArgsConstructor
@@ -83,10 +87,10 @@ public class NewsController {
             }
     )
     @PostMapping(value = "/{version}/news", version = "1.0")
-//    @CachePut(value = "createNews", key = "#result.body().id()") // Atualiza o cache após a criação de uma nova notícia. A chave do cache é o ID da notícia criada.
+    @CachePut(value = "news", key = "#result.body.id")
     public ResponseEntity<NewsCreateResponse> create(
             @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Estrutura de transporte para entrada de dados.", required = true)
-            @RequestBody NewsRequest request) {
+            @RequestBody @Valid NewsRequest request) {
 
         var response = Optional.of(request)
                 .map(newsPresenterPort::toNewsDto)
@@ -102,7 +106,7 @@ public class NewsController {
     @PutMapping(value = "/{version}/news/{id}", version = "1.0")
     public ResponseEntity<NewsResponse> update(
             @PathVariable(name = "id") final UUID id,
-            @RequestBody NewsRequest request) {
+            @RequestBody @Valid NewsRequest request) {
 
         var newsDto = newsPresenterPort.toNewsDto(id, request);
         var newsUpdate = newsUpdateInputPort.update(newsDto);
