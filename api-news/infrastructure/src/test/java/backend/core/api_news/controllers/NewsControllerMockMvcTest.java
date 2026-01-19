@@ -12,10 +12,7 @@ import backend.core.api_news.ports.input.NewsDeleteByIdInputPort;
 import backend.core.api_news.ports.input.NewsFindByIdInputPort;
 import backend.core.api_news.ports.input.NewsUpdateInputPort;
 import backend.core.api_news.presenters.NewsPresenterPort;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
@@ -27,6 +24,7 @@ import org.springframework.test.web.servlet.client.RestTestClient;
 
 import java.util.UUID;
 
+@Tag("unit")
 @WebMvcTest(NewsController.class)
 @Import(NoCacheTestConfig.class)  // Importa configuração que fornece CacheManager fake
 class NewsControllerMockMvcTest {
