@@ -1,11 +1,14 @@
 package backend.core.api_news.controllers;
 
+import backend.core.api_news.annotations.PageableParameter;
 import backend.core.api_news.dtos.requests.NewsRequest;
 import backend.core.api_news.dtos.responses.NewsCreateResponse;
 import backend.core.api_news.dtos.responses.NewsResponse;
 import backend.core.api_news.ports.input.*;
 import backend.core.api_news.presenters.NewsPresenterPort;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -20,6 +23,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
+import org.springframework.resilience.annotation.Retryable;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -78,9 +82,30 @@ public class NewsController {
                 .body(response);
     }
 
+    @Operation(summary = "Atualizar", description = "Recurso para atualizar clientes.",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "OK - requisição bem sucedida e com retorno.",
+                            content = {@Content(mediaType = "application/json", schema = @Schema(implementation = NewsResponse.class))}
+                    ),
+                    @ApiResponse(responseCode = "400", description = "Bad Request - requisição mal formulada.",
+                            content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ProblemDetail.class))}
+                    ),
+                    @ApiResponse(responseCode = "404", description = "Not Found - recurso não encontrado.",
+                            content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ProblemDetail.class))}
+                    ),
+                    @ApiResponse(responseCode = "409", description = "Conflict - violação de regras de negócio.",
+                            content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ProblemDetail.class))}
+                    ),
+                    @ApiResponse(responseCode = "500", description = "Internal Server Error - situação inesperada no servidor.",
+                            content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ProblemDetail.class))}
+                    )
+            }
+    )
     @PutMapping(value = "/{version}/news/{id}", version = "1.0")
     public ResponseEntity<NewsResponse> update(
+            @Parameter(name = "id", description = "Identificador único do recurso.", example = "034eb74c-69ee-4bd4-a064-5c4cc5e9e748", required = true)
             @PathVariable(name = "id") final UUID id,
+            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Estrutura de transporte para entrada de dados.", required = true)
             @RequestBody @Valid NewsRequest request) {
 
         var newsDto = newsPresenterPort.toNewsDto(id, request);
@@ -92,6 +117,50 @@ public class NewsController {
                 .body(response);
     }
 
+    @Operation(summary = "Desativar", description = "Recurso para desativar clientes.",
+            responses = {
+                    @ApiResponse(responseCode = "204", description = "No Content - requisição bem sucedida e sem retorno.",
+                            content = {@Content(mediaType = "application/json")}
+                    ),
+                    @ApiResponse(responseCode = "400", description = "Bad Request - requisição mal formulada.",
+                            content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ProblemDetail.class))}
+                    ),
+                    @ApiResponse(responseCode = "404", description = "Not Found - recurso não encontrado.",
+                            content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ProblemDetail.class))}
+                    ),
+                    @ApiResponse(responseCode = "500", description = "Internal Server Error - situação inesperada no servidor.",
+                            content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ProblemDetail.class))}
+                    )
+            }
+    )
+    @DeleteMapping(value = "/{version}/news/{id}", version = "1.0")
+    public ResponseEntity<Void> deleteById(
+            @Parameter(name = "id", description = "Identificador único do recurso.", example = "034eb74c-69ee-4bd4-a064-5c4cc5e9e748", required = true)
+            @PathVariable(name = "id") final UUID id) {
+
+        newsDeleteByIdInputPort.deleteById(id);
+
+        return ResponseEntity
+                .noContent()
+                .build();
+    }
+
+    @Operation(summary = "Consultar por ID", description = "Recurso para consultar clientes por ID.",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "OK - requisição bem sucedida e com retorno.",
+                            content = {@Content(mediaType = "application/json", schema = @Schema(implementation = NewsResponse.class))}
+                    ),
+                    @ApiResponse(responseCode = "400", description = "Bad Request - requisição mal formulada.",
+                            content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ProblemDetail.class))}
+                    ),
+                    @ApiResponse(responseCode = "404", description = "Not Found - recurso não encontrado.",
+                            content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ProblemDetail.class))}
+                    ),
+                    @ApiResponse(responseCode = "500", description = "Internal Server Error - situação inesperada no servidor.",
+                            content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ProblemDetail.class))}
+                    )
+            }
+    )
     @GetMapping(value = "/{version}/news/{id}", version = "1.0")
     public ResponseEntity<NewsResponse> findById(@PathVariable(name = "id") final UUID id) {
 
@@ -103,18 +172,31 @@ public class NewsController {
                 .body(response);
     }
 
-    @DeleteMapping(value = "/{version}/news/{id}", version = "1.0")
-    public ResponseEntity<Void> deleteById(@PathVariable(name = "id") final UUID id) {
-
-        newsDeleteByIdInputPort.deleteById(id);
-
-        return ResponseEntity
-                .noContent()
-                .build();
-    }
-
+    @Operation(summary = "Paginar todos", description = "Recurso para buscar todos os clientes paginados.",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "OK - requisição bem sucedida e com retorno.",
+                            content = {@Content(mediaType = "application/json", array = @ArraySchema(minItems = 0,
+                                    schema = @Schema(implementation = NewsResponse.class)))
+                            }
+                    ),
+                    @ApiResponse(responseCode = "400", description = "Bad Request - requisição mal formulada.",
+                            content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ProblemDetail.class))}
+                    ),
+                    @ApiResponse(responseCode = "500", description = "Internal Server Error - situação inesperada no servidor.",
+                            content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ProblemDetail.class))}
+                    )
+            }
+    )
     @GetMapping(value = "/{version}/news", version = "1.0")
+    @Retryable(
+            maxRetries = 4,
+            jitter = 10,
+            delay = 1000,
+            multiplier = 2
+    )
+    @PageableParameter
     public ResponseEntity<Page<NewsResponse>> pageAll(
+            @Parameter(hidden = true)
             @PageableDefault(sort = "title", direction = Sort.Direction.ASC, page = 0, size = 5) final Pageable paginacao) {
 
         var responsePage = newsPageAllInputPort.pageAll(paginacao)
