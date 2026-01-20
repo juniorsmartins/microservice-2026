@@ -4,6 +4,9 @@ import backend.core.api_news.dtos.NewsDto;
 import backend.core.api_news.ports.input.NewsUpdateInputPort;
 import backend.core.api_news.ports.output.NewsFindByIdOutputPort;
 import backend.core.api_news.ports.output.NewsSaveOutputPort;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Caching;
 
 public class NewsUpdateUseCase implements NewsUpdateInputPort {
 
@@ -16,6 +19,14 @@ public class NewsUpdateUseCase implements NewsUpdateInputPort {
         this.newsSaveOutputPort = newsSaveOutputPort;
     }
 
+    @Caching(
+            put = {
+                    @CachePut(value = "newsById", key = "#result.id"),
+            },
+            evict = {
+                    @CacheEvict(cacheNames = {"newsPageAll"}, allEntries = true)
+            }
+    )
     @Override
     public NewsDto update(NewsDto dto) {
 

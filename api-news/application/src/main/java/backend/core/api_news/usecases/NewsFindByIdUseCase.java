@@ -3,6 +3,7 @@ package backend.core.api_news.usecases;
 import backend.core.api_news.dtos.NewsDto;
 import backend.core.api_news.ports.input.NewsFindByIdInputPort;
 import backend.core.api_news.ports.output.NewsFindByIdOutputPort;
+import org.springframework.cache.annotation.Cacheable;
 
 import java.util.UUID;
 
@@ -14,6 +15,7 @@ public class NewsFindByIdUseCase implements NewsFindByIdInputPort {
         this.newsFindByIdOutputPort = newsFindByIdOutputPort;
     }
 
+    @Cacheable(value = "newsById", key = "#id")
     @Override
     public NewsDto findById(final UUID id) {
 

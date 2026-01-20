@@ -1,0 +1,34 @@
+package backend.core.api_news.controllers;
+
+import backend.core.api_news.dtos.ContactInfoDto;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.jspecify.annotations.NullMarked;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
+@Tag(name = "ApiCheck", description = "Controlador do recurso de checagem da API.")
+@Slf4j
+@NullMarked
+@RestController
+@RequestMapping(path = {"/api/"})
+@RequiredArgsConstructor
+public class ApiCheckController {
+
+    private final ContactInfoDto contactInfoDto;
+
+    @GetMapping(value = "/{version}/news/hostcheck", version = "1.0")
+    public String checkHost() throws UnknownHostException {
+        return InetAddress.getLocalHost().getHostName() + " - " + InetAddress.getLocalHost().getHostAddress();
+    }
+
+    @GetMapping(value = "/{version}/news/contact-info", version = "1.0")
+    public String contactInfo() {
+        return contactInfoDto.toString();
+    }
+}

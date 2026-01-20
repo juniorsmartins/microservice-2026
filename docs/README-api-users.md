@@ -18,6 +18,7 @@ Descrição: Microsserviços responsável por gerenciar os dados dos usuários d
 - API Versioning;
 - Null-safety (JSpecify);
 - Bean Registration (Spring Framework 7);
+- Resilience (Spring Framework 7);
 - Liquibase (migration em SQL);
 - Apache Kafka, Schema Registry e Apache Avro (mensageria);
 - RestAssured, JUnit e Mockito (testes);
