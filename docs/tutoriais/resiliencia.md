@@ -6,15 +6,12 @@
 - https://docs.spring.io/spring-framework/reference/index.html
 - https://docs.spring.io/spring-framework/reference/core/resilience.html
 - https://docs.spring.io/spring-framework/docs/7.0.2/javadoc-api/org/springframework/resilience/annotation/Retryable.html
-- https://www.youtube.com/watch?v=CT1wGTwOfg0 
-- 
-- 
+- https://www.youtube.com/watch?v=CT1wGTwOfg0
 - https://spring.io/projects/spring-cloud-circuitbreaker 
 - https://docs.spring.io/spring-cloud-circuitbreaker/reference/ 
 - https://github.com/spring-projects/spring-retry 
 - https://github.com/resilience4j/resilience4j 
-- https://resilience4j.readme.io/docs/getting-started-3 
-- 
+- https://resilience4j.readme.io/docs/getting-started-3
 - https://www.baeldung.com/resilience4j 
 - https://www.baeldung.com/spring-boot-4-spring-framework-7 
 - 
@@ -147,9 +144,5 @@ Exemplo para update:
     delay = 1000,
     multiplier = 2
 )
-```
-
-```
-
 ```
 
