@@ -20,6 +20,7 @@ Descrição: Microsserviço responsável pelo gerenciamento das notícias.
 - API Versioning;
 - Null-safety (JSpecify);
 - Bean Registration (Spring Framework 7);
+- Resilience (Spring Framework 7);
 - RestTestClient, JUnit e Mockito (testes);
 - MySQL (versão 8.4.7 - banco de dados relacional);
 - H2 Database (banco de dados em memória para testes);
