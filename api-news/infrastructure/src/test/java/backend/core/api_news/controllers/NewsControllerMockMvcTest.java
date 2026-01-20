@@ -1,7 +1,6 @@
 package backend.core.api_news.controllers;
 
 import backend.core.api_news.configs.NoCacheTestConfig;
-import backend.core.api_news.dtos.ContactInfoDto;
 import backend.core.api_news.dtos.NewsDto;
 import backend.core.api_news.dtos.requests.NewsRequest;
 import backend.core.api_news.dtos.responses.NewsCreateResponse;
@@ -9,8 +8,6 @@ import backend.core.api_news.dtos.responses.NewsResponse;
 import backend.core.api_news.ports.input.*;
 import backend.core.api_news.presenters.NewsPresenterPort;
 import org.junit.jupiter.api.*;
-import org.mockito.ArgumentMatcher;
-import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;

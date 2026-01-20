@@ -2,6 +2,8 @@ package backend.core.api_news.controllers;
 
 import backend.core.api_news.dtos.requests.NewsRequest;
 import backend.core.api_news.dtos.responses.NewsCreateResponse;
+import backend.core.api_news.dtos.responses.NewsResponse;
+import backend.core.api_news.entities.NewsEntity;
 import backend.core.api_news.repositories.NewsRepository;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,11 @@ class NewsControllerIntegrationTest {
     @BeforeEach
     void setUp() {
         restTestClient = RestTestClient.bindToApplicationContext(webApplicationContext).build();
+    }
+
+    @AfterEach
+    void tearDown() {
+        newsRepository.deleteAll();
     }
 
     @Nested
@@ -77,6 +84,76 @@ class NewsControllerIntegrationTest {
             Assertions.assertEquals(newsRequest.text(), newsEntity.getText());
             Assertions.assertEquals(newsRequest.author(), newsEntity.getAuthor());
             Assertions.assertEquals(newsRequest.font(), newsEntity.getFont());
+        }
+    }
+
+    @Nested
+    @DisplayName("UpdateIntegrationValid")
+    class UpdateIntegrationValid {
+
+        @Test
+        void dadaRequisicaoValida_quandoAtualizarNoticia_entaoRetornarHttp200AndDadosValidos() {
+            var newsEntity = new NewsEntity(null, "Tênis", "Djokovic vence mais uma",
+                    "Próximo desafio será contra Nadal", "Texto da matéria",
+                    "Tom Wolfe", "Tênis Global");
+            newsRepository.save(newsEntity);
+            var newsId = newsEntity.getId();
+
+            var newsRequest = new NewsRequest("Tênis Atual", "Djokovic vence mais uma Atual",
+                    "Próximo desafio será contra Nadal Atual", "Texto da matéria Atual",
+                    "Tom Wolfe Atual", "Tênis Global Atual");
+
+            restTestClient.put()
+                    .uri("/api/v1.0/news/{id}", newsId)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .body(newsRequest)
+                    .exchange()
+                    .expectStatus().isOk()
+                    .expectBody()
+                    .jsonPath("$.id").exists()
+                    .jsonPath("$.hat").isEqualTo("Tênis Atual")
+                    .jsonPath("$.title").isEqualTo("Djokovic vence mais uma Atual")
+                    .jsonPath("$.thinLine").isEqualTo("Próximo desafio será contra Nadal Atual")
+                    .jsonPath("$.text").isEqualTo("Texto da matéria Atual")
+                    .jsonPath("$.author").isEqualTo("Tom Wolfe Atual")
+                    .jsonPath("$.font").isEqualTo("Tênis Global Atual");
+        }
+
+        @Test
+        void dadaRequisicaoValida_quandoAtualizarNoticia_entaoSalvarDadosNoBanco() {
+            var newsEntity = new NewsEntity(null, "Tênis", "Djokovic vence mais uma",
+                    "Próximo desafio será contra Nadal", "Texto da matéria",
+                    "Tom Wolfe", "Tênis Global");
+            newsRepository.save(newsEntity);
+            var newsId = newsEntity.getId();
+
+            var newsRequest = new NewsRequest("Tênis Atual", "Djokovic vence mais uma Atual",
+                    "Próximo desafio será contra Nadal Atual", "Texto da matéria Atual",
+                    "Tom Wolfe Atual", "Tênis Global Atual");
+
+            var response = restTestClient.put()
+                    .uri("/api/v1.0/news/{id}", newsId)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .body(newsRequest)
+                    .exchange()
+                    .expectBody(NewsResponse.class)
+                    .returnResult()
+                    .getResponseBody();
+
+            var newsDoBanco = newsRepository.findById(newsId).orElseThrow();
+            Assertions.assertEquals(newsDoBanco.getHat(), response.hat());
+            Assertions.assertEquals(newsDoBanco.getTitle(), response.title());
+            Assertions.assertEquals(newsDoBanco.getThinLine(), response.thinLine());
+            Assertions.assertEquals(newsDoBanco.getText(), response.text());
+            Assertions.assertEquals(newsDoBanco.getAuthor(), response.author());
+            Assertions.assertEquals(newsDoBanco.getFont(), response.font());
+
+            Assertions.assertEquals(newsDoBanco.getHat(), newsRequest.hat());
+            Assertions.assertEquals(newsDoBanco.getTitle(), newsRequest.title());
+            Assertions.assertEquals(newsDoBanco.getThinLine(), newsRequest.thinLine());
+            Assertions.assertEquals(newsDoBanco.getText(), newsRequest.text());
+            Assertions.assertEquals(newsDoBanco.getAuthor(), newsRequest.author());
+            Assertions.assertEquals(newsDoBanco.getFont(), newsRequest.font());
         }
     }
 }
