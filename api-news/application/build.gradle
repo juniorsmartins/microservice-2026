@@ -1,9 +1,24 @@
 plugins {
     id 'java'
+    id 'org.springframework.boot' version '4.0.1'
+    id 'io.spring.dependency-management' version '1.1.7'
 }
 
 group = 'backend.core'
 version = '0.0.1-SNAPSHOT'
+description = 'Microsserviço responsável pelo gerenciamento das notícias.'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(25)
+    }
+}
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
 
 repositories {
     mavenCentral()
@@ -12,6 +27,13 @@ repositories {
 dependencies {
     implementation project(':business')
 
+    // Redis - Armazenamento e Cache.
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    testImplementation 'org.springframework.boot:spring-boot-starter-data-redis-test'
+    implementation 'org.springframework.boot:spring-boot-starter-cache'
+    testImplementation 'org.springframework.boot:spring-boot-starter-cache-test'
+
+    // Testes
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'

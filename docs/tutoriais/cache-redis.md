@@ -88,7 +88,7 @@ Exemplo: user:12345:profile
 Comandos para verificar o container do Redis:
 ```
 docker exec -it redis sh 
-redis-cli
+redis-cli --raw
 keys *
 get <chave>
 ```

@@ -28,5 +28,5 @@ public record NewsResponse(
         @Schema(name = "Fonte", description = "Pessoa, instituição, documento ou dado que confirma os fatos e é a origem da informação.", example = "IBGE")
         String font
 
-) implements java.io.Serializable {
+) {
 }

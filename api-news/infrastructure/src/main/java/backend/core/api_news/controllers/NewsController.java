@@ -1,6 +1,5 @@
 package backend.core.api_news.controllers;
 
-import backend.core.api_news.dtos.ContactInfoDto;
 import backend.core.api_news.dtos.requests.NewsRequest;
 import backend.core.api_news.dtos.responses.NewsCreateResponse;
 import backend.core.api_news.dtos.responses.NewsResponse;
@@ -19,20 +18,14 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jspecify.annotations.NullMarked;
-import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.InetAddress;
 import java.net.URI;
-import java.net.UnknownHostException;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -40,7 +33,6 @@ import java.util.UUID;
 @Tag(name = "News", description = "Controlador do recurso Notícias.")
 @Slf4j
 @NullMarked
-//@CacheConfig(cacheNames = "news")
 @RestController
 @RequestMapping(path = {"/api/"})
 @RequiredArgsConstructor
@@ -52,23 +44,11 @@ public class NewsController {
 
     private final NewsPresenterPort newsPresenterPort;
 
-    private final ContactInfoDto contactInfoDto;
-
     private final NewsDeleteByIdInputPort newsDeleteByIdInputPort;
 
     private final NewsFindByIdInputPort newsFindByIdInputPort;
 
     private final NewsUpdateInputPort newsUpdateInputPort;
-
-    @GetMapping(value = "/{version}/news/hostcheck", version = "1.0")
-    public String checkHost() throws UnknownHostException {
-        return InetAddress.getLocalHost().getHostName() + " - " + InetAddress.getLocalHost().getHostAddress();
-    }
-
-    @GetMapping(value = "/{version}/news/contact-info", version = "1.0")
-    public String contactInfo() {
-        return contactInfoDto.toString();
-    }
 
     @Operation(summary = "Cadastrar", description = "Recurso para criar novas notícias.",
             responses = {
@@ -87,7 +67,6 @@ public class NewsController {
             }
     )
     @PostMapping(value = "/{version}/news", version = "1.0")
-    @CachePut(value = "news", key = "#result.body.id")
     public ResponseEntity<NewsCreateResponse> create(
             @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Estrutura de transporte para entrada de dados.", required = true)
             @RequestBody @Valid NewsRequest request) {
@@ -139,8 +118,6 @@ public class NewsController {
     }
 
     @GetMapping(value = "/{version}/news", version = "1.0")
-    @Cacheable(value = "newsByTitle", key = "#title", unless = "#result == null || #result.isEmpty()")
-    // Cache com base no título. Não armazena resultados nulos ou vazios.
     public List<NewsResponse> findByTitleLike(@RequestParam(name = "title") String title) {
 
         log.info("\n\n 1.0 \n\n");

@@ -1,5 +1,6 @@
 package backend.core.api_news.dtos;
 
+import java.io.Serializable;
 import java.util.UUID;
 
 public record NewsDto(
@@ -11,5 +12,5 @@ public record NewsDto(
         String text,
         String author,
         String font
-) {
+) implements Serializable {
 }
