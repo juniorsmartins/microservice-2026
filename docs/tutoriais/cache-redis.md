@@ -76,12 +76,12 @@ Exemplo: user:12345:profile
     b. Configuração do Cache (estratégia de cache, TTL, etc);
     c. Configuração de Logging (nível de log para Redis).
 3. Habilitar o cache na classe Main com @EnableCaching;
-4. Implementar a lógica de cache nos serviços:
+4. Implementar a lógica de cache nos serviços ou nos controllers:
     a. Usar anotações como @Cacheable, @CachePut e @CacheEvict para gerenciar o cache;
     b. Importante: o objeto de retorno do método precisa implementar Serializable (java.io.Serializable).
 5. Criar o docker-compose.yml:
     a. Serviço do Redis (imagem oficial do Redis);
-    b. Serviço do Redis-UI (opcional, para visualização dos dados no Redis.
+    b. Serviço do Redis-UI (opcional, para visualização dos dados no Redis).
 6. Opcional - Configuração programática do RedisCacheManager (caso precise de uma configuração mais avançada):
     a. Criar uma classe de configuração que define o RedisCacheManager com políticas de expiração personalizadas.
 
@@ -95,12 +95,12 @@ get <chave>
 
 ### Implementação: 
 
-1. Adicionar dependências no build.gradle:
+1. Adicionar dependências no build.gradle (coloquei no build do módulo application, pois as anotações estão nos serviços):
 ```
-implementation 'org.springframework.boot:spring-boot-starter-data-redis'
-testImplementation 'org.springframework.boot:spring-boot-starter-data-redis-test'
-implementation 'org.springframework.boot:spring-boot-starter-cache'
-testImplementation 'org.springframework.boot:spring-boot-starter-cache-test'
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    testImplementation 'org.springframework.boot:spring-boot-starter-data-redis-test'
+    implementation 'org.springframework.boot:spring-boot-starter-cache'
+    testImplementation 'org.springframework.boot:spring-boot-starter-cache-test'
 ```
 
 2. Configurar o application.yml:
@@ -110,6 +110,7 @@ spring:
     redis:
       host: ${REDIS_HOST:redis}
       port: ${REDIS_PORT:6379}
+
   cache:
     type: redis 
     redis:
@@ -125,6 +126,7 @@ logging:
 3. Habilitar o cache na classe Main com @EnableCaching;
 ```
 @SpringBootApplication
+@RefreshScope
 @EnableCaching
 public class ApiNewsApplication {
 
@@ -134,60 +136,82 @@ public class ApiNewsApplication {
 }
 ```
 
-4. Implementar a lógica de cache nos serviços:
-Métodos no Controller (@Cacheable para Get e @CachePut para Post e Put - Adicionar @CacheEvict para Delete):
+4. Implementar a lógica de cache nos serviços ou nos controllers (optei por colocar anotações nos serviços/UseCase):
 ```
-    @PostMapping(value = "/{version}/news", version = "1.0")
-    @CachePut(value = "createNews", key = "#result.id()") // Atualiza o cache após a criação de uma nova notícia. A chave do cache é o ID da notícia criada.
-    public ResponseEntity<NewsCreateResponse> create(
-            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Estrutura de transporte para entrada de dados.", required = true)
-            @RequestBody NewsCreateRequest request) {
+    @Caching(
+            put = {
+                    @CachePut(value = "newsById", key = "#result.id")
+            },
+            evict = {
+                    @CacheEvict(value = "newsPageAll", allEntries = true) // Limpa cache de paginação
+            }
+    )
+    @Override
+    public NewsDto create(NewsDto dto) {
+        return newsSaveOutputPort.save(dto);
+    }
+    
+    @Caching(
+            put = {
+                    @CachePut(value = "newsById", key = "#result.id"),
+            },
+            evict = {
+                    @CacheEvict(cacheNames = {"newsPageAll"}, allEntries = true)
+            }
+    )
+    @Override
+    public NewsDto update(NewsDto dto) {
 
-        var response = Optional.of(request)
-                .map(newsPresenterPort::toNewsDto)
-                .map(newsCreateInputPort::create)
-                .map(newsPresenterPort::toNewsCreateResponse)
-                .orElseThrow();
-
-        return ResponseEntity
-                .created(URI.create("/api/1.0/news/" + response.id()))
-                .body(response);
+        return newsFindByIdOutputPort.findById(dto.id())
+                .map(news -> newsSaveOutputPort.save(dto))
+                .orElseThrow(() -> new RuntimeException("News not found with id: " + dto.id()));
     }
 
-    @GetMapping(value = "/{version}/news", version = "1.0")
-    @Cacheable(value = "newsByTitle", key = "#title", unless = "#result == null || #result.isEmpty()") // Cache com base no título. Não armazena resultados nulos ou vazios.
-    public List<NewsResponse> findByTitleLike(@RequestParam(name = "title") String title) {
+    @Caching(
+            evict = {
+                    @CacheEvict(value = "newsById", key = "#id"),
+                    @CacheEvict(cacheNames = {"newsPageAll"}, allEntries = true)
+            }
+    )
+    @Override
+    public void deleteById(UUID id) {
 
-        log.info("\n\n 1.0 \n\n");
-        return newsQueryPort.findByTitleLike(title)
-                .stream()
-                .map(newsPresenterPort::toNewsResponse)
-                .toList();
+        newsFindByIdOutputPort.findById(id)
+                .ifPresentOrElse(news -> newsDeleteByIdOutputPort.deleteById(news.id()),
+                        () -> {
+                            throw new IllegalArgumentException("News with id " + id + " not found");
+                        }
+                );
+
+    }
+
+    @Cacheable(value = "newsById", key = "#id")
+    @Override
+    public NewsDto findById(final UUID id) {
+
+        return newsFindByIdOutputPort.findById(id)
+                .orElseThrow(() -> new RuntimeException("News with id " + id + " not found"));
+    }
+
+    @Cacheable(value = "newsPageAll", key = "#pageable", condition = "#pageable.pageNumber <= 1", unless = "#result == null || #result.isEmpty()")
+    @Override
+    public Page<NewsDto> pageAll(Pageable pageable) {
+        return newsPageAllOutputPort.pageAll(pageable);
     }
 ```
 Objeto de retorno com Serializable (java.io.Serializable)
 ```
-@Schema(name = "NewsResponse", description = "Objeto para transporte de dados de saída em requisições.")
-public record NewsResponse(
+public record NewsDto(
 
-        @Schema(name = "ID", description = "Identificador único do recurso.", example = "92e719aa-3c45-4387-95a2-5d078bf410ed")
         UUID id,
-
-        @Schema(name = "chapéu", description = "Elemento editorial usado acima do título da matéria.", example = "Esporte")
         String hat,
-
-        @Schema(name = "título", description = "Frase principal responsável por atrair e apresentar a matéria.", example = "Arsenal consagra-se campeão ao vencer Coritiba")
         String title,
-
-        @Schema(name = "Linha fina", description = "Frase complementar ao título, posicionada logo abaixo e mais aprofundada.", example = "O Quarterback do Arsenal, Kudiba marcou 60% dos pontos com pases para o WideReceiver, Tommy.")
         String thinLine,
-
-        @Schema(name = "texto", description = "O corpo da matéria onde a história é contada.")
         String text,
-
-        @Schema(name = "fonte", description = "Pessoa, instituição, documento ou dado que confirma os fatos e é a origem da informação.", example = "IBGE")
+        String author,
         String font
-) implements java.io.Serializable {
+        
+) implements Serializable {
 }
 ```
 
@@ -240,3 +264,5 @@ volumes:
   redis-data:
     name: redis-data
 ```
+
+
