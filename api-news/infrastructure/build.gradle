@@ -56,12 +56,6 @@ dependencies {
 	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:3.0.0'
 	implementation 'io.swagger.core.v3:swagger-annotations-jakarta:2.2.41'
 
-	// Redis - Armazenamento e Cache.
-	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
-	testImplementation 'org.springframework.boot:spring-boot-starter-data-redis-test'
-	implementation 'org.springframework.boot:spring-boot-starter-cache'
-	testImplementation 'org.springframework.boot:spring-boot-starter-cache-test'
-
 	// Ferramentas de desenvolvimento
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'

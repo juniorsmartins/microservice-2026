@@ -3,6 +3,9 @@ package backend.core.api_news.usecases;
 import backend.core.api_news.dtos.NewsDto;
 import backend.core.api_news.ports.input.NewsCreateInputPort;
 import backend.core.api_news.ports.output.NewsSaveOutputPort;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Caching;
 
 public class NewsCreateUseCase implements NewsCreateInputPort {
 
@@ -12,6 +15,14 @@ public class NewsCreateUseCase implements NewsCreateInputPort {
         this.newsSaveOutputPort = newsSaveOutputPort;
     }
 
+    @Caching(
+            put = {
+                    @CachePut(value = "newsById", key = "#result.id")
+            },
+            evict = {
+                    @CacheEvict(value = "newsPageAll", allEntries = true) // Limpa cache de paginação
+            }
+    )
     @Override
     public NewsDto create(NewsDto dto) {
         return newsSaveOutputPort.save(dto);

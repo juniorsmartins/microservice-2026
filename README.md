@@ -76,19 +76,23 @@ Descrição: Microsserviço responsável por rotear as requisições para os mic
 
 ## Tutoriais
 
-- [Gradle multi-modulo](docs/tutoriais/multimodulo.md);
-- [Kafka](docs/tutoriais/kafka.md);
-- [Liquibase](docs/tutoriais/liquibase.md);
-- [Flyway](docs/tutoriais/flyway.md);
-- [Spring Mail](docs/tutoriais/spring-mail.md); 
+- [API Versioning](docs/tutoriais/api-versioning.md);
+- [Auditoria](docs/tutoriais/auditoria.md);
+- [Cache com Redis](docs/tutoriais/cache-redis.md);
 - [Config Server](docs/tutoriais/config-server.md);
 - [Eureka Server](docs/tutoriais/eureka-server.md);
+- [Flyway](docs/tutoriais/flyway.md);
 - [Gateway](docs/tutoriais/gateway.md);
-- [Resiliência](docs/tutoriais/resiliencia.md);
-- [Auditoria](docs/tutoriais/auditoria.md);
+- [Kafka](docs/tutoriais/kafka.md);
+- [Liquibase](docs/tutoriais/liquibase.md);
+- [Gradle multi-modulo](docs/tutoriais/multimodulo.md);
 - [Padrões e Utilidades](docs/tutoriais/padroes-utils.md);
+- [Resiliência](docs/tutoriais/resiliencia.md);
+- [RestTestClient](docs/tutoriais/rest-test-client.md);
+- [Spring AI](docs/tutoriais/spring-ai.md);
+- [Spring Cloud Bus](docs/tutoriais/spring-cloud-bus.md);
 - [Spring Doc](docs/tutoriais/spring-doc.md);
-- [API Versioning](docs/tutoriais/api-versioning.md);
+- [Spring Mail](docs/tutoriais/spring-mail.md);
 
 
 ## FAQ - Principais dúvidas
