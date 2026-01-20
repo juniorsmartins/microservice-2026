@@ -24,7 +24,7 @@ public class NewsUpdateUseCase implements NewsUpdateInputPort {
                     @CachePut(value = "newsById", key = "#result.id"),
             },
             evict = {
-                    @CacheEvict(cacheNames = {"newsPage", "newsByTitle"}, allEntries = true)
+                    @CacheEvict(cacheNames = {"newsPageAll"}, allEntries = true)
             }
     )
     @Override

@@ -17,11 +17,10 @@ public class NewsCreateUseCase implements NewsCreateInputPort {
 
     @Caching(
             put = {
-                    @CachePut(value = "newsById", key = "#result.id"),
-                    @CachePut(value = "newsByTitle", key = "#result.title")
+                    @CachePut(value = "newsById", key = "#result.id")
             },
             evict = {
-                    @CacheEvict(value = "newsPage", allEntries = true) // Limpa cache de paginação
+                    @CacheEvict(value = "newsPageAll", allEntries = true) // Limpa cache de paginação
             }
     )
     @Override

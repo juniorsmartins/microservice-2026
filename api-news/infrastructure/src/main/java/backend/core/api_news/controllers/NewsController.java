@@ -3,10 +3,7 @@ package backend.core.api_news.controllers;
 import backend.core.api_news.dtos.requests.NewsRequest;
 import backend.core.api_news.dtos.responses.NewsCreateResponse;
 import backend.core.api_news.dtos.responses.NewsResponse;
-import backend.core.api_news.ports.input.NewsCreateInputPort;
-import backend.core.api_news.ports.input.NewsDeleteByIdInputPort;
-import backend.core.api_news.ports.input.NewsFindByIdInputPort;
-import backend.core.api_news.ports.input.NewsUpdateInputPort;
+import backend.core.api_news.ports.input.*;
 import backend.core.api_news.presenters.NewsPresenterPort;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -17,6 +14,10 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jspecify.annotations.NullMarked;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -42,6 +43,8 @@ public class NewsController {
     private final NewsFindByIdInputPort newsFindByIdInputPort;
 
     private final NewsUpdateInputPort newsUpdateInputPort;
+
+    private final NewsPageAllInputPort newsPageAllInputPort;
 
     @Operation(summary = "Cadastrar", description = "Recurso para criar novas notícias.",
             responses = {
@@ -108,6 +111,18 @@ public class NewsController {
         return ResponseEntity
                 .noContent()
                 .build();
+    }
+
+    @GetMapping(value = "/{version}/news", version = "1.0")
+    public ResponseEntity<Page<NewsResponse>> pageAll(
+            @PageableDefault(sort = "title", direction = Sort.Direction.ASC, page = 0, size = 5) final Pageable paginacao) {
+
+        var responsePage = newsPageAllInputPort.pageAll(paginacao)
+                .map(newsPresenterPort::toNewsResponse);
+
+        return ResponseEntity
+                .ok()
+                .body(responsePage);
     }
 }
 

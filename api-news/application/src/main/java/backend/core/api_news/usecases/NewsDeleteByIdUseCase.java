@@ -23,7 +23,7 @@ public class NewsDeleteByIdUseCase implements NewsDeleteByIdInputPort {
     @Caching(
             evict = {
                     @CacheEvict(value = "newsById", key = "#id"),
-                    @CacheEvict(cacheNames = {"newsPage", "newsByTitle"}, allEntries = true)
+                    @CacheEvict(cacheNames = {"newsPageAll"}, allEntries = true)
             }
     )
     @Override

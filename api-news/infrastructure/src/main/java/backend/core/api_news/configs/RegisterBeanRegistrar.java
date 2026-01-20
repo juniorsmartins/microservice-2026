@@ -1,9 +1,6 @@
 package backend.core.api_news.configs;
 
-import backend.core.api_news.usecases.NewsCreateUseCase;
-import backend.core.api_news.usecases.NewsDeleteByIdUseCase;
-import backend.core.api_news.usecases.NewsFindByIdUseCase;
-import backend.core.api_news.usecases.NewsUpdateUseCase;
+import backend.core.api_news.usecases.*;
 import org.springframework.beans.factory.BeanRegistrar;
 import org.springframework.beans.factory.BeanRegistry;
 import org.springframework.core.env.Environment;
@@ -24,5 +21,8 @@ public class RegisterBeanRegistrar implements BeanRegistrar {
 
         registry.registerBean("newsDeleteByIdUseCase", NewsDeleteByIdUseCase.class,
                 spec -> spec.description("Serviço de deletar News por Id."));
+
+        registry.registerBean("newsPageAllUseCase", NewsPageAllUseCase.class,
+                spec -> spec.description("Serviço de paginar todas as News."));
     }
 }

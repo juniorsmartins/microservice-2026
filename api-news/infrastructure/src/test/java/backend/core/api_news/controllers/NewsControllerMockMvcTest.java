@@ -6,10 +6,7 @@ import backend.core.api_news.dtos.NewsDto;
 import backend.core.api_news.dtos.requests.NewsRequest;
 import backend.core.api_news.dtos.responses.NewsCreateResponse;
 import backend.core.api_news.dtos.responses.NewsResponse;
-import backend.core.api_news.ports.input.NewsCreateInputPort;
-import backend.core.api_news.ports.input.NewsDeleteByIdInputPort;
-import backend.core.api_news.ports.input.NewsFindByIdInputPort;
-import backend.core.api_news.ports.input.NewsUpdateInputPort;
+import backend.core.api_news.ports.input.*;
 import backend.core.api_news.presenters.NewsPresenterPort;
 import org.junit.jupiter.api.*;
 import org.mockito.Mockito;
@@ -45,6 +42,9 @@ class NewsControllerMockMvcTest {
 
     @MockitoBean
     NewsUpdateInputPort newsUpdateInputPort;
+
+    @MockitoBean
+    NewsPageAllInputPort newsPageAllInputPort;
 
     RestTestClient restTestClient;
 
