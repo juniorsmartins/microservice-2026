@@ -6,7 +6,6 @@ import backend.core.api_news.dtos.NewsDto;
 import backend.core.api_news.dtos.requests.NewsRequest;
 import backend.core.api_news.dtos.responses.NewsCreateResponse;
 import backend.core.api_news.dtos.responses.NewsResponse;
-import backend.core.api_news.gateways.NewsQueryPort;
 import backend.core.api_news.ports.input.NewsCreateInputPort;
 import backend.core.api_news.ports.input.NewsDeleteByIdInputPort;
 import backend.core.api_news.ports.input.NewsFindByIdInputPort;
@@ -36,13 +35,7 @@ class NewsControllerMockMvcTest {
     NewsCreateInputPort newsCreateInputPort;
 
     @MockitoBean
-    NewsQueryPort newsQueryPort;
-
-    @MockitoBean
     NewsPresenterPort newsPresenterPort;
-
-    @MockitoBean
-    ContactInfoDto contactInfoDto;
 
     @MockitoBean
     NewsDeleteByIdInputPort newsDeleteByIdInputPort;

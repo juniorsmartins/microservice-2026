@@ -1,7 +1,6 @@
 package backend.core.api_news.gateways;
 
 import backend.core.api_news.dtos.NewsDto;
-import backend.core.api_news.entities.NewsEntity;
 import backend.core.api_news.ports.output.NewsFindByIdOutputPort;
 import backend.core.api_news.presenters.NewsPresenterPort;
 import backend.core.api_news.repositories.NewsRepository;
@@ -9,23 +8,16 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 @Repository
 @RequiredArgsConstructor
-public class NewsQueryGateway implements NewsQueryPort, NewsFindByIdOutputPort {
+public class NewsQueryGateway implements NewsFindByIdOutputPort {
 
     private final NewsRepository newsRepository;
 
     private final NewsPresenterPort newsPresenterPort;
-
-    @Transactional(readOnly = true)
-    @Override
-    public List<NewsEntity> findByTitleLike(final String title) {
-        return newsRepository.findByTitleLike(title);
-    }
 
     @Transactional(readOnly = true)
     @Override

@@ -3,7 +3,6 @@ package backend.core.api_news.controllers;
 import backend.core.api_news.dtos.requests.NewsRequest;
 import backend.core.api_news.dtos.responses.NewsCreateResponse;
 import backend.core.api_news.dtos.responses.NewsResponse;
-import backend.core.api_news.gateways.NewsQueryPort;
 import backend.core.api_news.ports.input.NewsCreateInputPort;
 import backend.core.api_news.ports.input.NewsDeleteByIdInputPort;
 import backend.core.api_news.ports.input.NewsFindByIdInputPort;
@@ -18,15 +17,11 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jspecify.annotations.NullMarked;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.cache.annotation.Caching;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -39,8 +34,6 @@ import java.util.UUID;
 public class NewsController {
 
     private final NewsCreateInputPort newsCreateInputPort;
-
-    private final NewsQueryPort newsQueryPort;
 
     private final NewsPresenterPort newsPresenterPort;
 
@@ -115,26 +108,6 @@ public class NewsController {
         return ResponseEntity
                 .noContent()
                 .build();
-    }
-
-    @GetMapping(value = "/{version}/news", version = "1.0")
-    public List<NewsResponse> findByTitleLike(@RequestParam(name = "title") String title) {
-
-        log.info("\n\n 1.0 \n\n");
-        return newsQueryPort.findByTitleLike(title)
-                .stream()
-                .map(newsPresenterPort::toNewsResponse)
-                .toList();
-    }
-
-    @GetMapping(value = "/{version}/news", version = "2.0")
-    public List<NewsResponse> findByTitleLikeV2(@RequestParam(name = "title") String title) {
-
-        log.info("\n\n 2.0 \n\n");
-        return newsQueryPort.findByTitleLike(title)
-                .stream()
-                .map(newsPresenterPort::toNewsResponse)
-                .toList();
     }
 }
 
