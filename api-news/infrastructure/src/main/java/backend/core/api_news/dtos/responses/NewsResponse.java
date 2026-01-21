@@ -30,9 +30,13 @@ public record NewsResponse(
         String font,
 
         // Spring Data Jpa Auditing
+        @Schema(name = "createdBy", description = "Auditoria - registro de quem criou o recurso.")
         String createdBy,
+        @Schema(name = "lastModifiedBy", description = "Auditoria - registro de quem modificou o recurso.")
         String lastModifiedBy,
+        @Schema(name = "createdDate", description = "Auditoria - registro da data de criação do recurso.")
         OffsetDateTime createdDate,
+        @Schema(name = "lastModifiedDate", description = "Auditoria - registro da data de modificação do recurso.")
         OffsetDateTime lastModifiedDate
 ) {
 }
