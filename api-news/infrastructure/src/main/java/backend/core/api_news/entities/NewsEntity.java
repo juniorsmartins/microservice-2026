@@ -1,10 +1,7 @@
 package backend.core.api_news.entities;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -15,7 +12,9 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public final class NewsEntity implements Serializable {
+@EqualsAndHashCode(of = {"id"}, callSuper = false)
+@ToString
+public final class NewsEntity extends AbstractAuditingJpa implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -37,7 +36,7 @@ public final class NewsEntity implements Serializable {
     @Column(name = "text", nullable = false)
     private String text;
 
-    @Column(name = "autor", nullable = false)
+    @Column(name = "author", nullable = false)
     private String author;
 
     @Column(name = "font", nullable = false)
