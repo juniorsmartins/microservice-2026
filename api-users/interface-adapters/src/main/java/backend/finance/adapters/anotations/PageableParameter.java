@@ -20,7 +20,7 @@ import java.lang.annotation.Target;
         schema = @Schema(type = "integer", defaultValue = "5")
 )
 @Parameter(
-        in = ParameterIn.QUERY, name = "sort", description = "Critério de ordenação de página. Exemplos: createdAt,desc ou createdAt,asc."
+        in = ParameterIn.QUERY, name = "sort", description = "Critério de ordenação de página. Exemplos: createdDate,desc ou lastModifiedDate,asc."
 )
 public @interface PageableParameter {
 }
