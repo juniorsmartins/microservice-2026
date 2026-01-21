@@ -147,6 +147,8 @@ class NewsControllerIntegrationTest {
             Assertions.assertEquals(newsDoBanco.getText(), response.text());
             Assertions.assertEquals(newsDoBanco.getAuthor(), response.author());
             Assertions.assertEquals(newsDoBanco.getFont(), response.font());
+            Assertions.assertNotNull(newsDoBanco.getCreatedDate());
+            Assertions.assertNotNull(newsDoBanco.getLastModifiedDate());
 
             Assertions.assertEquals(newsDoBanco.getHat(), newsRequest.hat());
             Assertions.assertEquals(newsDoBanco.getTitle(), newsRequest.title());

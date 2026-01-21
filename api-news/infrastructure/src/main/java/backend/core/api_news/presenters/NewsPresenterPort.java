@@ -4,6 +4,7 @@ import backend.core.api_news.dtos.NewsDto;
 import backend.core.api_news.dtos.requests.NewsRequest;
 import backend.core.api_news.dtos.responses.NewsCreateResponse;
 import backend.core.api_news.dtos.responses.NewsResponse;
+import backend.core.api_news.dtos.responses.NewsUpdateResponse;
 import backend.core.api_news.entities.NewsEntity;
 
 import java.util.UUID;
@@ -18,7 +19,7 @@ public interface NewsPresenterPort {
 
     NewsCreateResponse toNewsCreateResponse(NewsDto dto);
 
-    NewsResponse toNewsResponse(NewsEntity entity);
+    NewsUpdateResponse toNewsUpdateResponse(NewsDto dto);
 
     NewsResponse toNewsResponse(NewsDto dto);
 

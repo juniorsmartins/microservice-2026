@@ -4,6 +4,7 @@ import backend.core.api_news.annotations.PageableParameter;
 import backend.core.api_news.dtos.requests.NewsRequest;
 import backend.core.api_news.dtos.responses.NewsCreateResponse;
 import backend.core.api_news.dtos.responses.NewsResponse;
+import backend.core.api_news.dtos.responses.NewsUpdateResponse;
 import backend.core.api_news.ports.input.*;
 import backend.core.api_news.presenters.NewsPresenterPort;
 import io.swagger.v3.oas.annotations.Operation;
@@ -85,7 +86,7 @@ public class NewsController {
     @Operation(summary = "Atualizar", description = "Recurso para atualizar clientes.",
             responses = {
                     @ApiResponse(responseCode = "200", description = "OK - requisição bem sucedida e com retorno.",
-                            content = {@Content(mediaType = "application/json", schema = @Schema(implementation = NewsResponse.class))}
+                            content = {@Content(mediaType = "application/json", schema = @Schema(implementation = NewsUpdateResponse.class))}
                     ),
                     @ApiResponse(responseCode = "400", description = "Bad Request - requisição mal formulada.",
                             content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ProblemDetail.class))}
@@ -102,7 +103,7 @@ public class NewsController {
             }
     )
     @PutMapping(value = "/{version}/news/{id}", version = "1.0")
-    public ResponseEntity<NewsResponse> update(
+    public ResponseEntity<NewsUpdateResponse> update(
             @Parameter(name = "id", description = "Identificador único do recurso.", example = "034eb74c-69ee-4bd4-a064-5c4cc5e9e748", required = true)
             @PathVariable(name = "id") final UUID id,
             @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Estrutura de transporte para entrada de dados.", required = true)
@@ -110,7 +111,7 @@ public class NewsController {
 
         var newsDto = newsPresenterPort.toNewsDto(id, request);
         var newsUpdate = newsUpdateInputPort.update(newsDto);
-        var response = newsPresenterPort.toNewsResponse(newsUpdate);
+        var response = newsPresenterPort.toNewsUpdateResponse(newsUpdate);
 
         return ResponseEntity
                 .ok()
