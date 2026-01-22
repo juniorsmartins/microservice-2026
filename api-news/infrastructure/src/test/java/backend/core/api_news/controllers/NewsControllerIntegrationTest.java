@@ -12,8 +12,11 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.http.ProblemDetail;
 import org.springframework.test.web.servlet.client.RestTestClient;
 import org.springframework.web.context.WebApplicationContext;
+
+import java.util.UUID;
 
 @Tag("integration")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -209,6 +212,25 @@ class NewsControllerIntegrationTest {
                     .jsonPath("$.text").isEqualTo("Texto da matéria")
                     .jsonPath("$.author").isEqualTo("Tom Wolfe")
                     .jsonPath("$.font").isEqualTo("Tênis Global");
+        }
+    }
+
+    @Nested
+    @DisplayName("FindByIdIntegrationInvalid")
+    class FindByIdIntegrationInvalid {
+
+        @Test
+        void dadaRequisicaoInvalida_quandoConsultarNoticiaPorId_entaoLancarExcecao404NotFound() {
+            var newsId = UUID.randomUUID();
+
+            restTestClient.get()
+                    .uri("/api/v1.0/news/{id}", newsId)
+                    .exchange()
+                    .expectStatus().isNotFound()
+                    .expectBody()
+                    .jsonPath("$.title").isEqualTo("Notícia não encontrada por id: " + newsId + ".")
+                    .jsonPath("$.type").isNotEmpty()
+                    .jsonPath("$.timestamp").isNotEmpty();
         }
     }
 }
