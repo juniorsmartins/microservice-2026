@@ -1,5 +1,6 @@
 package backend.core.api_news.usecases;
 
+import backend.core.api_news.exceptions.http404.NewsNotFoundCustomException;
 import backend.core.api_news.ports.input.NewsDeleteByIdInputPort;
 import backend.core.api_news.ports.output.NewsDeleteByIdOutputPort;
 import backend.core.api_news.ports.output.NewsFindByIdOutputPort;
@@ -32,7 +33,7 @@ public class NewsDeleteByIdUseCase implements NewsDeleteByIdInputPort {
         newsFindByIdOutputPort.findById(id)
                 .ifPresentOrElse(news -> newsDeleteByIdOutputPort.deleteById(news.id()),
                         () -> {
-                            throw new IllegalArgumentException("News with id " + id + " not found");
+                            throw new NewsNotFoundCustomException(id);
                         }
                 );
 
