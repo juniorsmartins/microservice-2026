@@ -2,6 +2,7 @@ package backend.core.api_news.exceptions;
 
 import backend.core.api_news.exceptions.http404.ResourceNotFoundCustomException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.*;
@@ -19,6 +20,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+@Slf4j
 @RestControllerAdvice
 @RequiredArgsConstructor
 public final class GlobalHandler extends ResponseEntityExceptionHandler {
@@ -33,11 +35,10 @@ public final class GlobalHandler extends ResponseEntityExceptionHandler {
         var message = messageSource
                 .getMessage(exception.getMessageKey(), new Object[]{exception.getValue()}, LocaleContextHolder.getLocale());
 
-        // ProblemDetail RFC 7807
-        ProblemDetail problemDetail = ProblemDetail.forStatus(HttpStatus.NOT_FOUND);
-        problemDetail.setType(URI.create("https://microservice2026.com/errors/resource-not-found"));
-        problemDetail.setTitle(message);
-        problemDetail.setProperty("timestamp", OffsetDateTime.now());
+        log.warn(message);
+
+        var problemDetail = getProblemDetail(HttpStatus.NOT_FOUND, "https://microservice2026.com/errors/resource-not-found",
+                message, null);
 
         return ResponseEntity
                 .status(HttpStatus.NOT_FOUND)
@@ -45,19 +46,20 @@ public final class GlobalHandler extends ResponseEntityExceptionHandler {
     }
 
     // ---------- TRATAMENTO DE EXCEÇÕES DEFAULT ---------- //
+    // ---------- 400 Bad Request ---------- //
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException exception,
                                                                   HttpHeaders httpHeaders,
                                                                   HttpStatusCode httpStatusCode,
                                                                   WebRequest webRequest) {
         var fieldErrors = getFieldErrors(exception);
+        var message = getMessage("exception.request.attribute.invalid");
+
+        log.warn(message);
 
         // ProblemDetail RFC 7807
-        ProblemDetail problemDetail = ProblemDetail.forStatus(httpStatusCode);
-        problemDetail.setType(URI.create("https://microservice2026.com/errors/invalid-fields"));
-        problemDetail.setTitle(getMessage("exception.request.attribute.invalid"));
-        problemDetail.setProperty("fields", fieldErrors);
-        problemDetail.setProperty("timestamp", OffsetDateTime.now());
+        var problemDetail = getProblemDetail(HttpStatus.BAD_REQUEST, "https://microservice2026.com/errors/invalid-fields",
+                message, fieldErrors);
 
         return super.handleExceptionInternal(exception, problemDetail, httpHeaders, httpStatusCode, webRequest);
     }
@@ -81,7 +83,7 @@ public final class GlobalHandler extends ResponseEntityExceptionHandler {
         return this.messageSource.getMessage(messageKey, new Object[]{}, LocaleContextHolder.getLocale());
     }
 
-    private ProblemDetail createProblemDetail(HttpStatus httpStatus,
+    private ProblemDetail getProblemDetail(HttpStatus httpStatus,
                                               String type,
                                               String title,
                                               Map<String, List<String>> fieldErrors) {
@@ -89,7 +91,9 @@ public final class GlobalHandler extends ResponseEntityExceptionHandler {
         ProblemDetail problemDetail = ProblemDetail.forStatus(httpStatus);
         problemDetail.setType(URI.create(type));
         problemDetail.setTitle(title);
-        problemDetail.setProperty("fields", fieldErrors);
+        if (fieldErrors != null) {
+            problemDetail.setProperty("fields", fieldErrors);
+        }
         problemDetail.setProperty("timestamp", OffsetDateTime.now());
 
         return problemDetail;
