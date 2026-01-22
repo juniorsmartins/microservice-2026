@@ -7,6 +7,8 @@ import backend.core.api_news.dtos.responses.NewsUpdateResponse;
 import backend.core.api_news.entities.NewsEntity;
 import backend.core.api_news.repositories.NewsRepository;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
@@ -87,6 +89,121 @@ class NewsControllerIntegrationTest {
             Assertions.assertEquals(newsRequest.text(), newsEntity.getText());
             Assertions.assertEquals(newsRequest.author(), newsEntity.getAuthor());
             Assertions.assertEquals(newsRequest.font(), newsEntity.getFont());
+        }
+    }
+
+    @Nested
+    @DisplayName("CreateIntegrationInvalid")
+    class CreateIntegrationInvalid {
+
+        @ParameterizedTest
+        @ValueSource(strings = {"", " "})
+        void dadaRequisicaoComChapeuInvalido_quandoCriarNoticia_entaoLancarExcecao400BadRequest(String valor) {
+            var newsRequest = new NewsCreateRequest(valor, "Djokovic vence mais uma",
+                    "Próximo desafio será contra Nadal", "Texto da matéria", "Tom Wolfe",
+                    "Tênis Global");
+
+            restTestClient.post()
+                    .uri("/api/v1.0/news")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .body(newsRequest)
+                    .exchange()
+                    .expectStatus().isBadRequest()
+                    .expectBody()
+                    .jsonPath("$.title").isEqualTo("Há um ou mais campos inválidos.")
+                    .jsonPath("$.type").isNotEmpty()
+                    .jsonPath("$.timestamp").isNotEmpty();
+        }
+
+        @ParameterizedTest
+        @ValueSource(strings = {"", " "})
+        void dadaRequisicaoComTituloInvalido_quandoCriarNoticia_entaoLancarExcecao400BadRequest(String valor) {
+            var newsRequest = new NewsCreateRequest("Tênis", valor,
+                    "Próximo desafio será contra Nadal", "Texto da matéria", "Tom Wolfe",
+                    "Tênis Global");
+
+            restTestClient.post()
+                    .uri("/api/v1.0/news")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .body(newsRequest)
+                    .exchange()
+                    .expectStatus().isBadRequest()
+                    .expectBody()
+                    .jsonPath("$.title").isEqualTo("Há um ou mais campos inválidos.")
+                    .jsonPath("$.type").isNotEmpty()
+                    .jsonPath("$.timestamp").isNotEmpty();
+        }
+
+        @ParameterizedTest
+        @ValueSource(strings = {"", " "})
+        void dadaRequisicaoComLinhaFinaInvalida_quandoCriarNoticia_entaoLancarExcecao400BadRequest(String valor) {
+            var newsRequest = new NewsCreateRequest("Tênis", "Djokovic vence mais uma",
+                    valor, "Texto da matéria", "Tom Wolfe", "Tênis Global");
+
+            restTestClient.post()
+                    .uri("/api/v1.0/news")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .body(newsRequest)
+                    .exchange()
+                    .expectStatus().isBadRequest()
+                    .expectBody()
+                    .jsonPath("$.title").isEqualTo("Há um ou mais campos inválidos.")
+                    .jsonPath("$.type").isNotEmpty()
+                    .jsonPath("$.timestamp").isNotEmpty();
+        }
+
+        @ParameterizedTest
+        @ValueSource(strings = {"", " "})
+        void dadaRequisicaoComTextoInvalido_quandoCriarNoticia_entaoLancarExcecao400BadRequest(String valor) {
+            var newsRequest = new NewsCreateRequest("Tênis", "Djokovic vence mais uma",
+                    "Próximo desafio será contra Nadal", valor, "Tom Wolfe", "Tênis Global");
+
+            restTestClient.post()
+                    .uri("/api/v1.0/news")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .body(newsRequest)
+                    .exchange()
+                    .expectStatus().isBadRequest()
+                    .expectBody()
+                    .jsonPath("$.title").isEqualTo("Há um ou mais campos inválidos.")
+                    .jsonPath("$.type").isNotEmpty()
+                    .jsonPath("$.timestamp").isNotEmpty();
+        }
+
+        @ParameterizedTest
+        @ValueSource(strings = {"", " "})
+        void dadaRequisicaoComAutorInvalido_quandoCriarNoticia_entaoLancarExcecao400BadRequest(String valor) {
+            var newsRequest = new NewsCreateRequest("Tênis", "Djokovic vence mais uma",
+                    "Próximo desafio será contra Nadal", "Texto da matéria", valor, "Tênis Global");
+
+            restTestClient.post()
+                    .uri("/api/v1.0/news")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .body(newsRequest)
+                    .exchange()
+                    .expectStatus().isBadRequest()
+                    .expectBody()
+                    .jsonPath("$.title").isEqualTo("Há um ou mais campos inválidos.")
+                    .jsonPath("$.type").isNotEmpty()
+                    .jsonPath("$.timestamp").isNotEmpty();
+        }
+
+        @ParameterizedTest
+        @ValueSource(strings = {"", " "})
+        void dadaRequisicaoComFonteInvalido_quandoCriarNoticia_entaoLancarExcecao400BadRequest(String valor) {
+            var newsRequest = new NewsCreateRequest("Tênis", "Djokovic vence mais uma",
+                    "Próximo desafio será contra Nadal", "Texto da matéria", "Tom Wolfe", valor);
+
+            restTestClient.post()
+                    .uri("/api/v1.0/news")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .body(newsRequest)
+                    .exchange()
+                    .expectStatus().isBadRequest()
+                    .expectBody()
+                    .jsonPath("$.title").isEqualTo("Há um ou mais campos inválidos.")
+                    .jsonPath("$.type").isNotEmpty()
+                    .jsonPath("$.timestamp").isNotEmpty();
         }
     }
 
