@@ -3,9 +3,11 @@ package backend.core.api_news.controllers;
 import backend.core.api_news.dtos.requests.NewsCreateRequest;
 import backend.core.api_news.dtos.responses.NewsCreateResponse;
 import backend.core.api_news.dtos.responses.NewsResponse;
+import backend.core.api_news.dtos.responses.NewsUpdateResponse;
 import backend.core.api_news.entities.NewsEntity;
 import backend.core.api_news.repositories.NewsRepository;
 import org.junit.jupiter.api.*;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
@@ -136,7 +138,8 @@ class NewsControllerIntegrationTest {
                     .contentType(MediaType.APPLICATION_JSON)
                     .body(newsRequest)
                     .exchange()
-                    .expectBody(NewsResponse.class)
+                    .expectStatus().isOk()
+                    .expectBody(NewsUpdateResponse.class)
                     .returnResult()
                     .getResponseBody();
 
@@ -156,6 +159,28 @@ class NewsControllerIntegrationTest {
             Assertions.assertEquals(newsDoBanco.getText(), newsRequest.text());
             Assertions.assertEquals(newsDoBanco.getAuthor(), newsRequest.author());
             Assertions.assertEquals(newsDoBanco.getFont(), newsRequest.font());
+        }
+    }
+
+    @Nested
+    @DisplayName("DeleteByIdIntegrationValid")
+    class DeleteByIdIntegrationValid {
+
+        @Test
+        void dadaRequisicaoValida_quandoDeletarNoticiaPorId_entaoRetornarHttp204NoContentAndApagarDoBanco() {
+            var newsEntity = new NewsEntity(null, "Tênis", "Djokovic vence mais uma",
+                    "Próximo desafio será contra Nadal", "Texto da matéria",
+                    "Tom Wolfe", "Tênis Global");
+            newsRepository.save(newsEntity);
+            var newsId = newsEntity.getId();
+
+            restTestClient.delete()
+                    .uri("/api/v1.0/news/{id}", newsId)
+                    .exchange()
+                    .expectStatus().isNoContent();
+
+            var newsDoBanco = newsRepository.findById(newsId);
+            Assertions.assertTrue(newsDoBanco.isEmpty());
         }
     }
 }
