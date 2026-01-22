@@ -20,7 +20,7 @@ public class NewsCreateUseCase implements NewsCreateInputPort {
                     @CachePut(value = "newsById", key = "#result.id")
             },
             evict = {
-                    @CacheEvict(value = "newsPageAll", allEntries = true) // Limpa cache de paginação
+                    @CacheEvict(cacheNames = {"newsPageAll"}, allEntries = true) // Limpa cache de paginação
             }
     )
     @Override

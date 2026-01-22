@@ -13,6 +13,7 @@ Descrição: Microsserviços responsável por gerenciar os dados dos usuários d
 - Spring Cloud Netflix Eureka Client (versão 2025.1.0);
 - Spring Cloud Bus AMQP (versão 2025.1.0);
 - Spring Doc OpenApi (versão 3.0.0);
+- Spring Data Jpa Auditing (auditoria);
 - Spring Data Envers (auditoria - versão 4.0.1);
 - Spring Data JPA;
 - API Versioning;

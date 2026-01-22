@@ -2,11 +2,10 @@ package backend.core.api_news.dtos.responses;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
-import java.time.OffsetDateTime;
 import java.util.UUID;
 
-@Schema(name = "NewsResponse", description = "Objeto para transporte de dados de saída em requisições.")
-public record NewsResponse(
+@Schema(name = "NewsFindByIdResponse", description = "Objeto para transporte de dados de saída em requisições.")
+public record NewsFindByIdResponse(
 
         @Schema(name = "ID", description = "Identificador único do recurso.", example = "92e719aa-3c45-4387-95a2-5d078bf410ed")
         UUID id,
@@ -27,16 +26,7 @@ public record NewsResponse(
         String author,
 
         @Schema(name = "Fonte", description = "Pessoa, instituição, documento ou dado que confirma os fatos e é a origem da informação.", example = "IBGE")
-        String font,
+        String font
 
-        // Spring Data Jpa Auditing
-        @Schema(name = "createdBy", description = "Auditoria - registro de quem criou o recurso.")
-        String createdBy,
-        @Schema(name = "lastModifiedBy", description = "Auditoria - registro de quem modificou o recurso.")
-        String lastModifiedBy,
-        @Schema(name = "createdDate", description = "Auditoria - registro da data de criação do recurso.")
-        OffsetDateTime createdDate,
-        @Schema(name = "lastModifiedDate", description = "Auditoria - registro da data de modificação do recurso.")
-        OffsetDateTime lastModifiedDate
 ) {
 }

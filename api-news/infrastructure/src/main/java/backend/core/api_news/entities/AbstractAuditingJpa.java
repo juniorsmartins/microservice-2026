@@ -11,8 +11,10 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.OffsetDateTime;
 
-@MappedSuperclass // Anotação de Herança para entidades JPA. Indica que esta classe não é uma entidade por si só, mas suas propriedades serão herdadas por entidades filhas.
-@EntityListeners(AuditingEntityListener.class) // Especifica que a classe usará o AuditingEntityListener para preencher automaticamente os campos de auditoria.
+@MappedSuperclass
+// Anotação de Herança para entidades JPA. Indica que esta classe não é uma entidade por si só, mas suas propriedades serão herdadas por entidades filhas.
+@EntityListeners(AuditingEntityListener.class)
+// Especifica que a classe usará o AuditingEntityListener para preencher automaticamente os campos de auditoria.
 @Getter
 @Setter
 public abstract class AbstractAuditingJpa {

@@ -2,9 +2,12 @@ package backend.core.api_news.controllers;
 
 import backend.core.api_news.configs.NoCacheTestConfig;
 import backend.core.api_news.dtos.NewsDto;
-import backend.core.api_news.dtos.requests.NewsRequest;
+import backend.core.api_news.dtos.requests.NewsCreateRequest;
+import backend.core.api_news.dtos.requests.NewsUpdateRequest;
 import backend.core.api_news.dtos.responses.NewsCreateResponse;
+import backend.core.api_news.dtos.responses.NewsFindByIdResponse;
 import backend.core.api_news.dtos.responses.NewsResponse;
+import backend.core.api_news.dtos.responses.NewsUpdateResponse;
 import backend.core.api_news.ports.input.*;
 import backend.core.api_news.presenters.NewsPresenterPort;
 import org.junit.jupiter.api.*;
@@ -64,13 +67,14 @@ class NewsControllerMockMvcTest {
         void dadaRequisicaoValida_quandoCriarNoticia_entaoRetornarHttp201AndDadosValidos() {
             var newsId = UUID.randomUUID();
 
-            var newsRequest = new NewsRequest("Tênis", "Djokovic vence mais uma",
+            var newsRequest = new NewsCreateRequest("Tênis", "Djokovic vence mais uma",
                     "Próximo desafio será contra Nadal", "Texto da matéria",
                     "Tom Wolfe", "Tênis Global");
 
             var newsDto = new NewsDto(newsId, "Tênis",
                     "Djokovic vence mais uma", "Próximo desafio será contra Nadal",
-                    "Texto da matéria", "Tom Wolfe", "Tênis Global");
+                    "Texto da matéria", "Tom Wolfe", "Tênis Global",
+                    null, null, null, null);
 
             var newsResponse = new NewsCreateResponse(newsId, "Tênis",
                     "Djokovic vence mais uma", "Próximo desafio será contra Nadal",
@@ -109,21 +113,21 @@ class NewsControllerMockMvcTest {
         void dadaRequisicaoValida_quandoAtualizarNoticia_entaoRetornarHttp200AndDadosValidos() {
             var newsId = UUID.randomUUID();
 
-            var newsRequest = new NewsRequest("Tênis", "Djokovic vence mais uma",
+            var newsRequest = new NewsUpdateRequest("Tênis", "Djokovic vence mais uma",
                     "Próximo desafio será contra Nadal", "Texto da matéria",
                     "Tom Wolfe", "Tênis Global");
 
             var newsDto = new NewsDto(newsId, "Tênis", "Djokovic vence mais uma",
                     "Próximo desafio será contra Nadal", "Texto da matéria", "Tom Wolfe",
-                    "Tênis Global");
+                    "Tênis Global", null, null, null, null);
 
-            var newsResponse = new NewsResponse(newsId, "Tênis", "Djokovic vence mais uma",
+            var newsUpdateResponse = new NewsUpdateResponse(newsId, "Tênis", "Djokovic vence mais uma",
                     "Próximo desafio será contra Nadal", "Texto da matéria", "Tom Wolfe",
                     "Tênis Global");
 
             Mockito.when(newsPresenterPort.toNewsDto(newsId, newsRequest)).thenReturn(newsDto);
             Mockito.when(newsUpdateInputPort.update(newsDto)).thenReturn(newsDto);
-            Mockito.when(newsPresenterPort.toNewsResponse(newsDto)).thenReturn(newsResponse);
+            Mockito.when(newsPresenterPort.toNewsUpdateResponse(newsDto)).thenReturn(newsUpdateResponse);
 
             restTestClient.put()
                     .uri("/api/v1.0/news/{id}", newsId)
@@ -142,7 +146,7 @@ class NewsControllerMockMvcTest {
 
             Mockito.verify(newsPresenterPort).toNewsDto(newsId, newsRequest);
             Mockito.verify(newsUpdateInputPort).update(newsDto);
-            Mockito.verify(newsPresenterPort).toNewsResponse(newsDto);
+            Mockito.verify(newsPresenterPort).toNewsUpdateResponse(newsDto);
         }
     }
 
@@ -175,14 +179,14 @@ class NewsControllerMockMvcTest {
 
             var newsDto = new NewsDto(newsId, "Tênis", "Djokovic vence mais uma",
                     "Próximo desafio será contra Nadal", "Texto da matéria", "Tom Wolfe",
-                    "Tênis Global");
+                    "Tênis Global", null, null, null, null);
 
-            var newsResponse = new NewsResponse(newsId, "Tênis", "Djokovic vence mais uma",
-                    "Próximo desafio será contra Nadal", "Texto da matéria", "Tom Wolfe",
-                    "Tênis Global");
+            var newsResponse = new NewsFindByIdResponse(newsId, "Tênis",
+                    "Djokovic vence mais uma", "Próximo desafio será contra Nadal",
+                    "Texto da matéria", "Tom Wolfe", "Tênis Global");
 
             Mockito.when(newsFindByIdInputPort.findById(newsId)).thenReturn(newsDto);
-            Mockito.when(newsPresenterPort.toNewsResponse(newsDto)).thenReturn(newsResponse);
+            Mockito.when(newsPresenterPort.toNewsFindByIdResponse(newsDto)).thenReturn(newsResponse);
 
             restTestClient.get()
                     .uri("/api/v1.0/news/{id}", newsId)
@@ -198,7 +202,7 @@ class NewsControllerMockMvcTest {
                     .jsonPath("$.font").isEqualTo("Tênis Global");
 
             Mockito.verify(newsFindByIdInputPort).findById(newsId);
-            Mockito.verify(newsPresenterPort).toNewsResponse(newsDto);
+            Mockito.verify(newsPresenterPort).toNewsFindByIdResponse(newsDto);
         }
     }
 
@@ -213,19 +217,23 @@ class NewsControllerMockMvcTest {
 
             var newsDto1 = new NewsDto(newsId1, "Tênis",
                     "Djokovic vence mais uma", "Próximo desafio será contra Nadal",
-                    "Texto da matéria", "Tom Wolfe", "Tênis Global");
+                    "Texto da matéria", "Tom Wolfe", "Tênis Global",
+                    null, null, null, null);
 
             var newsDto2 = new NewsDto(newsId2, "Futebol Americano",
                     "Dallas Cowboys vence Minesota", "Próximo desafio será contra Bears",
-                    "Texto da matéria", "Gay Talese", "NFL");
+                    "Texto da matéria", "Gay Talese", "NFL",
+                    null, null, null, null);
 
             var newsResponse1 = new NewsResponse(newsId1, "Tênis",
                     "Djokovic vence mais uma", "Próximo desafio será contra Nadal",
-                    "Texto da matéria", "Tom Wolfe", "Tênis Global");
+                    "Texto da matéria", "Tom Wolfe", "Tênis Global",
+                    null, null, null, null);
 
             var newsResponse2 = new NewsResponse(newsId2, "Futebol Americano",
                     "Dallas Cowboys vence Minesota", "Próximo desafio será contra Bears",
-                    "Texto da matéria", "Gay Talese", "NFL");
+                    "Texto da matéria", "Gay Talese", "NFL",
+                    null, null, null, null);
 
             Page<NewsDto> paginaDto = new PageImpl<>(List.of(newsDto1, newsDto2));
             Mockito.when(newsPageAllInputPort.pageAll(Mockito.any(Pageable.class))).thenReturn(paginaDto);

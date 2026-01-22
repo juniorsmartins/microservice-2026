@@ -31,7 +31,16 @@ public class NewsUpdateUseCase implements NewsUpdateInputPort {
     public NewsDto update(NewsDto dto) {
 
         return newsFindByIdOutputPort.findById(dto.id())
-                .map(news -> newsSaveOutputPort.save(dto))
+                .map(dtoDatabase -> {
+                    var dtoUpdated = this.toUpdate(dto, dtoDatabase);
+                    return this.newsSaveOutputPort.save(dtoUpdated);
+                })
                 .orElseThrow(() -> new RuntimeException("News not found with id: " + dto.id()));
+    }
+
+    private NewsDto toUpdate(NewsDto dtoRequest, NewsDto dtoDatabase) {
+        return new NewsDto(dtoDatabase.id(), dtoRequest.hat(), dtoRequest.title(), dtoRequest.thinLine(),
+                dtoRequest.text(), dtoRequest.author(), dtoRequest.font(), dtoDatabase.createdBy(),
+                dtoDatabase.lastModifiedBy(), dtoDatabase.createdDate(), dtoDatabase.lastModifiedDate());
     }
 }
