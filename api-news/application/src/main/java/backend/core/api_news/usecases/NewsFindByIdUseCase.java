@@ -1,6 +1,7 @@
 package backend.core.api_news.usecases;
 
 import backend.core.api_news.dtos.NewsDto;
+import backend.core.api_news.exceptions.http404.NewsNotFoundCustomException;
 import backend.core.api_news.ports.input.NewsFindByIdInputPort;
 import backend.core.api_news.ports.output.NewsFindByIdOutputPort;
 import org.springframework.cache.annotation.Cacheable;
@@ -20,6 +21,6 @@ public class NewsFindByIdUseCase implements NewsFindByIdInputPort {
     public NewsDto findById(final UUID id) {
 
         return newsFindByIdOutputPort.findById(id)
-                .orElseThrow(() -> new RuntimeException("News with id " + id + " not found"));
+                .orElseThrow(() -> new NewsNotFoundCustomException(id));
     }
 }
