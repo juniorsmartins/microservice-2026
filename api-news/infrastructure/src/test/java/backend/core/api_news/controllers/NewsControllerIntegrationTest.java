@@ -2,6 +2,7 @@ package backend.core.api_news.controllers;
 
 import backend.core.api_news.dtos.requests.NewsCreateRequest;
 import backend.core.api_news.dtos.responses.NewsCreateResponse;
+import backend.core.api_news.dtos.responses.NewsFindByIdResponse;
 import backend.core.api_news.dtos.responses.NewsResponse;
 import backend.core.api_news.dtos.responses.NewsUpdateResponse;
 import backend.core.api_news.entities.NewsEntity;
@@ -181,6 +182,33 @@ class NewsControllerIntegrationTest {
 
             var newsDoBanco = newsRepository.findById(newsId);
             Assertions.assertTrue(newsDoBanco.isEmpty());
+        }
+    }
+
+    @Nested
+    @DisplayName("FindByIdIntegrationValid")
+    class FindByIdIntegrationValid {
+
+        @Test
+        void dadaRequisicaoValida_quandoConsultarNoticiaPorId_entaoRetornarHttp200AndDadosValidos() {
+            var newsEntity = new NewsEntity(null, "Tênis", "Djokovic vence mais uma",
+                    "Próximo desafio será contra Nadal", "Texto da matéria",
+                    "Tom Wolfe", "Tênis Global");
+            newsRepository.save(newsEntity);
+            var newsId = newsEntity.getId();
+
+            restTestClient.get()
+                    .uri("/api/v1.0/news/{id}", newsId)
+                    .exchange()
+                    .expectStatus().isOk()
+                    .expectBody()
+                    .jsonPath("$.id").isEqualTo(newsId.toString())
+                    .jsonPath("$.hat").isEqualTo("Tênis")
+                    .jsonPath("$.title").isEqualTo("Djokovic vence mais uma")
+                    .jsonPath("$.thinLine").isEqualTo("Próximo desafio será contra Nadal")
+                    .jsonPath("$.text").isEqualTo("Texto da matéria")
+                    .jsonPath("$.author").isEqualTo("Tom Wolfe")
+                    .jsonPath("$.font").isEqualTo("Tênis Global");
         }
     }
 }
