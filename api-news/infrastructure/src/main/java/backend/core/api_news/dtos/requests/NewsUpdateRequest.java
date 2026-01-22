@@ -3,8 +3,8 @@ package backend.core.api_news.dtos.requests;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 
-@Schema(name = "NewsCreateRequest", description = "Objeto para transporte de dados de entrada em requisições.")
-public record NewsRequest(
+@Schema(name = "NewsUpdateRequest", description = "Objeto para transporte de dados de entrada em requisições.")
+public record NewsUpdateRequest(
 
         @Schema(name = "Chapéu", description = "Elemento editorial usado acima do título da matéria.", example = "Esporte")
         @NotBlank

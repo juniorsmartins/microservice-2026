@@ -2,7 +2,8 @@ package backend.core.api_news.controllers;
 
 import backend.core.api_news.configs.NoCacheTestConfig;
 import backend.core.api_news.dtos.NewsDto;
-import backend.core.api_news.dtos.requests.NewsRequest;
+import backend.core.api_news.dtos.requests.NewsCreateRequest;
+import backend.core.api_news.dtos.requests.NewsUpdateRequest;
 import backend.core.api_news.dtos.responses.NewsCreateResponse;
 import backend.core.api_news.dtos.responses.NewsResponse;
 import backend.core.api_news.dtos.responses.NewsUpdateResponse;
@@ -65,7 +66,7 @@ class NewsControllerMockMvcTest {
         void dadaRequisicaoValida_quandoCriarNoticia_entaoRetornarHttp201AndDadosValidos() {
             var newsId = UUID.randomUUID();
 
-            var newsRequest = new NewsRequest("Tênis", "Djokovic vence mais uma",
+            var newsRequest = new NewsCreateRequest("Tênis", "Djokovic vence mais uma",
                     "Próximo desafio será contra Nadal", "Texto da matéria",
                     "Tom Wolfe", "Tênis Global");
 
@@ -111,7 +112,7 @@ class NewsControllerMockMvcTest {
         void dadaRequisicaoValida_quandoAtualizarNoticia_entaoRetornarHttp200AndDadosValidos() {
             var newsId = UUID.randomUUID();
 
-            var newsRequest = new NewsRequest("Tênis", "Djokovic vence mais uma",
+            var newsRequest = new NewsUpdateRequest("Tênis", "Djokovic vence mais uma",
                     "Próximo desafio será contra Nadal", "Texto da matéria",
                     "Tom Wolfe", "Tênis Global");
 

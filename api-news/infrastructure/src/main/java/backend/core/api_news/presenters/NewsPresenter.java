@@ -1,7 +1,8 @@
 package backend.core.api_news.presenters;
 
 import backend.core.api_news.dtos.NewsDto;
-import backend.core.api_news.dtos.requests.NewsRequest;
+import backend.core.api_news.dtos.requests.NewsCreateRequest;
+import backend.core.api_news.dtos.requests.NewsUpdateRequest;
 import backend.core.api_news.dtos.responses.NewsCreateResponse;
 import backend.core.api_news.dtos.responses.NewsResponse;
 import backend.core.api_news.dtos.responses.NewsUpdateResponse;
@@ -14,13 +15,13 @@ import java.util.UUID;
 public class NewsPresenter implements NewsPresenterPort {
 
     @Override
-    public NewsDto toNewsDto(NewsRequest request) {
+    public NewsDto toNewsDto(NewsCreateRequest request) {
         return new NewsDto(null, request.hat(), request.title(), request.thinLine(), request.text(),
                 request.author(), request.font(), null, null, null, null);
     }
 
     @Override
-    public NewsDto toNewsDto(UUID id, NewsRequest request) {
+    public NewsDto toNewsDto(UUID id, NewsUpdateRequest request) {
         return new NewsDto(id, request.hat(), request.title(), request.thinLine(), request.text(), request.author(),
                 request.font(), null, null, null, null);
     }

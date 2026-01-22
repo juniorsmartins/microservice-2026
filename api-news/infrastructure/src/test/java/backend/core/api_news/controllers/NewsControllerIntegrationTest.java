@@ -1,6 +1,6 @@
 package backend.core.api_news.controllers;
 
-import backend.core.api_news.dtos.requests.NewsRequest;
+import backend.core.api_news.dtos.requests.NewsCreateRequest;
 import backend.core.api_news.dtos.responses.NewsCreateResponse;
 import backend.core.api_news.dtos.responses.NewsResponse;
 import backend.core.api_news.entities.NewsEntity;
@@ -40,7 +40,7 @@ class NewsControllerIntegrationTest {
 
         @Test
         void dadaRequisicaoValida_quandoCriarNoticia_entaoRetornarHttp201AndDadosValidos() {
-            var newsRequest = new NewsRequest("Tênis", "Djokovic vence mais uma",
+            var newsRequest = new NewsCreateRequest("Tênis", "Djokovic vence mais uma",
                     "Próximo desafio será contra Nadal", "Texto da matéria",
                     "Tom Wolfe", "Tênis Global");
 
@@ -62,7 +62,7 @@ class NewsControllerIntegrationTest {
 
         @Test
         void dadaRequisicaoValida_quandoCriarNoticia_entaoSalvarDadosNoBanco() {
-            var newsRequest = new NewsRequest("Boxe", "Canelo vence mais uma",
+            var newsRequest = new NewsCreateRequest("Boxe", "Canelo vence mais uma",
                     "Próxima luta será contra Terence", "Texto da matéria",
                     "Tom Wolfe", "Tênis Global");
 
@@ -99,7 +99,7 @@ class NewsControllerIntegrationTest {
             newsRepository.save(newsEntity);
             var newsId = newsEntity.getId();
 
-            var newsRequest = new NewsRequest("Tênis Atual", "Djokovic vence mais uma Atual",
+            var newsRequest = new NewsCreateRequest("Tênis Atual", "Djokovic vence mais uma Atual",
                     "Próximo desafio será contra Nadal Atual", "Texto da matéria Atual",
                     "Tom Wolfe Atual", "Tênis Global Atual");
 
@@ -127,7 +127,7 @@ class NewsControllerIntegrationTest {
             newsRepository.save(newsEntity);
             var newsId = newsEntity.getId();
 
-            var newsRequest = new NewsRequest("Tênis Atual", "Djokovic vence mais uma Atual",
+            var newsRequest = new NewsCreateRequest("Tênis Atual", "Djokovic vence mais uma Atual",
                     "Próximo desafio será contra Nadal Atual", "Texto da matéria Atual",
                     "Tom Wolfe Atual", "Tênis Global Atual");
 

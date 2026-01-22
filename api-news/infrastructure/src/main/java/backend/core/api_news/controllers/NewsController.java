@@ -1,7 +1,8 @@
 package backend.core.api_news.controllers;
 
 import backend.core.api_news.annotations.PageableParameter;
-import backend.core.api_news.dtos.requests.NewsRequest;
+import backend.core.api_news.dtos.requests.NewsCreateRequest;
+import backend.core.api_news.dtos.requests.NewsUpdateRequest;
 import backend.core.api_news.dtos.responses.NewsCreateResponse;
 import backend.core.api_news.dtos.responses.NewsResponse;
 import backend.core.api_news.dtos.responses.NewsUpdateResponse;
@@ -70,7 +71,7 @@ public class NewsController {
     @PostMapping(value = "/{version}/news", version = "1.0")
     public ResponseEntity<NewsCreateResponse> create(
             @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Estrutura de transporte para entrada de dados.", required = true)
-            @RequestBody @Valid NewsRequest request) {
+            @RequestBody @Valid NewsCreateRequest request) {
 
         var response = Optional.of(request)
                 .map(newsPresenterPort::toNewsDto)
@@ -107,7 +108,7 @@ public class NewsController {
             @Parameter(name = "id", description = "Identificador único do recurso.", example = "034eb74c-69ee-4bd4-a064-5c4cc5e9e748", required = true)
             @PathVariable(name = "id") final UUID id,
             @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Estrutura de transporte para entrada de dados.", required = true)
-            @RequestBody @Valid NewsRequest request) {
+            @RequestBody @Valid NewsUpdateRequest request) {
 
         var newsDto = newsPresenterPort.toNewsDto(id, request);
         var newsUpdate = newsUpdateInputPort.update(newsDto);
