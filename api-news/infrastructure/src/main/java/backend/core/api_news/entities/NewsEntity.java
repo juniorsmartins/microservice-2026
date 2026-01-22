@@ -5,6 +5,7 @@ import lombok.*;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.time.OffsetDateTime;
 import java.util.UUID;
 
 @Entity
@@ -18,6 +19,21 @@ public final class NewsEntity extends AbstractAuditingJpa implements Serializabl
 
     @Serial
     private static final long serialVersionUID = 1L;
+
+    public NewsEntity(UUID id, String hat, String title, String thinLine, String text, String author, String font,
+                      String createdBy, String lastModifiedBy, OffsetDateTime createdDate, OffsetDateTime lastModifiedDate) {
+        this.id = id;
+        this.hat = hat;
+        this.title = title;
+        this.thinLine = thinLine;
+        this.text = text;
+        this.author = author;
+        this.font = font;
+        this.setCreatedBy(createdBy);
+        this.setLastModifiedBy(lastModifiedBy);
+        this.setCreatedDate(createdDate);
+        this.setLastModifiedDate(lastModifiedDate);
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

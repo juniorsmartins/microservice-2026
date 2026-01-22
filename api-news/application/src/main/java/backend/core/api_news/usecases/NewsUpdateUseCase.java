@@ -1,6 +1,7 @@
 package backend.core.api_news.usecases;
 
 import backend.core.api_news.dtos.NewsDto;
+import backend.core.api_news.exceptions.http404.NewsNotFoundCustomException;
 import backend.core.api_news.ports.input.NewsUpdateInputPort;
 import backend.core.api_news.ports.output.NewsFindByIdOutputPort;
 import backend.core.api_news.ports.output.NewsSaveOutputPort;
@@ -31,7 +32,16 @@ public class NewsUpdateUseCase implements NewsUpdateInputPort {
     public NewsDto update(NewsDto dto) {
 
         return newsFindByIdOutputPort.findById(dto.id())
-                .map(news -> newsSaveOutputPort.save(dto))
-                .orElseThrow(() -> new RuntimeException("News not found with id: " + dto.id()));
+                .map(dtoDatabase -> {
+                    var dtoUpdated = this.toUpdate(dto, dtoDatabase);
+                    return this.newsSaveOutputPort.save(dtoUpdated);
+                })
+                .orElseThrow(() -> new NewsNotFoundCustomException(dto.id()));
+    }
+
+    private NewsDto toUpdate(NewsDto dtoRequest, NewsDto dtoDatabase) {
+        return new NewsDto(dtoDatabase.id(), dtoRequest.hat(), dtoRequest.title(), dtoRequest.thinLine(),
+                dtoRequest.text(), dtoRequest.author(), dtoRequest.font(), dtoDatabase.createdBy(),
+                dtoDatabase.lastModifiedBy(), dtoDatabase.createdDate(), dtoDatabase.lastModifiedDate());
     }
 }

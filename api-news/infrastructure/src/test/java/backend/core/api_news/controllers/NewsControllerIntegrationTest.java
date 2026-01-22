@@ -1,8 +1,9 @@
 package backend.core.api_news.controllers;
 
-import backend.core.api_news.dtos.requests.NewsRequest;
+import backend.core.api_news.dtos.requests.NewsCreateRequest;
+import backend.core.api_news.dtos.requests.NewsUpdateRequest;
 import backend.core.api_news.dtos.responses.NewsCreateResponse;
-import backend.core.api_news.dtos.responses.NewsResponse;
+import backend.core.api_news.dtos.responses.NewsUpdateResponse;
 import backend.core.api_news.entities.NewsEntity;
 import backend.core.api_news.repositories.NewsRepository;
 import org.junit.jupiter.api.*;
@@ -11,6 +12,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.client.RestTestClient;
 import org.springframework.web.context.WebApplicationContext;
+
+import java.util.UUID;
 
 @Tag("integration")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -40,7 +43,7 @@ class NewsControllerIntegrationTest {
 
         @Test
         void dadaRequisicaoValida_quandoCriarNoticia_entaoRetornarHttp201AndDadosValidos() {
-            var newsRequest = new NewsRequest("Tênis", "Djokovic vence mais uma",
+            var newsRequest = new NewsCreateRequest("Tênis", "Djokovic vence mais uma",
                     "Próximo desafio será contra Nadal", "Texto da matéria",
                     "Tom Wolfe", "Tênis Global");
 
@@ -62,7 +65,7 @@ class NewsControllerIntegrationTest {
 
         @Test
         void dadaRequisicaoValida_quandoCriarNoticia_entaoSalvarDadosNoBanco() {
-            var newsRequest = new NewsRequest("Boxe", "Canelo vence mais uma",
+            var newsRequest = new NewsCreateRequest("Boxe", "Canelo vence mais uma",
                     "Próxima luta será contra Terence", "Texto da matéria",
                     "Tom Wolfe", "Tênis Global");
 
@@ -92,14 +95,14 @@ class NewsControllerIntegrationTest {
     class UpdateIntegrationValid {
 
         @Test
-        void dadaRequisicaoValida_quandoAtualizarNoticia_entaoRetornarHttp200AndDadosValidos() {
+        void dadaRequisicaoValida_quandoAtualizarNoticiaPorId_entaoRetornarHttp200AndDadosValidos() {
             var newsEntity = new NewsEntity(null, "Tênis", "Djokovic vence mais uma",
                     "Próximo desafio será contra Nadal", "Texto da matéria",
                     "Tom Wolfe", "Tênis Global");
             newsRepository.save(newsEntity);
             var newsId = newsEntity.getId();
 
-            var newsRequest = new NewsRequest("Tênis Atual", "Djokovic vence mais uma Atual",
+            var newsRequest = new NewsUpdateRequest("Tênis Atual", "Djokovic vence mais uma Atual",
                     "Próximo desafio será contra Nadal Atual", "Texto da matéria Atual",
                     "Tom Wolfe Atual", "Tênis Global Atual");
 
@@ -120,14 +123,14 @@ class NewsControllerIntegrationTest {
         }
 
         @Test
-        void dadaRequisicaoValida_quandoAtualizarNoticia_entaoSalvarDadosNoBanco() {
+        void dadaRequisicaoValida_quandoAtualizarNoticiaPorId_entaoSalvarDadosNoBanco() {
             var newsEntity = new NewsEntity(null, "Tênis", "Djokovic vence mais uma",
                     "Próximo desafio será contra Nadal", "Texto da matéria",
                     "Tom Wolfe", "Tênis Global");
             newsRepository.save(newsEntity);
             var newsId = newsEntity.getId();
 
-            var newsRequest = new NewsRequest("Tênis Atual", "Djokovic vence mais uma Atual",
+            var newsRequest = new NewsUpdateRequest("Tênis Atual", "Djokovic vence mais uma Atual",
                     "Próximo desafio será contra Nadal Atual", "Texto da matéria Atual",
                     "Tom Wolfe Atual", "Tênis Global Atual");
 
@@ -136,7 +139,8 @@ class NewsControllerIntegrationTest {
                     .contentType(MediaType.APPLICATION_JSON)
                     .body(newsRequest)
                     .exchange()
-                    .expectBody(NewsResponse.class)
+                    .expectStatus().isOk()
+                    .expectBody(NewsUpdateResponse.class)
                     .returnResult()
                     .getResponseBody();
 
@@ -147,6 +151,8 @@ class NewsControllerIntegrationTest {
             Assertions.assertEquals(newsDoBanco.getText(), response.text());
             Assertions.assertEquals(newsDoBanco.getAuthor(), response.author());
             Assertions.assertEquals(newsDoBanco.getFont(), response.font());
+            Assertions.assertNotNull(newsDoBanco.getCreatedDate());
+            Assertions.assertNotNull(newsDoBanco.getLastModifiedDate());
 
             Assertions.assertEquals(newsDoBanco.getHat(), newsRequest.hat());
             Assertions.assertEquals(newsDoBanco.getTitle(), newsRequest.title());
@@ -154,6 +160,118 @@ class NewsControllerIntegrationTest {
             Assertions.assertEquals(newsDoBanco.getText(), newsRequest.text());
             Assertions.assertEquals(newsDoBanco.getAuthor(), newsRequest.author());
             Assertions.assertEquals(newsDoBanco.getFont(), newsRequest.font());
+        }
+    }
+
+    @Nested
+    @DisplayName("UpdateIntegrationInvalid")
+    class UpdateIntegrationInvalid {
+
+        @Test
+        void dadaRequisicaoInvalida_quandoAtualizarNoticiaPorId_entaoLancarExcecao404NotFound() {
+            var newsId = UUID.randomUUID();
+
+            var newsRequest = new NewsUpdateRequest("Tênis Atual", "Djokovic vence mais uma Atual",
+                    "Próximo desafio será contra Nadal Atual", "Texto da matéria Atual",
+                    "Tom Wolfe Atual", "Tênis Global Atual");
+
+            restTestClient.put()
+                    .uri("/api/v1.0/news/{id}", newsId)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .body(newsRequest)
+                    .exchange()
+                    .expectStatus().isNotFound()
+                    .expectBody()
+                    .jsonPath("$.title").isEqualTo("Notícia não encontrada por id: " + newsId + ".")
+                    .jsonPath("$.type").isNotEmpty()
+                    .jsonPath("$.timestamp").isNotEmpty();
+        }
+    }
+
+    @Nested
+    @DisplayName("DeleteByIdIntegrationValid")
+    class DeleteByIdIntegrationValid {
+
+        @Test
+        void dadaRequisicaoValida_quandoDeletarNoticiaPorId_entaoRetornarHttp204NoContentAndApagarDoBanco() {
+            var newsEntity = new NewsEntity(null, "Tênis", "Djokovic vence mais uma",
+                    "Próximo desafio será contra Nadal", "Texto da matéria",
+                    "Tom Wolfe", "Tênis Global");
+            newsRepository.save(newsEntity);
+            var newsId = newsEntity.getId();
+
+            restTestClient.delete()
+                    .uri("/api/v1.0/news/{id}", newsId)
+                    .exchange()
+                    .expectStatus().isNoContent();
+
+            var newsDoBanco = newsRepository.findById(newsId);
+            Assertions.assertTrue(newsDoBanco.isEmpty());
+        }
+    }
+
+    @Nested
+    @DisplayName("DeleteByIdIntegrationInvalid")
+    class DeleteByIdIntegrationInvalid {
+
+        @Test
+        void dadaRequisicaoInvalida_quandoDeletarNoticiaPorId_entaoLancarExcecao404NotFound() {
+            var newsId = UUID.randomUUID();
+
+            restTestClient.delete()
+                    .uri("/api/v1.0/news/{id}", newsId)
+                    .exchange()
+                    .expectStatus().isNotFound()
+                    .expectBody()
+                    .jsonPath("$.title").isEqualTo("Notícia não encontrada por id: " + newsId + ".")
+                    .jsonPath("$.type").isNotEmpty()
+                    .jsonPath("$.timestamp").isNotEmpty();
+        }
+    }
+
+    @Nested
+    @DisplayName("FindByIdIntegrationValid")
+    class FindByIdIntegrationValid {
+
+        @Test
+        void dadaRequisicaoValida_quandoConsultarNoticiaPorId_entaoRetornarHttp200AndDadosValidos() {
+            var newsEntity = new NewsEntity(null, "Tênis", "Djokovic vence mais uma",
+                    "Próximo desafio será contra Nadal", "Texto da matéria",
+                    "Tom Wolfe", "Tênis Global");
+            newsRepository.save(newsEntity);
+            var newsId = newsEntity.getId();
+
+            restTestClient.get()
+                    .uri("/api/v1.0/news/{id}", newsId)
+                    .exchange()
+                    .expectStatus().isOk()
+                    .expectBody()
+                    .jsonPath("$.id").isEqualTo(newsId.toString())
+                    .jsonPath("$.hat").isEqualTo("Tênis")
+                    .jsonPath("$.title").isEqualTo("Djokovic vence mais uma")
+                    .jsonPath("$.thinLine").isEqualTo("Próximo desafio será contra Nadal")
+                    .jsonPath("$.text").isEqualTo("Texto da matéria")
+                    .jsonPath("$.author").isEqualTo("Tom Wolfe")
+                    .jsonPath("$.font").isEqualTo("Tênis Global");
+        }
+    }
+
+    @Nested
+    @DisplayName("FindByIdIntegrationInvalid")
+    class FindByIdIntegrationInvalid {
+
+        @Test
+        void dadaRequisicaoInvalida_quandoConsultarNoticiaPorId_entaoLancarExcecao404NotFound() {
+            var newsId = UUID.randomUUID();
+
+            restTestClient.get()
+                    .uri("/api/v1.0/news/{id}", newsId)
+                    .exchange()
+                    .expectStatus().isNotFound()
+                    .expectBody()
+                    .jsonPath("$.title").isEqualTo("Notícia não encontrada por id: " + newsId + ".")
+                    .jsonPath("$.type").isNotEmpty()
+                    .jsonPath("$.timestamp").isNotEmpty();
         }
     }
 }

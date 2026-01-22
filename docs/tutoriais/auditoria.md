@@ -18,30 +18,27 @@
 ### Introdução: 
 
 ```
-Em qualquer aplicação, auditoria significa rastrear e registrar cada alteração em todos os 
-objetos de negócio, ou seja, rastrear cada operação de inserção, atualização e exclusão. 
-Basicamente, envolve o rastreamento de três coisas.
+Em qualquer aplicação, auditoria significa rastrear e registrar cada alteração em todos os objetos de negócio, ou seja, 
+rastrear cada operação de inserção, atualização e exclusão. Basicamente, envolve o rastreamento de três coisas.
 
 * Que operação foi realizada?
 * Quem fez isso?
 * Quando foi feito?
 
-A auditoria nos ajuda a manter registros históricos, o que posteriormente pode nos 
-auxiliar no rastreamento das atividades dos usuários.
+A auditoria nos ajuda a manter registros históricos, o que posteriormente pode nos auxiliar no rastreamento das 
+atividades dos usuários.
 
-Embora o JPA Auditing oferece configuração fácil para auditoria básica, ela não fornece 
-detalhes de todas as alterações/atualizações feitas em uma entidade. Por exemplo, uma 
-entidade Cliente pode ter sido modificada 5 vezes. Com a auditoria JPA, não há como 
-descobrir o que foi alterado na entidade em cada uma das 5 atualizações. E assim Envers 
+Embora o JPA Auditing ofereça configuração fácil para auditoria básica, ela não fornece detalhes de todas as 
+alterações/atualizações feitas em uma entidade. Por exemplo, uma entidade Cliente pode ter sido modificada 5 vezes. Com 
+a auditoria JPA, não há como descobrir o que foi alterado na entidade em cada uma das 5 atualizações. E assim Envers 
 entra em cena, fornecendo o histórico de auditoria completo de uma entidade. 
 ```
 
 Spring Data Jpa Auditing
 ```
-Permite rastrear e registrar automaticamente informações de auditoria, como data de criação, 
-data de modificação e usuário que criou ou modificou uma entidade. Isso é especialmente útil 
-em aplicações que exigem conformidade com regulamentos ou precisam manter um histórico 
-detalhado das alterações feitas nos dados.
+Permite rastrear e registrar automaticamente informações de auditoria, como data de criação, data de modificação e 
+usuário que criou ou modificou uma entidade. Isso é especialmente útil em aplicações que exigem conformidade com 
+regulamentos ou precisam manter um histórico detalhado das alterações feitas nos dados.
 ```
 
 Spring Data Envers
