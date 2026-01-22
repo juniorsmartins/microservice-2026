@@ -1,18 +1,15 @@
 package backend.core.api_news.controllers;
 
 import backend.core.api_news.dtos.requests.NewsCreateRequest;
+import backend.core.api_news.dtos.requests.NewsUpdateRequest;
 import backend.core.api_news.dtos.responses.NewsCreateResponse;
-import backend.core.api_news.dtos.responses.NewsFindByIdResponse;
-import backend.core.api_news.dtos.responses.NewsResponse;
 import backend.core.api_news.dtos.responses.NewsUpdateResponse;
 import backend.core.api_news.entities.NewsEntity;
 import backend.core.api_news.repositories.NewsRepository;
 import org.junit.jupiter.api.*;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.http.ProblemDetail;
 import org.springframework.test.web.servlet.client.RestTestClient;
 import org.springframework.web.context.WebApplicationContext;
 
@@ -98,14 +95,14 @@ class NewsControllerIntegrationTest {
     class UpdateIntegrationValid {
 
         @Test
-        void dadaRequisicaoValida_quandoAtualizarNoticia_entaoRetornarHttp200AndDadosValidos() {
+        void dadaRequisicaoValida_quandoAtualizarNoticiaPorId_entaoRetornarHttp200AndDadosValidos() {
             var newsEntity = new NewsEntity(null, "Tênis", "Djokovic vence mais uma",
                     "Próximo desafio será contra Nadal", "Texto da matéria",
                     "Tom Wolfe", "Tênis Global");
             newsRepository.save(newsEntity);
             var newsId = newsEntity.getId();
 
-            var newsRequest = new NewsCreateRequest("Tênis Atual", "Djokovic vence mais uma Atual",
+            var newsRequest = new NewsUpdateRequest("Tênis Atual", "Djokovic vence mais uma Atual",
                     "Próximo desafio será contra Nadal Atual", "Texto da matéria Atual",
                     "Tom Wolfe Atual", "Tênis Global Atual");
 
@@ -126,14 +123,14 @@ class NewsControllerIntegrationTest {
         }
 
         @Test
-        void dadaRequisicaoValida_quandoAtualizarNoticia_entaoSalvarDadosNoBanco() {
+        void dadaRequisicaoValida_quandoAtualizarNoticiaPorId_entaoSalvarDadosNoBanco() {
             var newsEntity = new NewsEntity(null, "Tênis", "Djokovic vence mais uma",
                     "Próximo desafio será contra Nadal", "Texto da matéria",
                     "Tom Wolfe", "Tênis Global");
             newsRepository.save(newsEntity);
             var newsId = newsEntity.getId();
 
-            var newsRequest = new NewsCreateRequest("Tênis Atual", "Djokovic vence mais uma Atual",
+            var newsRequest = new NewsUpdateRequest("Tênis Atual", "Djokovic vence mais uma Atual",
                     "Próximo desafio será contra Nadal Atual", "Texto da matéria Atual",
                     "Tom Wolfe Atual", "Tênis Global Atual");
 
@@ -167,6 +164,31 @@ class NewsControllerIntegrationTest {
     }
 
     @Nested
+    @DisplayName("UpdateIntegrationInvalid")
+    class UpdateIntegrationInvalid {
+
+        @Test
+        void dadaRequisicaoInvalida_quandoAtualizarNoticiaPorId_entaoLancarExcecao404NotFound() {
+            var newsId = UUID.randomUUID();
+
+            var newsRequest = new NewsUpdateRequest("Tênis Atual", "Djokovic vence mais uma Atual",
+                    "Próximo desafio será contra Nadal Atual", "Texto da matéria Atual",
+                    "Tom Wolfe Atual", "Tênis Global Atual");
+
+            restTestClient.put()
+                    .uri("/api/v1.0/news/{id}", newsId)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .body(newsRequest)
+                    .exchange()
+                    .expectStatus().isNotFound()
+                    .expectBody()
+                    .jsonPath("$.title").isEqualTo("Notícia não encontrada por id: " + newsId + ".")
+                    .jsonPath("$.type").isNotEmpty()
+                    .jsonPath("$.timestamp").isNotEmpty();
+        }
+    }
+
+    @Nested
     @DisplayName("DeleteByIdIntegrationValid")
     class DeleteByIdIntegrationValid {
 
@@ -185,6 +207,25 @@ class NewsControllerIntegrationTest {
 
             var newsDoBanco = newsRepository.findById(newsId);
             Assertions.assertTrue(newsDoBanco.isEmpty());
+        }
+    }
+
+    @Nested
+    @DisplayName("DeleteByIdIntegrationInvalid")
+    class DeleteByIdIntegrationInvalid {
+
+        @Test
+        void dadaRequisicaoInvalida_quandoDeletarNoticiaPorId_entaoLancarExcecao404NotFound() {
+            var newsId = UUID.randomUUID();
+
+            restTestClient.delete()
+                    .uri("/api/v1.0/news/{id}", newsId)
+                    .exchange()
+                    .expectStatus().isNotFound()
+                    .expectBody()
+                    .jsonPath("$.title").isEqualTo("Notícia não encontrada por id: " + newsId + ".")
+                    .jsonPath("$.type").isNotEmpty()
+                    .jsonPath("$.timestamp").isNotEmpty();
         }
     }
 
