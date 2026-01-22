@@ -4,6 +4,7 @@ import backend.core.api_news.dtos.NewsDto;
 import backend.core.api_news.dtos.requests.NewsCreateRequest;
 import backend.core.api_news.dtos.requests.NewsUpdateRequest;
 import backend.core.api_news.dtos.responses.NewsCreateResponse;
+import backend.core.api_news.dtos.responses.NewsFindByIdResponse;
 import backend.core.api_news.dtos.responses.NewsResponse;
 import backend.core.api_news.dtos.responses.NewsUpdateResponse;
 import backend.core.api_news.entities.NewsEntity;
@@ -41,6 +42,11 @@ public class NewsPresenter implements NewsPresenterPort {
     @Override
     public NewsUpdateResponse toNewsUpdateResponse(NewsDto dto) {
         return new NewsUpdateResponse(dto.id(), dto.hat(), dto.title(), dto.thinLine(), dto.text(), dto.author(), dto.font());
+    }
+
+    @Override
+    public NewsFindByIdResponse toNewsFindByIdResponse(NewsDto dto) {
+        return new NewsFindByIdResponse(dto.id(), dto.hat(), dto.title(), dto.thinLine(), dto.text(), dto.author(), dto.font());
     }
 
     @Override

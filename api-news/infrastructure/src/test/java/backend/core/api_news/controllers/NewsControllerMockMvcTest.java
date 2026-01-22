@@ -5,6 +5,7 @@ import backend.core.api_news.dtos.NewsDto;
 import backend.core.api_news.dtos.requests.NewsCreateRequest;
 import backend.core.api_news.dtos.requests.NewsUpdateRequest;
 import backend.core.api_news.dtos.responses.NewsCreateResponse;
+import backend.core.api_news.dtos.responses.NewsFindByIdResponse;
 import backend.core.api_news.dtos.responses.NewsResponse;
 import backend.core.api_news.dtos.responses.NewsUpdateResponse;
 import backend.core.api_news.ports.input.*;
@@ -180,12 +181,12 @@ class NewsControllerMockMvcTest {
                     "Próximo desafio será contra Nadal", "Texto da matéria", "Tom Wolfe",
                     "Tênis Global", null, null, null, null);
 
-            var newsResponse = new NewsResponse(newsId, "Tênis", "Djokovic vence mais uma",
-                    "Próximo desafio será contra Nadal", "Texto da matéria", "Tom Wolfe",
-                    "Tênis Global", null, null, null, null);
+            var newsResponse = new NewsFindByIdResponse(newsId, "Tênis",
+                    "Djokovic vence mais uma", "Próximo desafio será contra Nadal",
+                    "Texto da matéria", "Tom Wolfe", "Tênis Global");
 
             Mockito.when(newsFindByIdInputPort.findById(newsId)).thenReturn(newsDto);
-            Mockito.when(newsPresenterPort.toNewsResponse(newsDto)).thenReturn(newsResponse);
+            Mockito.when(newsPresenterPort.toNewsFindByIdResponse(newsDto)).thenReturn(newsResponse);
 
             restTestClient.get()
                     .uri("/api/v1.0/news/{id}", newsId)
@@ -201,7 +202,7 @@ class NewsControllerMockMvcTest {
                     .jsonPath("$.font").isEqualTo("Tênis Global");
 
             Mockito.verify(newsFindByIdInputPort).findById(newsId);
-            Mockito.verify(newsPresenterPort).toNewsResponse(newsDto);
+            Mockito.verify(newsPresenterPort).toNewsFindByIdResponse(newsDto);
         }
     }
 

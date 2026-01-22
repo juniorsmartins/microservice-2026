@@ -4,6 +4,7 @@ import backend.core.api_news.annotations.PageableParameter;
 import backend.core.api_news.dtos.requests.NewsCreateRequest;
 import backend.core.api_news.dtos.requests.NewsUpdateRequest;
 import backend.core.api_news.dtos.responses.NewsCreateResponse;
+import backend.core.api_news.dtos.responses.NewsFindByIdResponse;
 import backend.core.api_news.dtos.responses.NewsResponse;
 import backend.core.api_news.dtos.responses.NewsUpdateResponse;
 import backend.core.api_news.ports.input.*;
@@ -150,7 +151,7 @@ public class NewsController {
     @Operation(summary = "Consultar por ID", description = "Recurso para consultar clientes por ID.",
             responses = {
                     @ApiResponse(responseCode = "200", description = "OK - requisição bem sucedida e com retorno.",
-                            content = {@Content(mediaType = "application/json", schema = @Schema(implementation = NewsResponse.class))}
+                            content = {@Content(mediaType = "application/json", schema = @Schema(implementation = NewsFindByIdResponse.class))}
                     ),
                     @ApiResponse(responseCode = "400", description = "Bad Request - requisição mal formulada.",
                             content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ProblemDetail.class))}
@@ -164,10 +165,10 @@ public class NewsController {
             }
     )
     @GetMapping(value = "/{version}/news/{id}", version = "1.0")
-    public ResponseEntity<NewsResponse> findById(@PathVariable(name = "id") final UUID id) {
+    public ResponseEntity<NewsFindByIdResponse> findById(@PathVariable(name = "id") final UUID id) {
 
         var newsDto = newsFindByIdInputPort.findById(id);
-        var response = newsPresenterPort.toNewsResponse(newsDto);
+        var response = newsPresenterPort.toNewsFindByIdResponse(newsDto);
 
         return ResponseEntity
                 .ok()
