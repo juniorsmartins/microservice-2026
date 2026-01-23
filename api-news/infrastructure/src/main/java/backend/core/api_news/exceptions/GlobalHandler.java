@@ -64,7 +64,7 @@ public final class GlobalHandler extends ResponseEntityExceptionHandler {
         return super.handleExceptionInternal(exception, problemDetail, httpHeaders, httpStatusCode, webRequest);
     }
 
-    // ---------- Métodos assessórios ---------- //
+    // ---------- MÉTODOS ASSESSÓRIOS ---------- //
     private Map<String, List<String>> getFieldErrors(BindException ex) {
 
         return ex.getBindingResult()
