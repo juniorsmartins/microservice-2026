@@ -7,6 +7,8 @@ import backend.core.api_news.dtos.responses.NewsUpdateResponse;
 import backend.core.api_news.entities.NewsEntity;
 import backend.core.api_news.repositories.NewsRepository;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
@@ -91,6 +93,34 @@ class NewsControllerIntegrationTest {
     }
 
     @Nested
+    @DisplayName("CreateIntegrationInvalid")
+    class CreateIntegrationInvalid {
+
+        @ParameterizedTest
+        @ValueSource(strings = {"", " "})
+        void dadaRequisicaoComPropriedadesInvalidas_quandoCriarNoticia_entaoLancarExcecao400BadRequest(String value) {
+            var newsRequest = new NewsCreateRequest(value, value, value, value, value, value);
+
+            restTestClient.post()
+                    .uri("/api/v1.0/news")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .body(newsRequest)
+                    .exchange()
+                    .expectStatus().isBadRequest()
+                    .expectBody()
+                    .jsonPath("$.title").isEqualTo("Há um ou mais campos inválidos.")
+                    .jsonPath("$.type").isNotEmpty()
+                    .jsonPath("$.timestamp").isNotEmpty()
+                    .jsonPath("$.fields.hat").isEqualTo("não deve estar em branco")
+                    .jsonPath("$.fields.title").isEqualTo("não deve estar em branco")
+                    .jsonPath("$.fields.thinLine").isEqualTo("não deve estar em branco")
+                    .jsonPath("$.fields.text").isEqualTo("não deve estar em branco")
+                    .jsonPath("$.fields.author").isEqualTo("não deve estar em branco")
+                    .jsonPath("$.fields.font").isEqualTo("não deve estar em branco");
+        }
+    }
+
+    @Nested
     @DisplayName("UpdateIntegrationValid")
     class UpdateIntegrationValid {
 
@@ -168,7 +198,7 @@ class NewsControllerIntegrationTest {
     class UpdateIntegrationInvalid {
 
         @Test
-        void dadaRequisicaoInvalida_quandoAtualizarNoticiaPorId_entaoLancarExcecao404NotFound() {
+        void dadaRequisicaoInvalidaComIdInexistente_quandoAtualizarNoticiaPorId_entaoLancarExcecao404NotFound() {
             var newsId = UUID.randomUUID();
 
             var newsRequest = new NewsUpdateRequest("Tênis Atual", "Djokovic vence mais uma Atual",
@@ -185,6 +215,35 @@ class NewsControllerIntegrationTest {
                     .jsonPath("$.title").isEqualTo("Notícia não encontrada por id: " + newsId + ".")
                     .jsonPath("$.type").isNotEmpty()
                     .jsonPath("$.timestamp").isNotEmpty();
+        }
+
+        @ParameterizedTest
+        @ValueSource(strings = {"", "   "})
+        void dadaRequisicaoComPropriedadesInvalidas_quandoAtualizarNoticiaPorId_entaoLancarExcecao400BadRequest(String value) {
+            var newsEntity = new NewsEntity(null, "Tênis", "Djokovic vence mais uma",
+                    "Próximo desafio será contra Nadal", "Texto da matéria",
+                    "Tom Wolfe", "Tênis Global");
+            newsRepository.save(newsEntity);
+            var newsId = newsEntity.getId();
+
+            var newsRequest = new NewsUpdateRequest(value, value, value, value, value, value);
+
+            restTestClient.put()
+                    .uri("/api/v1.0/news/{id}", newsId)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .body(newsRequest)
+                    .exchange()
+                    .expectStatus().isBadRequest()
+                    .expectBody()
+                    .jsonPath("$.title").isEqualTo("Há um ou mais campos inválidos.")
+                    .jsonPath("$.type").isNotEmpty()
+                    .jsonPath("$.timestamp").isNotEmpty()
+                    .jsonPath("$.fields.hat").isEqualTo("não deve estar em branco")
+                    .jsonPath("$.fields.title").isEqualTo("não deve estar em branco")
+                    .jsonPath("$.fields.thinLine").isEqualTo("não deve estar em branco")
+                    .jsonPath("$.fields.text").isEqualTo("não deve estar em branco")
+                    .jsonPath("$.fields.author").isEqualTo("não deve estar em branco")
+                    .jsonPath("$.fields.font").isEqualTo("não deve estar em branco");
         }
     }
 
@@ -215,7 +274,7 @@ class NewsControllerIntegrationTest {
     class DeleteByIdIntegrationInvalid {
 
         @Test
-        void dadaRequisicaoInvalida_quandoDeletarNoticiaPorId_entaoLancarExcecao404NotFound() {
+        void dadaRequisicaoInvalidaComIdInexistente_quandoDeletarNoticiaPorId_entaoLancarExcecao404NotFound() {
             var newsId = UUID.randomUUID();
 
             restTestClient.delete()
@@ -261,7 +320,7 @@ class NewsControllerIntegrationTest {
     class FindByIdIntegrationInvalid {
 
         @Test
-        void dadaRequisicaoInvalida_quandoConsultarNoticiaPorId_entaoLancarExcecao404NotFound() {
+        void dadaRequisicaoInvalidaComIdInexistente_quandoConsultarNoticiaPorId_entaoLancarExcecao404NotFound() {
             var newsId = UUID.randomUUID();
 
             restTestClient.get()
