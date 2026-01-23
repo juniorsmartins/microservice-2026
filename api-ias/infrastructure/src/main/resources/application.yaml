@@ -63,12 +63,15 @@ spring:
   # --------------------------------------------------
   # Config de Inteligência Artificial
   # --------------------------------------------------
-#  ai:
-#    openai:
-#      api-key: ${OPENAI_API_KEY:your-api-key-here}
-#      chat:
-#        options:
-#          model: gpt-4o
+  ai:
+    openai:
+      base-url: ${OPENAI_BASE_URL}
+      api-key: ${OPENAI_API_KEY}
+      chat:
+        options:
+          model: gpt-5-nano
+#          temperature: 1
+
       # Multi-provider support (same code, different backend):
       # Azure OpenAI:
       #   base-url: https://<deployment>.openai.azure.com

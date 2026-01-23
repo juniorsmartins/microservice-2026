@@ -12,13 +12,13 @@ import org.springframework.web.bind.annotation.RestController;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
-@Tag(name = "Ias", description = "Controlador do recurso de Ias.")
+@Tag(name = "ApiCheck", description = "Controlador do recurso de checagem da API.")
 @Slf4j
 @NullMarked
 @RestController
 @RequestMapping(path = {"/api/"})
 @RequiredArgsConstructor
-public class IasController {
+public class ApiCheckController {
 
     private final ContactInfoDto contactInfoDto;
 
