@@ -1,13 +1,9 @@
 package backend.ia.infrastructure.controllers;
 
-import backend.ia.infrastructure.dtos.ChatRequest;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.jspecify.annotations.NullMarked;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.Map;
 
 @Tag(name = "RedisChatMemory", description = "Controlador do recurso de Chat de Ias.")
 @Slf4j

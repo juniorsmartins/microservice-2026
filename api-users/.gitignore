@@ -35,3 +35,29 @@ out/
 
 ### VS Code ###
 .vscode/
+*.swp
+*.swo
+*.swn
+
+# ========== ENVIRONMENT FILES ==========
+.env
+.env.local
+.env.development
+.env.production
+.env.test
+.env.*
+!.env.example
+
+# ========== SECRETS & KEYS ==========
+*.key
+*.pem
+*.p12
+*.jks
+*.keystore
+*.priv
+*.pub
+
+# ========== LOGS ==========
+*.log
+logs/
+

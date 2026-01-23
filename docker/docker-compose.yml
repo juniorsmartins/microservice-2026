@@ -561,6 +561,8 @@ services:
         APP_NAME: "api-ias"
         APP_VERSION: "v0.0.2"
         APP_DESCRIPTION: "Microsserviço responsável por fornecer inteligência artificial."
+    env_file:
+      - envs/.env-api-ias
     ports:
       - "9010:9010"
     deploy:
@@ -581,7 +583,8 @@ services:
       RABBIT_PASS: guest
       REDIS_HOST: redis
       REDIS_PORT: 6379
-      OPENAI_API_KEY: your-api-key-here
+      OPENAI_BASE_URL: https://api.openai.com
+#      OPENAI_API_KEY:
       JAVA_TOOL_OPTIONS: "--enable-native-access=ALL-UNNAMED" # Elimina alguns warnnings
     restart: unless-stopped
     networks:
