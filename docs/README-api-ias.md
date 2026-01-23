@@ -6,7 +6,7 @@ Descrição: Microsserviço responsável por fornecer inteligência artificial.
 
 - Java (versão 25);
 - Gradle (versão 9.2.1);
-- Spring Boot (versão 4.0.1);
+- Spring Boot (versão 4.0.2);
 - Spring Boot WebMVC;
 - Spring Boot Actuator (monitoramento);
 - Spring Cloud Config Client (versão 2025.1.0);
