@@ -40,6 +40,7 @@ out/
 *.swn
 
 # ========== ENVIRONMENT FILES ==========
+docker/envs
 .env
 .env.local
 .env.development
