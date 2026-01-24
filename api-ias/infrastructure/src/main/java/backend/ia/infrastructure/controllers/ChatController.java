@@ -4,11 +4,13 @@ import backend.ia.infrastructure.dtos.request.ChatRequest;
 import backend.ia.infrastructure.dtos.response.ChatResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jspecify.annotations.NullMarked;
 import org.springframework.ai.chat.client.ChatClient;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @Tag(name = "Chat", description = "Controlador do recurso de Chat de Ias.")
 @Slf4j

@@ -42,8 +42,8 @@ spring:
   rabbitmq:
     host: ${RABBIT_HOST:localhost}
     port: ${RABBIT_PORT:5672}
-    username: ${RABBIT_USER:"guest"}
-    password: ${RABBIT_PASS:"guest"}
+    username: ${RABBIT_USER}
+    password: ${RABBIT_PASS}
   # --------------------------------------------------
 
 
@@ -166,6 +166,9 @@ logging:
   # --------------------------------------------------
 
 
+  # --------------------------------------------------
+  # ApiCheck
+  # --------------------------------------------------
 build:
   version: "1.0"
 informacoes:
@@ -176,4 +179,5 @@ informacoes:
   on-call-suport:
     - (453) 392-4829
     - (236) 203-0384
+  # --------------------------------------------------
 
