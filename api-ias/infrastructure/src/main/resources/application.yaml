@@ -70,7 +70,7 @@ spring:
       chat:
         options:
           model: gpt-5-nano
-#          temperature: 1
+          temperature: 1
 
       # Multi-provider support (same code, different backend):
       # Azure OpenAI:
@@ -161,6 +161,7 @@ logging:
     org.springframework.cloud.config: DEBUG
     org.springframework.cloud.config.client: TRACE
     org.springframework.ai: INFO
+    org.springframework.ai.chat.client.advisor: DEBUG # Permitirá ver como é o bastidor da conversa com a IA
     org.springframework.cache: DEBUG
     org.springframework.data.redis.cache: DEBUG
   # --------------------------------------------------

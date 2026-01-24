@@ -52,9 +52,9 @@ Pré-requisitos do Spring AI 2.0.0-M1:
 ### Passo-a-passo
 
 Pré-requisitos:
-1. Criar APi Key do OpenAI
+1. Criar APi Key do OpenAI;
    a. https://platform.openai.com/settings/organization/api-keys
-2.
+2. Inserir crédito (não é grátis).
 
 API Cliente:
 1. Adicionar dependência;
@@ -62,15 +62,15 @@ API Cliente:
 2. Adicionar configuração no application.yml;
     a. Configuração de IA;
     b. Configuração de Logging;
-    c. Configuração de Redis (memória para Chat);
+3. Criar ChatController e seus DTOs;
+4. Faça Post no endpoint do chat para testar.
+
+
 3. Criação no docker-compose.yml;
-    a. Serviço de database do Redis;
-    b. Serviço de UI para visualização do Redis (opcional);
+   a. Serviço de database do Redis;
+   b. Serviço de UI para visualização do Redis (opcional);
 
-
-
-
-
+   c. Configuração de Redis (memória para Chat);
 
 ### Implementação: 
 
