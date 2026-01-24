@@ -570,6 +570,9 @@ services:
         limits:
           cpus: '0.5'
           memory: 512M
+        reservations:
+          memory: 256M
+          cpus: '0.3'
     environment:
       TZ: utc
       SERVER_PORT: 9010
@@ -579,12 +582,9 @@ services:
       SPRING_RABBITMQ_HOST: "rabbit"
       RABBIT_HOST: rabbit
       RABBIT_PORT: 5672
-      RABBIT_USER: guest
-      RABBIT_PASS: guest
       REDIS_HOST: redis
       REDIS_PORT: 6379
       OPENAI_BASE_URL: https://api.openai.com
-#      OPENAI_API_KEY:
       JAVA_TOOL_OPTIONS: "--enable-native-access=ALL-UNNAMED" # Elimina alguns warnnings
     restart: unless-stopped
     networks:
