@@ -7,7 +7,7 @@
 - https://docs.spring.io/spring-ai/reference/2.0/api/chatmodel.html 
 - https://docs.spring.io/spring-ai/reference/2.0/api/multimodality.html 
 - https://docs.spring.io/spring-ai/reference/2.0/api/chat/google-genai-chat.html 
-- 
+- https://ai.google.dev/gemini-api/docs?hl=pt-br#java 
 - 
 - https://www.youtube.com/watch?v=daPwd4DnEfA 
 - https://spring.io/blog/2025/12/11/spring-ai-2-0-0-M1-available-now 

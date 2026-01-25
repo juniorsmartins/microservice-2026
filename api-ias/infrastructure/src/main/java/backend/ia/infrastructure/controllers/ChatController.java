@@ -7,13 +7,11 @@ import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.jspecify.annotations.NullMarked;
 import org.springframework.ai.chat.client.ChatClient;
-import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
-import org.springframework.ai.openai.OpenAiChatModel;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.ai.google.genai.GoogleGenAiChatModel;
 
 @Tag(name = "Chat", description = "Controlador do recurso de Chat de Ias.")
 @Slf4j
@@ -26,15 +24,11 @@ public class ChatController {
 
     private final ChatClient geminiAiChatClient;
 
-    public ChatController(OpenAiChatModel openAiChatClient, GoogleGenAiChatModel geminiAiChatClient) {
-
-        this.openAiChatClient = ChatClient.builder(openAiChatClient)
-                .defaultAdvisors(new SimpleLoggerAdvisor())
-                .build();
-
-        this.geminiAiChatClient = ChatClient.builder(geminiAiChatClient)
-                .defaultAdvisors(new SimpleLoggerAdvisor())
-                .build();
+    public ChatController(
+            @Qualifier("openAiChatClient") ChatClient openAiChatClient,
+            @Qualifier("geminiAiChatClient") ChatClient geminiAiChatClient) {
+        this.openAiChatClient = openAiChatClient;
+        this.geminiAiChatClient = geminiAiChatClient;
     }
 
     @PostMapping(value = "/{version}/ias/openai/chat", version = "1.0")
