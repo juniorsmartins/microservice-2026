@@ -64,6 +64,10 @@ spring:
   # Config de Inteligência Artificial
   # --------------------------------------------------
   ai:
+    chat:
+      client:
+        enabled: false # Desativa o cliente padrão para usar múltiplos modelos
+
     openai:
       base-url: ${OPENAI_BASE_URL}
       api-key: ${OPENAI_API_KEY}
@@ -71,6 +75,23 @@ spring:
         options:
           model: gpt-5-nano
           temperature: 1
+
+    google:
+      genai:
+        api-key: ${GEMINI_API_KEY}
+        chat:
+          options:
+            model: gemini-2.0-flash
+            temperature: 0.1
+
+#  ai:
+#    openai:
+#      base-url: ${GEMINI_BASE_URL}
+#      api-key: ${GEMINI_API_KEY}
+#      chat:
+#        completions-path: ${GEMINI_COMPLETIONS_PATH}
+#        options:
+#          model: gemini-2.0-flash
 
       # Multi-provider support (same code, different backend):
       # Azure OpenAI:
