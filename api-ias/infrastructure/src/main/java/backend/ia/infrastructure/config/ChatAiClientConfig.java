@@ -3,6 +3,7 @@ package backend.ia.infrastructure.config;
 
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
+import org.springframework.ai.deepseek.DeepSeekChatModel;
 import org.springframework.ai.google.genai.GoogleGenAiChatModel;
 import org.springframework.ai.openai.OpenAiChatModel;
 import org.springframework.context.annotation.Bean;
@@ -21,6 +22,13 @@ public class ChatAiClientConfig {
     @Bean(name = "geminiAiChatClient")
     public ChatClient geminiAiChatClient(GoogleGenAiChatModel googleGenAiChatModel) {
         return ChatClient.builder(googleGenAiChatModel)
+                .defaultAdvisors(new SimpleLoggerAdvisor())
+                .build();
+    }
+
+    @Bean(name = "deepseekAiChatClient")
+    public ChatClient deepseekAiChatClient(DeepSeekChatModel deepSeekChatModel) {
+        return ChatClient.builder(deepSeekChatModel)
                 .defaultAdvisors(new SimpleLoggerAdvisor())
                 .build();
     }
