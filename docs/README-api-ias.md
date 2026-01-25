@@ -12,6 +12,9 @@ Descrição: Microsserviço responsável por fornecer inteligência artificial.
 - Spring Cloud Config Client (versão 2025.1.0);
 - Spring Cloud Netflix Eureka Client (versão 2025.1.0);
 - Spring Cloud Bus AMQP (versão 2025.1.0);
+- Spring AI (versão 2.0.0-M2);
+- Spring AI Model OpenAI;
+- Spring AI Model Google GenAi;
 - Spring Doc OpenApi (versão 3.0.0);
 - Spring Boot Data Redis;
 - Spring Boot Cache;

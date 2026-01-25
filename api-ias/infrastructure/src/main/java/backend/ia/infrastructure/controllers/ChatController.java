@@ -7,6 +7,7 @@ import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.jspecify.annotations.NullMarked;
 import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,15 +20,26 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(path = {"/api/"})
 public class ChatController {
 
-    private final ChatClient chatClient;
+    private final ChatClient openAiChatClient;
 
-    public ChatController(ChatClient.Builder chatClientBuilder) {
-        this.chatClient = chatClientBuilder.build(); // Aqui podem ser feitas personalizações
+    private final ChatClient geminiAiChatClient;
+
+    public ChatController(
+            @Qualifier("openAiChatClient") ChatClient openAiChatClient,
+            @Qualifier("geminiAiChatClient") ChatClient geminiAiChatClient) {
+        this.openAiChatClient = openAiChatClient;
+        this.geminiAiChatClient = geminiAiChatClient;
     }
 
-    @PostMapping(value = "/{version}/ias/chat", version = "1.0")
-    public ChatResponse chat(@RequestBody @Valid ChatRequest input) {
-        var response = chatClient.prompt(input.prompt()).call().content();
+    @PostMapping(value = "/{version}/ias/openai/chat", version = "1.0")
+    public ChatResponse chatOpenAi(@RequestBody @Valid ChatRequest input) {
+        var response = openAiChatClient.prompt(input.prompt()).call().content();
+        return new ChatResponse(response);
+    }
+
+    @PostMapping(value = "/{version}/ias/gemini/chat", version = "1.0")
+    public ChatResponse chatGemini(@RequestBody @Valid ChatRequest input) {
+        var response = geminiAiChatClient.prompt(input.prompt()).call().content();
         return new ChatResponse(response);
     }
 }
