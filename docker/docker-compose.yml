@@ -585,8 +585,7 @@ services:
       REDIS_HOST: redis
       REDIS_PORT: 6379
       OPENAI_BASE_URL: https://api.openai.com
-      GEMINI_BASE_URL: https://generativelanguage.googleapis.com
-      GEMINI_COMPLETIONS_PATH: /v1beta/openai/chat/completions
+      DEEPSEEK_BASE_URL: https://api.deepseek.com
       JAVA_TOOL_OPTIONS: "--enable-native-access=ALL-UNNAMED" # Elimina alguns warnnings
     restart: unless-stopped
     networks:
