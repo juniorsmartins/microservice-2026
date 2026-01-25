@@ -84,6 +84,15 @@ spring:
             model: gemini-2.0-flash
             temperature: 0.1
 
+    deepseek:
+      base-url: ${DEEPSEEK_BASE_URL}
+      api-key: ${DEEPSEEK_API_KEY}
+      chat:
+        options:
+          model: deepseek-chat
+          temperature: 2
+
+
 #  ai:
 #    openai:
 #      base-url: ${GEMINI_BASE_URL}
