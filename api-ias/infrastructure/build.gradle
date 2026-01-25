@@ -61,6 +61,7 @@ dependencies {
     // Inteligência Artificial
     implementation 'org.springframework.ai:spring-ai-starter-model-openai'
     implementation 'org.springframework.ai:spring-ai-starter-model-google-genai'
+    implementation 'org.springframework.ai:spring-ai-starter-model-deepseek'
 
     // Ferramentas de desenvolvimento
     compileOnly 'org.projectlombok:lombok'

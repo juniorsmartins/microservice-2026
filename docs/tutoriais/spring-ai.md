@@ -8,6 +8,8 @@
 - https://docs.spring.io/spring-ai/reference/2.0/api/multimodality.html 
 - https://docs.spring.io/spring-ai/reference/2.0/api/chat/google-genai-chat.html 
 - https://ai.google.dev/gemini-api/docs?hl=pt-br#java 
+- https://docs.spring.io/spring-ai/reference/2.0/api/chat/deepseek-chat.html 
+- 
 - 
 - https://www.youtube.com/watch?v=daPwd4DnEfA 
 - https://spring.io/blog/2025/12/11/spring-ai-2-0-0-M1-available-now 
@@ -87,23 +89,30 @@ Cliente com múltiplos modelos de IA (OpenAI + Gemini AI):
    d. Configuração de Logging.
 3. Criar classe de configuração dos beans dos dois modelos;
 4. Criar ChatController e DTOs;
-5. Configuração no docker compose (chaves de apis estão no arquivo env para esconder segredos);
+5. Configuração no docker compose (chaves de IAs estão no arquivo env para esconder segredos);
 6. Faça Post no endpoint do chat para testar.
 
 
-Pré-requisitos (Deepseek AI):
-1. Criar APi Key do Deepseek;
-   a. https://platform.deepseek.com/api_keys
-2. Grátis com limitações.
+Pré-requisitos (OpenAI + Gemini AI + Deepseek):
+1. Criar API Key do OpenAI (https://platform.openai.com/settings/organization/api-keys);
+2. Criar API Key do Gemini (https://aistudio.google.com/app/api-keys);
+3. Criar API Key do Deepseek (https://platform.deepseek.com/api_keys).
 
-Cliente (Deepseek AI):
+Cliente com múltiplos modelos de IA (OpenAI + Gemini AI + Deepseek):
 1. Adicionar dependência;
-   a. Spring AI Model OpenAI (spring-ai-starter-model-openai).
+   a. Spring AI Model OpenAI (spring-ai-starter-model-openai);
+   b. Spring AI Model Google GenAI (spring-ai-starter-model-google-genai);
+   c. Spring AI Model Deepseek (spring-ai-starter-model-deepseek).
 2. Adicionar configuração no application.yml;
-   a. Configuração de IA;
-   b. Configuração de Logging;
-3. Criar ChatController e seus DTOs;
-4. Faça Post no endpoint do chat para testar.
+   a. Desativação de client padrão para usar múltiplos modelos;
+   b. Configuração de OpenAI;
+   c. Configuração de Google GenAI;
+   d. Configuração de Deepseek;
+   e. Configuração de Logging.
+3. Criar classe de configuração dos beans dos três modelos;
+4. Criar ChatController e DTOs;
+5. Configuração no docker compose (chaves de IAs estão no arquivo env para esconder segredos);
+
 
 
 Pré-requisitos (OpenRouter AI):
@@ -369,8 +378,6 @@ public record ChatResponse(String prompt) {
       REDIS_HOST: redis
       REDIS_PORT: 6379
       OPENAI_BASE_URL: https://api.openai.com
-      GEMINI_BASE_URL: https://generativelanguage.googleapis.com
-      GEMINI_COMPLETIONS_PATH: /v1beta/openai/chat/completions
       JAVA_TOOL_OPTIONS: "--enable-native-access=ALL-UNNAMED" # Elimina alguns warnnings
     restart: unless-stopped
     networks:
@@ -401,3 +408,190 @@ Corpo da mensagem:
 ```
 
 
+Cliente com múltiplos modelos de IA (OpenAI + Gemini AI + Deepseek):
+
+1. Adicionar dependência;
+   a. Spring AI Model OpenAI (spring-ai-starter-model-openai);
+   b. Spring AI Model Google GenAI (spring-ai-starter-model-google-genai);
+   c. Spring AI Model Deepseek (spring-ai-starter-model-deepseek).
+```
+ext {
+    set('springAiVersion', "2.0.0-M2")
+}
+
+dependencies {
+
+    implementation 'org.springframework.ai:spring-ai-starter-model-openai'
+    implementation 'org.springframework.ai:spring-ai-starter-model-google-genai'
+    implementation 'org.springframework.ai:spring-ai-starter-model-deepseek'
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.ai:spring-ai-bom:${springAiVersion}"
+    }
+}
+```
+
+2. Adicionar configuração no application.yml;
+   a. Desativação de client padrão para usar múltiplos modelos;
+   b. Configuração de OpenAI;
+   c. Configuração de Google GenAI;
+   d. Configuração de Deepseek;
+   e. Configuração de Logging.
+```
+spring:
+  ai:
+    chat:
+      client:
+        enabled: false # Desativa o cliente padrão para usar múltiplos modelos
+
+    openai:
+      base-url: ${OPENAI_BASE_URL}
+      api-key: ${OPENAI_API_KEY}
+      chat:
+        options:
+          model: gpt-5-nano
+          temperature: 1
+
+    google:
+      genai:
+        api-key: ${GEMINI_API_KEY}
+        chat:
+          options:
+            model: gemini-2.0-flash
+            temperature: 0.1
+
+    deepseek:
+      base-url: ${DEEPSEEK_BASE_URL}
+      api-key: ${DEEPSEEK_API_KEY}
+      chat:
+        options:
+          model: deepseek-chat
+          temperature: 2
+```
+
+3. Criar classe de configuração dos beans dos três modelos;
+```
+@Configuration
+public class ChatAiClientConfig {
+
+    @Bean(name = "openAiChatClient")
+    public ChatClient openAiChatClient(OpenAiChatModel openAiChatModel) {
+        return ChatClient.builder(openAiChatModel)
+                .defaultAdvisors(new SimpleLoggerAdvisor())
+                .build();
+    }
+
+    @Bean(name = "geminiAiChatClient")
+    public ChatClient geminiAiChatClient(GoogleGenAiChatModel googleGenAiChatModel) {
+        return ChatClient.builder(googleGenAiChatModel)
+                .defaultAdvisors(new SimpleLoggerAdvisor())
+                .build();
+    }
+
+    @Bean(name = "deepseekAiChatClient")
+    public ChatClient deepseekAiChatClient(DeepSeekChatModel deepSeekChatModel) {
+        return ChatClient.builder(deepSeekChatModel)
+                .defaultAdvisors(new SimpleLoggerAdvisor())
+                .build();
+    }
+}
+```
+
+4. Criar ChatController e DTOs;
+```
+@Tag(name = "Chat", description = "Controlador do recurso de Chat de Ias.")
+@Slf4j
+@NullMarked
+@RestController
+@RequestMapping(path = {"/api/"})
+public class ChatController {
+
+    private final ChatClient openAiChatClient;
+
+    private final ChatClient geminiAiChatClient;
+
+    private final ChatClient deepseekAiChatClient;
+
+    public ChatController(
+            @Qualifier("openAiChatClient") ChatClient openAiChatClient,
+            @Qualifier("geminiAiChatClient") ChatClient geminiAiChatClient,
+            @Qualifier("deepseekAiChatClient") ChatClient deepseekAiChatClient) {
+        this.openAiChatClient = openAiChatClient;
+        this.geminiAiChatClient = geminiAiChatClient;
+        this.deepseekAiChatClient = deepseekAiChatClient;
+    }
+
+    @PostMapping(value = "/{version}/ias/openai/chat", version = "1.0")
+    public ChatResponse chatOpenAi(@RequestBody @Valid ChatRequest input) {
+        var response = openAiChatClient.prompt(input.prompt()).call().content();
+        return new ChatResponse(response);
+    }
+
+    @PostMapping(value = "/{version}/ias/gemini/chat", version = "1.0")
+    public ChatResponse chatGemini(@RequestBody @Valid ChatRequest input) {
+        var response = geminiAiChatClient.prompt(input.prompt()).call().content();
+        return new ChatResponse(response);
+    }
+
+    @PostMapping(value = "/{version}/ias/deepseek/chat", version = "1.0")
+    public ChatResponse chatDeepseek(@RequestBody @Valid ChatRequest input) {
+        var response = deepseekAiChatClient.prompt(input.prompt()).call().content();
+        return new ChatResponse(response);
+    }
+}
+```
+
+5. Configuração no docker compose (chaves de IAs estão no arquivo env para esconder segredos);
+```
+  api-ias:
+    image: juniorsmartins/api-ias:v0.0.2
+    container_name: api-ias
+    hostname: api-ias
+    build:
+      context: ../api-ias
+      dockerfile: Dockerfile
+      args:
+        APP_NAME: "api-ias"
+        APP_VERSION: "v0.0.2"
+        APP_DESCRIPTION: "Microsserviço responsável por fornecer inteligência artificial."
+    env_file:
+      - envs/.env-api-ias
+    ports:
+      - "9010:9010"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+        reservations:
+          memory: 256M
+          cpus: '0.3'
+    environment:
+      TZ: utc
+      SERVER_PORT: 9010
+      SPRING_CLOUD_CONFIG_SERVER_URI: http://configserver:8888
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8761/eureka/
+      SPRING_PROFILES_ACTIVE: dev
+      SPRING_RABBITMQ_HOST: "rabbit"
+      RABBIT_HOST: rabbit
+      RABBIT_PORT: 5672
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      OPENAI_BASE_URL: https://api.openai.com
+      DEEPSEEK_BASE_URL: https://api.deepseek.com
+      JAVA_TOOL_OPTIONS: "--enable-native-access=ALL-UNNAMED" # Elimina alguns warnnings
+    restart: unless-stopped
+    networks:
+      - communication
+    depends_on:
+      schema-registry:
+        condition: service_healthy
+      configserver:
+        condition: service_healthy
+      eurekaserver:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+```

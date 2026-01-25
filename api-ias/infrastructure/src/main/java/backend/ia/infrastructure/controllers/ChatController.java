@@ -24,11 +24,15 @@ public class ChatController {
 
     private final ChatClient geminiAiChatClient;
 
+    private final ChatClient deepseekAiChatClient;
+
     public ChatController(
             @Qualifier("openAiChatClient") ChatClient openAiChatClient,
-            @Qualifier("geminiAiChatClient") ChatClient geminiAiChatClient) {
+            @Qualifier("geminiAiChatClient") ChatClient geminiAiChatClient,
+            @Qualifier("deepseekAiChatClient") ChatClient deepseekAiChatClient) {
         this.openAiChatClient = openAiChatClient;
         this.geminiAiChatClient = geminiAiChatClient;
+        this.deepseekAiChatClient = deepseekAiChatClient;
     }
 
     @PostMapping(value = "/{version}/ias/openai/chat", version = "1.0")
@@ -40,6 +44,12 @@ public class ChatController {
     @PostMapping(value = "/{version}/ias/gemini/chat", version = "1.0")
     public ChatResponse chatGemini(@RequestBody @Valid ChatRequest input) {
         var response = geminiAiChatClient.prompt(input.prompt()).call().content();
+        return new ChatResponse(response);
+    }
+
+    @PostMapping(value = "/{version}/ias/deepseek/chat", version = "1.0")
+    public ChatResponse chatDeepseek(@RequestBody @Valid ChatRequest input) {
+        var response = deepseekAiChatClient.prompt(input.prompt()).call().content();
         return new ChatResponse(response);
     }
 }
