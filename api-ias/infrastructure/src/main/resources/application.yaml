@@ -82,7 +82,7 @@ spring:
         chat:
           options:
             model: gemini-2.0-flash
-            temperature: 0.1
+            temperature: 0.2
 
     deepseek:
       base-url: ${DEEPSEEK_BASE_URL}
@@ -99,32 +99,6 @@ spring:
         options:
           model: claude-sonnet-4-20250514
           temperature: 0.8
-
-
-#  ai:
-#    openai:
-#      base-url: ${GEMINI_BASE_URL}
-#      api-key: ${GEMINI_API_KEY}
-#      chat:
-#        completions-path: ${GEMINI_COMPLETIONS_PATH}
-#        options:
-#          model: gemini-2.0-flash
-
-      # Multi-provider support (same code, different backend):
-      # Azure OpenAI:
-      #   base-url: https://<deployment>.openai.azure.com
-      #   microsoft-deployment-name: <deployment-name>
-      # GitHub Models:
-      #   base-url: https://models.inference.ai.azure.com
-      #   api-key: github_pat_XXX
-
-    # NEW in 2.0: Anthropic Citations & Skills API
-#    anthropic:
-#      api-key: ${ANTHROPIC_API_KEY:}
-#      timeout: 600s
-#      chat:
-#        options:
-#          model: claude-sonnet-4-5
 
     # NEW in 2.0: Redis Chat Memory configuration
 #    chat:
