@@ -17,23 +17,15 @@
 - https://github.com/spring-projects/spring-ai 
 - https://github.com/spring-ai-community/awesome-spring-ai 
 - https://platform.openai.com/docs/quickstart?language=java 
-- https://platform.openai.com/settings/organization/billing/overview 
-- 
--
+- https://platform.openai.com/settings/organization/billing/overview
 - https://docs.spring.io/spring-ai/reference/getting-started.html
 - https://spring.io/blog/2024/11/19/why-spring-ai
-- 
--
 - https://www.baeldung.com/spring-ai 
 - https://www.youtube.com/watch?v=FzLABAppJfM 
-- https://www.youtube.com/watch?v=NscHAlj-yQ0 
-- 
+- https://www.youtube.com/watch?v=NscHAlj-yQ0
 - https://usama.codes/blog/spring-ai-2-spring-boot-4-guide
-- https://www.youtube.com/playlist?list=PLZV0a2jwt22uoDm3LNDFvN6i2cAVU_HTH 
-- 
-- 
+- https://www.youtube.com/playlist?list=PLZV0a2jwt22uoDm3LNDFvN6i2cAVU_HTH
 - https://www.youtube.com/watch?v=oP7tn_YfoOk&list=PLuNxlOYbv61hmSWcdM0rtoWT0qEjZMIhU&index=1 (playlist)
-- 
 
 
 ### Introdução: 
@@ -52,7 +44,6 @@ Pré-requisitos do Spring AI 2.0.0-M1:
 
 
 ## 2. Configuração
-
 
 ### Passo-a-passo
 
@@ -120,32 +111,11 @@ Adição de Anthropic Claude:
 6. Alterações no docker compose da api-ias.
 
 
-
-
-Adição do Grog:
+Grog:
 1. Criar API Key (https://console.groq.com/keys);
-2. 
 
-
-
-
-Pré-requisitos (OpenRouter AI):
-1. Criar APi Key do Deepseek;
-   a. https://openrouter.ai/settings/keys
-2. Grátis com limitações.
-
-Cliente (OpenRouter AI):
-1. Adicionar dependência;
-   a. Spring AI Model OpenAI (spring-ai-starter-model-openai).
-2. Adicionar configuração no application.yml;
-   a. Configuração de IA;
-   b. Configuração de Logging;
-3. Criar ChatController e seus DTOs;
-4. Faça Post no endpoint do chat para testar.
-
-
-
-
+OpenRouter AI:
+1. Criar APi Key (https://openrouter.ai/settings/keys)
 
 ### Implementação: 
 
@@ -817,5 +787,87 @@ public class ChatController {
         condition: service_healthy
 ```
 
+
+Melhorias no prompt:
+
+Ao enviar:
+```
+@PostMapping(value = "/{version}/ias/openai/chat", version = "1.0")
+    public ChatResponse chatOpenAi(@RequestBody @Valid ChatRequest input) {
+
+        String systemPrompt = "Você é um assistente profissional e engraçado. Sempre responde de forma objetiva, explicativa, detalhada e bem humorada.";
+        SystemMessage systemMessage = new SystemMessage(systemPrompt);
+        UserMessage userMessage = new UserMessage(input.prompt());
+
+        Prompt prompt = new Prompt(List.of(systemMessage, userMessage));
+        var response = openAiChatClient.prompt(prompt).call().content();
+
+        return new ChatResponse(response);
+    }
+    
+    @PostMapping(value = "/{version}/ias/openai/chat/dev-java", version = "1.0")
+    public ChatResponse chatOpenAi(@RequestBody @Valid ChatDevRequest input) {
+
+        PromptTemplate promptTemplate = new PromptTemplate("""
+                Tenho um microsserviços escrito em Java (versão {javaVersion}), Spring Boot (versão {springBootVersion}), 
+                Gradle (versão {gradleVersion}) e Spring Cloud (versão {springCloudVersion}).
+                
+                Esse microsserviços possui ConfigServer, EurekaServer, GatewayServer, Cache com Redis e já possui 
+                as seguintes APIs Rest: {apisRestList}. 
+                
+                Esse microsserviços possui o objetivo de fornecer diversas ferramentas para Jornalistas e Assessores de Imprensa.
+                
+                Agora me ajude com a seguinte questão: {questao}. 
+                
+                Para que eu possa entender melhor, sempre explique os detalhes e exemplifique com código.
+                """);
+
+        Map<String, Object> vars = Map.of(
+                "javaVersion", input.javaVersion(), "springBootVersion", input.springBootVersion(),
+                "gradleVersion", input.gradleVersion(), "springCloudVersion", input.springCloudVersion(),
+                "apisRestList", input.apisRestList(), "questao", input.questao());
+
+        Message message = promptTemplate.createMessage(vars);
+        var response = openAiChatClient.prompt().messages(message).call().content();
+
+        return new ChatResponse(response);
+    }
+```
+
+Com resposta estruturada:
+```
+    @PostMapping(value = "/{version}/ias/openai/chat/tweet", version = "1.0")
+    public TweetResponse chatOpenAiTweet(@RequestBody @Valid ChatRequest input) {
+
+        SystemMessage systemMessage = new SystemMessage(StandardCharsets.UTF_8.toString());
+
+        PromptTemplate promptTemplate = new PromptTemplate("""
+                Gere um tweet para o seguinte conteúdo: 
+                
+                {content}
+                
+                {format}
+                """);
+
+        BeanOutputConverter<TweetResponse> beanOutputConverter = new BeanOutputConverter<>(TweetResponse.class);
+        String format = beanOutputConverter.getFormat();
+        Map<String, Object> vars = Map.of("content", input.prompt(), "format", format);
+
+        Message userMessage = promptTemplate.createMessage(vars);
+
+        Prompt prompt = new Prompt(List.of(systemMessage, userMessage));
+        String response = openAiChatClient.prompt(prompt).call().content();
+
+        return beanOutputConverter.convert(response);
+    }
+    
+ public record TweetResponse(
+
+     String content,
+
+     List<String> hashTag
+) {
+}
+```
 
 
