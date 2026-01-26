@@ -16,6 +16,7 @@ Descrição: Microsserviço responsável por fornecer inteligência artificial.
 - Spring AI Model OpenAI;
 - Spring AI Model Google GenAi;
 - Spring AI Model Deepseek;
+- Spring AI Model Ahthropic;
 - Spring Doc OpenApi (versão 3.0.0);
 - Spring Boot Data Redis;
 - Spring Boot Cache;

@@ -92,6 +92,14 @@ spring:
           model: deepseek-chat
           temperature: 2
 
+    anthropic:
+      base-url: ${ANTHROPIC_BASE_URL}
+      api-key: ${ANTHROPIC_API_KEY}
+      chat:
+        options:
+          model: claude-sonnet-4-20250514
+          temperature: 0.8
+
 
 #  ai:
 #    openai:
@@ -117,14 +125,6 @@ spring:
 #      chat:
 #        options:
 #          model: claude-sonnet-4-5
-
-    # NEW in 2.0: Google GenAI (Gemini) integration
-#    google:
-#      genai:
-#        api-key: ${GOOGLE_GENAI_API_KEY:}
-#        chat:
-#          options:
-#            model: gemini-2.0-flash
 
     # NEW in 2.0: Redis Chat Memory configuration
 #    chat:

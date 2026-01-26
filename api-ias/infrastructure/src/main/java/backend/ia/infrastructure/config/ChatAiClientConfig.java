@@ -1,6 +1,7 @@
 package backend.ia.infrastructure.config;
 
 
+import org.springframework.ai.anthropic.AnthropicChatModel;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
 import org.springframework.ai.deepseek.DeepSeekChatModel;
@@ -29,6 +30,13 @@ public class ChatAiClientConfig {
     @Bean(name = "deepseekAiChatClient")
     public ChatClient deepseekAiChatClient(DeepSeekChatModel deepSeekChatModel) {
         return ChatClient.builder(deepSeekChatModel)
+                .defaultAdvisors(new SimpleLoggerAdvisor())
+                .build();
+    }
+
+    @Bean(name = "anthropicAiChatClient")
+    public ChatClient anthropicAiChatClient(AnthropicChatModel anthropicChatModel) {
+        return ChatClient.builder(anthropicChatModel)
                 .defaultAdvisors(new SimpleLoggerAdvisor())
                 .build();
     }
