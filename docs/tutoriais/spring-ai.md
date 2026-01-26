@@ -609,3 +609,213 @@ public class ChatController {
       redis:
         condition: service_healthy
 ```
+
+
+Adição de Anthropic Claude:
+
+2. Incluir dependência (spring-ai-starter-model-anthropic);
+```
+ext {
+    set('springAiVersion', "2.0.0-M2")
+}
+
+dependencies {
+
+    implementation 'org.springframework.ai:spring-ai-starter-model-openai'
+    implementation 'org.springframework.ai:spring-ai-starter-model-google-genai'
+    implementation 'org.springframework.ai:spring-ai-starter-model-deepseek'
+    implementation 'org.springframework.ai:spring-ai-starter-model-anthropic'
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.ai:spring-ai-bom:${springAiVersion}"
+    }
+}
+```
+
+3. Configurar application;
+```
+  ai:
+    chat:
+      client:
+        enabled: false # Desativa o cliente padrão para usar múltiplos modelos
+
+    openai:
+      base-url: ${OPENAI_BASE_URL}
+      api-key: ${OPENAI_API_KEY}
+      chat:
+        options:
+          model: gpt-5-nano
+          temperature: 1
+
+    google:
+      genai:
+        api-key: ${GEMINI_API_KEY}
+        chat:
+          options:
+            model: gemini-2.0-flash
+            temperature: 0.1
+
+    deepseek:
+      base-url: ${DEEPSEEK_BASE_URL}
+      api-key: ${DEEPSEEK_API_KEY}
+      chat:
+        options:
+          model: deepseek-chat
+          temperature: 2
+
+    anthropic:
+      base-url: ${ANTHROPIC_BASE_URL}
+      api-key: ${ANTHROPIC_API_KEY}
+      chat:
+        options:
+          model: claude-sonnet-4-20250514
+          temperature: 0.8
+```
+
+4. Criar bean para o Anthropic;
+```
+@Configuration
+public class ChatAiClientConfig {
+
+    @Bean(name = "openAiChatClient")
+    public ChatClient openAiChatClient(OpenAiChatModel openAiChatModel) {
+        return ChatClient.builder(openAiChatModel)
+                .defaultAdvisors(new SimpleLoggerAdvisor())
+                .build();
+    }
+
+    @Bean(name = "geminiAiChatClient")
+    public ChatClient geminiAiChatClient(GoogleGenAiChatModel googleGenAiChatModel) {
+        return ChatClient.builder(googleGenAiChatModel)
+                .defaultAdvisors(new SimpleLoggerAdvisor())
+                .build();
+    }
+
+    @Bean(name = "deepseekAiChatClient")
+    public ChatClient deepseekAiChatClient(DeepSeekChatModel deepSeekChatModel) {
+        return ChatClient.builder(deepSeekChatModel)
+                .defaultAdvisors(new SimpleLoggerAdvisor())
+                .build();
+    }
+
+    @Bean(name = "anthropicAiChatClient")
+    public ChatClient anthropicAiChatClient(AnthropicChatModel anthropicChatModel) {
+        return ChatClient.builder(anthropicChatModel)
+                .defaultAdvisors(new SimpleLoggerAdvisor())
+                .build();
+    }
+}
+```
+
+5. Criar endpoint no Controller;
+```
+@Tag(name = "Chat", description = "Controlador do recurso de Chat de Ias.")
+@Slf4j
+@NullMarked
+@RestController
+@RequestMapping(path = {"/api/"})
+public class ChatController {
+
+    private final ChatClient openAiChatClient;
+
+    private final ChatClient geminiAiChatClient;
+
+    private final ChatClient deepseekAiChatClient;
+
+    private final ChatClient anthropicAiChatClient;
+
+    public ChatController(
+            @Qualifier("openAiChatClient") ChatClient openAiChatClient,
+            @Qualifier("geminiAiChatClient") ChatClient geminiAiChatClient,
+            @Qualifier("deepseekAiChatClient") ChatClient deepseekAiChatClient,
+            @Qualifier("anthropicAiChatClient") ChatClient anthropicAiChatClient) {
+        this.openAiChatClient = openAiChatClient;
+        this.geminiAiChatClient = geminiAiChatClient;
+        this.deepseekAiChatClient = deepseekAiChatClient;
+        this.anthropicAiChatClient = anthropicAiChatClient;
+    }
+
+    @PostMapping(value = "/{version}/ias/openai/chat", version = "1.0")
+    public ChatResponse chatOpenAi(@RequestBody @Valid ChatRequest input) {
+        var response = openAiChatClient.prompt(input.prompt()).call().content();
+        return new ChatResponse(response);
+    }
+
+    @PostMapping(value = "/{version}/ias/gemini/chat", version = "1.0")
+    public ChatResponse chatGemini(@RequestBody @Valid ChatRequest input) {
+        var response = geminiAiChatClient.prompt(input.prompt()).call().content();
+        return new ChatResponse(response);
+    }
+
+    @PostMapping(value = "/{version}/ias/deepseek/chat", version = "1.0")
+    public ChatResponse chatDeepseek(@RequestBody @Valid ChatRequest input) {
+        var response = deepseekAiChatClient.prompt(input.prompt()).call().content();
+        return new ChatResponse(response);
+    }
+
+    @PostMapping(value = "/{version}/ias/anthropic/chat", version = "1.0")
+    public ChatResponse chatAnthropic(@RequestBody @Valid ChatRequest input) {
+        var response = anthropicAiChatClient.prompt(input.prompt()).call().content();
+        return new ChatResponse(response);
+    }
+}
+```
+
+6. Alterações no docker compose da api-ias.
+```
+  api-ias:
+    image: juniorsmartins/api-ias:v0.0.2
+    container_name: api-ias
+    hostname: api-ias
+    build:
+      context: ../api-ias
+      dockerfile: Dockerfile
+      args:
+        APP_NAME: "api-ias"
+        APP_VERSION: "v0.0.2"
+        APP_DESCRIPTION: "Microsserviço responsável por fornecer inteligência artificial."
+    env_file:
+      - envs/.env-api-ias
+    ports:
+      - "9010:9010"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+        reservations:
+          memory: 256M
+          cpus: '0.3'
+    environment:
+      TZ: utc
+      SERVER_PORT: 9010
+      SPRING_CLOUD_CONFIG_SERVER_URI: http://configserver:8888
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8761/eureka/
+      SPRING_PROFILES_ACTIVE: dev
+      SPRING_RABBITMQ_HOST: "rabbit"
+      RABBIT_HOST: rabbit
+      RABBIT_PORT: 5672
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      OPENAI_BASE_URL: https://api.openai.com
+      DEEPSEEK_BASE_URL: https://api.deepseek.com
+      ANTHROPIC_BASE_URL: https://api.anthropic.com
+      JAVA_TOOL_OPTIONS: "--enable-native-access=ALL-UNNAMED" # Elimina alguns warnnings
+    restart: unless-stopped
+    networks:
+      - communication
+    depends_on:
+      schema-registry:
+        condition: service_healthy
+      configserver:
+        condition: service_healthy
+      eurekaserver:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+```
+
+
+

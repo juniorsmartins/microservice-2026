@@ -2,7 +2,6 @@
 
 - Objetivo: microsserviços com ferramentas de pesquisa, estatística, investigação e publicação de material jornalístico. 
 
-
 ## Autoria
 
 [Junior Martins](https://www.linkedin.com/in/juniorsmartins/)
