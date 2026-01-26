@@ -17,23 +17,15 @@
 - https://github.com/spring-projects/spring-ai 
 - https://github.com/spring-ai-community/awesome-spring-ai 
 - https://platform.openai.com/docs/quickstart?language=java 
-- https://platform.openai.com/settings/organization/billing/overview 
-- 
--
+- https://platform.openai.com/settings/organization/billing/overview
 - https://docs.spring.io/spring-ai/reference/getting-started.html
 - https://spring.io/blog/2024/11/19/why-spring-ai
-- 
--
 - https://www.baeldung.com/spring-ai 
 - https://www.youtube.com/watch?v=FzLABAppJfM 
-- https://www.youtube.com/watch?v=NscHAlj-yQ0 
-- 
+- https://www.youtube.com/watch?v=NscHAlj-yQ0
 - https://usama.codes/blog/spring-ai-2-spring-boot-4-guide
-- https://www.youtube.com/playlist?list=PLZV0a2jwt22uoDm3LNDFvN6i2cAVU_HTH 
-- 
-- 
+- https://www.youtube.com/playlist?list=PLZV0a2jwt22uoDm3LNDFvN6i2cAVU_HTH
 - https://www.youtube.com/watch?v=oP7tn_YfoOk&list=PLuNxlOYbv61hmSWcdM0rtoWT0qEjZMIhU&index=1 (playlist)
-- 
 
 
 ### Introdução: 
@@ -120,31 +112,11 @@ Adição de Anthropic Claude:
 6. Alterações no docker compose da api-ias.
 
 
-
-
-Adição do Grog:
+Grog:
 1. Criar API Key (https://console.groq.com/keys);
-2. 
 
-
-
-
-Pré-requisitos (OpenRouter AI):
-1. Criar APi Key do Deepseek;
-   a. https://openrouter.ai/settings/keys
-2. Grátis com limitações.
-
-Cliente (OpenRouter AI):
-1. Adicionar dependência;
-   a. Spring AI Model OpenAI (spring-ai-starter-model-openai).
-2. Adicionar configuração no application.yml;
-   a. Configuração de IA;
-   b. Configuração de Logging;
-3. Criar ChatController e seus DTOs;
-4. Faça Post no endpoint do chat para testar.
-
-
-
+2. OpenRouter AI:
+1. Criar APi Key (https://openrouter.ai/settings/keys)
 
 
 ### Implementação: 
