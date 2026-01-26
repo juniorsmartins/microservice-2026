@@ -26,13 +26,17 @@ public class ChatController {
 
     private final ChatClient deepseekAiChatClient;
 
+    private final ChatClient anthropicAiChatClient;
+
     public ChatController(
             @Qualifier("openAiChatClient") ChatClient openAiChatClient,
             @Qualifier("geminiAiChatClient") ChatClient geminiAiChatClient,
-            @Qualifier("deepseekAiChatClient") ChatClient deepseekAiChatClient) {
+            @Qualifier("deepseekAiChatClient") ChatClient deepseekAiChatClient,
+            @Qualifier("anthropicAiChatClient") ChatClient anthropicAiChatClient) {
         this.openAiChatClient = openAiChatClient;
         this.geminiAiChatClient = geminiAiChatClient;
         this.deepseekAiChatClient = deepseekAiChatClient;
+        this.anthropicAiChatClient = anthropicAiChatClient;
     }
 
     @PostMapping(value = "/{version}/ias/openai/chat", version = "1.0")
@@ -50,6 +54,12 @@ public class ChatController {
     @PostMapping(value = "/{version}/ias/deepseek/chat", version = "1.0")
     public ChatResponse chatDeepseek(@RequestBody @Valid ChatRequest input) {
         var response = deepseekAiChatClient.prompt(input.prompt()).call().content();
+        return new ChatResponse(response);
+    }
+
+    @PostMapping(value = "/{version}/ias/anthropic/chat", version = "1.0")
+    public ChatResponse chatAnthropic(@RequestBody @Valid ChatRequest input) {
+        var response = anthropicAiChatClient.prompt(input.prompt()).call().content();
         return new ChatResponse(response);
     }
 }

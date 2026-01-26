@@ -9,6 +9,7 @@
 - https://docs.spring.io/spring-ai/reference/2.0/api/chat/google-genai-chat.html 
 - https://ai.google.dev/gemini-api/docs?hl=pt-br#java 
 - https://docs.spring.io/spring-ai/reference/2.0/api/chat/deepseek-chat.html 
+- https://docs.spring.io/spring-ai/reference/2.0/api/chat/anthropic-chat.html 
 - 
 - 
 - https://www.youtube.com/watch?v=daPwd4DnEfA 
@@ -47,10 +48,6 @@ Pré-requisitos do Spring AI 2.0.0-M1:
 - Java 21;
 - Spring Boot 4.0; 
 - Spring Framework 7.0.
-
-
-
-
 ```
 
 
@@ -112,6 +109,23 @@ Cliente com múltiplos modelos de IA (OpenAI + Gemini AI + Deepseek):
 3. Criar classe de configuração dos beans dos três modelos;
 4. Criar ChatController e DTOs;
 5. Configuração no docker compose (chaves de IAs estão no arquivo env para esconder segredos);
+
+
+Adição de Anthropic Claude: 
+1. Criar API KEY (https://platform.claude.com/settings/keys);
+2. Incluir dependência (spring-ai-starter-model-anthropic);
+3. Configurar application;
+4. Criar bean para o Anthropic;
+5. Criar endpoint no Controller;
+6. Alterações no docker compose da api-ias.
+
+
+
+
+Adição do Grog:
+1. Criar API Key (https://console.groq.com/keys);
+2. 
+
 
 
 
