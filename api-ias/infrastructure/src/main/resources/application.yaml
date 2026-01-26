@@ -82,7 +82,7 @@ spring:
         chat:
           options:
             model: gemini-2.0-flash
-            temperature: 0.1
+            temperature: 0.2
 
     deepseek:
       base-url: ${DEEPSEEK_BASE_URL}

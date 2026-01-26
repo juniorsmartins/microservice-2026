@@ -45,7 +45,6 @@ Pré-requisitos do Spring AI 2.0.0-M1:
 
 ## 2. Configuração
 
-
 ### Passo-a-passo
 
 Pré-requisitos (OpenAI):
@@ -115,9 +114,8 @@ Adição de Anthropic Claude:
 Grog:
 1. Criar API Key (https://console.groq.com/keys);
 
-2. OpenRouter AI:
+OpenRouter AI:
 1. Criar APi Key (https://openrouter.ai/settings/keys)
-
 
 ### Implementação: 
 
@@ -787,6 +785,12 @@ public class ChatController {
         condition: service_healthy
       redis:
         condition: service_healthy
+```
+
+
+Melhorias no prompt:
+```
+
 ```
 
 
