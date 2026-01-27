@@ -40,15 +40,19 @@ public class ChatController {
 
     private final ChatClient anthropicAiChatClient;
 
+    private final ChatClient ollamaAiChatClient;
+
     public ChatController(
             @Qualifier("openAiChatClient") ChatClient openAiChatClient,
             @Qualifier("geminiAiChatClient") ChatClient geminiAiChatClient,
             @Qualifier("deepseekAiChatClient") ChatClient deepseekAiChatClient,
-            @Qualifier("anthropicAiChatClient") ChatClient anthropicAiChatClient) {
+            @Qualifier("anthropicAiChatClient") ChatClient anthropicAiChatClient,
+            @Qualifier("ollamaAiChatClient") ChatClient ollamaAiChatClient) {
         this.openAiChatClient = openAiChatClient;
         this.geminiAiChatClient = geminiAiChatClient;
         this.deepseekAiChatClient = deepseekAiChatClient;
         this.anthropicAiChatClient = anthropicAiChatClient;
+        this.ollamaAiChatClient = ollamaAiChatClient;
     }
 
     @PostMapping(value = "/{version}/ias/openai/chat", version = "1.0")
@@ -132,6 +136,12 @@ public class ChatController {
     @PostMapping(value = "/{version}/ias/anthropic/chat", version = "1.0")
     public ChatResponse chatAnthropic(@RequestBody @Valid ChatRequest input) {
         var response = anthropicAiChatClient.prompt(input.prompt()).call().content();
+        return new ChatResponse(response);
+    }
+
+    @PostMapping(value = "/{version}/ias/ollama/chat", version = "1.0")
+    public ChatResponse chatOllama(@RequestBody @Valid ChatRequest input) {
+        var response = ollamaAiChatClient.prompt(input.prompt()).call().content();
         return new ChatResponse(response);
     }
 }
