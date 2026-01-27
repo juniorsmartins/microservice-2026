@@ -14,8 +14,8 @@ spring:
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
     url: jdbc:mariadb://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:db-notifications}?createDatabaseIfNotExist=true&serverTimezone=UTC
-    username: ${MARIADB_USER:mariadb}
-    password: ${MARIADB_PASSWORD:mariadb}
+    username: ${MARIADB_USER}
+    password: ${MARIADB_PASSWORD}
 
     hikari:
       autoCommit: false
@@ -143,8 +143,8 @@ spring:
   rabbitmq:
     host: ${RABBIT_HOST:localhost}
     port: ${RABBIT_PORT:5672}
-    username: ${RABBIT_USER:"guest"}
-    password: ${RABBIT_PASS:"guest"}
+    username: ${RABBIT_USER}
+    password: ${RABBIT_PASS}
   # --------------------------------------------------
 
 
