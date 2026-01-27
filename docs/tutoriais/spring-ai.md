@@ -10,6 +10,9 @@
 - https://ai.google.dev/gemini-api/docs?hl=pt-br#java 
 - https://docs.spring.io/spring-ai/reference/2.0/api/chat/deepseek-chat.html 
 - https://docs.spring.io/spring-ai/reference/2.0/api/chat/anthropic-chat.html 
+- https://docs.spring.io/spring-ai/reference/2.0/api/chat/ollama-chat.html 
+- https://ollama.com/library 
+- https://github.com/ollama/ollama?tab=readme-ov-file#model-library 
 - 
 - 
 - https://www.youtube.com/watch?v=daPwd4DnEfA 
@@ -109,6 +112,16 @@ Adição de Anthropic Claude:
 4. Criar bean para o Anthropic;
 5. Criar endpoint no Controller;
 6. Alterações no docker compose da api-ias.
+
+
+Adição do modelo local de IA, Ollama (https://ollama.com/ - não precisa de api-key):
+1. Incluir dependência (spring-ai-starter-model-ollama);
+2. Configurar application;
+3. Criar bean para o Ollama;
+4. Criar endpoint no Controller;
+5. Criar serviço do Ollama no docker compose;
+6. Alterações o docker compose da api-ias.
+Obs: Ollama pode usar diversos modelos de diferentes IAs. Veja quais em: https://ollama.com/search
 
 
 Grog:
@@ -788,6 +801,55 @@ public class ChatController {
 ```
 
 
+Adição do modelo local de IA, Ollama (https://ollama.com/ - não precisa de api-key):
+
+1. Incluir dependência (spring-ai-starter-model-ollama);
+```
+implementation 'org.springframework.ai:spring-ai-starter-model-ollama'
+```
+
+2. Configurar application;
+```
+spring:
+  ai:
+    ollama:
+      base-url: ${OLLAMA_BASE_URL:http://localhost:11434}
+      chat:
+        options:
+          model: qwen3-vl 
+          temperature: 0.5
+```
+
+3. Criar bean para o Ollama; 
+```
+    @Bean(name = "ollamaAiChatClient")
+    public ChatClient ollamaAiChatClient(OllamaChatModel ollamaChatModel) {
+        return ChatClient.builder(ollamaChatModel)
+                .defaultAdvisors(new SimpleLoggerAdvisor())
+                .build();
+    }
+```
+
+4. Criar endpoint no Controller;
+```
+    @PostMapping(value = "/{version}/ias/ollama/chat", version = "1.0")
+    public ChatResponse chatOllama(@RequestBody @Valid ChatRequest input) {
+        var response = ollamaAiChatClient.prompt(input.prompt()).call().content();
+        return new ChatResponse(response);
+    }
+```
+
+5. Criar serviço do Ollama no docker compose;
+```
+
+```
+
+6. Alterações o docker compose da api-ias.
+```
+
+```
+
+
 Melhorias no prompt:
 
 Ao enviar:
@@ -868,6 +930,11 @@ Com resposta estruturada:
      List<String> hashTag
 ) {
 }
+```
+
+Implementação de memória:
+```
+
 ```
 
 

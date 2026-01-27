@@ -100,6 +100,15 @@ spring:
           model: claude-sonnet-4-20250514
           temperature: 0.8
 
+    ollama:
+      init:
+        pull-model-strategy: always
+      base-url: ${OLLAMA_BASE_URL:http://localhost:11434}
+      chat:
+        options:
+          model: qwen2.5:0.5b # O Ollama pode usar diversos modelos de IAs diferentes (veja: https://ollama.com/search) - llama3.2:1b qwen2.5:0.5b gemma2:2b
+          temperature: 0.5
+
     # NEW in 2.0: Redis Chat Memory configuration
 #    chat:
 #      memory:
