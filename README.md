@@ -22,7 +22,7 @@
 ## Arquitetura 
 
 Arquitetura de Microsserviços
-![Arquitetura de Microsserviços](docs/diagramas/Microservices-v4.jpg)
+![Arquitetura de Microsserviços](docs/diagramas/Microservices-v5.jpg)
 
 Arquitetura Orientada a Eventos
 ![Arquitetura Orientada a Eventos](docs/diagramas/ArquiteturaEventos-v1.jpg)
