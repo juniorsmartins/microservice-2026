@@ -348,6 +348,8 @@ services:
         APP_NAME: "api-users"
         APP_VERSION: "v0.0.2"
         APP_DESCRIPTION: "API de Usuários para segurança de sistema financeiro."
+    env_file:
+      - envs/.env-api-users
     ports:
       - "9050:9050"
     deploy:
@@ -366,13 +368,9 @@ services:
       DB_HOST: database-users
       DB_NAME: db-users
       DB_PORT: 5432
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
       SPRING_RABBITMQ_HOST: "rabbit"
       RABBIT_HOST: rabbit
       RABBIT_PORT: 5672
-      RABBIT_USER: guest
-      RABBIT_PASS: guest
       JAVA_TOOL_OPTIONS: "--enable-native-access=ALL-UNNAMED" # Elimina alguns warnnings
     restart: unless-stopped
     networks:
@@ -391,6 +389,8 @@ services:
     image: postgres:17.0
     container_name: database-users
     hostname: database-users
+    env_file:
+      - envs/.env-api-users
     ports:
       - "5501:5432"
     deploy:
@@ -403,8 +403,6 @@ services:
       TZ: utc
       POSTGRES_DB: db-users
 #      POSTGRES_MULTIPLE_DATABASES: db_user, db_outro1, db_outro2
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
     volumes:
       - db-users:/var/lib/postgresql/data
     networks:
@@ -421,6 +419,8 @@ services:
         APP_NAME: "api-notifications"
         APP_VERSION: "v0.0.2"
         APP_DESCRIPTION: "API para notificações de cliente via email."
+    env_file:
+      - envs/.env-api-notifications
     ports:
       - "9060:9060"
     deploy:
@@ -439,13 +439,9 @@ services:
       DB_HOST: database-notifications
       DB_PORT: 3306
       DB_NAME: db-notifications
-      MARIADB_USER: mariadb
-      MARIADB_PASSWORD: mariadb
       SPRING_RABBITMQ_HOST: "rabbit"
       RABBIT_HOST: rabbit
       RABBIT_PORT: 5672
-      RABBIT_USER: guest
-      RABBIT_PASS: guest
     restart: unless-stopped
     networks:
       - communication
@@ -463,6 +459,8 @@ services:
     image: mariadb:12.1.2
     container_name: database-notifications
     hostname: database-notifications
+    env_file:
+      - envs/.env-api-notifications
     ports:
       - "3306:3306"
     deploy:
@@ -475,8 +473,6 @@ services:
       TZ: utc
       MARIADB_ROOT_PASSWORD: root123
       MARIADB_DATABASE: db-notifications
-      MARIADB_USER: mariadb
-      MARIADB_PASSWORD: mariadb
     volumes:
       - db-notifications:/var/lib/mysql
     networks:
@@ -493,6 +489,8 @@ services:
         APP_NAME: "api-news"
         APP_VERSION: "v0.0.2"
         APP_DESCRIPTION: "Microsserviço para registro de notícias."
+    env_file:
+      - envs/.env-api-news
     ports:
       - "9000:9000"
     deploy:
@@ -509,13 +507,9 @@ services:
       DB_HOST: database-news
       DB_PORT: 3306
       DB_NAME: db-news
-      MYSQL_USER: mysql123
-      MYSQL_PASSWORD: mysql123
       SPRING_RABBITMQ_HOST: "rabbit"
       RABBIT_HOST: rabbit
       RABBIT_PORT: 5672
-      RABBIT_USER: guest
-      RABBIT_PASS: guest
     restart: unless-stopped
     networks:
       - communication
@@ -533,6 +527,8 @@ services:
     image: mysql:lts-oraclelinux9
     container_name: database-news
     hostname: database-news
+    env_file:
+      - envs/.env-api-news
     ports:
       - "3307:3306"
     deploy:
@@ -545,8 +541,6 @@ services:
       TZ: utc
       MYSQL_ROOT_PASSWORD: root123
       MYSQL_DATABASE: db-news
-      MYSQL_USER: mysql123
-      MYSQL_PASSWORD: mysql123
     volumes:
       - db-news:/var/lib/mysql
     networks:
