@@ -813,10 +813,12 @@ implementation 'org.springframework.ai:spring-ai-starter-model-ollama'
 spring:
   ai:
     ollama:
+      init:
+        pull-model-strategy: always
       base-url: ${OLLAMA_BASE_URL:http://localhost:11434}
       chat:
         options:
-          model: qwen3-vl 
+          model: qwen2.5:0.5b 
           temperature: 0.5
 ```
 
@@ -841,12 +843,86 @@ spring:
 
 5. Criar serviço do Ollama no docker compose;
 ```
-
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ollama
+    hostname: ollama
+    ports:
+      - "11434:11434"
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 2G
+        reservations:
+          cpus: '1.0'
+          memory: 512M
+    volumes:
+      - ollama_data:/root/.ollama
+    restart: unless-stopped
+    networks:
+      - communication
+      
+volumes:
+  ollama_data:
+    name: ollama_data
 ```
 
 6. Alterações o docker compose da api-ias.
 ```
-
+  api-ias:
+    image: juniorsmartins/api-ias:v0.0.2
+    container_name: api-ias
+    hostname: api-ias
+    build:
+      context: ../api-ias
+      dockerfile: Dockerfile
+      args:
+        APP_NAME: "api-ias"
+        APP_VERSION: "v0.0.2"
+        APP_DESCRIPTION: "Microsserviço responsável por fornecer inteligência artificial."
+    env_file:
+      - envs/.env-api-ias
+    ports:
+      - "9010:9010"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+        reservations:
+          memory: 256M
+          cpus: '0.3'
+    environment:
+      TZ: utc
+      SERVER_PORT: 9010
+      SPRING_CLOUD_CONFIG_SERVER_URI: http://configserver:8888
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8761/eureka/
+      SPRING_PROFILES_ACTIVE: dev
+      SPRING_RABBITMQ_HOST: "rabbit"
+      RABBIT_HOST: rabbit
+      RABBIT_PORT: 5672
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      OPENAI_BASE_URL: https://api.openai.com
+      DEEPSEEK_BASE_URL: https://api.deepseek.com
+      ANTHROPIC_BASE_URL: https://api.anthropic.com
+      OLLAMA_BASE_URL: http://ollama:11434
+      JAVA_TOOL_OPTIONS: "--enable-native-access=ALL-UNNAMED" # Elimina alguns warnnings
+    restart: unless-stopped
+    networks:
+      - communication
+    depends_on:
+      schema-registry:
+        condition: service_healthy
+      configserver:
+        condition: service_healthy
+      eurekaserver:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      ollama:
+        condition: service_started
 ```
 
 

@@ -14,8 +14,8 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:db-news}?createDatabaseIfNotExist=true&serverTimezone=UTC&useSSL=false&allowPublicKeyRetrieval=true
-    username: ${MYSQL_USER:mysql123}
-    password: ${MYSQL_PASSWORD:mysql123}
+    username: ${MYSQL_USER}
+    password: ${MYSQL_PASSWORD}
 
     hikari:
       # Se true, cada operação SQL é automaticamente commitada ao fim da execução se não houver transação explícita. true é adequado em cenários simples. Em aplicações com transações claras via Spring, normalmente fica false, pois o controle é feito pelo gerenciador transacional.
@@ -124,8 +124,8 @@ spring:
   rabbitmq:
     host: ${RABBIT_HOST:localhost}
     port: ${RABBIT_PORT:5672}
-    username: ${RABBIT_USER:"guest"}
-    password: ${RABBIT_PASS:"guest"}
+    username: ${RABBIT_USER}
+    password: ${RABBIT_PASS}
   # --------------------------------------------------
 
 
