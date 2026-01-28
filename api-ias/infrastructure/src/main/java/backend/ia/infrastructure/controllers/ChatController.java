@@ -146,24 +146,27 @@ public class ChatController {
             @RequestBody @Valid ChatRequest input,
             @CookieValue(name = "X-CONV-ID", required = false) String convId) {
 
-        String conversationId = convId == null ? UUID.randomUUID().toString() : convId;
+        var conversationId = convId == null ? UUID.randomUUID().toString() : convId;
+        var responseCookie = createResponseCookie("X-CONV-ID", conversationId, 3600);
 
         var response = ollamaAiChatClient.prompt()
                 .user(input.prompt())
                 .advisors(spec -> spec.param(ChatMemory.CONVERSATION_ID, conversationId) )
                 .call()
                 .content();
-
-        ResponseCookie cookie = ResponseCookie.from("X-CONV-ID", conversationId)
-                .path("/")
-                .maxAge(3600)
-                .build();
-
-        ChatResponse chatResponse = new ChatResponse(response);
+        var chatResponse = new ChatResponse(response);
 
         return ResponseEntity
                 .ok()
-                .header(HttpHeaders.SET_COOKIE, cookie.toString())
+                .header(HttpHeaders.SET_COOKIE, responseCookie.toString())
                 .body(chatResponse);
+    }
+
+    private ResponseCookie createResponseCookie(String name, String conversationId, int maxAgeSeconds) {
+
+        return ResponseCookie.from(name, conversationId)
+                .path("/")
+                .maxAge(maxAgeSeconds)
+                .build();
     }
 }
