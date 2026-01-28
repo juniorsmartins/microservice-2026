@@ -13,6 +13,7 @@
 - https://docs.spring.io/spring-ai/reference/2.0/api/chat/ollama-chat.html 
 - https://ollama.com/library 
 - https://github.com/ollama/ollama?tab=readme-ov-file#model-library 
+- https://docs.spring.io/spring-ai/reference/2.0/api/chat-memory.html 
 - 
 - 
 - https://www.youtube.com/watch?v=daPwd4DnEfA 
@@ -43,6 +44,31 @@ Pré-requisitos do Spring AI 2.0.0-M1:
 - Java 21;
 - Spring Boot 4.0; 
 - Spring Framework 7.0.
+
+Memória de chat: 
+- ChatMemory (essa interface permite implementar vários tipos de memória para atender a diferentes casos de uso);
+- MessageWindowChatMemory (histórico de conversas - essa classe implementa ChatMemory e chama ChatMemoryRepository).
+- ChatMemoryRepository (interface para armazenar a memória do chat, mas também permite implementar o próprio repositório);
+   - InMemoryChatMemoryRepository (armazena mensagens na memória);
+   - JdbcChatMemoryRepository (armazenar mensagens em banco de dados relacional).
+
+MessageWindowChatMemory - Mantém uma janela de mensagens até um tamanho máximo especificado. Quando o número de 
+mensagens excede o máximo, as mensagens mais antigas são removidas, preservando-se as mensagens do sistema. O tamanho 
+padrão da janela é de 20 mensagens.
+
+MessageWindowChatMemory memory = MessageWindowChatMemory.builder()
+    .maxMessages(20)
+    .build();
+
+InMemoryChatMemoryRepository - Armazena mensagens na memória usando um ConcurrentHashMap. Por padrão, se nenhum outro 
+repositório já estiver configurado, o Spring AI configura automaticamente um ChatMemoryRepository bean do tipo 
+InMemoryChatMemoryRepository que você pode usar diretamente em sua aplicação.
+
+JdbcChatMemoryRepository - É uma implementação integrada que usa JDBC para armazenar mensagens em um banco de dados 
+relacional. Ela oferece suporte a vários bancos de dados nativamente e é adequada para aplicações que exigem 
+armazenamento persistente da memória de bate-papo (implementation 
+'org.springframework.ai:spring-ai-starter-model-chat-memory-repository-jdbc'). O Spring AI oferece configuração 
+automática para o JdbcChatMemoryRepository, que você pode usar diretamente em sua aplicação.
 ```
 
 
@@ -1008,9 +1034,155 @@ Com resposta estruturada:
 }
 ```
 
-Implementação de memória:
+Implementação de memória padrão de chat no Ollama (ChatAiClientConfig):
+```
+    @Bean(name = "ollamaAiChatClient")
+    public ChatClient ollamaAiChatClient(OllamaChatModel ollamaChatModel, ChatMemory chatMemory) {
+        return ChatClient.builder(ollamaChatModel)
+                .defaultAdvisors(MessageChatMemoryAdvisor.builder(chatMemory).build(), new SimpleLoggerAdvisor())
+                .build();
+    }
 ```
 
+Implementação de memória de chat com Redis no Ollama (ChatAiClientConfig):
+a. Adição de dependência 
 ```
+implementation 'org.springframework.ai:spring-ai-starter-model-chat-memory-repository-redis'
+```
+b. Alteração no bean
+```
+    @Bean(name = "ollamaAiChatClient")
+    public ChatClient ollamaAiChatClient(OllamaChatModel ollamaChatModel) {
 
+        var chatMemory = createRedisChatMemoryRepository();
+
+        return ChatClient.builder(ollamaChatModel)
+                .defaultAdvisors(MessageChatMemoryAdvisor.builder(chatMemory).build(), new SimpleLoggerAdvisor())
+                .build();
+    }
+
+    private ChatMemory createRedisChatMemoryRepository() {
+
+        JedisPooled jedisPooled = new JedisPooled("redis", 6379);
+
+        ChatMemoryRepository chatMemoryRepository = RedisChatMemoryRepository.builder()
+                .jedisClient(jedisPooled)
+                .indexName("api-ias-memory-chat-index")
+                .keyPrefix("api-ias-memory-chat")
+                .timeToLive(Duration.ofMinutes(10))
+                .build();
+
+        return createChatMemory(chatMemoryRepository, 25);
+    }
+
+    private ChatMemory createChatMemory(ChatMemoryRepository chatMemoryRepository, int maxMessages) {
+        return MessageWindowChatMemory.builder()
+                .chatMemoryRepository(chatMemoryRepository)
+                .maxMessages(maxMessages)
+                .build();
+    }
+```
+d. Redis no docker compose
+```
+  api-ias:
+    image: juniorsmartins/api-ias:v0.0.2
+    container_name: api-ias
+    hostname: api-ias
+    build:
+      context: ../api-ias
+      dockerfile: Dockerfile
+      args:
+        APP_NAME: "api-ias"
+        APP_VERSION: "v0.0.2"
+        APP_DESCRIPTION: "Microsserviço responsável por fornecer inteligência artificial."
+    env_file:
+      - envs/.env-api-ias
+    ports:
+      - "9010:9010"
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 1G
+        reservations:
+          memory: 256M
+          cpus: '0.3'
+    environment:
+      TZ: utc
+      SERVER_PORT: 9010
+      SPRING_CLOUD_CONFIG_SERVER_URI: http://configserver:8888
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8761/eureka/
+      SPRING_PROFILES_ACTIVE: dev
+      SPRING_RABBITMQ_HOST: "rabbit"
+      RABBIT_HOST: rabbit
+      RABBIT_PORT: 5672
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      OPENAI_BASE_URL: https://api.openai.com
+      DEEPSEEK_BASE_URL: https://api.deepseek.com
+      ANTHROPIC_BASE_URL: https://api.anthropic.com
+      OLLAMA_BASE_URL: http://ollama:11434
+      JAVA_TOOL_OPTIONS: "--enable-native-access=ALL-UNNAMED" # Elimina alguns warnnings
+    restart: unless-stopped
+    networks:
+      - communication
+    depends_on:
+      schema-registry:
+        condition: service_healthy
+      configserver:
+        condition: service_healthy
+      eurekaserver:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      ollama:
+        condition: service_started
+
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ollama
+    hostname: ollama
+    ports:
+      - "11434:11434"
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 3G
+        reservations:
+          cpus: '0.5'
+          memory: 512M
+    volumes:
+      - ollama_data:/root/.ollama
+    restart: unless-stopped
+    networks:
+      - communication
+
+  redis:
+    image: redis:8.4.0
+    container_name: redis
+    hostname: redis
+    ports:
+      - "6379:6379"
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 1024M
+    restart: unless-stopped
+    environment:
+      TZ: utc
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+    volumes:
+      - redis-data:/data
+    command: ["redis-server", "--appendonly", "yes"]
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - communication
+```
 
