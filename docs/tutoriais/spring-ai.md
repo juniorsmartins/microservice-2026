@@ -1068,7 +1068,7 @@ b. Alteração no bean
         ChatMemoryRepository chatMemoryRepository = RedisChatMemoryRepository.builder()
                 .jedisClient(jedisPooled)
                 .indexName("api-ias-memory-chat-index")
-                .keyPrefix("api-ias-memory-chat")
+                .keyPrefix("api-ias-memory-chat-")
                 .timeToLive(Duration.ofMinutes(10))
                 .build();
 
@@ -1186,3 +1186,34 @@ d. Redis no docker compose
       - communication
 ```
 
+Implementação de conversationId na memória de chat com Redis no Ollama:
+```
+    @PostMapping(value = "/{version}/ias/ollama/chat", version = "1.0")
+    public ResponseEntity<ChatResponse> chatOllama(
+            @RequestBody @Valid ChatRequest input,
+            @CookieValue(name = "X-CONV-ID", required = false) String convId) {
+
+        var conversationId = convId == null ? UUID.randomUUID().toString() : convId;
+        var responseCookie = createResponseCookie("X-CONV-ID", conversationId, 3600);
+
+        var response = ollamaAiChatClient.prompt()
+                .user(input.prompt())
+                .advisors(spec -> spec.param(ChatMemory.CONVERSATION_ID, conversationId) )
+                .call()
+                .content();
+        var chatResponse = new ChatResponse(response);
+
+        return ResponseEntity
+                .ok()
+                .header(HttpHeaders.SET_COOKIE, responseCookie.toString())
+                .body(chatResponse);
+    }
+
+    private ResponseCookie createResponseCookie(String name, String conversationId, int maxAgeSeconds) {
+
+        return ResponseCookie.from(name, conversationId)
+                .path("/")
+                .maxAge(maxAgeSeconds)
+                .build();
+    }
+```
