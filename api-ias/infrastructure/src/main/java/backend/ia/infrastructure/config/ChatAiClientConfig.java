@@ -22,7 +22,7 @@ import java.time.Duration;
 @Configuration
 public class ChatAiClientConfig {
 
-    @Bean(name = "openAiChatClient") // com memória padrão automática
+    @Bean(name = "openAiChatClient") // com memória volátil default
     public ChatClient openAiChatClient(OpenAiChatModel openAiChatModel, ChatMemory chatMemory) {
         return ChatClient.builder(openAiChatModel)
                 .defaultAdvisors(MessageChatMemoryAdvisor.builder(chatMemory).build(), new SimpleLoggerAdvisor())
@@ -43,14 +43,14 @@ public class ChatAiClientConfig {
                 .build();
     }
 
-    @Bean(name = "anthropicAiChatClient") // com memória padrão automática
+    @Bean(name = "anthropicAiChatClient") // com memória volátil default
     public ChatClient anthropicAiChatClient(AnthropicChatModel anthropicChatModel, ChatMemory chatMemory) {
         return ChatClient.builder(anthropicChatModel)
                 .defaultAdvisors(MessageChatMemoryAdvisor.builder(chatMemory).build(), new SimpleLoggerAdvisor())
                 .build();
     }
 
-    @Bean(name = "ollamaAiChatClient") // Com memória Redis
+    @Bean(name = "ollamaAiChatClient") // Com memória volátil Redis
     public ChatClient ollamaAiChatClient(OllamaChatModel ollamaChatModel) {
 
         var chatMemory = createRedisChatMemoryRepository();
@@ -67,8 +67,8 @@ public class ChatAiClientConfig {
         ChatMemoryRepository chatMemoryRepository = RedisChatMemoryRepository.builder()
                 .jedisClient(jedisPooled)
                 .indexName("api-ias-memory-chat-index")
-                .keyPrefix("api-ias-memory-chat")
-                .timeToLive(Duration.ofMinutes(10))
+                .keyPrefix("api-ias-memory-chat-")
+                .timeToLive(Duration.ofHours(30))
                 .build();
 
         return createChatMemory(chatMemoryRepository, 25);

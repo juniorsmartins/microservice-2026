@@ -1068,7 +1068,7 @@ b. Alteração no bean
         ChatMemoryRepository chatMemoryRepository = RedisChatMemoryRepository.builder()
                 .jedisClient(jedisPooled)
                 .indexName("api-ias-memory-chat-index")
-                .keyPrefix("api-ias-memory-chat")
+                .keyPrefix("api-ias-memory-chat-")
                 .timeToLive(Duration.ofMinutes(10))
                 .build();
 

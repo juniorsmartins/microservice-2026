@@ -9,6 +9,7 @@ import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.jspecify.annotations.NullMarked;
 import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.ai.chat.memory.ChatMemory;
 import org.springframework.ai.chat.messages.Message;
 import org.springframework.ai.chat.messages.SystemMessage;
 import org.springframework.ai.chat.messages.UserMessage;
@@ -16,14 +17,15 @@ import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.ai.chat.prompt.PromptTemplate;
 import org.springframework.ai.converter.BeanOutputConverter;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseCookie;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 @Tag(name = "Chat", description = "Controlador do recurso de Chat de Ias.")
 @Slf4j
@@ -140,8 +142,28 @@ public class ChatController {
     }
 
     @PostMapping(value = "/{version}/ias/ollama/chat", version = "1.0")
-    public ChatResponse chatOllama(@RequestBody @Valid ChatRequest input) {
-        var response = ollamaAiChatClient.prompt(input.prompt()).call().content();
-        return new ChatResponse(response);
+    public ResponseEntity<ChatResponse> chatOllama(
+            @RequestBody @Valid ChatRequest input,
+            @CookieValue(name = "X-CONV-ID", required = false) String convId) {
+
+        String conversationId = convId == null ? UUID.randomUUID().toString() : convId;
+
+        var response = ollamaAiChatClient.prompt()
+                .user(input.prompt())
+                .advisors(spec -> spec.param(ChatMemory.CONVERSATION_ID, conversationId) )
+                .call()
+                .content();
+
+        ResponseCookie cookie = ResponseCookie.from("X-CONV-ID", conversationId)
+                .path("/")
+                .maxAge(3600)
+                .build();
+
+        ChatResponse chatResponse = new ChatResponse(response);
+
+        return ResponseEntity
+                .ok()
+                .header(HttpHeaders.SET_COOKIE, cookie.toString())
+                .body(chatResponse);
     }
 }
