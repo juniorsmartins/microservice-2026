@@ -13,6 +13,7 @@
 - https://docs.spring.io/spring-ai/reference/2.0/api/chat/ollama-chat.html 
 - https://ollama.com/library 
 - https://github.com/ollama/ollama?tab=readme-ov-file#model-library 
+- https://docs.spring.io/spring-ai/reference/2.0/api/chat-memory.html 
 - 
 - 
 - https://www.youtube.com/watch?v=daPwd4DnEfA 
@@ -43,6 +44,31 @@ Pré-requisitos do Spring AI 2.0.0-M1:
 - Java 21;
 - Spring Boot 4.0; 
 - Spring Framework 7.0.
+
+Memória de chat: 
+- ChatMemory (essa interface permite implementar vários tipos de memória para atender a diferentes casos de uso);
+- MessageWindowChatMemory (histórico de conversas - essa classe implementa ChatMemory e chama ChatMemoryRepository).
+- ChatMemoryRepository (interface para armazenar a memória do chat, mas também permite implementar o próprio repositório);
+   - InMemoryChatMemoryRepository (armazena mensagens na memória);
+   - JdbcChatMemoryRepository (armazenar mensagens em banco de dados relacional).
+
+MessageWindowChatMemory - Mantém uma janela de mensagens até um tamanho máximo especificado. Quando o número de 
+mensagens excede o máximo, as mensagens mais antigas são removidas, preservando-se as mensagens do sistema. O tamanho 
+padrão da janela é de 20 mensagens.
+
+MessageWindowChatMemory memory = MessageWindowChatMemory.builder()
+    .maxMessages(20)
+    .build();
+
+InMemoryChatMemoryRepository - Armazena mensagens na memória usando um ConcurrentHashMap. Por padrão, se nenhum outro 
+repositório já estiver configurado, o Spring AI configura automaticamente um ChatMemoryRepository bean do tipo 
+InMemoryChatMemoryRepository que você pode usar diretamente em sua aplicação.
+
+JdbcChatMemoryRepository - É uma implementação integrada que usa JDBC para armazenar mensagens em um banco de dados 
+relacional. Ela oferece suporte a vários bancos de dados nativamente e é adequada para aplicações que exigem 
+armazenamento persistente da memória de bate-papo (implementation 
+'org.springframework.ai:spring-ai-starter-model-chat-memory-repository-jdbc'). O Spring AI oferece configuração 
+automática para o JdbcChatMemoryRepository, que você pode usar diretamente em sua aplicação.
 ```
 
 
@@ -1008,7 +1034,17 @@ Com resposta estruturada:
 }
 ```
 
-Implementação de memória:
+Implementação de memória padrão de chat no Ollama:
+```
+    @Bean(name = "ollamaAiChatClient")
+    public ChatClient ollamaAiChatClient(OllamaChatModel ollamaChatModel, ChatMemory chatMemory) {
+        return ChatClient.builder(ollamaChatModel)
+                .defaultAdvisors(MessageChatMemoryAdvisor.builder(chatMemory).build(), new SimpleLoggerAdvisor())
+                .build();
+    }
+```
+
+Implementação de memória de chat com Redis no Ollama:
 ```
 
 ```
