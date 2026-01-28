@@ -22,35 +22,35 @@ import java.time.Duration;
 @Configuration
 public class ChatAiClientConfig {
 
-    @Bean(name = "openAiChatClient")
-    public ChatClient openAiChatClient(OpenAiChatModel openAiChatModel) {
+    @Bean(name = "openAiChatClient") // com memória padrão automática
+    public ChatClient openAiChatClient(OpenAiChatModel openAiChatModel, ChatMemory chatMemory) {
         return ChatClient.builder(openAiChatModel)
-                .defaultAdvisors(new SimpleLoggerAdvisor())
+                .defaultAdvisors(MessageChatMemoryAdvisor.builder(chatMemory).build(), new SimpleLoggerAdvisor())
                 .build();
     }
 
-    @Bean(name = "geminiAiChatClient")
+    @Bean(name = "geminiAiChatClient") // sem memória
     public ChatClient geminiAiChatClient(GoogleGenAiChatModel googleGenAiChatModel) {
         return ChatClient.builder(googleGenAiChatModel)
                 .defaultAdvisors(new SimpleLoggerAdvisor())
                 .build();
     }
 
-    @Bean(name = "deepseekAiChatClient")
+    @Bean(name = "deepseekAiChatClient") // sem memória
     public ChatClient deepseekAiChatClient(DeepSeekChatModel deepSeekChatModel) {
         return ChatClient.builder(deepSeekChatModel)
                 .defaultAdvisors(new SimpleLoggerAdvisor())
                 .build();
     }
 
-    @Bean(name = "anthropicAiChatClient")
-    public ChatClient anthropicAiChatClient(AnthropicChatModel anthropicChatModel) {
+    @Bean(name = "anthropicAiChatClient") // com memória padrão automática
+    public ChatClient anthropicAiChatClient(AnthropicChatModel anthropicChatModel, ChatMemory chatMemory) {
         return ChatClient.builder(anthropicChatModel)
-                .defaultAdvisors(new SimpleLoggerAdvisor())
+                .defaultAdvisors(MessageChatMemoryAdvisor.builder(chatMemory).build(), new SimpleLoggerAdvisor())
                 .build();
     }
 
-    @Bean(name = "ollamaAiChatClient")
+    @Bean(name = "ollamaAiChatClient") // Com memória Redis
     public ChatClient ollamaAiChatClient(OllamaChatModel ollamaChatModel) {
 
         var chatMemory = createRedisChatMemoryRepository();
