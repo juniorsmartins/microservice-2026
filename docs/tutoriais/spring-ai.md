@@ -14,22 +14,7 @@
 - https://ollama.com/library 
 - https://github.com/ollama/ollama?tab=readme-ov-file#model-library 
 - https://docs.spring.io/spring-ai/reference/2.0/api/chat-memory.html 
-- 
-- 
-- https://www.youtube.com/watch?v=daPwd4DnEfA 
-- https://spring.io/blog/2025/12/11/spring-ai-2-0-0-M1-available-now 
-- https://github.com/spring-projects/spring-ai 
-- https://github.com/spring-ai-community/awesome-spring-ai 
-- https://platform.openai.com/docs/quickstart?language=java 
-- https://platform.openai.com/settings/organization/billing/overview
-- https://docs.spring.io/spring-ai/reference/getting-started.html
-- https://spring.io/blog/2024/11/19/why-spring-ai
-- https://www.baeldung.com/spring-ai 
-- https://www.youtube.com/watch?v=FzLABAppJfM 
-- https://www.youtube.com/watch?v=NscHAlj-yQ0
-- https://usama.codes/blog/spring-ai-2-spring-boot-4-guide
-- https://www.youtube.com/playlist?list=PLZV0a2jwt22uoDm3LNDFvN6i2cAVU_HTH
-- https://www.youtube.com/watch?v=oP7tn_YfoOk&list=PLuNxlOYbv61hmSWcdM0rtoWT0qEjZMIhU&index=1 (playlist)
+- https://www.youtube.com/watch?v=oP7tn_YfoOk&list=PLuNxlOYbv61hmSWcdM0rtoWT0qEjZMIhU&index=1
 
 
 ### Introdução: 
