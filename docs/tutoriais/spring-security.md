@@ -9,6 +9,9 @@
 - https://docs.spring.io/spring-security/reference/servlet/architecture.html (arquitetura) 
 - https://docs.spring.io/spring-security/reference/servlet/getting-started.html (começando)
 - 
+- 
+- 
+- https://www.youtube.com/playlist?list=PLZV0a2jwt22s5NCKOwSmHVagoDW8nflaC (playlist do Dan Vega)
 
 ### Introdução: 
 
@@ -16,20 +19,26 @@
 Spring Security é um framework poderoso e altamente customizável para adicionar autenticação (quem você é) e 
 autorização (o que você pode fazer) em aplicações Java/Spring.
 
-- Autenticação: 
+AUTENTICAÇÃO
 
 O Spring Security oferece suporte abrangente para autenticação . A autenticação é a forma como verificamos a identidade 
 de quem está tentando acessar um recurso específico. Uma maneira comum de autenticar usuários é exigindo que eles 
 insiram um nome de usuário e uma senha. Uma vez realizada a autenticação, conhecemos a identidade e podemos realizar a 
 autorização.
 
-- Autorização: 
+a. Autenticação básica: login e senha - gera valor de sessão para ser armazenado em cookie do navegador. 
+b. Oauth2: servidor de autenticação e token de acesso - toda a lógica de autenticação e autorização centralizada num 
+único componente.
+
+- Oauth2: 
+
+AUTORIZAÇÃO
 
 O Spring Security oferece suporte abrangente para autorização . Autorização é o processo de determinar quem tem 
 permissão para acessar um recurso específico. O Spring Security proporciona defesa em profundidade , permitindo 
 autorização baseada em requisição e autorização baseada em método.
 
-- Centralized Identity and Access Management (IAM):
+CENTRALIZED IDENTITY AND ACCESS MANAGEMENT (IAM)
 
 IAM centralizado é um sistema único que gerencia quem pode acessar o quê em todas as aplicações e recursos da 
 organização. 
@@ -52,7 +61,7 @@ Exemplo prático: Funcionário novo entra na empresa: Cadastrado no IAM uma vez;
 ERP, CRM, intranet; Muda de departamento? Permissões atualizadas no IAM refletem em todos os sistemas; Sai da empresa? 
 Acesso revogado em todos os lugares simultaneamente.
 
-- Logging: 
+LOGGING
 
 O Spring Security fornece um registro abrangente de todos os eventos relacionados à segurança nos níveis DEBUG e TRACE. 
 Isso pode ser muito útil ao depurar sua aplicação, pois, por questões de segurança, o Spring Security não adiciona 
