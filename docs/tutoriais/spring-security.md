@@ -19,6 +19,7 @@
 Spring Security é um framework poderoso e altamente customizável para adicionar autenticação (quem você é) e 
 autorização (o que você pode fazer) em aplicações Java/Spring.
 
+
 AUTENTICAÇÃO
 
 O Spring Security oferece suporte abrangente para autenticação . A autenticação é a forma como verificamos a identidade 
@@ -29,15 +30,6 @@ autorização.
 A. Autenticação básica (stateful): login e senha - gera valor de sessão para ser armazenado em cookie do navegador. O 
    servidor mantém o estado da sessão.
 
-B. Oauth2 (stateless): utiliza um servidor de autorização separado que emite tokens de acesso. Toda a lógica de 
-   autenticação e autorização é centralizada num único componente (Authorization Server). O token é enviado em cada 
-   requisição, eliminando a necessidade de sessões no servidor.
-
-Oauth2: 
-- Resource Owner (proprietário do recurso): o usuário dono dos dados;
-- Client (aplicação cliente): quem deseja acessar recursos do proprietário;
-- Authorization Server: servidor que autentica e emite tokens;
-- Resource Server: servidor que hospeda os recursos protegidos.
 
 AUTORIZAÇÃO
 
@@ -48,6 +40,68 @@ autorização baseada em requisição (URLs) e autorização baseada em método 
 Exemplos:
 - Baseada em requisição: controlar acesso a /admin/** apenas para usuários com role ADMIN;
 - Baseada em método: anotar métodos específicos para exigir permissões granulares.
+
+B. Oauth2 (stateless): utiliza um servidor de autorização separado que emite tokens de acesso. Toda a lógica de 
+   autenticação e autorização é centralizada num único componente (Authorization Server). O token é enviado em cada 
+   requisição, eliminando a necessidade de sessões no servidor.
+   
+IMPORTANTE: a estrutura Oauth2 foi criada originalmente para dar suporte à autorização. Posteriormente, acabaram 
+usando também para autenticação. 
+
+Oauth2: 
+- Resource Owner (proprietário do recurso): o usuário dono dos dados;
+- Client (aplicação cliente): quem deseja acessar recursos do proprietário;
+- Authorization Server: servidor que autentica e emite tokens;
+- Resource Server: servidor que hospeda os recursos protegidos;
+- Scopes: permissões granulares que o cliente deseja, como acesso a dados ou determinadas ações. O servidor de 
+  autenticação quem emite um token de acesso para o cliente com base em escopos. Esses escopos decidem quais ações o 
+  aplicativo cliente pode executar.
+
+
+OPEN ID CONNECT
+
+OpenID Connect é um protocolo de autenticação construído sobre o OAuth2. Enquanto o OAuth2 foi originalmente projetado 
+apenas para autorização (conceder acesso a recursos), o OpenID Connect adiciona uma camada de autenticação, permitindo 
+verificar a identidade do usuário.
+
+Diferenças principais:
+
+OAuth2:
+- Focado em AUTORIZAÇÃO (o que você pode acessar)
+- Access Token: contém permissões/escopos, mas não identifica quem é o usuário
+- Pergunta: "Este token pode acessar o recurso X?"
+
+OpenID Connect:
+- Adiciona AUTENTICAÇÃO (quem você é) ao OAuth2
+- ID Token (JWT): contém informações sobre o usuário (nome, email, foto, etc.)
+- Access Token: continua sendo usado para autorização de recursos
+- Pergunta: "Quem é este usuário?" + "O que ele pode acessar?"
+
+Como funciona:
+1. Usuário faz login no Authorization Server
+2. Servidor retorna um ID Token (identidade do usuário) + Access Token (autorização)
+3. Aplicação valida o ID Token para saber quem é o usuário
+4. Aplicação usa o Access Token para acessar recursos protegidos
+
+Exemplo prático:
+Quando você faz login em um site usando "Entrar com Google":
+- Google autentica você (OpenID Connect)
+- Retorna um ID Token dizendo "Este é João Silva, email: joao@gmail.com"
+- Retorna um Access Token permitindo acessar foto de perfil, calendário, etc.
+
+Estrutura do ID Token (JWT):
+{
+  "sub": "usuario123",           // ID único do usuário
+  "name": "João Silva",          // Nome completo
+  "email": "joao@gmail.com",     // Email
+  "picture": "https://...",      // Foto de perfil
+  "iss": "https://accounts.google.com",  // Emissor
+  "aud": "sua-aplicacao-id",     // Audiência (sua aplicação)
+  "exp": 1234567890              // Expiração
+}
+
+Em resumo: OAuth2 diz "o que você pode fazer", OpenID Connect adiciona "quem você é".
+
 
 PROTEÇÕES DE SEGURANÇA
 
@@ -62,6 +116,7 @@ O Spring Security oferece diversas proteções automáticas:
 - Session Management: controle de sessões concorrentes, fixação de sessão, timeout.
 
 - Password Encoding: armazenamento seguro de senhas usando algoritmos como BCrypt, evitando senhas em texto plano.
+
 
 CENTRALIZED IDENTITY AND ACCESS MANAGEMENT (IAM)
 
@@ -91,6 +146,11 @@ Benefícios principais:
 Exemplo prático: Funcionário novo entra na empresa: Cadastrado no IAM uma vez; Automaticamente ganha acesso a email, 
 ERP, CRM, intranet; Muda de departamento? Permissões atualizadas no IAM refletem em todos os sistemas; Sai da empresa? 
 Acesso revogado em todos os lugares simultaneamente.
+
+
+
+
+
 
 LOGGING
 
