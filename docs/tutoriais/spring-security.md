@@ -12,6 +12,9 @@
 - https://auth0.com/docs (Oauth2 e outros) 
 - https://docs.spring.io/spring-security/reference/servlet/oauth2/index.html (Oauth2)
 - https://www.keycloak.org/ (Keycloak - open source)
+- https://www.keycloak.org/getting-started/getting-started-docker (Keycloak com Docker)
+- 
+- 
 - https://spring.io/projects/spring-authorization-server (Spring Authorization Server)
 - https://docs.spring.io/spring-authorization-server/reference/overview.html (Spring Authorization Server)
 - 
