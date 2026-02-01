@@ -8,10 +8,18 @@
 - https://github.com/spring-projects/spring-security/ 
 - https://docs.spring.io/spring-security/reference/servlet/architecture.html (arquitetura) 
 - https://docs.spring.io/spring-security/reference/servlet/getting-started.html (começando)
-- 
+- https://oauth.net/2/ (Oauth2)
+- https://auth0.com/docs (Oauth2 e outros) 
+- https://docs.spring.io/spring-security/reference/servlet/oauth2/index.html (Oauth2)
+- https://www.keycloak.org/ (Keycloak - open source)
 - 
 - 
 - https://www.youtube.com/playlist?list=PLZV0a2jwt22s5NCKOwSmHVagoDW8nflaC (playlist do Dan Vega)
+- 
+- 
+- https://www.okta.com/ (produto comercial)
+- https://aws.amazon.com/pt/cognito/ (produto comercial)
+- 
 
 ### Introdução: 
 
@@ -147,6 +155,9 @@ Acesso revogado em todos os lugares simultaneamente.
 ```
 KEYCLOAK
 ```
+O Keycloak é um produto de gerenciamento de identidade e acesso de código aberto (open source). 
+
+
 
 ```
 LOGGING
