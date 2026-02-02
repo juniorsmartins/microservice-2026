@@ -17,7 +17,7 @@
 - 
 - https://spring.io/projects/spring-authorization-server (Spring Authorization Server)
 - https://docs.spring.io/spring-authorization-server/reference/overview.html (Spring Authorization Server)
-- 
+- https://www.jwt.io/ 
 - https://www.youtube.com/playlist?list=PLZV0a2jwt22s5NCKOwSmHVagoDW8nflaC (playlist do Dan Vega)
 - 
 - 
@@ -161,6 +161,8 @@ KEYCLOAK
 ```
 O Keycloak é um produto de gerenciamento de identidade e acesso de código aberto (open source). 
 
+- Realm: 
+- Realm master: 
 
 
 ```
@@ -179,10 +181,19 @@ logging.level.org.springframework.security=TRACE
 
 ### Passo-a-passo
 
-1. Adicionar dependências;
-    a. implementation 'org.springframework.boot:spring-boot-starter-security' 
-    b. testImplementation 'org.springframework.boot:spring-boot-starter-security-test'
-2. 
+Criar Auth Server (servidor de autenticação) com KeyCloak;
+1. Criar container de Keycloak no docker compose;
+2. Entrar no Keycloak e configurar;
+
+Adaptar Gateway Server para também ser Resource Server (servidor de recursos);
+1. Adicionar dependências:
+   a. implementation 'org.springframework.boot:spring-boot-starter-security'
+   b. testImplementation 'org.springframework.boot:spring-boot-starter-security-test'
+   c. implementation 'org.springframework.boot:spring-boot-starter-security-oauth2-resource-server' 
+   d. testImplementation 'org.springframework.boot:spring-boot-starter-security-oauth2-resource-server-test'
+2. Criar classe SecurityConfig;
+
+
 
 
 ### Implementação: 
