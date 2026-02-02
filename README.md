@@ -57,18 +57,20 @@ Descrição: Microsserviço responsável pelo registro e descoberta dos microsse
 - Docker (dockerfile e docker compose).
 
 
-## Gateway
+## Gateway Server e Resource Server
 
-Descrição: Microsserviço responsável por rotear as requisições para os microsserviços.
+Descrição: Gateway Server e Resource Server - responsável por ser ponto único de entrada, roteador de requisições e servidor de recursos protegidos.
 
 ### Tecnologias Gateway
 
 - Java (versão 25);
 - Gradle (versão 9.2.1);
-- Spring Boot (versão 4.0.1);
+- Spring Boot (versão 4.0.2);
 - Spring Boot Actuator (monitoramento);
 - Spring Cloud Gateway Server WebFlux (versão 2025.1.0);
 - Spring Cloud Netflix Eureka Client (versão 2025.1.0);
+- Spring Security;
+- Spring Security Oauth2 Resource Server;
 - Spring Doc OpenApi (versão 3.0.0);
 - Docker (dockerfile e docker compose).
 
