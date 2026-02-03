@@ -94,6 +94,7 @@ Descrição: Gateway Server e Resource Server - responsável por ser ponto únic
 - [Spring Cloud Bus](docs/tutoriais/spring-cloud-bus.md);
 - [Spring Doc](docs/tutoriais/spring-doc.md);
 - [Spring Mail](docs/tutoriais/spring-mail.md);
+- [Spring Security](docs/tutoriais/spring-security.md).
 
 
 ## FAQ - Principais dúvidas

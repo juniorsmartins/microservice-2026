@@ -184,6 +184,9 @@ logging.level.org.springframework.security=TRACE
 Criar Auth Server (servidor de autenticação) com KeyCloak;
 1. Criar container de Keycloak no docker compose;
 2. Entrar no Keycloak e configurar;
+   a. Ir em Clients e clicar em Create Client;
+   b. Criar Client (client ID: microservices-2026-credentials; name: microservices-2026; description: microservices-2026; clicar botão next; ativar client authentication; em authentication flow, marcar apenas "service accounts roles"; clicar botão next; clicar botão save)
+   c. Pegar o secret para fazer requisições via Postman.   
 
 Adaptar Gateway Server para também ser Resource Server (servidor de recursos);
 1. Adicionar dependências:
@@ -191,7 +194,10 @@ Adaptar Gateway Server para também ser Resource Server (servidor de recursos);
    b. testImplementation 'org.springframework.boot:spring-boot-starter-security-test'
    c. implementation 'org.springframework.boot:spring-boot-starter-security-oauth2-resource-server' 
    d. testImplementation 'org.springframework.boot:spring-boot-starter-security-oauth2-resource-server-test'
-2. Criar classe SecurityConfig;
+   e. implementation 'org.springframework.security:spring-security-oauth2-jose:7.0.2'
+2. Criar classe SecurityConfig (com anotações @Configuration e @EnableWebFluxSecurity);
+3. Configurar application.yml;
+4. Testar requisição no Postman (em authorization, adicionar Oauth2; token name = clientcredentials_accesstoken; grant type = Client Credentials; access token url = http://localhost:8080/realms/master/protocol/openid-connect/token ; client id = microservices-2026-cc; client secret = pegar a credencial no Keycloak; Scope = openid email profile; client authorization = send client credentials in body; clicar no botão Get New Access Token)
 
 
 

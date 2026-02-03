@@ -1,12 +1,12 @@
 plugins {
 	id 'java'
-	id 'org.springframework.boot' version '4.0.1'
+	id 'org.springframework.boot' version '4.0.2'
 	id 'io.spring.dependency-management' version '1.1.7'
 }
 
 group = 'backend.communication'
 version = '0.0.1-SNAPSHOT'
-description = 'Microsserviço responsável por rotear as requisições para os microsserviços.'
+description = 'Gateway Server e Resource Server - responsável por ser ponto único de entrada, roteador de requisições e servidor de recursos protegidos.'
 
 java {
 	toolchain {
@@ -23,14 +23,24 @@ ext {
 }
 
 dependencies {
+	// Comunicação Interprocessos
 	implementation 'org.springframework.cloud:spring-cloud-starter-gateway-server-webflux'
-
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 	testImplementation 'org.springframework.boot:spring-boot-starter-actuator-test'
 	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
 
+	// Security
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	testImplementation 'org.springframework.boot:spring-boot-starter-security-test'
+	implementation 'org.springframework.boot:spring-boot-starter-security-oauth2-resource-server'
+	testImplementation 'org.springframework.boot:spring-boot-starter-security-oauth2-resource-server-test'
+	implementation 'org.springframework.security:spring-security-oauth2-jose:7.0.2'
+
+	// Documentação
 	implementation 'org.springdoc:springdoc-openapi-starter-webflux-ui:3.0.0'
 
+	// Testes
+	testImplementation 'io.projectreactor:reactor-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
