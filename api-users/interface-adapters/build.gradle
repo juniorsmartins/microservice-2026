@@ -1,6 +1,6 @@
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '4.0.1'
+    id 'org.springframework.boot' version '4.0.2'
     id 'io.spring.dependency-management' version '1.1.7'
     id "com.github.davidmc24.gradle.plugin.avro" version "1.9.1"
 }
@@ -39,6 +39,9 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-webmvc' // Para construir APIs RESTful
     testImplementation 'org.springframework.boot:spring-boot-starter-webmvc-test' // Dependências de teste para WebMVC
 
+    // Security
+
+
     // JPA e Banco de Dados
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa' // Para integração com JPA/Hibernate
     testImplementation 'org.springframework.boot:spring-boot-starter-data-jpa-test' // Dependências de teste para JPA
@@ -67,14 +70,15 @@ dependencies {
     testImplementation group: 'io.confluent', name: 'kafka-schema-registry', version: '8.0.0' // Necessário para mockar schema registry nos testes
     implementation group: 'org.apache.avro', name: 'avro', version: '1.12.0' // Utilizada para trabalhar com esquemas Avro e serializar/desserializar mensagens.
 
-    // Documentação
-    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:3.0.0'
-    implementation 'io.swagger.core.v3:swagger-annotations-jakarta:2.2.41' // Para previnir conflitos com outras bibliotecas (Confluent e etc)
-
     // Ferramentas de desenvolvimento
     compileOnly 'org.projectlombok:lombok' // Para reduzir código boilerplate (getters, setters, construtores, etc.)
     annotationProcessor 'org.projectlombok:lombok'
 
+    // Documentação
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:3.0.0'
+    implementation 'io.swagger.core.v3:swagger-annotations-jakarta:2.2.41' // Para previnir conflitos com outras bibliotecas (Confluent e etc)
+
+    // Testes
     testImplementation group: 'io.rest-assured', name: 'rest-assured', version: '6.0.0' // versão 6 compatível com Spring Boot 4
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }

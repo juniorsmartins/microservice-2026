@@ -7,6 +7,17 @@ spring:
 
 
   # --------------------------------------------------
+  # Config de Security (resource server)
+  # --------------------------------------------------
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: "http://keycloak:8080/realms/master/protocol/openid-connect/certs"
+  # --------------------------------------------------
+
+
+  # --------------------------------------------------
   # Config de Gateway
   # --------------------------------------------------
   cloud:
@@ -17,7 +28,7 @@ spring:
             - id: api-users
               uri: lb://api-users
               predicates:
-                - Path=/api/{version}/customers/**
+                  - Path=/api/{version}/customers/**
 
             - id: api-notifications
               uri: lb://api-notifications
