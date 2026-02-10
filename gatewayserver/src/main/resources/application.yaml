@@ -13,7 +13,7 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          jwk-set-uri: "http://keycloak:8080/realms/master/protocol/openid-connect/certs"
+          jwk-set-uri: "http://keycloak:8080/realms/master/protocol/openid-connect/certs" # URL para buscar as chaves públicas do Keycloak. Altere "master" para o nome do seu realm, se necessário.
   # --------------------------------------------------
 
 

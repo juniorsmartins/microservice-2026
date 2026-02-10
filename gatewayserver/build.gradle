@@ -30,11 +30,11 @@ dependencies {
 	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
 
 	// Security
-	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.springframework.boot:spring-boot-starter-security' // Dependências principais de segurança
 	testImplementation 'org.springframework.boot:spring-boot-starter-security-test'
-	implementation 'org.springframework.boot:spring-boot-starter-security-oauth2-resource-server'
+	implementation 'org.springframework.boot:spring-boot-starter-security-oauth2-resource-server' // Para configurar o Gateway como Resource Server
 	testImplementation 'org.springframework.boot:spring-boot-starter-security-oauth2-resource-server-test'
-	implementation 'org.springframework.security:spring-security-oauth2-jose:7.0.2'
+	implementation 'org.springframework.security:spring-security-oauth2-jose:7.0.2' // Para suporte a JWT.
 
 	// Documentação
 	implementation 'org.springdoc:springdoc-openapi-starter-webflux-ui:3.0.0'

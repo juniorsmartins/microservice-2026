@@ -187,6 +187,7 @@ Criar Auth Server (servidor de autenticação) com KeyCloak;
    a. Ir em Clients e clicar em Create Client;
    b. Criar Client (client ID: microservices-2026-credentials; name: microservices-2026; description: microservices-2026; clicar botão next; ativar client authentication; em authentication flow, marcar apenas "service accounts roles"; clicar botão next; clicar botão save)
    c. Pegar o secret para fazer requisições via Postman.   
+3. Criar Roles (em Realm Roles, )
 
 Adaptar Gateway Server para também ser Resource Server (servidor de recursos);
 1. Adicionar dependências:
@@ -196,8 +197,10 @@ Adaptar Gateway Server para também ser Resource Server (servidor de recursos);
    d. testImplementation 'org.springframework.boot:spring-boot-starter-security-oauth2-resource-server-test'
    e. implementation 'org.springframework.security:spring-security-oauth2-jose:7.0.2'
 2. Criar classe SecurityConfig (com anotações @Configuration e @EnableWebFluxSecurity);
-3. Configurar application.yml;
-4. Testar requisição no Postman (em authorization, adicionar Oauth2; token name = clientcredentials_accesstoken; grant type = Client Credentials; access token url = http://localhost:8080/realms/master/protocol/openid-connect/token ; client id = microservices-2026-cc; client secret = pegar a credencial no Keycloak; Scope = openid email profile; client authorization = send client credentials in body; clicar no botão Get New Access Token)
+3. Criar classe KeycloakRoleConverter (implementando Converter<Jwt, Collection<GrantedAuthority>>);
+4. Configurar o conversor na classe SecurityConfig (fazer ela usar o KeycloakRoleConverter);
+4. Configurar application.yml;
+5. Testar requisição no Postman (em authorization, adicionar Oauth2; token name = clientcredentials_accesstoken; grant type = Client Credentials; access token url = http://localhost:8080/realms/master/protocol/openid-connect/token ; client id = microservices-2026-cc; client secret = pegar a credencial no Keycloak; Scope = openid email profile; client authorization = send client credentials in body; clicar no botão Get New Access Token)
 
 
 
