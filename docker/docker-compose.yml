@@ -7,6 +7,8 @@ volumes:
     name: db-notifications
   db-news:
     name: db-news
+  db-keycloak:
+    name: db-keycloak
   kafka1-data:
     name: kafka1-data
   kafka2-data:
@@ -398,6 +400,9 @@ services:
         limits:
           cpus: '0.5'
           memory: 256M
+        reservations:
+          cpus: '0.25'
+          memory: 128M
     restart: unless-stopped
     environment:
       TZ: utc
@@ -468,6 +473,9 @@ services:
         limits:
           cpus: '0.5'
           memory: 256M
+        reservations:
+          cpus: '0.25'
+          memory: 128M
     restart: unless-stopped
     environment:
       TZ: utc
@@ -536,6 +544,9 @@ services:
         limits:
           cpus: '0.5'
           memory: 256M
+        reservations:
+          cpus: '0.25'
+          memory: 128M
     restart: unless-stopped
     environment:
       TZ: utc
@@ -680,19 +691,64 @@ services:
         condition: service_healthy
 
   keycloak:
-#    image: bitnami/keycloak:latest
-    image: quay.io/keycloak/keycloak:26.5.2
+    image: quay.io/keycloak/keycloak:26.5.5
     container_name: keycloak
     hostname: keycloak
-    command: start-dev
+    command: start-dev # Modo de desenvolvimento: mais rápido para subir, mas não recomendado para produção. Para produção, use "start" e configure um banco de dados externo.
     ports:
       - "8080:8080"
+    deploy:
+        resources:
+          limits:
+            cpus: '1.0'
+            memory: 1024M
+          reservations:
+            cpus: '0.5'
+            memory: 512M
+    env_file:
+      - envs/.env-keycloak 
     environment:
-      KC_BOOTSTRAP_ADMIN_USERNAME: admin
-      KC_BOOTSTRAP_ADMIN_PASSWORD: admin
+        TZ: utc
+        KC_DB: postgres
+        KC_DB_URL: jdbc:postgresql://database-keycloak:5432/db-keycloak
+        KC_LOG_LEVEL: info
+        KC_LOG_CONSOLE_OUTPUT: json
+    restart: unless-stopped
     networks:
       - communication
+    depends_on:
+      database-keycloak:
+        condition: service_healthy
 
+  database-keycloak:
+    image: postgres:17.0
+    container_name: database-keycloak
+    hostname: database-keycloak
+    env_file:
+      - envs/.env-keycloak-db
+    ports:
+      - "5502:5432"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+        reservations:
+          cpus: '0.25'
+          memory: 128M
+    restart: unless-stopped
+    environment:
+      TZ: utc
+    volumes:
+      - db-keycloak:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U keycloak -d db-keycloak"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    networks:
+      - communication
 
 
 
