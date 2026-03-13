@@ -209,16 +209,12 @@ Criar Auth Server (servidor de autenticação) com KeyCloak;
 
 Adaptar Gateway Server para também ser Resource Server (servidor de recursos);
 1. Adicionar dependências:
-   a. implementation 'org.springframework.boot:spring-boot-starter-security'
-   b. testImplementation 'org.springframework.boot:spring-boot-starter-security-test'
-   c. implementation 'org.springframework.boot:spring-boot-starter-security-oauth2-resource-server' 
-   d. testImplementation 'org.springframework.boot:spring-boot-starter-security-oauth2-resource-server-test'
-   e. implementation 'org.springframework.security:spring-security-oauth2-jose:7.0.2'
-2. Criar classe SecurityConfig (com anotações @Configuration e @EnableWebFluxSecurity);
-3. Criar classe KeycloakRoleConverter (implementando Converter<Jwt, Collection<GrantedAuthority>>);
+2. Criar classe KeycloakRoleConverter (implementando Converter<Jwt, Collection<GrantedAuthority>>);
+3. Criar classe SecurityConfig (com anotações @Configuration e @EnableWebFluxSecurity);
+
 4. Configurar o conversor na classe SecurityConfig (fazer ela usar o KeycloakRoleConverter);
-4. Configurar application.yml;
-5. Testar requisição no Postman (em authorization, adicionar Oauth2; token name = clientcredentials_accesstoken; grant type = Client Credentials; access token url = http://localhost:8080/realms/master/protocol/openid-connect/token ; client id = microservices-2026-cc; client secret = pegar a credencial no Keycloak; Scope = openid email profile; client authorization = send client credentials in body; clicar no botão Get New Access Token)
+5. Configurar application.yml;
+6. Testar requisição no Postman (em authorization, adicionar Oauth2; token name = clientcredentials_accesstoken; grant type = Client Credentials; access token url = http://localhost:8080/realms/master/protocol/openid-connect/token ; client id = microservices-2026-cc; client secret = pegar a credencial no Keycloak; Scope = openid email profile; client authorization = send client credentials in body; clicar no botão Get New Access Token)
 
 
 ### Implementação: 
@@ -251,12 +247,44 @@ d. Criar Roles (em Realm Roles, criar role "admin" e role "user");
 ```
 
 
-4. Configurar application.yml;
+
+Adaptar Gateway Server para também ser Resource Server (servidor de recursos);
+1. Adicionar dependências:
 ```
-a. Entrar na interface do Keycloak e acessar Realm Settings, no final da página, há a seção "Endpoints" com os endpoints de autenticação. Copiar o endpoint "OpenID Endpoint Configuration" e colar no application.yml, na propriedade spring.security.oauth2.resourceserver.jwt.issuer-uri. O Spring Security irá usar esse endpoint para descobrir as chaves públicas do Keycloak e validar os tokens de acesso.
+	implementation 'org.springframework.boot:spring-boot-starter-security' // Dependências principais de segurança
+	testImplementation 'org.springframework.boot:spring-boot-starter-security-test'
+	implementation 'org.springframework.boot:spring-boot-starter-security-oauth2-resource-server' // Para configurar o Gateway como Resource Server
+	testImplementation 'org.springframework.boot:spring-boot-starter-security-oauth2-resource-server-test'
+	implementation 'org.springframework.security:spring-security-oauth2-jose:7.0.3' // Para suporte a JWT.
+```
+2. Criar classe KeycloakRoleConverter (implementando Converter<Jwt, Collection<GrantedAuthority>>);
 ```
 
-5. Testar requisição no Postman
+```
+3. Criar classe SecurityConfig (com anotações @Configuration e @EnableWebFluxSecurity);
+```
+
+```
+4. Configurar o conversor na classe SecurityConfig (fazer ela usar o KeycloakRoleConverter);
+5. Configurar application.yml;
+```
+a. Entrar na interface do Keycloak e acessar Realm Settings. No final da página, há a seção "Endpoints" com os endpoints de autenticação. Abra em outra aba "OpenID Endpoint Configuration". Então copie o endereço de URL da chave "jwks_uri". Servirá para descarregar certificado público do Keycloak, necessário para validar os tokens de acesso recebidos pelo Gateway Server. O URL deve ser algo como: "http://localhost:7080/realms/dev/protocol/openid-connect/certs". Esse URL será configurado no application.yml do Gateway Server para que ele possa validar os tokens JWT emitidos pelo Keycloak.
+
+spring:
+  application:
+    name: gatewayserver
+
+  # --------------------------------------------------
+  # Config de Security (resource server)
+  # --------------------------------------------------
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: "http://localhost:7080/realms/dev/protocol/openid-connect/certs"
+  # --------------------------------------------------
+```
+6. Testar requisição no Postman
 ```
 a. Crie uma requisição POST no Postman (nome: ClientCredentials_AccessToken); 
 b. A requisição usará o endpoint de token do Keycloak para obter um token de acesso usando as credenciais do cliente criado.
