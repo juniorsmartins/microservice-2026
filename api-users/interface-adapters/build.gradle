@@ -39,9 +39,6 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-webmvc' // Para construir APIs RESTful
     testImplementation 'org.springframework.boot:spring-boot-starter-webmvc-test' // Dependências de teste para WebMVC
 
-    // Security
-
-
     // JPA e Banco de Dados
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa' // Para integração com JPA/Hibernate
     testImplementation 'org.springframework.boot:spring-boot-starter-data-jpa-test' // Dependências de teste para JPA

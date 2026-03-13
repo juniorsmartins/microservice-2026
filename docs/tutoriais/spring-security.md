@@ -13,6 +13,8 @@
 - https://docs.spring.io/spring-security/reference/servlet/oauth2/index.html (Oauth2)
 - https://www.keycloak.org/ (Keycloak - open source)
 - https://www.keycloak.org/getting-started/getting-started-docker (Keycloak com Docker)
+- https://www.keycloak.org/server/configuration (configurações do Keycloak) 
+- https://www.keycloak.org/server/configuration-production (configurações de produção do Keycloak)
 - 
 - 
 - https://spring.io/projects/spring-authorization-server (Spring Authorization Server)
@@ -48,7 +50,7 @@ O Spring Security oferece diversas proteções automáticas:
 ```
 AUTENTICAÇÃO
 ```
-O Spring Security oferece suporte abrangente para autenticação . A autenticação é a forma como verificamos a identidade 
+O Spring Security oferece suporte abrangente para autenticação. A autenticação é a forma como verificamos a identidade 
 de quem está tentando acessar um recurso específico. Uma maneira comum de autenticar usuários é exigindo que eles 
 insiram um nome de usuário e uma senha. Uma vez realizada a autenticação, conhecemos a identidade e podemos realizar a 
 autorização.
@@ -58,7 +60,7 @@ A. Autenticação básica (stateful): login e senha - gera valor de sessão para
 ```
 AUTORIZAÇÃO
 ```
-O Spring Security oferece suporte abrangente para autorização . Autorização é o processo de determinar quem tem 
+O Spring Security oferece suporte abrangente para autorização. Autorização é o processo de determinar quem tem 
 permissão para acessar um recurso específico. O Spring Security proporciona defesa em profundidade, permitindo 
 autorização baseada em requisição (URLs) e autorização baseada em método (@PreAuthorize, @Secured).
 
@@ -150,7 +152,7 @@ Exemplos de soluções IAM:
 Benefícios principais: 
 - Single Sign-On (SSO): login uma vez, acessa tudo; 
 - Gestão centralizada: adiciona/remove usuários em um só lugar; 
-- Segurança: políticas de senha, MFA, auditoria centralizadas; 
+- Segurança: políticas de senha, MFA e auditoria centralizadas; 
 - Controle de acesso: gerencia permissões de forma unificada.
 
 Exemplo prático: Funcionário novo entra na empresa: Cadastrado no IAM uma vez; Automaticamente ganha acesso a email, 
@@ -159,10 +161,21 @@ Acesso revogado em todos os lugares simultaneamente.
 ```
 KEYCLOAK
 ```
-O Keycloak é um produto de gerenciamento de identidade e acesso de código aberto (open source). 
+O Keycloak é um produto de gerenciamento de identidade e acesso de código aberto (open source). Ele fornece uma solução 
+completa para autenticação, autorização e gerenciamento de usuários. O Keycloak suporta diversos protocolos de 
+autenticação, como OpenID Connect, OAuth2 e SAML, e oferece recursos avançados, como Single Sign-On (SSO), autenticação 
+multifator (MFA), integração com redes sociais, e muito mais. Ele é amplamente utilizado para proteger aplicações e 
+serviços, permitindo que os desenvolvedores se concentrem na lógica de negócios, enquanto o Keycloak cuida da segurança.
 
-- Realm: 
-- Realm master: 
+- Realm: Realm é a unidade de organização principal no Keycloak. Ele representa um espaço de gerenciamento de usuários, 
+  clientes, roles e políticas. Cada realm é isolado dos outros, permitindo que você tenha múltiplos ambientes ou 
+  aplicações dentro do mesmo servidor Keycloak. Por exemplo, você pode ter um realm para desenvolvimento, outro para 
+  produção, ou um realm para cada aplicação.
+- Realm master: O realm master é o realm padrão criado automaticamente quando você instala o Keycloak. Ele é usado 
+  principalmente para gerenciar a própria instância do Keycloak, incluindo a criação de outros realms, gerenciamento de 
+  usuários e configuração global. O realm master é o ponto de entrada para a administração do Keycloak, mas não deve ser 
+  usado para gerenciar usuários ou clientes de aplicações, pois é destinado apenas para administração do servidor 
+  Keycloak.
 
 
 ```
@@ -183,10 +196,13 @@ logging.level.org.springframework.security=TRACE
 
 Criar Auth Server (servidor de autenticação) com KeyCloak;
 1. Criar container de Keycloak no docker compose;
-2. Entrar no Keycloak e configurar;
+2. Criar container de banco de dados, dedicado para o Keycloak, no docker-compose;
+3. Entrar no Keycloak e configurar (http://localhost:7080/);
+
    a. Ir em Clients e clicar em Create Client;
    b. Criar Client (client ID: microservices-2026-credentials; name: microservices-2026; description: microservices-2026; clicar botão next; ativar client authentication; em authentication flow, marcar apenas "service accounts roles"; clicar botão next; clicar botão save)
    c. Pegar o secret para fazer requisições via Postman.   
+4. Criar Roles (em Realm Roles, )
 
 Adaptar Gateway Server para também ser Resource Server (servidor de recursos);
 1. Adicionar dependências:
@@ -196,12 +212,29 @@ Adaptar Gateway Server para também ser Resource Server (servidor de recursos);
    d. testImplementation 'org.springframework.boot:spring-boot-starter-security-oauth2-resource-server-test'
    e. implementation 'org.springframework.security:spring-security-oauth2-jose:7.0.2'
 2. Criar classe SecurityConfig (com anotações @Configuration e @EnableWebFluxSecurity);
-3. Configurar application.yml;
-4. Testar requisição no Postman (em authorization, adicionar Oauth2; token name = clientcredentials_accesstoken; grant type = Client Credentials; access token url = http://localhost:8080/realms/master/protocol/openid-connect/token ; client id = microservices-2026-cc; client secret = pegar a credencial no Keycloak; Scope = openid email profile; client authorization = send client credentials in body; clicar no botão Get New Access Token)
+3. Criar classe KeycloakRoleConverter (implementando Converter<Jwt, Collection<GrantedAuthority>>);
+4. Configurar o conversor na classe SecurityConfig (fazer ela usar o KeycloakRoleConverter);
+4. Configurar application.yml;
+5. Testar requisição no Postman (em authorization, adicionar Oauth2; token name = clientcredentials_accesstoken; grant type = Client Credentials; access token url = http://localhost:8080/realms/master/protocol/openid-connect/token ; client id = microservices-2026-cc; client secret = pegar a credencial no Keycloak; Scope = openid email profile; client authorization = send client credentials in body; clicar no botão Get New Access Token)
 
 
 
 
 ### Implementação: 
+
+
+
+3. Entrar no Keycloak e configurar (http://localhost:7080/);
+```
+a. Acessar o Keycloak com as credenciais padrão;
+b. Criar um novo realm (realm: microservices-2026-development);
+c. Criar um novo usuário (em Users, clicar em Add User; username: admin; email: 
+
+
+```
+   a. Ir em Clients e clicar em Create Client;
+   b. Criar Client (client ID: microservices-2026-credentials; name: microservices-2026; description: microservices-2026; clicar botão next; ativar client authentication; em authentication flow, marcar apenas "service accounts roles"; clicar botão next; clicar botão save)
+   c. Pegar o secret para fazer requisições via Postman.   
+
 
 
