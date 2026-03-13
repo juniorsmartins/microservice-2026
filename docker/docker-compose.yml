@@ -1,25 +1,5 @@
 name: microservice-2026
 
-volumes:
-  db-users:
-    name: db-users
-  db-notifications:
-    name: db-notifications
-  db-news:
-    name: db-news
-  db-keycloak:
-    name: db-keycloak
-  kafka1-data:
-    name: kafka1-data
-  kafka2-data:
-    name: kafka2-data
-  kafka3-data:
-    name: kafka3-data
-  redis-data:
-    name: redis-data
-  ollama_data:
-    name: ollama_data
-
 networks:
   communication:
     name: communication
@@ -213,6 +193,8 @@ services:
     networks:
       - communication
 
+
+
   configserver:
     image: juniorsmartins/configserver:v0.0.2
     container_name: configserver
@@ -339,6 +321,8 @@ services:
       eurekaserver:
         condition: service_healthy
 
+
+
   api-users:
     image: juniorsmartins/api-users:v0.0.2
     container_name: api-users
@@ -359,6 +343,9 @@ services:
         limits:
           cpus: '0.5'
           memory: 512M
+        reservations:
+          cpus: '0.25'
+          memory: 128M
     environment:
       TZ: utc
       SERVER_PORT: 9050
@@ -387,32 +374,6 @@ services:
       eurekaserver:
         condition: service_healthy
 
-  database-users:
-    image: postgres:17.0
-    container_name: database-users
-    hostname: database-users
-    env_file:
-      - envs/.env-api-users
-    ports:
-      - "5501:5432"
-    deploy:
-      resources:
-        limits:
-          cpus: '0.5'
-          memory: 256M
-        reservations:
-          cpus: '0.25'
-          memory: 128M
-    restart: unless-stopped
-    environment:
-      TZ: utc
-      POSTGRES_DB: db-users
-#      POSTGRES_MULTIPLE_DATABASES: db_user, db_outro1, db_outro2
-    volumes:
-      - db-users:/var/lib/postgresql/data
-    networks:
-      - communication
-
   api-notifications:
     image: juniorsmartins/api-notifications:v0.0.2
     container_name: api-notifications
@@ -433,6 +394,9 @@ services:
         limits:
           cpus: '0.5'
           memory: 256M
+        reservations:
+          cpus: '0.25'
+          memory: 128M
     environment:
       TZ: utc
       SERVER_PORT: 9060
@@ -460,32 +424,6 @@ services:
       eurekaserver:
         condition: service_healthy
 
-  database-notifications:
-    image: mariadb:12.1.2
-    container_name: database-notifications
-    hostname: database-notifications
-    env_file:
-      - envs/.env-api-notifications
-    ports:
-      - "3306:3306"
-    deploy:
-      resources:
-        limits:
-          cpus: '0.5'
-          memory: 256M
-        reservations:
-          cpus: '0.25'
-          memory: 128M
-    restart: unless-stopped
-    environment:
-      TZ: utc
-      MARIADB_ROOT_PASSWORD: root123
-      MARIADB_DATABASE: db-notifications
-    volumes:
-      - db-notifications:/var/lib/mysql
-    networks:
-      - communication
-
   api-news:
     image: juniorsmartins/api-news:v0.0.2
     container_name: api-news
@@ -506,6 +444,9 @@ services:
         limits:
           cpus: '0.5'
           memory: 512M
+        reservations:
+          cpus: '0.25'
+          memory: 128M
     environment:
       TZ: utc
       SERVER_PORT: 9000
@@ -531,32 +472,6 @@ services:
       eurekaserver:
         condition: service_healthy
 
-  database-news:
-    image: mysql:lts-oraclelinux9
-    container_name: database-news
-    hostname: database-news
-    env_file:
-      - envs/.env-api-news
-    ports:
-      - "3307:3306"
-    deploy:
-      resources:
-        limits:
-          cpus: '0.5'
-          memory: 256M
-        reservations:
-          cpus: '0.25'
-          memory: 128M
-    restart: unless-stopped
-    environment:
-      TZ: utc
-      MYSQL_ROOT_PASSWORD: root123
-      MYSQL_DATABASE: db-news
-    volumes:
-      - db-news:/var/lib/mysql
-    networks:
-      - communication
-
   api-ias:
     image: juniorsmartins/api-ias:v0.0.2
     container_name: api-ias
@@ -578,8 +493,8 @@ services:
           cpus: '1.0'
           memory: 1G
         reservations:
-          memory: 256M
-          cpus: '0.3'
+          cpus: '0.25'
+          memory: 128M
     environment:
       TZ: utc
       SERVER_PORT: 9010
@@ -610,6 +525,8 @@ services:
         condition: service_healthy
       ollama:
         condition: service_started
+
+
 
   ollama:
     image: ollama/ollama:latest
@@ -663,6 +580,9 @@ services:
         limits:
           cpus: '1.0'
           memory: 1024M
+        reservations:
+          cpus: '0.25'
+          memory: 128M
     restart: unless-stopped
     environment:
       TZ: utc
@@ -696,15 +616,15 @@ services:
     hostname: keycloak
     command: start-dev # Modo de desenvolvimento: mais rápido para subir, mas não recomendado para produção. Para produção, use "start" e configure um banco de dados externo.
     ports:
-      - "8080:8080"
+      - "7080:8080"
     deploy:
         resources:
           limits:
             cpus: '1.0'
             memory: 1024M
           reservations:
-            cpus: '0.5'
-            memory: 512M
+            cpus: '0.25'
+            memory: 128M
     env_file:
       - envs/.env-keycloak 
     environment:
@@ -719,6 +639,86 @@ services:
     depends_on:
       database-keycloak:
         condition: service_healthy
+
+
+
+  database-users:
+    image: postgres:17.0
+    container_name: database-users
+    hostname: database-users
+    env_file:
+      - envs/.env-api-users
+    ports:
+      - "5501:5432"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 256M
+        reservations:
+          cpus: '0.25'
+          memory: 128M
+    restart: unless-stopped
+    environment:
+      TZ: utc
+      POSTGRES_DB: db-users
+    #      POSTGRES_MULTIPLE_DATABASES: db_user, db_outro1, db_outro2
+    volumes:
+      - db-users:/var/lib/postgresql/data
+    networks:
+      - communication
+
+  database-notifications:
+    image: mariadb:12.1.2
+    container_name: database-notifications
+    hostname: database-notifications
+    env_file:
+      - envs/.env-api-notifications
+    ports:
+      - "3306:3306"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 256M
+        reservations:
+          cpus: '0.25'
+          memory: 128M
+    restart: unless-stopped
+    environment:
+      TZ: utc
+      MARIADB_ROOT_PASSWORD: root123
+      MARIADB_DATABASE: db-notifications
+    volumes:
+      - db-notifications:/var/lib/mysql
+    networks:
+      - communication
+
+  database-news:
+    image: mysql:lts-oraclelinux9
+    container_name: database-news
+    hostname: database-news
+    env_file:
+      - envs/.env-api-news
+    ports:
+      - "3307:3306"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 256M
+        reservations:
+          cpus: '0.25'
+          memory: 128M
+    restart: unless-stopped
+    environment:
+      TZ: utc
+      MYSQL_ROOT_PASSWORD: root123
+      MYSQL_DATABASE: db-news
+    volumes:
+      - db-news:/var/lib/mysql
+    networks:
+      - communication
 
   database-keycloak:
     image: postgres:17.0
@@ -749,6 +749,29 @@ services:
       start_period: 10s
     networks:
       - communication
+
+
+
+volumes:
+  db-users:
+    name: db-users
+  db-notifications:
+    name: db-notifications
+  db-news:
+    name: db-news
+  db-keycloak:
+    name: db-keycloak
+  kafka1-data:
+    name: kafka1-data
+  kafka2-data:
+    name: kafka2-data
+  kafka3-data:
+    name: kafka3-data
+  redis-data:
+    name: redis-data
+  ollama_data:
+    name: ollama_data
+
 
 
 
