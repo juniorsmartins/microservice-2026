@@ -22,7 +22,7 @@
 ## Arquitetura 
 
 Arquitetura de Microsserviços
-![Arquitetura de Microsserviços](docs/diagramas/Microservices-v7.jpg)
+![Arquitetura de Microsserviços](docs/diagramas/Microservices-v8.jpg)
 
 Arquitetura Orientada a Eventos
 ![Arquitetura Orientada a Eventos](docs/diagramas/ArquiteturaEventos-v1.jpg)
@@ -94,6 +94,7 @@ Descrição: Gateway Server e Resource Server - responsável por ser ponto únic
 - [Spring Cloud Bus](docs/tutoriais/spring-cloud-bus.md);
 - [Spring Doc](docs/tutoriais/spring-doc.md);
 - [Spring Mail](docs/tutoriais/spring-mail.md);
+- [Spring Security](docs/tutoriais/spring-security.md).
 
 
 ## FAQ - Principais dúvidas
