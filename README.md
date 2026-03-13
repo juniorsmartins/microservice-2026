@@ -101,8 +101,7 @@ Descrição: Gateway Server e Resource Server - responsável por ser ponto únic
 
 1. Meu computador precisa ter quais dependências para rodar a aplicação?
 ```
-1. Docker;
-2, Docker Compose.
+1. Docker e Docker Compose.
 ```
 
 2. Como rodar a aplicação?
