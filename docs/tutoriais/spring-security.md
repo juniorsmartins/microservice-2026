@@ -204,17 +204,19 @@ Criar Auth Server (servidor de autenticação) com KeyCloak;
 
    a. Ir em Clients e clicar em Create Client;
    b. Criar Client (client ID: microservices-2026-credentials; name: microservices-2026; description: microservices-2026; clicar botão next; ativar client authentication; em authentication flow, marcar apenas "service accounts roles"; clicar botão next; clicar botão save)
-   c. Pegar o secret para fazer requisições via Postman.   
-4. Criar Roles (em Realm Roles, )
+   c. Pegar o secret para fazer requisições via Postman.
+4. Criar papéis/roles no Keycloak (criar roles "admin", "user" e etc);
 
 Adaptar Gateway Server para também ser Resource Server (servidor de recursos);
 1. Adicionar dependências:
 2. Criar classe KeycloakRoleConverter (implementando Converter<Jwt, Collection<GrantedAuthority>>);
 3. Criar classe SecurityConfig (com anotações @Configuration e @EnableWebFluxSecurity);
+4. Configurar application.yml;
+5. Testar acessar token via Postman
+6. Testar requisição no Postman (em authorization, adicionar Oauth2; token name = clientcredentials_accesstoken; grant type = Client Credentials; access token url = http://localhost:8080/realms/master/protocol/openid-connect/token ; client id = microservices-2026-cc; client secret = pegar a credencial no Keycloak; Scope = openid email profile; client authorization = send client credentials in body; clicar no botão Get New Access Token);
 
-4. Configurar o conversor na classe SecurityConfig (fazer ela usar o KeycloakRoleConverter);
-5. Configurar application.yml;
-6. Testar requisição no Postman (em authorization, adicionar Oauth2; token name = clientcredentials_accesstoken; grant type = Client Credentials; access token url = http://localhost:8080/realms/master/protocol/openid-connect/token ; client id = microservices-2026-cc; client secret = pegar a credencial no Keycloak; Scope = openid email profile; client authorization = send client credentials in body; clicar no botão Get New Access Token)
+
+8. Fazer requisição POST para criar no Postman.
 
 
 ### Implementação: 
@@ -245,7 +247,20 @@ c. Criar um novo Client (não esquecer de verificar em qual realm está criando 
       - Após salvar, acessar a aba "Credentials" para obter o client secret, que será usado para autenticação e obtenção de tokens de acesso.
 d. Criar Roles (em Realm Roles, criar role "admin" e role "user");
 ```
+7. Criar papéis/roles no Keycloak (criar roles "admin", "user" e etc);
+```
+a. Acesse o Keycloak e selecione o realm adequado;
+b. No menu lateral, clique em "Realm Roles";
+c. Clique no botão "Create Role" para criar um novo papel/role;
+d. Preencha os campos:
+   - Role Name: admin (nome do papel, usado para identificação e atribuição a usuários ou clientes)
+   - Description: Papel de administrador com permissões completas (descrição do papel, útil para documentação e entendimento do propósito do papel)
+   - Clicar em Save para criar o papel;
+e. Repita o processo para criar outros papéis, como "user", "manager", etc, conforme necessário para a sua aplicação.
+f. Após criar os papéis, você pode atribuí-los a usuários ou clientes para controlar o acesso a recursos protegidos com base nesses papéis. 
+g. No caso de clientes, vá na aba "Clients", selecione o cliente desejado, acesse a aba "Service Account Roles" e atribua os papéis criados para que o cliente possa obter tokens de acesso com as permissões associadas a esses papéis.
 
+```
 
 
 Adaptar Gateway Server para também ser Resource Server (servidor de recursos);
@@ -265,8 +280,7 @@ Adaptar Gateway Server para também ser Resource Server (servidor de recursos);
 ```
 
 ```
-4. Configurar o conversor na classe SecurityConfig (fazer ela usar o KeycloakRoleConverter);
-5. Configurar application.yml;
+4. Configurar application.yml;
 ```
 a. Entrar na interface do Keycloak e acessar Realm Settings. No final da página, há a seção "Endpoints" com os endpoints de autenticação. Abra em outra aba "OpenID Endpoint Configuration". Então copie o endereço de URL da chave "jwks_uri". Servirá para descarregar certificado público do Keycloak, necessário para validar os tokens de acesso recebidos pelo Gateway Server. O URL deve ser algo como: "http://localhost:7080/realms/dev/protocol/openid-connect/certs". Esse URL será configurado no application.yml do Gateway Server para que ele possa validar os tokens JWT emitidos pelo Keycloak.
 
@@ -284,7 +298,7 @@ spring:
           jwk-set-uri: "http://localhost:7080/realms/dev/protocol/openid-connect/certs"
   # --------------------------------------------------
 ```
-6. Testar requisição no Postman
+5. Testar acessar token via Postman
 ```
 a. Crie uma requisição POST no Postman (nome: ClientCredentials_AccessToken); 
 b. A requisição usará o endpoint de token do Keycloak para obter um token de acesso usando as credenciais do cliente criado.
@@ -297,7 +311,32 @@ c. Vá no "Body" da requisição e selecione a opção "x-www-form-urlencoded". 
    - scope: openid email profile (escopos desejados, separados por espaço). (o que é? são permissões granulares que o cliente deseja obter no token de acesso. No caso de Client Credentials, os escopos podem ser usados para limitar as ações que o cliente pode realizar ou os recursos que pode acessar. Os escopos "openid", "email" e "profile" são comumente usados para obter informações básicas sobre o usuário, mas em um cenário de Client Credentials, eles podem ser personalizados para refletir as permissões específicas necessárias para a aplicação cliente).
 d. Clique no botão "Send" para enviar a requisição. Se tudo estiver configurado corretamente, o Postman irá obter um token de acesso do Keycloak, que pode ser usado para autenticar requisições para o Gateway Server ou outros recursos protegidos.
 ```
-
-
+6. Fazer requisição POST para criar/cadastrar no Postman.
+   https://www.udemy.com/course/master-microservices-with-spring-docker-kubernetes/learn/lecture/39945484#overview
+```
+Verbo: POST
+URL: localhost:8765/api/1.0/news
+Body: 
+{
+    "hat": "Futebol Americano", 
+    "title": "Cuiabá Arsenal vence Coritiba Crocodilles",
+    "thinLine": "thinLine",
+    "text": "text",
+    "author": "Joseph Pulitzer",
+    "font": "font" 
+}
+Authorization: 
+- Auth Type: OAuth 2.0
+- Configure New Token:
+   - Token Name: ClientCredentials_AccessToken
+   - Grant Type: Client Credentials
+   - Access Token URL: http://localhost:7080/realms/dev/protocol/openid-connect/token
+   - Client ID: microservices-2026-cc
+   - Client Secret: (client secret do cliente criado no Keycloak)
+   - Scope: openid email profile
+   - Client Authentication: Send client credentials in body
+   - Clicar no botão "Get New Access Token" para obter o token de acesso do Keycloak e usá-lo para autenticar a requisição POST ao Gateway Server. Se a requisição for bem-sucedida, o recurso protegido será acessado e a notícia será criada/cadastrada com sucesso.
+   
+```
 
 

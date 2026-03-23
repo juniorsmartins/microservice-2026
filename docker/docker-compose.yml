@@ -304,6 +304,7 @@ services:
       TZ: utc
       SERVER_PORT: 8765
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8761/eureka/
+      RESOURCESERVER_JWT_JWK_SET_URI: http://keycloak:8080/realms/dev/protocol/openid-connect/certs
       JAVA_TOOL_OPTIONS: "--enable-native-access=ALL-UNNAMED" # Elimina alguns warnnings
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:8765/actuator/health" ]
