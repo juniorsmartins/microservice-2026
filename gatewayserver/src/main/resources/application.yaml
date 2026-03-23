@@ -9,11 +9,11 @@ spring:
   # --------------------------------------------------
   # Config de Security (resource server)
   # --------------------------------------------------
-#  security:
-#    oauth2:
-#      resourceserver:
-#        jwt:
-#          jwk-set-uri: "http://keycloak:7080/realms/master/protocol/openid-connect/certs" # URL para buscar as chaves públicas do Keycloak. Altere "master" para o nome do seu realm, se necessário.
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: ${RESOURCESERVER_JWT_JWK_SET_URI} # URL para buscar as chaves públicas do Keycloak. Altere "dev" para o nome do seu realm, se necessário.
   # --------------------------------------------------
 
 

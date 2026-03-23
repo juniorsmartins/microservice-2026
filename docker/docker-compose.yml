@@ -304,6 +304,7 @@ services:
       TZ: utc
       SERVER_PORT: 8765
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8761/eureka/
+      RESOURCESERVER_JWT_JWK_SET_URI: http://keycloak:8080/realms/dev/protocol/openid-connect/certs
       JAVA_TOOL_OPTIONS: "--enable-native-access=ALL-UNNAMED" # Elimina alguns warnnings
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:8765/actuator/health" ]
@@ -629,10 +630,12 @@ services:
       - envs/.env-keycloak 
     environment:
         TZ: utc
-        KC_DB: postgres
+        KC_DB: postgres # Configura o Keycloak para usar PostgreSQL como banco de dados. O driver JDBC é incluído na imagem oficial.
         KC_DB_URL: jdbc:postgresql://database-keycloak:5432/db-keycloak
-        KC_LOG_LEVEL: info
-        KC_LOG_CONSOLE_OUTPUT: json
+        KC_HEALTH_ENABLED: true # Ativa endpoint de health check (/health) para o Keycloak, usado pelo Docker Compose para verificar se o serviço está pronto.
+        KC_METRICS_ENABLED: true # Ativa endpoint de métricas (/metrics) para monitoramento do Keycloak.
+        KC_LOG_LEVEL: info # Nível de log: trace, debug, info, warn, error. Info é um bom equilíbrio para produção.
+        KC_LOG_CONSOLE_OUTPUT: json # Formato de log: json é recomendado para produção, facilita análise centralizada. Em dev, pode ser "plain" para melhor legibilidade.
     restart: unless-stopped
     networks:
       - communication
